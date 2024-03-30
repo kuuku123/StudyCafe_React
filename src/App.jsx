@@ -1,6 +1,6 @@
-import React from 'react';
-import HomePage from './pages/HomePage';
-const App = ({tab}) => (
+import React from "react";
+import HomePage from "./pages/HomePage";
+const App = ({ tab }) => (
   <div>
     <HomePage></HomePage>
   </div>
