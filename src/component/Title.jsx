@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import SignupPage from "../pages/SignupPage";
 
 const Title = ({ loginUrl = "", children }) => {
   const Title_style = styled.div`
@@ -33,7 +35,9 @@ const Title = ({ loginUrl = "", children }) => {
       <Children_style>{children}</Children_style>
       <Login_Signup_style>
         <h3>로그인</h3>
-        <h3>가입</h3>
+        <Link to="/sign-up">
+          <h3>가입</h3>
+        </Link>
       </Login_Signup_style>
     </Title_style>
   );

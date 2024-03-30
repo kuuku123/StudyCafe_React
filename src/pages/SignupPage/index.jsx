@@ -1,11 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 import Page from "../../component/Page";
 import Title from "../../component/Title";
 import CopyRight from "../../component/CopyRight";
-import styled from "styled-components";
-import Hompage_Main from "./Hompage_Main";
 
-const HomePage = () => {
+const SignupPage = () => {
   const Header_Input_style = styled.input`
     margin-left: 10px;
     font-size: 24px;
@@ -31,10 +30,10 @@ const HomePage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <Hompage_Main></Hompage_Main>
+        sign-up page
       </Page>
     </div>
   );
 };
 
-export default HomePage;
+export default SignupPage;
