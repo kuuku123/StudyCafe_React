@@ -49,4 +49,4 @@ const Hompage_Main = () => {
   );
 };
 
-export default Hompage_Main
+export default Hompage_Main;
