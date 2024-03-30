@@ -11,6 +11,10 @@ const Title = ({ loginUrl = "", children }) => {
   `;
 
   const Children_style = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin-left: 10px;
   `;
   const Login_Signup_style = styled.div`
