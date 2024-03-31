@@ -7,7 +7,7 @@ const Hompage_Main = () => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    min-height: 40vh;
   `;
   const Homepage_Main_SignUp_Button_style = styled.button`
     background-color: #007bff;

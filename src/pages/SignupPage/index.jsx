@@ -28,7 +28,7 @@ const SignupPage = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 40%;
+    min-height: 40vh;
   `;
   const Signup_Container_style = styled.div`
     display: flex;
