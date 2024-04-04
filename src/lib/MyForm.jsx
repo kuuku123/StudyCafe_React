@@ -20,12 +20,15 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
   };
 
   const handleSubmit = (e) => {
+    console.log("MyForm handleSumbit called");
+    console.log("onSubmit => ",onSubmit)
     e.preventDefault();
 
     const nextTouched = Object.keys(values).reduce((touched, field) => {
       touched[field] = true;
       return touched;
     }, {});
+    setTouched(nextTouched);
 
     const errors = validate(values);
     setErrors(errors);
@@ -65,14 +68,11 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
 const formContext = React.createContext({});
 formContext.displayName = "FormContext";
 
-export const Form = ({children, ...rest }) => {
+export const Form = ({ id, children, ...rest }) => {
   const formValue = useForm(rest);
   return (
     <formContext.Provider value={formValue}>
-      <form
-        noValidate
-        onSubmit={formValue.handleSubmit}
-      >
+      <form id={id} noValidate onSubmit={formValue.handleSubmit}>
         {children}
       </form>
     </formContext.Provider>
@@ -88,8 +88,8 @@ export const Field = ({ as = "input", children, ...rest }) => {
   );
 };
 
-export const ErrorMessage = ({name}) => {
-  const {touched, errors } = React.useContext(formContext)
-  if (!touched[name] || !errors[name]) return null
-  return <span>{errors[name]}</span>
-}
+export const ErrorMessage = ({ name }) => {
+  const { touched, errors } = React.useContext(formContext);
+  if (!touched[name] || !errors[name]) return null;
+  return <span>{errors[name]}</span>;
+};

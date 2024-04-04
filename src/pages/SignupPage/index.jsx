@@ -11,14 +11,14 @@ const SignupPage = () => {
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    outline: none; 
-    transition: border-color 0.3s ease; 
+    outline: none;
+    transition: border-color 0.3s ease;
     height: auto;
   `;
   const Header_Image_style = styled.img`
-    width: 70px; 
-    height: auto; 
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    width: 70px;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   `;
   const Signup_Main_style = styled.div`
     display: flex;
@@ -59,6 +59,14 @@ const SignupPage = () => {
       cursor: not-allowed;
     }
   `;
+
+  const handleSubmit = async (signupInfo) => {
+    const response = await fetch("http://localhost:8081/sign-up", {
+      method: "POST",
+      body: JSON.stringify(signupInfo),
+    });
+    console.log(response);
+  };
   return (
     <div>
       <Page
@@ -76,9 +84,11 @@ const SignupPage = () => {
           <Signup_Container_style>
             <h1>계정 만들기</h1>
           </Signup_Container_style>
-          <SignupForm onSubmit={() => console.log("hi")}></SignupForm>
+          <SignupForm onSubmit={handleSubmit}></SignupForm>
           <Signup_Container_style>
-            <SignUp_Button_style>가입 하기</SignUp_Button_style>
+            <SignUp_Button_style type="submit" form="signup-form">
+              가입 하기
+            </SignUp_Button_style>
           </Signup_Container_style>
         </Signup_Main_style>
       </Page>
