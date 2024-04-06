@@ -63,6 +63,9 @@ const SignupPage = () => {
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(signupInfo),
     });
     console.log(response);

@@ -5,7 +5,6 @@ import FormControl from "../../component/FomrControl";
 
 const SignupForm = ({ onSubmit }) => {
 
-  console.log("onSubmit => ",onSubmit)
   const signup_input_style = {
     fontSize: "1rem",
     border: "1px solid #ccc",
