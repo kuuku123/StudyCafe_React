@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Page from "../../component/Page";
 import Title from "../../component/Title";
 import CopyRight from "../../component/CopyRight";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import SignupForm from "./SignupForm";
 
 const SignupPage = () => {
@@ -60,6 +60,7 @@ const SignupPage = () => {
     }
   `;
 
+  const navigate = useNavigate()
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
       method: "POST",
@@ -67,8 +68,16 @@ const SignupPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signupInfo),
-    });
-    console.log(response);
+    }).then((res) => res.json());
+    console.log("response status", response.status)
+    if (response.status === "OK") {
+      console.log("redirect")
+      navigate("/")
+    }
+    else {
+      console.log(response.body)
+      alert(response.body)
+    }
   };
   return (
     <div>
