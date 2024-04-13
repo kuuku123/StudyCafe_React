@@ -34,7 +34,9 @@ const Title = ({ loginUrl = "", children }) => {
     <Title_style>
       <Children_style>{children}</Children_style>
       <Login_Signup_style>
-        <h3>로그인</h3>
+        <Link to="/login">
+          <h3>로그인</h3>
+        </Link>
         <Link to="/sign-up">
           <h3>가입</h3>
         </Link>

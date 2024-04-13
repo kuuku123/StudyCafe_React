@@ -3,8 +3,9 @@ import styled from "styled-components";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../component/FomrControl";
 
-const SignupForm = ({ onSubmit }) => {
-  const signup_input_style = {
+const LoginForm = ({ onSubmit }) => {
+
+  const login_input_style = {
     fontSize: "1rem",
     border: "1px solid #ccc",
     borderRadius: "5px",
@@ -18,25 +19,18 @@ const SignupForm = ({ onSubmit }) => {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.nickname) {
-      errors.nickname = "write nickname for your account";
-    }
-    if (!values.email) {
-      errors.email = "write email for your account";
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(values.email)) {
-      errors.email = "write valid email address";
+    if (!values.nicknameOrEmail) {
+      errors.nicknameOrEmail = "write nickname or email for login"
     }
     console.log("errors => ", errors);
     return errors;
   };
+
   return (
     <MyForm.Form
-      id="signup-form"
+      id="login-form"
       initialValue={{
-        nickname: "",
-        email: "",
+        nicknameOrEmail: "",
         password: "",
       }}
       validate={validate}
@@ -44,26 +38,14 @@ const SignupForm = ({ onSubmit }) => {
     >
       <FormControl
         label="닉네임"
-        htmlFor="nickname"
-        error={<MyForm.ErrorMessage name="nickname"></MyForm.ErrorMessage>}
+        htmlFor="nicknameOrEmail"
+        error={<MyForm.ErrorMessage name="nicknameOrEmail"></MyForm.ErrorMessage>}
       >
         <MyForm.Field
-          id="signup-nickname"
-          style={signup_input_style}
-          name="nickname"
-          placeholder="write your nickname"
-        ></MyForm.Field>
-      </FormControl>
-      <FormControl
-        label="이메일"
-        htmlFor="email"
-        error={<MyForm.ErrorMessage name="email"></MyForm.ErrorMessage>}
-      >
-        <MyForm.Field
-          id="email"
-          style={signup_input_style}
-          name="email"
-          placeholder="write your email"
+          id="login-nicknameOrEmail"
+          style={login_input_style}
+          name="nicknameOrEmail"
+          placeholder="write your nickname or email"
         ></MyForm.Field>
       </FormControl>
       <FormControl
@@ -73,7 +55,7 @@ const SignupForm = ({ onSubmit }) => {
       >
         <MyForm.Field
           id="password"
-          style={signup_input_style}
+          style={login_input_style}
           name="password"
           type="password"
           placeholder="write your password"
@@ -83,4 +65,4 @@ const SignupForm = ({ onSubmit }) => {
   );
 };
 
-export default SignupForm;
+export default LoginForm;
