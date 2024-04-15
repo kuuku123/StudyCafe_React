@@ -64,6 +64,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const handleSubmit = async (loginInfo) => {
     const response = await fetch("http://localhost:8081/login", {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -63,15 +63,19 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signupInfo),
-    }).then((res) => res.json());
+    }).then((res) => {
+      console.log(res);
+      return res.json();
+    });
     console.log("response status", response.status);
     if (response.status === "OK") {
-      console.log("redirect");
+      console.log(response.headers);
       navigate("/");
     } else {
       console.log(response.body);
