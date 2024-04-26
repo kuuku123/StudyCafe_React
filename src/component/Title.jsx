@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import SignupPage from "../pages/SignupPage";
 
-const Title = ({ loginUrl = "", children }) => {
+const Title = ({ children }) => {
   const Title_style = styled.div`
     display: flex;
     justify-content: space-between;
@@ -26,9 +26,61 @@ const Title = ({ loginUrl = "", children }) => {
     gap: 10px;
     margin-right: 10px;
   `;
-  console.log("Title", children);
-  if (loginUrl) {
-    return <h1>{children}</h1>;
+
+  const LogOut_Button_style = styled.button`
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    /* Hover effect */
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    /* Active effect */
+    &:active {
+      background-color: #004080;
+    }
+
+    /* Disabled styles */
+    &:disabled {
+      background-color: #b3b3b3;
+      color: #666666;
+      cursor: not-allowed;
+    }
+  `;
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    const isLogin = localStorage.getItem("login");
+    if (isLogin === "success") {
+      setLogin(true);
+    } else if (isLogin === null) {
+      setLogin(false);
+    }
+  }, []);
+
+  handleLogout = () => {
+    localStorage.removeItem("login")
+    
+    setLogin(false)
+  }
+
+  if (login) {
+    return (
+      <Title_style>
+        <Children_style>{children}</Children_style>
+        <Login_Signup_style>
+          <LogOut_Button_style>
+            <h3>로그아웃</h3>
+          </LogOut_Button_style>
+        </Login_Signup_style>
+      </Title_style>
+    );
   }
   return (
     <Title_style>

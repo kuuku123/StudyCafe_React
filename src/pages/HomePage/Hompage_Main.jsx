@@ -42,9 +42,6 @@ const Hompage_Main = () => {
         태그와 지역 기반으로 스터디를 찾고 참여하세요. 스터디 모임 관리 기능을
         제공합니다.
       </h2>
-      <Homepage_Main_SignUp_Button_style>
-        회원 가입
-      </Homepage_Main_SignUp_Button_style>
     </Homeapge_Main_style>
   );
 };
