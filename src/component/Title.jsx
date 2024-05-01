@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import SignupPage from "../pages/SignupPage";
+import Cookies from "js-cookie";
 
 const Title = ({ children }) => {
   const Title_style = styled.div`
@@ -64,10 +65,20 @@ const Title = ({ children }) => {
     }
   }, []);
 
-  handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("login")
-    
+    Cookies.remove("JSESSIONID")
     setLogin(false)
+    const response = await fetch("http://localhost:8081/logout", {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then((res) => {
+      console.log(res);
+      return res.json();
+    });
   }
 
   if (login) {
@@ -75,7 +86,7 @@ const Title = ({ children }) => {
       <Title_style>
         <Children_style>{children}</Children_style>
         <Login_Signup_style>
-          <LogOut_Button_style>
+          <LogOut_Button_style onClick={handleLogout}>
             <h3>로그아웃</h3>
           </LogOut_Button_style>
         </Login_Signup_style>

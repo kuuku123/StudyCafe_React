@@ -20,7 +20,7 @@ const HomePage = () => {
     height: auto; /* Maintain aspect ratio */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
   `;
-  
+
   return (
     <div>
       <Page
