@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
-import SignupPage from "../pages/SignupPage";
-import Cookies from "js-cookie";
+import DropDownContainer from "./DropDownContainer";
 
 const Title = ({ children }) => {
   const Title_style = styled.div`
@@ -10,7 +9,7 @@ const Title = ({ children }) => {
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    background-color: black;
+    background-color: #c2b4b4;
   `;
 
   const Children_style = styled.div`
@@ -28,36 +27,16 @@ const Title = ({ children }) => {
     margin-right: 10px;
   `;
 
-  const LogOut_Button_style = styled.button`
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  const link_style = {
+    color: "#004080",
+    textDecoration: "none",
+  };
 
-    /* Hover effect */
-    &:hover {
-      background-color: #0056b3;
-    }
-
-    /* Active effect */
-    &:active {
-      background-color: #004080;
-    }
-
-    /* Disabled styles */
-    &:disabled {
-      background-color: #b3b3b3;
-      color: #666666;
-      cursor: not-allowed;
-    }
-  `;
   const [login, setLogin] = useState(false);
 
+
   useEffect(() => {
-    const isLogin = localStorage.getItem("login");
+    const isLogin = sessionStorage.getItem("login");
     if (isLogin === "success") {
       setLogin(true);
     } else if (isLogin === null) {
@@ -65,30 +44,14 @@ const Title = ({ children }) => {
     }
   }, []);
 
-  const handleLogout = async () => {
-    localStorage.removeItem("login")
-    Cookies.remove("JSESSIONID")
-    setLogin(false)
-    const response = await fetch("http://localhost:8081/logout", {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    });
-  }
-
   if (login) {
     return (
       <Title_style>
         <Children_style>{children}</Children_style>
         <Login_Signup_style>
-          <LogOut_Button_style onClick={handleLogout}>
-            <h3>로그아웃</h3>
-          </LogOut_Button_style>
+          <div>bell</div>
+          <div>create study</div>
+          <DropDownContainer setLogin={setLogin}></DropDownContainer>
         </Login_Signup_style>
       </Title_style>
     );
@@ -97,11 +60,11 @@ const Title = ({ children }) => {
     <Title_style>
       <Children_style>{children}</Children_style>
       <Login_Signup_style>
-        <Link to="/login">
-          <h3>로그인</h3>
+        <Link style={link_style} to="/login">
+          로그인
         </Link>
-        <Link to="/sign-up">
-          <h3>가입</h3>
+        <Link style={link_style} to="/sign-up">
+          가입
         </Link>
       </Login_Signup_style>
     </Title_style>

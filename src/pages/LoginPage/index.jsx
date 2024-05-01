@@ -74,7 +74,8 @@ const LoginPage = () => {
     console.log("response status", response.status)
     if (response.status === "OK") {
       console.log("redirect")
-      localStorage.setItem("login","success")
+      sessionStorage.setItem("user", loginInfo.nicknameOrEmail)
+      sessionStorage.setItem("login","success")
       navigate("/")
     }
     else {
