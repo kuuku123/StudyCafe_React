@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -17,6 +18,10 @@ const App = ({ tab }) => {
     {
       path: "/login",
       element: <LoginPage></LoginPage>,
+    },
+    {
+      path: "/profile",
+      element: <ProfilePage></ProfilePage>
     },
   ]);
   return (

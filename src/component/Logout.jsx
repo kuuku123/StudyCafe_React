@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Cookies from "js-cookie";
 
 const Logout = ({setLogin}) => {
+
   const handleLogout = async () => {
     sessionStorage.removeItem("login");
     sessionStorage.removeItem("user");

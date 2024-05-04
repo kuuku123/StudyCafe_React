@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import Page from "../../component/Page";
 import Title from "../../component/Title";
-import LoginForm from './LoginForm';
+import LoginForm from "./LoginForm";
 import CopyRight from "../../component/CopyRight";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  
   const Header_Input_style = styled.input`
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -61,7 +60,7 @@ const LoginPage = () => {
     }
   `;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async (loginInfo) => {
     const response = await fetch("http://localhost:8081/login", {
       credentials: "include",
@@ -71,17 +70,16 @@ const LoginPage = () => {
       },
       body: JSON.stringify(loginInfo),
     }).then((res) => res.json());
-    console.log("response status", response.status)
+    console.log("response status", response.status);
     if (response.status === "OK") {
-      console.log("redirect")
-      sessionStorage.setItem("user", loginInfo.nicknameOrEmail)
-      sessionStorage.setItem("login","success")
-      navigate("/")
-    }
-    else {
-      console.log(response.body)
-      localStorage.removeItem("login")
-      alert(response.body)
+      console.log("redirect");
+      sessionStorage.setItem("user", loginInfo.nicknameOrEmail);
+      sessionStorage.setItem("login", "success");
+      navigate("/");
+    } else {
+      console.log(response.body);
+      localStorage.removeItem("login");
+      alert(response.body);
     }
   };
 
@@ -114,4 +112,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage
+export default LoginPage;
