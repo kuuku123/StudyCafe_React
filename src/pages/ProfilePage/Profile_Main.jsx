@@ -1,32 +1,78 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Profile_Main = () => {
-  const Column_style = styled.div`
-    display: flex;
+  const Grid_Container_style = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    min-height: 60vh;
+    justify-items: center;
+    align-items: center;
   `;
 
-  const Left_Column_style = styled.div`
-    display: flex;
-    flex: 4; /* 3 parts out of 10 */
-    align-items: center;
-    justify-content: center;
+  const Profile_Pic_style = styled.div`
+    grid-row-start: 3;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 2;
   `;
-
-  const Right_Column_style = styled.div`
-    display: flex;
-    flex: 6; /* 7 parts out of 10 */
-    align-items: center;
-    justify-content: center;
+  const Profile_MyProfile_style = styled.div`
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 1;
+    grid-column-end: 2;
+  `;
+  const Profile_Study_style = styled.div`
+    grid-row-start: 6;
+    grid-row-end: 7;
+    grid-column-start: 1;
+    grid-column-end: 2;
+  `;
+  const Profile_Name_style = styled.div`
+    grid-row-start: 3;
+    grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  `;
+  const Profile_Info_style = styled.div`
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  `;
+  const Profile_Email_style = styled.div`
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  `;
+  const Profile_Emailverfication_style = styled.div`
+    grid-row-start: 6;
+    grid-row-end: 7;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  `;
+  const Profile_Edit_style = styled.div`
+    grid-row-start: 7;
+    grid-row-end: 8;
+    grid-column-start: 2;
+    grid-column-end: 4;
   `;
 
   return (
-    <div>
-      <Column_style>
-        <Left_Column_style>left</Left_Column_style>
-        <Right_Column_style>right</Right_Column_style>
-      </Column_style>
-    </div>
+    <Grid_Container_style>
+      <Profile_Pic_style>pic</Profile_Pic_style>
+      <Profile_MyProfile_style>myprofile</Profile_MyProfile_style>
+      <Profile_Study_style>study</Profile_Study_style>
+      <Profile_Name_style>{sessionStorage.getItem("user")}</Profile_Name_style>
+      <Profile_Info_style>info</Profile_Info_style>
+      <Profile_Email_style>email</Profile_Email_style>
+      <Profile_Emailverfication_style>
+        <Link to={"/profile-setting"}>email verification</Link>
+      </Profile_Emailverfication_style>
+    </Grid_Container_style>
   );
 };
 

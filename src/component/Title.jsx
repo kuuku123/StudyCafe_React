@@ -34,7 +34,6 @@ const Title = ({ children }) => {
 
   const [login, setLogin] = useState(false);
 
-
   useEffect(() => {
     const isLogin = sessionStorage.getItem("login");
     if (isLogin === "success") {

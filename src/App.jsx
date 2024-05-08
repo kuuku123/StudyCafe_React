@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
+import ProfileSettingPage from "./pages/ProfileSettingPage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -23,6 +24,10 @@ const App = ({ tab }) => {
       path: "/profile",
       element: <ProfilePage></ProfilePage>
     },
+    {
+      path: "/profile-setting",
+      element: <ProfileSettingPage></ProfileSettingPage>
+    }
   ]);
   return (
     <div>

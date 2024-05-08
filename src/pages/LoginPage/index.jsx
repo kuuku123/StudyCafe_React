@@ -61,26 +61,41 @@ const LoginPage = () => {
   `;
 
   const navigate = useNavigate();
+
+  // const handleSubmit = async () => {
+  //   const data = await fetch(
+  //     "https://play-lh.googleusercontent.com/hYdIazwJBlPhmN74Yz3m_jU9nA6t02U7ZARfKunt6dauUAB6O3nLHp0v5ypisNt9OJk"
+  //   );
+  //   console.log("data ", data);
+  //   const blob = await data.blob();
+  //   console.log("blob  ", blob);
+  //   const url = URL.createObjectURL(blob)
+  //   window.open(url)
+  // };
   const handleSubmit = async (loginInfo) => {
-    const response = await fetch("http://localhost:8081/login", {
+    const raw_response = await fetch("http://localhost:8081/login", {
       credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(loginInfo),
-    }).then((res) => res.json());
-    console.log("response status", response.status);
-    if (response.status === "OK") {
-      console.log("redirect");
-      sessionStorage.setItem("user", loginInfo.nicknameOrEmail);
-      sessionStorage.setItem("login", "success");
-      navigate("/");
-    } else {
-      console.log(response.body);
-      localStorage.removeItem("login");
-      alert(response.body);
-    }
+    });
+
+    console.log(raw_response)
+    const response = await raw_response.json();
+      console.log("response status", response.status);
+      if (response.status === "OK") {
+        console.log("redirect");
+        sessionStorage.setItem("user", loginInfo.nicknameOrEmail);
+        sessionStorage.setItem("login", "success");
+        console.log(response.data)
+        navigate("/");
+      } else {
+        console.log(response.body);
+        localStorage.removeItem("login");
+        alert(response.body);
+      }
   };
 
   return (
