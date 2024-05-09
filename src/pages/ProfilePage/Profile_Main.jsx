@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -61,9 +61,32 @@ const Profile_Main = () => {
     grid-column-end: 4;
   `;
 
+  const [img, setImage] = useState();
+
+  useEffect(() => {
+    async function fetchProfileImage() {
+      const raw_profile_image = await fetch(
+        `http://localhost:8081/profile-image?user=${sessionStorage.getItem(
+          "user"
+        )}`,
+        {
+          credentials: "include",
+          method: "GET",
+        }
+      );
+      const profile_image = await raw_profile_image.blob();
+      const url = URL.createObjectURL(profile_image);
+      setImage(url);
+    }
+    fetchProfileImage();
+  }, []);
+
   return (
     <Grid_Container_style>
-      <Profile_Pic_style>pic</Profile_Pic_style>
+      <Profile_Pic_style>
+        <img src={img} width="120px" height="120px"></img>
+        <figcaption style={{ textAlign: "center" }}>Profile Image</figcaption>
+      </Profile_Pic_style>
       <Profile_MyProfile_style>myprofile</Profile_MyProfile_style>
       <Profile_Study_style>study</Profile_Study_style>
       <Profile_Name_style>{sessionStorage.getItem("user")}</Profile_Name_style>
