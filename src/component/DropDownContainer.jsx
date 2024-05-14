@@ -60,7 +60,9 @@ const DropDownContainer = ({ setLogin }) => {
       <DropDown_style>
         <Li_style>{sessionStorage.getItem("user")}</Li_style>
         <li>
-          <Link style={link_style} to={"/profile"}>Profile</Link>
+          <Link style={link_style} to={"/profile"}>
+            Profile
+          </Link>
         </li>
         <li>Study</li>
         <Logout setLogin={setLogin}></Logout>

@@ -79,9 +79,18 @@ const Profile_Main = () => {
     justify-content: center;
     font-size: 30px;
   `;
-  const Profile_Emailverfication_style = styled.div`
+  const Profile_Emailverification_style = styled.div`
     grid-row-start: 6;
     grid-row-end: 7;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+  `;
+  const Profile_Edit_style = styled.div`
+    grid-row-start: 7;
+    grid-row-end: 8;
     grid-column-start: 2;
     grid-column-end: 4;
     display: flex;
@@ -142,10 +151,13 @@ const Profile_Main = () => {
         <CgMail size={"55px"}></CgMail>
         {profile.email}
       </Profile_Email_style>
-      <Profile_Emailverfication_style>
+      <Profile_Emailverification_style>
         <CgCalendar size={"55px"}></CgCalendar>
-        <Link to={"/profile-setting"}>email verification</Link>
-      </Profile_Emailverfication_style>
+        <div>email verification</div>
+      </Profile_Emailverification_style>
+      <Profile_Edit_style>
+        <Link to={"/profile-setting"}>profile edit</Link>
+      </Profile_Edit_style>
     </Grid_Container_style>
   );
 };
