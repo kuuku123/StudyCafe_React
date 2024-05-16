@@ -50,16 +50,6 @@ const ProfileSetting_Main = () => {
       cursor: not-allowed;
     }
   `;
-  // const Profile_Edit_style = styled.form`
-  //   grid-row-start: 2;
-  //   grid-row-end: 7;
-  //   grid-column-start: 2;
-  //   grid-column-end: 4;
-  //   align-self: stretch;
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 10px;
-  // `;
 
   const Profile_Edit_style = {
     gridRowStart: "2",

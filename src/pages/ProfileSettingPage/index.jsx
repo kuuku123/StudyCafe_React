@@ -27,7 +27,6 @@ const ProfileSettingPage = () => {
       <Page
         header={
           <Title>
-            <Header_Image_style src="/images/image.png"></Header_Image_style>
             <Header_Input_style></Header_Input_style>
           </Title>
         }

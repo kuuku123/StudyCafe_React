@@ -56,7 +56,7 @@ const DropDownContainer = ({ setLogin }) => {
     textDecoration: "none",
   };
   return (
-    <NavItem icon={<CgProfile></CgProfile>}>
+    <NavItem icon={<CgProfile size={"22px"}></CgProfile>}>
       <DropDown_style>
         <Li_style>{sessionStorage.getItem("user")}</Li_style>
         <li>

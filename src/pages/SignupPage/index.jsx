@@ -7,12 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
 
 const SignupPage = () => {
+
   const Header_Input_style = styled.input`
-    font-size: 1rem;
+    margin-left: 10px;
+    font-size: 24px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease;
+    outline: none; /* Remove the default focus outline */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
     height: auto;
   `;
   const Header_Image_style = styled.img`
@@ -87,9 +89,6 @@ const SignupPage = () => {
       <Page
         header={
           <Title>
-            <Link to="/">
-              <Header_Image_style src="/images/image.png"></Header_Image_style>
-            </Link>
             <Header_Input_style></Header_Input_style>
           </Title>
         }

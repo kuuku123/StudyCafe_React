@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
+import { CgBell } from "react-icons/cg";
 
 const Title = ({ children }) => {
   const Title_style = styled.div`
@@ -27,6 +28,11 @@ const Title = ({ children }) => {
     margin-right: 10px;
   `;
 
+  const Header_Image_style = styled.img`
+    width: 70px; /* Set the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+  `;
   const link_style = {
     color: "#004080",
     textDecoration: "none",
@@ -46,10 +52,15 @@ const Title = ({ children }) => {
   if (login) {
     return (
       <Title_style>
-        <Children_style>{children}</Children_style>
+        <Children_style>
+          <Link to="/">
+            <Header_Image_style src="/images/image.png"></Header_Image_style>
+          </Link>
+          {children}
+        </Children_style>
         <Login_Signup_style>
-          <div>bell</div>
-          <div>create study</div>
+          <CgBell size={"22px"}></CgBell>
+          <div style={{ fontSize: "22px" }}>create study</div>
           <DropDownContainer setLogin={setLogin}></DropDownContainer>
         </Login_Signup_style>
       </Title_style>
@@ -57,7 +68,12 @@ const Title = ({ children }) => {
   }
   return (
     <Title_style>
-      <Children_style>{children}</Children_style>
+      <Children_style>
+        <Link to="/">
+          <Header_Image_style src="/images/image.png"></Header_Image_style>
+        </Link>
+        {children}
+      </Children_style>
       <Login_Signup_style>
         <Link style={link_style} to="/login">
           로그인

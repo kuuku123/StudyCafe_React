@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Page from "../../component/Page";
 import Title from "../../component/Title";
 import CopyRight from "../../component/CopyRight";
@@ -15,20 +15,34 @@ const HomePage = () => {
     transition: border-color 0.3s ease; /* Smooth transition for border color */
     height: auto;
   `;
-  const Header_Image_style = styled.img`
-    width: 70px; /* Set the width of the image */
-    height: auto; /* Maintain aspect ratio */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
-  `;
+
+  const [emailVerified, setEmailVerified] = useState()
+
+  useEffect(() => {
+    async function fetchEmailVerification() {
+      const raw_info = await fetch("",
+        {
+          credentials: "include",
+          method: "GET",
+        }
+      )
+      const result = await raw_info.json();
+    }
+    
+
+
+  },[])
 
   return (
     <div>
       <Page
         header={
-          <Title>
-            <Header_Image_style src="/images/image.png"></Header_Image_style>
-            <Header_Input_style></Header_Input_style>
-          </Title>
+          <>
+            <Title>
+              <Header_Input_style></Header_Input_style>
+            </Title>
+            <div>이메일 인증을 완료해라</div>
+          </>
         }
         footer={<CopyRight></CopyRight>}
       >
