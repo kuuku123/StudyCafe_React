@@ -1,20 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../component/FomrControl";
+import * as S from "./SignupPage_style"
 
 const SignupForm = ({ onSubmit }) => {
-  const signup_input_style = {
-    fontSize: "1rem",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    outline: "none",
-    transition: "border-color 0.3s ease",
-    height: "auto",
-    marginTop: "10px",
-    padding: "0.375rem 0.75rem",
-    width: "600px",
-  };
 
   const validate = (values) => {
     const errors = {};
@@ -28,7 +17,6 @@ const SignupForm = ({ onSubmit }) => {
     if (!emailRegex.test(values.email)) {
       errors.email = "write valid email address";
     }
-    console.log("errors => ", errors);
     return errors;
   };
   return (
@@ -49,7 +37,7 @@ const SignupForm = ({ onSubmit }) => {
       >
         <MyForm.Field
           id="signup-nickname"
-          style={signup_input_style}
+          style={S.signup_input_style}
           name="nickname"
           placeholder="write your nickname"
         ></MyForm.Field>
@@ -61,7 +49,7 @@ const SignupForm = ({ onSubmit }) => {
       >
         <MyForm.Field
           id="email"
-          style={signup_input_style}
+          style={S.signup_input_style}
           name="email"
           placeholder="write your email"
         ></MyForm.Field>
@@ -73,7 +61,7 @@ const SignupForm = ({ onSubmit }) => {
       >
         <MyForm.Field
           id="password"
-          style={signup_input_style}
+          style={S.signup_input_style}
           name="password"
           type="password"
           placeholder="write your password"

@@ -1,26 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../component/FomrControl";
+import * as S from "./LoginForm_style";
 
 const LoginForm = ({ onSubmit }) => {
-
-  const login_input_style = {
-    fontSize: "1rem",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    outline: "none",
-    transition: "border-color 0.3s ease",
-    height: "auto",
-    marginTop: "10px",
-    padding: "0.375rem 0.75rem",
-    width: "600px",
-  };
-
   const validate = (values) => {
     const errors = {};
     if (!values.nicknameOrEmail) {
-      errors.nicknameOrEmail = "write nickname or email for login"
+      errors.nicknameOrEmail = "write nickname or email for login";
     }
     console.log("errors => ", errors);
     return errors;
@@ -39,11 +26,13 @@ const LoginForm = ({ onSubmit }) => {
       <FormControl
         label="닉네임"
         htmlFor="nicknameOrEmail"
-        error={<MyForm.ErrorMessage name="nicknameOrEmail"></MyForm.ErrorMessage>}
+        error={
+          <MyForm.ErrorMessage name="nicknameOrEmail"></MyForm.ErrorMessage>
+        }
       >
         <MyForm.Field
           id="login-nicknameOrEmail"
-          style={login_input_style}
+          style={S.login_input_style}
           name="nicknameOrEmail"
           placeholder="write your nickname or email"
         ></MyForm.Field>
@@ -55,7 +44,7 @@ const LoginForm = ({ onSubmit }) => {
       >
         <MyForm.Field
           id="password"
-          style={login_input_style}
+          style={S.login_input_style}
           name="password"
           type="password"
           placeholder="write your password"
