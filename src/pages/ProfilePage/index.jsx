@@ -1,7 +1,7 @@
 import React from "react";
-import Page from "../../component/Page";
-import Title from "../../component/Title";
-import CopyRight from "../../component/CopyRight";
+import Page from "../../components/Page";
+import Title from "../../components/Title";
+import CopyRight from "../../components/CopyRight";
 import Profile_Main from "./Profile_Main";
 import * as S from "./Profile_style";
 

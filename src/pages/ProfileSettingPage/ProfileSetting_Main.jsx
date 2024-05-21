@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../component/FomrControl";
-import * as S from "./ProfileSeting_style"
+import FormControl from "../../components/FomrControl";
+import * as S from "./ProfileSeting_style";
 
 const ProfileSetting_Main = () => {
-
   const [img, setImage] = useState();
   const navigate = useNavigate();
 

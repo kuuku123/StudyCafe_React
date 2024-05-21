@@ -1,6 +1,6 @@
 import React from "react";
 import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../component/FomrControl";
+import FormControl from "../../components/FomrControl";
 import * as S from "./LoginForm_style";
 
 const LoginForm = ({ onSubmit }) => {

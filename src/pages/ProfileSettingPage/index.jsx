@@ -1,12 +1,11 @@
 import React from "react";
 import ProfileSetting_Main from "./ProfileSetting_Main";
-import Page from "../../component/Page";
-import Title from "../../component/Title";
-import CopyRight from "../../component/CopyRight";
-import * as S from "./ProfileSeting_style"
+import Page from "../../components/Page";
+import Title from "../../components/Title";
+import CopyRight from "../../components/CopyRight";
+import * as S from "./ProfileSeting_style";
 
 const ProfileSettingPage = () => {
-
   return (
     <div>
       <Page

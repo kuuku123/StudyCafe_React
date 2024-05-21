@@ -5,6 +5,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
+import * as MyLayout from "./lib/MyLayout";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -30,9 +31,9 @@ const App = ({ tab }) => {
     }
   ]);
   return (
-    <div>
+    <MyLayout.Layout>
       <RouterProvider router={homePage}></RouterProvider>
-    </div>
+    </MyLayout.Layout>
   );
 };
 export default App;

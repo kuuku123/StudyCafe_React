@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CgCalendar, CgMail } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import * as S from "./Profile_style";
-import ProfileApi from "../../component/ProfileApi";
+import ProfileApi from "../../components/ProfileApi";
 
 const Profile_Main = () => {
   const [img, setImage] = useState();
@@ -11,15 +11,27 @@ const Profile_Main = () => {
     email: "default email",
   });
 
-  useEffect( async() => {
-    const profile_image = await ProfileApi.fetchProfileImage();
-    const url = URL.createObjectURL(profile_image);
-    setImage(url);
+  useEffect(() => {
+    const getProfileImage = async () => {
+      try {
+        const profile_image = await ProfileApi.fetchProfileImage();
+        const url = URL.createObjectURL(profile_image);
+        setImage(url);
+      } catch (error) {
+        console.log("failed to fetch image ", error);
+      }
+    };
+    getProfileImage();
   }, []);
 
-  useEffect(async () => {
-    const profile = await ProfileApi.fetchProfile();
-    setProfile(profile);
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const profile = await ProfileApi.fetchProfile();
+        setProfile(profile);
+      } catch (error) {}
+    };
+    getProfile();
   }, []);
 
   return (

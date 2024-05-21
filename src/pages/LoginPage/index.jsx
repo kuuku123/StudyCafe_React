@@ -1,8 +1,8 @@
 import React from "react";
-import Page from "../../component/Page";
-import Title from "../../component/Title";
+import Page from "../../components/Page";
+import Title from "../../components/Title";
 import LoginForm from "./LoginForm";
-import CopyRight from "../../component/CopyRight";
+import CopyRight from "../../components/CopyRight";
 import { useNavigate } from "react-router-dom";
 import * as S from "./LoginForm_style";
 

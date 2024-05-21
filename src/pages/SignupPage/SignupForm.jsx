@@ -1,10 +1,9 @@
 import React from "react";
 import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../component/FomrControl";
-import * as S from "./SignupPage_style"
+import FormControl from "../../components/FomrControl";
+import * as S from "./SignupPage_style";
 
 const SignupForm = ({ onSubmit }) => {
-
   const validate = (values) => {
     const errors = {};
     if (!values.nickname) {

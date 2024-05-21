@@ -1,14 +1,12 @@
 import React from "react";
-import Page from "../../component/Page";
-import Title from "../../component/Title";
-import CopyRight from "../../component/CopyRight";
+import Page from "../../components/Page";
+import Title from "../../components/Title";
+import CopyRight from "../../components/CopyRight";
 import { useNavigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
-import * as S from "./SignupPage_style"
+import * as S from "./SignupPage_style";
 
 const SignupPage = () => {
-
-
   const navigate = useNavigate();
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
@@ -31,6 +29,7 @@ const SignupPage = () => {
       alert(response.body);
     }
   };
+
   return (
     <div>
       <Page
