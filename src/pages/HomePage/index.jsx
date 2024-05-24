@@ -5,6 +5,7 @@ import CopyRight from "../../components/CopyRight";
 import Hompage_Main from "./Hompage_Main";
 import * as S from "./Homepage_style";
 import ProfileApi from "../../components/ProfileApi";
+import EmailVerification from "./EmailVerification";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
@@ -36,7 +37,7 @@ const HomePage = () => {
               <S.Header_Input_style></S.Header_Input_style>
             </Title>
             <div>
-              {triedLogin && !emailVerified && "이메일 인증을 완료해라"}
+              {triedLogin && !emailVerified && <EmailVerification></EmailVerification>}
             </div>
           </>
         }

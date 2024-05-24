@@ -4,11 +4,13 @@
     "build": "webpack --config webpack.prod.config.js"
   },
   "dependencies": {
+    "css-loader": "^7.1.2",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.0",
     "react-router-dom": "^6.22.3",
+    "style-loader": "^4.0.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

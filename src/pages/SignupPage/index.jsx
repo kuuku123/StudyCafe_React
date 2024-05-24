@@ -5,9 +5,12 @@ import CopyRight from "../../components/CopyRight";
 import { useNavigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import * as S from "./SignupPage_style";
+import * as MyLayout from "../../lib/MyLayout";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const { startLoading, finishLoading } = MyLayout.useLoading();
+  const { openDialog } = MyLayout.useDialog();
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
       credentials: "include",
@@ -26,7 +29,12 @@ const SignupPage = () => {
       navigate("/");
     } else {
       console.log(response.body);
-      alert(response.body);
+      if (response.body != null) {
+        openDialog(response.body);
+      } else {
+        console.log("went rhere");
+        openDialog("duplicate nickname or email");
+      }
     }
   };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import * as MyLayout from "../lib/MyLayout";
 
 const Page = ({ header, children, footer }) => {
   return (
@@ -6,6 +7,7 @@ const Page = ({ header, children, footer }) => {
       <header>{header}</header>
       <main>{children}</main>
       <footer>{footer}</footer>
+      <MyLayout.DialogContainer></MyLayout.DialogContainer>
     </div>
   );
 };
