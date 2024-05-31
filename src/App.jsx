@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
+import EmailReSendPage from "./pages/EmailReSendPage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -28,6 +29,10 @@ const App = ({ tab }) => {
     {
       path: "/profile-setting",
       element: <ProfileSettingPage></ProfileSettingPage>
+    },
+    {
+      path: "/email-resend",
+      element: <EmailReSendPage></EmailReSendPage>
     }
   ]);
   return (

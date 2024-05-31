@@ -1,3 +1,16 @@
+.Backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Optional: Adds a semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
 .Dialog {
   background-color: #fff;
   border-radius: 8px;
@@ -6,7 +19,7 @@
   padding: 16px;
   position: relative;
   width: 300px;
-  z-index: 1100;
+  z-index: 1200;
 }
 .Dialog > header {
   font-size: 1.3rem;

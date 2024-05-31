@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import * as S from "./SignupPage_style";
 import * as MyLayout from "../../lib/MyLayout";
+import Dialog from "../../components/Dialog";
+import Button from "../../components/Button";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const { startLoading, finishLoading } = MyLayout.useLoading();
-  const { openDialog } = MyLayout.useDialog();
+  const { openDialog, closeDialog } = MyLayout.useDialog();
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
       credentials: "include",
@@ -33,7 +34,14 @@ const SignupPage = () => {
         openDialog(response.body);
       } else {
         console.log("went rhere");
-        openDialog("duplicate nickname or email");
+        openDialog(
+          <Dialog
+            header={<>오류</>}
+            footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
+          >
+            "duplicate nickname or email"
+          </Dialog>
+        );
       }
     }
   };
