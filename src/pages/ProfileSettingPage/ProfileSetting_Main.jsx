@@ -26,7 +26,17 @@ const ProfileSetting_Main = () => {
     fetchProfileImage();
   }, []);
 
+  const onChange = (e) => {
+    const img = e.target.files[0];
+    const reader = new FileReader()
+    reader.readAsDataURL(img)
+    reader.onloadend = () => {
+      setImage(reader.result)
+    }
+  };
+
   const handleSubmit = async (profileEditInfo) => {
+    console.log(profileEditInfo)
     const raw_response = await fetch("http://localhost:8081/settings/profile", {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -64,7 +74,7 @@ const ProfileSetting_Main = () => {
       </S.Profile_List_style>
 
       <MyForm.Form
-        style={Profile_Edit_style}
+        style={S.Profile_Edit_style}
         id="profile-edit-form"
         initialValue={{ bio: "", link: "", job: "", location: "" }}
         validate={validate}
@@ -132,6 +142,12 @@ const ProfileSetting_Main = () => {
       <S.Profile_Image_style>
         <img src={img} width="120px" height="120px"></img>
         <figcaption style={{ textAlign: "center" }}>Profile Image</figcaption>
+        <input
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          name="profile_img"
+          onChange={onChange}
+        ></input>
       </S.Profile_Image_style>
     </S.Grid_Container_style>
   );

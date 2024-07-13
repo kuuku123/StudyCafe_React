@@ -29,7 +29,9 @@ const Profile_Main = () => {
       try {
         const profile = await ProfileApi.fetchProfile();
         setProfile(profile);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     };
     getProfile();
   }, []);
