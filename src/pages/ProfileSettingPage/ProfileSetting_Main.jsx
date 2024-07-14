@@ -36,7 +36,7 @@ const ProfileSetting_Main = () => {
   };
 
   const handleSubmit = async (profileEditInfo) => {
-    console.log(profileEditInfo)
+    profileEditInfo["profileImage"] = img
     const raw_response = await fetch("http://localhost:8081/settings/profile", {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -76,7 +76,7 @@ const ProfileSetting_Main = () => {
       <MyForm.Form
         style={S.Profile_Edit_style}
         id="profile-edit-form"
-        initialValue={{ bio: "", link: "", job: "", location: "" }}
+        initialValue={{ bio: "", link: "", job: "", location: "",profileImage: img }}
         validate={validate}
         onSubmit={handleSubmit}
       >
@@ -138,7 +138,6 @@ const ProfileSetting_Main = () => {
         </FormControl>
         <button type="submit">수정하기</button>
       </MyForm.Form>
-
       <S.Profile_Image_style>
         <img src={img} width="120px" height="120px"></img>
         <figcaption style={{ textAlign: "center" }}>Profile Image</figcaption>
