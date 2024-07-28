@@ -28,9 +28,9 @@ const Profile_Main = () => {
     const getProfile = async () => {
       try {
         const profile = await ProfileApi.fetchProfile();
-        setProfile(profile);
+        setProfile(profile.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
     getProfile();
@@ -43,7 +43,9 @@ const Profile_Main = () => {
         <figcaption style={{ textAlign: "center" }}>Profile Image</figcaption>
       </S.Profile_Pic_style>
       <S.Profile_List_style>
-        <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+        <Link to={"/profile"}>
+          <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+        </Link>
         <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
       </S.Profile_List_style>
       <S.Profile_Name_style>

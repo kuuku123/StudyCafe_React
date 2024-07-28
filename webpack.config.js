@@ -41,4 +41,12 @@ module.exports = {
       template: "public/index.html",
     }),
   ],
+  devServer: {
+    historyApiFallback: true,
+    static: {
+      directory: './public',
+    },
+    compress: true,
+    port: 3000,
+  },
 };

@@ -5,11 +5,11 @@ import LoginForm from "./LoginForm";
 import CopyRight from "../../components/CopyRight";
 import { useNavigate } from "react-router-dom";
 import * as S from "./LoginForm_style";
-import * as MyLayout from "../../lib/MyLayout"
+import * as MyLayout from "../../lib/MyLayout";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const {openDialog } = MyLayout.useDialog()
+  const { openDialog } = MyLayout.useDialog();
 
   const handleSubmit = async (loginInfo) => {
     const raw_response = await fetch("http://localhost:8081/login", {

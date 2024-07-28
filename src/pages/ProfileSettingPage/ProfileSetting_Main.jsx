@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSeting_style";
@@ -28,15 +28,15 @@ const ProfileSetting_Main = () => {
 
   const onChange = (e) => {
     const img = e.target.files[0];
-    const reader = new FileReader()
-    reader.readAsDataURL(img)
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
     reader.onloadend = () => {
-      setImage(reader.result)
-    }
+      setImage(reader.result);
+    };
   };
 
   const handleSubmit = async (profileEditInfo) => {
-    profileEditInfo["profileImage"] = img
+    profileEditInfo["profileImage"] = img;
     const raw_response = await fetch("http://localhost:8081/settings/profile", {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -63,7 +63,9 @@ const ProfileSetting_Main = () => {
   return (
     <S.Grid_Container_style>
       <S.Profile_List_style>
-        <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+        <Link to={"/profile"}>
+          <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+        </Link>
         <S.Profile_List_Element_style>Password</S.Profile_List_Element_style>
         <S.Profile_List_Element_style>Alaram</S.Profile_List_Element_style>
         <S.Profile_List_Element_style>
@@ -76,7 +78,13 @@ const ProfileSetting_Main = () => {
       <MyForm.Form
         style={S.Profile_Edit_style}
         id="profile-edit-form"
-        initialValue={{ bio: "", link: "", job: "", location: "",profileImage: img }}
+        initialValue={{
+          bio: "",
+          link: "",
+          job: "",
+          location: "",
+          profileImage: img,
+        }}
         validate={validate}
         onSubmit={handleSubmit}
       >
