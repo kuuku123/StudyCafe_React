@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
 import { CgBell } from "react-icons/cg";
-import * as S from "./Component_style"
+import * as S from "./Component_style";
 
 const Title = ({ children }) => {
-
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
@@ -28,7 +27,9 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <CgBell size={"22px"}></CgBell>
-          <div style={{ fontSize: "22px" }}>create study</div>
+          <Link to="create-study">
+            <div style={{ fontSize: "22px" }}>create study</div>
+          </Link>
           <DropDownContainer setLogin={setLogin}></DropDownContainer>
         </S.Login_Signup_style>
       </S.Title_style>

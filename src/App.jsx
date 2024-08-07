@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
+import CreateStudyPage from "./pages/CreateStudyPage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -24,16 +25,20 @@ const App = ({ tab }) => {
     },
     {
       path: "/profile",
-      element: <ProfilePage></ProfilePage>
+      element: <ProfilePage></ProfilePage>,
     },
     {
       path: "/profile-setting",
-      element: <ProfileSettingPage></ProfileSettingPage>
+      element: <ProfileSettingPage></ProfileSettingPage>,
     },
     {
       path: "/email-resend",
-      element: <EmailReSendPage></EmailReSendPage>
-    }
+      element: <EmailReSendPage></EmailReSendPage>,
+    },
+    {
+      path: "create-study",
+      element: <CreateStudyPage></CreateStudyPage>,
+    },
   ]);
   return (
     <MyLayout.Layout>
