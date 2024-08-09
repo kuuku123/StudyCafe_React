@@ -63,6 +63,7 @@ export const FormControl_Container_style = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-bottom: 20px;
+  text-align: start
 `;
 
 export const Title_style = styled.div`

@@ -27,7 +27,7 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <CgBell size={"22px"}></CgBell>
-          <Link to="create-study">
+          <Link to="/create-study">
             <div style={{ fontSize: "22px" }}>create study</div>
           </Link>
           <DropDownContainer setLogin={setLogin}></DropDownContainer>

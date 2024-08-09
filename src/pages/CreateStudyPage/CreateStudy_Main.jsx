@@ -4,6 +4,8 @@ import * as S from "./CreateStudyPage_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 const CreateStudy_Main = () => {
+
+
   
   
   const handleSubmit = async (createStudyForm) => {
@@ -31,7 +33,20 @@ const CreateStudy_Main = () => {
     return errors;
   };
 
-  const input_style = {width: "1200px", height: "40px"}
+  // const input_style = {width: "1200px", height: "40px"}
+  const input_style = {
+  width: "100vh", // Takes full width of the parent container
+  maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
+  height: "40px",
+  minWidth: "200px", // Ensures it doesn't shrink too much
+};
+
+  const long_description_style = {
+  width: "100vh", // Takes full width of the parent container
+  maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
+  height: "200px",
+  minWidth: "200px", // Ensures it doesn't shrink too much
+};
   
   return (
     <S.CreateStudy_Main_style>
@@ -41,11 +56,16 @@ const CreateStudy_Main = () => {
         initialValue={{
           url: "",
           name: "",
-          short_description:"",
-          long_description:"",
+          "short-description":"",
+          "long-description":"",
         }}
         validate={validate}
         onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <FormControl
           label="스터디 url을 작성해주세요"
@@ -92,25 +112,20 @@ const CreateStudy_Main = () => {
 
         <FormControl
           label="스터디 long-description 을 작성해주세요"
-          htmlFor="long-desrciption"
+          htmlFor="long-description"
           error={<MyForm.ErrorMessage name="long-description"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
             id="create-study-long-description"
             name="long-description"
             placeholder="write long-description for your study group"
-            style={input_style}
+            style={long_description_style}
+            // as={<MyEditor></MyEditor>}
           >
           </MyForm.Field>
         </FormControl>
+        <button type="submit">저장하기</button>
       </MyForm.Form>
-      <MyEditor style={{
-          width: "1200px",
-          height: "300px",
-          marginBottom: "20px",
-          display: "flex",
-          flexDirection: "column",
-        }}></MyEditor>
     </S.CreateStudy_Main_style>
   );
 };

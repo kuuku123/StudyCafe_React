@@ -11,9 +11,5 @@ export const Header_Input_style = styled.input`
 `;
 
 export const CreateStudy_Main_style = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 40vh;
-  gap: 20px;
+  text-align: center;
 `;
