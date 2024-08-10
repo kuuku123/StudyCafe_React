@@ -4,10 +4,7 @@ import "react-quill/dist/quill.snow.css";
 
 const MyEditor = ({ style, ...rest }) => {
   const defaultStyle = {
-    // width: "1200px",
-    // height: "300px",
     marginBottom: "50px",
-
     width: "100%", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
     height: "300px",
@@ -15,11 +12,11 @@ const MyEditor = ({ style, ...rest }) => {
   };
 
   const combinedStyle = { ...defaultStyle, ...style };
-
   console.log("rest = " + JSON.stringify(rest));
+  // debugger;
   return (
     <>
-      <ReactQuill style={combinedStyle} {...rest}></ReactQuill>
+      <ReactQuill preserveWhitespace style={combinedStyle} {...rest}></ReactQuill>
     </>
   );
 };

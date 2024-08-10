@@ -4,10 +4,6 @@ import * as S from "./CreateStudyPage_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 const CreateStudy_Main = () => {
-
-
-  
-  
   const handleSubmit = async (createStudyForm) => {
     createStudyForm["profileImage"] = img;
     const raw_response = await fetch("http://localhost:8081/settings/profile", {
@@ -35,19 +31,19 @@ const CreateStudy_Main = () => {
 
   // const input_style = {width: "1200px", height: "40px"}
   const input_style = {
-  width: "100vh", // Takes full width of the parent container
-  maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
-  height: "40px",
-  minWidth: "200px", // Ensures it doesn't shrink too much
-};
+    width: "100vh", // Takes full width of the parent container
+    maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
+    height: "40px",
+    minWidth: "200px", // Ensures it doesn't shrink too much
+  };
 
   const long_description_style = {
-  width: "100vh", // Takes full width of the parent container
-  maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
-  height: "200px",
-  minWidth: "200px", // Ensures it doesn't shrink too much
-};
-  
+    width: "100vh", // Takes full width of the parent container
+    maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
+    height: "200px",
+    minWidth: "200px", // Ensures it doesn't shrink too much
+  };
+
   return (
     <S.CreateStudy_Main_style>
       <h2>스터디 개설</h2>
@@ -56,8 +52,9 @@ const CreateStudy_Main = () => {
         initialValue={{
           url: "",
           name: "",
-          "short-description":"",
-          "long-description":"",
+          "short-description": "",
+          "long-description": "",
+          "long-description-text": "",
         }}
         validate={validate}
         onSubmit={handleSubmit}
@@ -77,8 +74,7 @@ const CreateStudy_Main = () => {
             name="url"
             placeholder="write url for your study group"
             style={input_style}
-          >
-          </MyForm.Field>
+          ></MyForm.Field>
         </FormControl>
 
         <FormControl
@@ -91,38 +87,38 @@ const CreateStudy_Main = () => {
             name="name"
             placeholder="write name for your study group"
             style={input_style}
-          >
-          </MyForm.Field>
+          ></MyForm.Field>
         </FormControl>
-
 
         <FormControl
           label="스터디 short description을 작성해주세요"
           htmlFor="url"
-          error={<MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>}
+          error={
+            <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
+          }
         >
           <MyForm.Field
             id="create-study-shrot-description"
             name="short-description"
             placeholder="write short-description for your study group"
             style={input_style}
-          >
-          </MyForm.Field>
+          ></MyForm.Field>
         </FormControl>
 
         <FormControl
           label="스터디 long-description 을 작성해주세요"
-          htmlFor="long-description"
-          error={<MyForm.ErrorMessage name="long-description"></MyForm.ErrorMessage>}
+          htmlFor="longDescription"
+          error={
+            <MyForm.ErrorMessage name="longDescription"></MyForm.ErrorMessage>
+          }
         >
           <MyForm.Field
             id="create-study-long-description"
             name="long-description"
             placeholder="write long-description for your study group"
             style={long_description_style}
-            // as={<MyEditor></MyEditor>}
-          >
-          </MyForm.Field>
+            as={MyEditor}
+          ></MyForm.Field>
         </FormControl>
         <button type="submit">저장하기</button>
       </MyForm.Form>

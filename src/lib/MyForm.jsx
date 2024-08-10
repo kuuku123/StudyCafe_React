@@ -1,22 +1,41 @@
-import React from "react";
+import React, { Component } from "react";
 
 export const useForm = ({ initialValue, validate, onSubmit }) => {
   const [values, setValues] = React.useState(initialValue);
   const [errors, setErrors] = React.useState({});
   const [touched, setTouched] = React.useState({});
 
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e, delta, source , editor) => {
+    if (e.target === undefined) {
+      const text = editor.getText().replace(/\n$/,'')
+      const html = editor.getHTML()
+      if (source === "api"){
+        return // to prevent infitie loop when SetValues triggered 
+      }
+      console.log(values);
+      setValues({
+        ...values,
+        "long-description": html,
+        "long-description-text": text,
+      });
+    } else {
+      console.log(values)
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
-  const handleBlur = (e) => {
-    setTouched({
-      ...touched,
-      [e.target.name]: true,
-    });
+  const handleBlur = (e, source, editor) => {
+    if (e.target === undefined) {
+
+    } else {
+      setTouched({
+        ...touched,
+        [e.target.name]: true,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
