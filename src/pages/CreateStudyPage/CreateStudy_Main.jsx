@@ -3,10 +3,18 @@ import MyEditor from "../../components/Quill-Editor/MyEditor";
 import * as S from "./CreateStudyPage_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
+import { useNavigate } from "react-router-dom";
+import * as MyLayout from "../../lib/MyLayout";
+import Dialog from "../../components/Dialog";
+import Button from "../../components/Button";
 const CreateStudy_Main = () => {
+
+  const navigate = useNavigate();
+  const { openDialog, closeDialog } = MyLayout.useDialog();
+
   const handleSubmit = async (createStudyForm) => {
-    createStudyForm["profileImage"] = img;
-    const raw_response = await fetch("http://localhost:8081/settings/profile", {
+    console.log("createSutdyForm = ",createStudyForm)
+    const raw_response = await fetch("http://localhost:8081/new-study", {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
@@ -17,10 +25,21 @@ const CreateStudy_Main = () => {
     const response = await raw_response.json();
     console.log(response);
     if (response.status === "OK") {
-      console.log("update ok~");
+      console.log("createstudy ok~");
       navigate("/");
     } else {
-      alert("BadRequest");
+        openDialog(
+          <Dialog
+            header={<>오류</>}
+            footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
+          >
+            <ul>
+              {Object.keys(response.data).map((key) => (
+                <li key={key}>{key} : {response.data[key]}</li>
+              ))}
+            </ul>
+          </Dialog>
+        );
     }
   };
 
@@ -37,7 +56,7 @@ const CreateStudy_Main = () => {
     minWidth: "200px", // Ensures it doesn't shrink too much
   };
 
-  const long_description_style = {
+  const full_description_style = {
     width: "100vh", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
     height: "200px",
@@ -50,11 +69,11 @@ const CreateStudy_Main = () => {
       <MyForm.Form
         id="create-study-form"
         initialValue={{
-          url: "",
-          name: "",
-          "short-description": "",
-          "long-description": "",
-          "long-description-text": "",
+          path: "",
+          title: "",
+          "shortDescription": "",
+          "fullDescription": "",
+          "fullDescriptionText": "",
         }}
         validate={validate}
         onSubmit={handleSubmit}
@@ -65,58 +84,58 @@ const CreateStudy_Main = () => {
         }}
       >
         <FormControl
-          label="스터디 url을 작성해주세요"
-          htmlFor="url"
-          error={<MyForm.ErrorMessage name="url"></MyForm.ErrorMessage>}
+          label="스터디 path를 작성해주세요"
+          htmlFor="path"
+          error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
-            id="create-study-url"
-            name="url"
-            placeholder="write url for your study group"
+            id="create-study-path"
+            name="path"
+            placeholder="write path for your study group"
             style={input_style}
           ></MyForm.Field>
         </FormControl>
 
         <FormControl
           label="스터디 이름을 작성해주세요"
-          htmlFor="name"
-          error={<MyForm.ErrorMessage name="name"></MyForm.ErrorMessage>}
+          htmlFor="title"
+          error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
-            id="create-study-name"
-            name="name"
-            placeholder="write name for your study group"
+            id="create-study-title"
+            name="title"
+            placeholder="write title for your study group"
             style={input_style}
           ></MyForm.Field>
         </FormControl>
 
         <FormControl
           label="스터디 short description을 작성해주세요"
-          htmlFor="url"
+          htmlFor="shrot-description"
           error={
             <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
           }
         >
           <MyForm.Field
             id="create-study-shrot-description"
-            name="short-description"
+            name="shortDescription"
             placeholder="write short-description for your study group"
             style={input_style}
           ></MyForm.Field>
         </FormControl>
 
         <FormControl
-          label="스터디 long-description 을 작성해주세요"
-          htmlFor="longDescription"
+          label="스터디 full description 을 작성해주세요"
+          htmlFor="full-description"
           error={
-            <MyForm.ErrorMessage name="longDescription"></MyForm.ErrorMessage>
+            <MyForm.ErrorMessage name="full-description"></MyForm.ErrorMessage>
           }
         >
           <MyForm.Field
-            id="create-study-long-description"
-            name="long-description"
-            placeholder="write long-description for your study group"
-            style={long_description_style}
+            id="create-study-full-description"
+            name="fullDescription"
+            placeholder="write full-description for your study group"
+            style={full_description_style}
             as={MyEditor}
           ></MyForm.Field>
         </FormControl>

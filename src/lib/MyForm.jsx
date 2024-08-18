@@ -12,11 +12,11 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
       if (source === "api"){
         return // to prevent infitie loop when SetValues triggered 
       }
-      console.log(values);
+      console.log("e.target undefined = ", values);
       setValues({
         ...values,
-        "long-description": html,
-        "long-description-text": text,
+        "fullDescription": html,
+        "fullDescriptionText": text,
       });
     } else {
       console.log(values)
@@ -100,6 +100,7 @@ export const Form = ({ id, style, children, ...rest }) => {
 
 export const Field = ({ as = "input", children, ...rest }) => {
   const { getFieldProps } = React.useContext(formContext);
+  console.log("creating")
   return React.createElement(
     as,
     { ...rest, ...getFieldProps(rest.name) },

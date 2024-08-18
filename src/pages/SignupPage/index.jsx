@@ -29,7 +29,6 @@ const SignupPage = () => {
       console.log(response.headers);
       navigate("/");
     } else {
-      console.log(response.body);
       if (response.body != null) {
         openDialog(response.body);
       } else {
@@ -39,7 +38,11 @@ const SignupPage = () => {
             header={<>오류</>}
             footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
           >
-            "duplicate nickname or email"
+            <ul>
+              {Object.keys(response.data).map((key) => (
+                <li key={key}>{response.data[key]}</li>
+              ))}
+            </ul>
           </Dialog>
         );
       }
