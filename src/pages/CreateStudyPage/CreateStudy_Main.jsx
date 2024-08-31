@@ -25,7 +25,7 @@ const CreateStudy_Main = () => {
     const response = await raw_response.json();
     console.log(response);
     if (response.status === "OK") {
-      console.log("createstudy ok~");
+      console.log("createstudy ok~", response.data.path);
       navigate("/");
     } else {
         openDialog(

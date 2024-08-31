@@ -8,6 +8,7 @@ import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
+import StudyPage from "./pages/StudyPage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -38,6 +39,10 @@ const App = ({ tab }) => {
     {
       path: "create-study",
       element: <CreateStudyPage></CreateStudyPage>,
+    },
+    {
+      path: "study",
+      element: <StudyPage></StudyPage>
     },
   ]);
   return (

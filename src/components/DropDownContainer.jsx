@@ -3,7 +3,7 @@ import NavItem from "./NavItem";
 import { CgProfile } from "react-icons/cg";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
-import * as S from "./Component_style"
+import * as S from "./Component_style";
 
 const DropDownContainer = ({ setLogin }) => {
   return (
@@ -15,7 +15,9 @@ const DropDownContainer = ({ setLogin }) => {
             Profile
           </Link>
         </li>
-        <li>Study</li>
+        <li>
+          <Link style={S.link_style} to={"/study"}>Study</Link>
+        </li>
         <Logout setLogin={setLogin}></Logout>
       </S.DropDown_style>
     </NavItem>
