@@ -6,6 +6,7 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
   const [touched, setTouched] = React.useState({});
 
   const handleChange = (e, delta, source , editor) => {
+    console.log("handle Change")
     if (e.target === undefined) {
       const text = editor.getText().replace(/\n$/,'')
       const html = editor.getHTML()
@@ -100,7 +101,6 @@ export const Form = ({ id, style, children, ...rest }) => {
 
 export const Field = ({ as = "input", children, ...rest }) => {
   const { getFieldProps } = React.useContext(formContext);
-  console.log("creating")
   return React.createElement(
     as,
     { ...rest, ...getFieldProps(rest.name) },

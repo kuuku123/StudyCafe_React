@@ -9,7 +9,7 @@ import EmailVerification from "./EmailVerification";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
-  const [triedLogin, setTriedLgoin] = useState(false);
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -17,7 +17,6 @@ const HomePage = () => {
         const profile = await ProfileApi.fetchProfile();
         console.log("profile", profile);
         if (profile.data != null) {
-          setTriedLgoin(true);
           setEmailVerified(profile.data.emailVerified);
         }
       } catch (error) {
@@ -25,7 +24,7 @@ const HomePage = () => {
       }
     };
     getProfile();
-    console.log("triedLogin ", triedLogin);
+    if (sessionStorage.getItem("user")) setLogin(true)
   }, []);
 
   return (
@@ -37,7 +36,7 @@ const HomePage = () => {
               <S.Header_Input_style></S.Header_Input_style>
             </Title>
             <div>
-              {triedLogin && !emailVerified && <EmailVerification></EmailVerification>}
+              {login && !emailVerified && <EmailVerification></EmailVerification>}
             </div>
           </>
         }
