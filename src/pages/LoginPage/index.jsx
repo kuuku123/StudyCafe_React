@@ -6,10 +6,12 @@ import CopyRight from "../../components/CopyRight";
 import { useNavigate } from "react-router-dom";
 import * as S from "./LoginForm_style";
 import * as MyLayout from "../../lib/MyLayout";
+import Dialog from "../../components/Dialog";
+import Button from "../../components/Button";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { openDialog } = MyLayout.useDialog();
+  const { openDialog, closeDialog } = MyLayout.useDialog();
 
   const handleSubmit = async (loginInfo) => {
     const raw_response = await fetch("http://localhost:8081/login", {
@@ -28,7 +30,14 @@ const LoginPage = () => {
       navigate("/");
     } else {
       localStorage.removeItem("login");
-      openDialog(response.body);
+      openDialog(
+        <Dialog
+          header={<>오류</>}
+          footer={<Button onClick={closeDialog}>닫기</Button>}
+        >
+          {response.message}
+        </Dialog>
+      );
     }
   };
 

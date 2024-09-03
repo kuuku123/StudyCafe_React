@@ -16,7 +16,9 @@ const DropDownContainer = ({ setLogin }) => {
           </Link>
         </li>
         <li>
-          <Link style={S.link_style} to={"/study"}>Study</Link>
+          <Link style={S.link_style} to={"/study"}>
+            Study
+          </Link>
         </li>
         <Logout setLogin={setLogin}></Logout>
       </S.DropDown_style>

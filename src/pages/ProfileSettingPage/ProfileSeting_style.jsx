@@ -4,7 +4,7 @@ export const Grid_Container_style = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  min-height: 60vh;
+  min-height: 80vh;
   justify-items: center;
   align-items: center;
 `;

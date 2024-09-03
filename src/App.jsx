@@ -42,7 +42,7 @@ const App = ({ tab }) => {
     },
     {
       path: "study",
-      element: <StudyPage></StudyPage>
+      element: <StudyPage></StudyPage>,
     },
   ]);
   return (

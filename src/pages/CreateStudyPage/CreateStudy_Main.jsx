@@ -8,12 +8,11 @@ import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
 const CreateStudy_Main = () => {
-
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
 
   const handleSubmit = async (createStudyForm) => {
-    console.log("createSutdyForm = ",createStudyForm)
+    console.log("createSutdyForm = ", createStudyForm);
     const raw_response = await fetch("http://localhost:8081/new-study", {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -27,19 +26,23 @@ const CreateStudy_Main = () => {
     if (response.status === "OK") {
       console.log("createstudy ok~", response.data.path);
       navigate("/");
+    } else if (response.status === 403) {
+      console.log("unauthorized");
     } else {
-        openDialog(
-          <Dialog
-            header={<>오류</>}
-            footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
-          >
-            <ul>
-              {Object.keys(response.data).map((key) => (
-                <li key={key}>{key} : {response.data[key]}</li>
-              ))}
-            </ul>
-          </Dialog>
-        );
+      openDialog(
+        <Dialog
+          header={<>오류</>}
+          footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
+        >
+          <ul>
+            {Object.keys(response.data).map((key) => (
+              <li key={key}>
+                {key} : {response.data[key]}
+              </li>
+            ))}
+          </ul>
+        </Dialog>
+      );
     }
   };
 
@@ -71,9 +74,9 @@ const CreateStudy_Main = () => {
         initialValue={{
           path: "",
           title: "",
-          "shortDescription": "",
-          "fullDescription": "",
-          "fullDescriptionText": "",
+          shortDescription: "",
+          fullDescription: "",
+          fullDescriptionText: "",
         }}
         validate={validate}
         onSubmit={handleSubmit}
