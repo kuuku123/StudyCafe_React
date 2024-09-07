@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
+import HandleResponseApi from "../../lib/HandleResponse";
 const CreateStudy_Main = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
@@ -23,27 +24,7 @@ const CreateStudy_Main = () => {
     });
     const response = await raw_response.json();
     console.log(response);
-    if (response.status === "OK") {
-      console.log("createstudy ok~", response.data.path);
-      navigate("/");
-    } else if (response.status === 403) {
-      console.log("unauthorized");
-    } else {
-      openDialog(
-        <Dialog
-          header={<>오류</>}
-          footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
-        >
-          <ul>
-            {Object.keys(response.data).map((key) => (
-              <li key={key}>
-                {key} : {response.data[key]}
-              </li>
-            ))}
-          </ul>
-        </Dialog>
-      );
-    }
+    HandleResponseApi.handleResponse(response)
   };
 
   const validate = (values) => {

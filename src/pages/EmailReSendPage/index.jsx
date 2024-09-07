@@ -7,6 +7,7 @@ import Page from "../../components/Page";
 import * as S from "./EmailResendPage_style.jsx";
 import Button from "../../components/Button.jsx";
 import Dialog from "../../components/Dialog.jsx";
+import HandleResponseApi from "../../lib/HandleResponse.jsx";
 
 const EmailReSendPage = () => {
   const navigate = useNavigate();
@@ -22,18 +23,7 @@ const EmailReSendPage = () => {
     );
     const response = await raw_response.json();
     console.log(response.message);
-    if (response.status === "OK") {
-      navigate("/");
-    } else {
-      openDialog(
-        <Dialog
-          header={<>오류</>}
-          footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
-        >
-          {response.message}
-        </Dialog>
-      );
-    }
+    HandleResponseApi.handleResponse(response)
   };
   return (
     <Page

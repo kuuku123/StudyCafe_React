@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Dialog from "../components/Dialog";
 import Backdrop from "../components/Backdrop";
+import { useNavigate } from "react-router-dom";
 
 export const layoutContext = React.createContext({});
 layoutContext.displayName = "LayoutContext";
@@ -17,9 +18,14 @@ export const Layout = ({ children }) => {
 };
 
 export const useDialog = () => {
+  const navigate = useNavigate();
   const { dialog, setDialog } = React.useContext(layoutContext);
   const openDialog = (element) => setDialog(element);
-  const closeDialog = () => setDialog(null);
+  const closeDialog = (path) => {
+    console.log("path => ", path)
+    setDialog(null)
+    if(path) navigate(path)
+  };
   return { dialog, openDialog, closeDialog };
 };
 

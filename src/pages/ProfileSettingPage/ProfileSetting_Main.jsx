@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSeting_style";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const ProfileSetting_Main = () => {
   const [img, setImage] = useState();
@@ -47,12 +48,7 @@ const ProfileSetting_Main = () => {
     });
     const response = await raw_response.json();
     console.log(response);
-    if (response.status === "OK") {
-      console.log("update ok~");
-      navigate("/");
-    } else {
-      alert("BadRequest");
-    }
+    HandleResponseApi.handleResponse(response)
   };
 
   const validate = (values) => {
