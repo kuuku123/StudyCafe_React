@@ -3,6 +3,7 @@ import { CgCalendar, CgMail } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import * as S from "./Profile_style";
 import ProfileApi from "../../components/ProfileApi";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const Profile_Main = () => {
   const [img, setImage] = useState();
@@ -11,29 +12,47 @@ const Profile_Main = () => {
     email: "default email",
   });
 
+  const hanldeResponse = HandleResponseApi.useHandleResponse();
+
   useEffect(() => {
-    const getProfileImage = async () => {
-      try {
-        const profile_image = await ProfileApi.fetchProfileImage();
-        const url = URL.createObjectURL(profile_image);
-        setImage(url);
-      } catch (error) {
-        console.log("failed to fetch image ", error);
+    const handleImage = (profile_image_base64_encoded) => {
+      console.log("at handle Image => ", profile_image_base64_encoded);
+      const base64WithoutHeader = profile_image_base64_encoded.replace(
+        /^data:image\/(png|jpeg|jpg);base64,/,
+        ""
+      );
+
+      // Convert Base64 to binary string
+      const binaryString = atob(base64WithoutHeader);
+
+      // Convert binary string to array of 8-bit unsigned integers
+      const binaryLength = binaryString.length;
+      const bytes = new Uint8Array(binaryLength);
+
+      for (let i = 0; i < binaryLength; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
       }
+      const blob = new Blob([bytes], { type: 'image/jpeg' });
+      // const profile_image = profile_image_base64_encoded.blob();
+      const url = URL.createObjectURL(blob);
+      setImage(url);
+    };
+    const getProfileImage = async () => {
+      const profile_image_json = await ProfileApi.fetchProfileImage();
+      console.log("profile_image_json => ", profile_image_json);
+      hanldeResponse(profile_image_json, handleImage, false);
     };
     getProfileImage();
   }, []);
 
   useEffect(() => {
     const getProfile = async () => {
-      try {
-        const profile = await ProfileApi.fetchProfile();
-        console.log("profile", profile);
-        if (profile.status === "OK") {
-          setProfile(profile.data);
-        }
-      } catch (error) {
-        console.log(error);
+      const response = await ProfileApi.fetchProfile();
+      console.log("profile", response);
+
+      hanldeResponse(response, setProfile, false);
+      if (profile.status === "OK") {
+        setProfile(profile.data);
       }
     };
     getProfile();

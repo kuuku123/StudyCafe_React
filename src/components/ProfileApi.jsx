@@ -17,8 +17,10 @@ const fetchProfileImage = async () => {
       method: "GET",
     }
   );
-  const profile_image = await raw_profile_image.blob();
-  return profile_image
+  console.log("raw_profile_image => ",raw_profile_image)
+  const profile_image_json = await raw_profile_image.json()
+  // const profile_image = await raw_profile_image.blob();
+  return profile_image_json 
 };
 
 const ProfileApi = {

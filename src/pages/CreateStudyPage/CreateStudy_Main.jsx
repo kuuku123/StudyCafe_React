@@ -19,7 +19,7 @@ const CreateStudy_Main = () => {
     });
     const response = await raw_response.json();
     console.log(response);
-    handleResponse(response);
+    handleResponse(response,null,true);
   };
 
   const validate = (values) => {

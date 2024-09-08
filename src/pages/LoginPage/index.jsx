@@ -33,7 +33,7 @@ const LoginPage = () => {
       openDialog(
         <Dialog
           header={<>오류</>}
-          footer={<Button onClick={closeDialog}>닫기</Button>}
+          footer={<Button onClick={() => closeDialog("/sign-up")}>닫기</Button>}
         >
           {response.message}
         </Dialog>

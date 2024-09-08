@@ -7,11 +7,14 @@ import Dialog from "../components/Dialog";
 const useHandleResponse = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
-  const handleResponse = (response) => {
+  const handleResponse = (response, callback, useNavigate) => {
+    console.log("useNavigate => ", useNavigate)
     if (response.status === "OK") {
-      console.log("createstudy ok~", response.data.path);
-      navigate("/");
-    } else if (response.status === 403) {
+      console.log("response ok~  ", response.data);
+      if (callback) callback(response.data);
+      if (useNavigate) navigate("/");
+    }
+    else if (response.status === 403) {
       console.log("unauthorized");
       openDialog(
         <Dialog
@@ -41,7 +44,7 @@ const useHandleResponse = () => {
       );
     }
   };
-  return handleResponse
+  return handleResponse;
 };
 
 const HandleResponseApi = {
