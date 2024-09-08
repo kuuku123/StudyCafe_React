@@ -7,7 +7,6 @@ import HandleResponseApi from "../../lib/HandleResponse";
 
 const ProfileSetting_Main = () => {
   const [img, setImage] = useState();
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProfileImage() {
@@ -48,7 +47,7 @@ const ProfileSetting_Main = () => {
     });
     const response = await raw_response.json();
     console.log(response);
-    HandleResponseApi.handleResponse(response)
+    HandleResponseApi.handleResponse(response);
   };
 
   const validate = (values) => {

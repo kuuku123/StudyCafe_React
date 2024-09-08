@@ -9,6 +9,7 @@ import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
 import StudyPage from "./pages/StudyPage";
+import Study_Info from "./pages/StudyPage/ComponentPage/Info";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -37,12 +38,16 @@ const App = ({ tab }) => {
       element: <EmailReSendPage></EmailReSendPage>,
     },
     {
-      path: "create-study",
+      path: "/create-study",
       element: <CreateStudyPage></CreateStudyPage>,
     },
     {
-      path: "study",
+      path: "/study",
       element: <StudyPage></StudyPage>,
+    },
+    {
+      path: "/study/info",
+      element: <Study_Info></Study_Info>,
     },
   ]);
   return (

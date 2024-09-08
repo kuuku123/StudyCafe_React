@@ -9,6 +9,23 @@ export const Grid_Container_style = styled.div`
   align-items: center;
 `;
 
+export const Study_Component_style = styled.div`
+  grid-row-start: 3;
+  grid-row-end: 8;
+  grid-column-start: 2;
+  grid-column-end: 16;
+`;
+export const Study_Component_Click_style = styled.span`
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+  transform: ${(props) => (props.clicked ? "scale(1.6)" : "scale(1)")};
+
+  &:hover {
+    transform: scale(1.6);
+  }
+`;
 export const Study_Title_style = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,7 +47,6 @@ export const Study_Link_style = styled.div`
   grid-column-end: 7;
   width: 100%;
 `;
-
 
 export const Study_Draft_style = styled.div`
   display: flex;

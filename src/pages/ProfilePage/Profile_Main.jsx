@@ -28,7 +28,7 @@ const Profile_Main = () => {
     const getProfile = async () => {
       try {
         const profile = await ProfileApi.fetchProfile();
-        console.log("profile", profile)
+        console.log("profile", profile);
         if (profile.status === "OK") {
           setProfile(profile.data);
         }
@@ -39,7 +39,7 @@ const Profile_Main = () => {
     getProfile();
   }, []);
 
-  console.log("profile ==> " , profile)
+  console.log("profile ==> ", profile);
   return (
     <S.Grid_Container_style>
       <S.Profile_Pic_style>

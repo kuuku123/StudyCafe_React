@@ -1,8 +1,8 @@
 import React from "react";
-import Page from '../../components/Page'
-import Title from '../../components/Title'
+import Page from "../../components/Page";
+import Title from "../../components/Title";
 import * as S from "./StudyPage_style";
-import CopyRight from '../../components/CopyRight';
+import CopyRight from "../../components/CopyRight";
 import Study_Main from "./Study_Main";
 
 const StudyPage = () => {

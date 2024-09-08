@@ -3,14 +3,9 @@ import MyEditor from "../../components/Quill-Editor/MyEditor";
 import * as S from "./CreateStudyPage_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
-import { useNavigate } from "react-router-dom";
-import * as MyLayout from "../../lib/MyLayout";
-import Dialog from "../../components/Dialog";
-import Button from "../../components/Button";
 import HandleResponseApi from "../../lib/HandleResponse";
 const CreateStudy_Main = () => {
-  const navigate = useNavigate();
-  const { openDialog, closeDialog } = MyLayout.useDialog();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleSubmit = async (createStudyForm) => {
     console.log("createSutdyForm = ", createStudyForm);
@@ -24,7 +19,7 @@ const CreateStudy_Main = () => {
     });
     const response = await raw_response.json();
     console.log(response);
-    HandleResponseApi.handleResponse(response)
+    handleResponse(response);
   };
 
   const validate = (values) => {

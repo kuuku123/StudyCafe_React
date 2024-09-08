@@ -10,8 +10,7 @@ import Dialog from "../../components/Dialog.jsx";
 import HandleResponseApi from "../../lib/HandleResponse.jsx";
 
 const EmailReSendPage = () => {
-  const navigate = useNavigate();
-  const { openDialog, closeDialog } = MyLayout.useDialog();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleClick = async () => {
     const raw_response = await fetch(
@@ -23,7 +22,7 @@ const EmailReSendPage = () => {
     );
     const response = await raw_response.json();
     console.log(response.message);
-    HandleResponseApi.handleResponse(response)
+    handleResponse(response);
   };
   return (
     <Page
