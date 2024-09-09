@@ -4,7 +4,7 @@ import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
 import Hompage_Main from "./Hompage_Main";
 import * as S from "./Homepage_style";
-import ProfileApi from "../../components/ProfileApi";
+import ProfileApi from "../../lib/ProfileApi";
 import EmailVerification from "./EmailVerification";
 
 const HomePage = () => {
@@ -24,7 +24,7 @@ const HomePage = () => {
       }
     };
     getProfile();
-    if (sessionStorage.getItem("user")) setLogin(true)
+    if (sessionStorage.getItem("user")) setLogin(true);
   }, []);
 
   return (
@@ -36,7 +36,9 @@ const HomePage = () => {
               <S.Header_Input_style></S.Header_Input_style>
             </Title>
             <div>
-              {login && !emailVerified && <EmailVerification></EmailVerification>}
+              {login && !emailVerified && (
+                <EmailVerification></EmailVerification>
+              )}
             </div>
           </>
         }

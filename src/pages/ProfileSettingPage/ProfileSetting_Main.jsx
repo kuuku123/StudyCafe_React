@@ -4,26 +4,41 @@ import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSeting_style";
 import HandleResponseApi from "../../lib/HandleResponse";
+import ProfileApi from "../../lib/ProfileApi";
 
 const ProfileSetting_Main = () => {
   const [img, setImage] = useState();
+  const hanldeResponse = HandleResponseApi.useHandleResponse();
+
+  const handleImage = (profile_image_base64_encoded) => {
+    console.log("at handle Image => ", profile_image_base64_encoded);
+    const base64WithoutHeader = profile_image_base64_encoded.replace(
+      /^data:image\/(png|jpeg|jpg);base64,/,
+      ""
+    );
+    // Convert Base64 to binary string
+    const binaryString = atob(base64WithoutHeader);
+
+    // Convert binary string to array of 8-bit unsigned integers
+    const binaryLength = binaryString.length;
+    const bytes = new Uint8Array(binaryLength);
+
+    for (let i = 0; i < binaryLength; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    const blob = new Blob([bytes], { type: "image/jpeg" });
+    // const profile_image = profile_image_base64_encoded.blob();
+    const url = URL.createObjectURL(blob);
+    setImage(url);
+  };
 
   useEffect(() => {
-    async function fetchProfileImage() {
-      const raw_profile_image = await fetch(
-        `http://localhost:8081/profile-image?user=${sessionStorage.getItem(
-          "user"
-        )}`,
-        {
-          credentials: "include",
-          method: "GET",
-        }
-      );
-      const profile_image = await raw_profile_image.blob();
-      const url = URL.createObjectURL(profile_image);
-      setImage(url);
-    }
-    fetchProfileImage();
+    const getProfileImage = async () => {
+      const profile_image_json = await ProfileApi.fetchProfileImage();
+      console.log("profile_image_json => ", profile_image_json);
+      hanldeResponse(profile_image_json, handleImage, false);
+    };
+    getProfileImage();
   }, []);
 
   const onChange = (e) => {
