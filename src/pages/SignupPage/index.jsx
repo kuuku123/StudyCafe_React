@@ -8,10 +8,12 @@ import * as S from "./SignupPage_style";
 import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
+  const handleResopnse = HandleResponseApi.useHandleResponse()
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
       credentials: "include",
@@ -20,33 +22,12 @@ const SignupPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signupInfo),
-    }).then((res) => {
+    }
+  ).then((res) => {
       console.log(res);
       return res.json();
     });
-    console.log("response status", response.status);
-    if (response.status === "OK") {
-      console.log(response.headers);
-      navigate("/");
-    } else {
-      if (response.body != null) {
-        openDialog(response.body);
-      } else {
-        console.log("went rhere");
-        openDialog(
-          <Dialog
-            header={<>오류</>}
-            footer={<Button onClick={closeDialog}>네, 알겠습니다</Button>}
-          >
-            <ul>
-              {Object.keys(response.data).map((key) => (
-                <li key={key}>{response.data[key]}</li>
-              ))}
-            </ul>
-          </Dialog>
-        );
-      }
-    }
+    handleResopnse(response)
   };
 
   return (

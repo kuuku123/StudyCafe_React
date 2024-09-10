@@ -10,6 +10,7 @@ const useHandleResponse = () => {
 
   const handleResponse = (response, callback, useNavigate = true) => {
     console.log("useNavigate => ", useNavigate);
+    console.log(response)
     if (response.status === "OK") {
       console.log("response ok~  ", response.data);
       if (callback) callback(response.data);
@@ -33,7 +34,7 @@ const useHandleResponse = () => {
           footer={<Button onClick={() => closeDialog()}>네, 알겠습니다</Button>}
         >
           <ul>
-            {Object.keys &&
+            {response.data &&
               Object.keys(response.data).map((key) => (
                 <li key={key}>
                   {key} : {response.data[key]}
