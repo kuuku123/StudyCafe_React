@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./StudyPage_style";
 import { Link } from "react-router-dom";
-import * as style from "../../components/Component_style";
+import * as style from "../../../components/Component_style";
 import Study_Info from "./ComponentPage/Info";
 import Study_Member from "./ComponentPage/Member";
 import Study_Schedule from "./ComponentPage/Schedule";
@@ -60,9 +60,7 @@ const Study_Main = () => {
       </S.Study_Link_style>
 
       <S.Study_Link_Horizontal_Line_style></S.Study_Link_Horizontal_Line_style>
-      <S.Study_Component_style>
-        {pageComponent[category]}
-      </S.Study_Component_style>
+      {pageComponent[category]}
     </S.Grid_Container_style>
   );
 };

@@ -9,12 +9,6 @@ export const Grid_Container_style = styled.div`
   align-items: center;
 `;
 
-export const Study_Component_style = styled.div`
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 2;
-  grid-column-end: 16;
-`;
 export const Study_Component_Click_style = styled.span`
   padding: 10px;
   margin: 5px;

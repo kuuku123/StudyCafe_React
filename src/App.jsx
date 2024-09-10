@@ -8,8 +8,8 @@ import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
-import StudyPage from "./pages/StudyPage";
-import Study_Info from "./pages/StudyPage/ComponentPage/Info";
+import StudyPage from "./pages/StudyListPage/StudyPage";
+import StudyListPage from "./pages/StudyListPage";
 
 const App = ({ tab }) => {
   const homePage = createBrowserRouter([
@@ -43,11 +43,11 @@ const App = ({ tab }) => {
     },
     {
       path: "/study",
-      element: <StudyPage></StudyPage>,
+      element: <StudyListPage></StudyListPage>,
     },
     {
-      path: "/study/info",
-      element: <Study_Info></Study_Info>,
+      path: "/study/path",
+      element: <StudyPage></StudyPage>,
     },
   ]);
   return (

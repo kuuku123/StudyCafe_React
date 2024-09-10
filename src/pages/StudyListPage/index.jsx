@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
+import * as S from "./StudyListPage_style";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
-import * as S from "./StudyPage_style";
 import CopyRight from "../../components/CopyRight";
-import Study_Main from "./Study_Main";
+import StudyList_Main from './StudyList_Main';
 
-const StudyPage = () => {
+const StudyListPage = () => {
   return (
     <div>
       <Page
@@ -18,10 +18,10 @@ const StudyPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <Study_Main></Study_Main>
+        <StudyList_Main></StudyList_Main>
       </Page>
     </div>
-  );
-};
+  )
+}
 
-export default StudyPage;
+export default StudyListPage

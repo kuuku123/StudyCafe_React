@@ -6,25 +6,25 @@ import Hompage_Main from "./Hompage_Main";
 import * as S from "./Homepage_style";
 import ProfileApi from "../../lib/ProfileApi";
 import EmailVerification from "./EmailVerification";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
+  const handleResponse = HandleResponseApi.useHandleResponse()
+
+
+  const handleProfileResponse = (profile_data) => {
+    setEmailVerified(profile_data.emailVerified)
+    if (sessionStorage.getItem("user")) setLogin(true);
+  }
 
   useEffect(() => {
     const getProfile = async () => {
-      try {
         const profile = await ProfileApi.fetchProfile();
-        console.log("profile", profile);
-        if (profile.data != null) {
-          setEmailVerified(profile.data.emailVerified);
-        }
-      } catch (error) {
-        console.log("Faeild to fetch profile: ", error);
-      }
+        handleResponse(profile,handleProfileResponse,false)
     };
     getProfile();
-    if (sessionStorage.getItem("user")) setLogin(true);
   }, []);
 
   return (

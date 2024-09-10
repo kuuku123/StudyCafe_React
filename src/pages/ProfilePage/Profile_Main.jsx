@@ -39,7 +39,6 @@ const Profile_Main = () => {
   useEffect(() => {
     const getProfileImage = async () => {
       const profile_image_json = await ProfileApi.fetchProfileImage();
-      console.log("profile_image_json => ", profile_image_json);
       hanldeResponse(profile_image_json, handleImage, false);
     };
     getProfileImage();
@@ -48,17 +47,11 @@ const Profile_Main = () => {
   useEffect(() => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
-      console.log("profile", response);
-
       hanldeResponse(response, setProfile, false);
-      if (profile.status === "OK") {
-        setProfile(profile.data);
-      }
     };
     getProfile();
   }, []);
 
-  console.log("profile ==> ", profile);
   return (
     <S.Grid_Container_style>
       <S.Profile_Pic_style>
