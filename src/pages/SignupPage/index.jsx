@@ -2,17 +2,11 @@ import React from "react";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
-import { useNavigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import * as S from "./SignupPage_style";
-import * as MyLayout from "../../lib/MyLayout";
-import Dialog from "../../components/Dialog";
-import Button from "../../components/Button";
 import HandleResponseApi from "../../lib/HandleResponse";
 
 const SignupPage = () => {
-  const navigate = useNavigate();
-  const { openDialog, closeDialog } = MyLayout.useDialog();
   const handleResopnse = HandleResponseApi.useHandleResponse()
   const handleSubmit = async (signupInfo) => {
     const response = await fetch("http://localhost:8081/sign-up", {
