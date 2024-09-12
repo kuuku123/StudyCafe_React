@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
+  output: {
+    publicPath: "/", // Ensure assets are loaded from the root
+  },
   resolve: {
     extensions: [".js", ".jsx"],
   },
@@ -31,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
@@ -44,7 +47,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     static: {
-      directory: './public',
+      directory: "./public",
     },
     compress: true,
     port: 3000,

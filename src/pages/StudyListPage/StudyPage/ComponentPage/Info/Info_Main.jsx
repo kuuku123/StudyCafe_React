@@ -1,7 +1,9 @@
 import React from "react";
 import * as S from "./Info_Main_style";
+import { useStudy } from "../..";
 
-const Study_Info_Main = ({ study }) => {
+const Study_Info_Main = () => {
+  const study = useStudy()
   return (
     <>
       <S.Study_ShortDescription_style>

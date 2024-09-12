@@ -1,16 +1,30 @@
-import React from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
 import * as S from "./StudyPage_style";
 import CopyRight from "../../../components/CopyRight";
 import Study_Main from "./Study_Main";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const StudyContext = createContext();
+export const useStudy = () => useContext(StudyContext);
 
 const StudyPage = () => {
   const location = useLocation();
-  console.log("location => ", location.state);
-
   const study = location.state;
+  console.log("study => ", study);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!study) {
+      console.log("it worked")
+      navigate("/study");
+    }
+  }, []);
+
+  if (!study) return null;
+
   return (
     <div>
       <Page
@@ -23,7 +37,9 @@ const StudyPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <Study_Main study={study}></Study_Main>
+        <StudyContext.Provider value={study}>
+          <Study_Main study={study}></Study_Main>
+        </StudyContext.Provider>
       </Page>
     </div>
   );

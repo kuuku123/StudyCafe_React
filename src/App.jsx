@@ -10,8 +10,9 @@ import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
 import StudyPage from "./pages/StudyListPage/StudyPage";
 import StudyListPage from "./pages/StudyListPage";
+import ErrorPage from "./pages/ErrorPage";
 
-const App = ({ tab }) => {
+const App = () => {
   const homePage = createBrowserRouter([
     {
       path: "/",
@@ -48,6 +49,10 @@ const App = ({ tab }) => {
     {
       path: "/study/:path",
       element: <StudyPage></StudyPage>,
+    },
+    {
+      path: "*",
+      element: <ErrorPage/>, 
     },
   ]);
   return (
