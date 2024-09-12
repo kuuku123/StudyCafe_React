@@ -46,7 +46,7 @@ const App = ({ tab }) => {
       element: <StudyListPage></StudyListPage>,
     },
     {
-      path: "/study/path",
+      path: "/study/:path",
       element: <StudyPage></StudyPage>,
     },
   ]);

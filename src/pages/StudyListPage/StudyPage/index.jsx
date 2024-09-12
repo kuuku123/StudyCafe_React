@@ -4,8 +4,13 @@ import Title from "../../../components/Title";
 import * as S from "./StudyPage_style";
 import CopyRight from "../../../components/CopyRight";
 import Study_Main from "./Study_Main";
+import { useLocation } from "react-router-dom";
 
 const StudyPage = () => {
+  const location = useLocation();
+  console.log("location => ", location.state);
+
+  const study = location.state;
   return (
     <div>
       <Page
@@ -18,7 +23,7 @@ const StudyPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <Study_Main></Study_Main>
+        <Study_Main study={study}></Study_Main>
       </Page>
     </div>
   );

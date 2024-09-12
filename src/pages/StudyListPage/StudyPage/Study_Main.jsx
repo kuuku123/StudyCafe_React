@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import * as S from "./StudyPage_style";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import * as style from "../../../components/Component_style";
 import Study_Info from "./ComponentPage/Info";
 import Study_Member from "./ComponentPage/Member";
 import Study_Schedule from "./ComponentPage/Schedule";
 import Study_Configuration from "./ComponentPage/Configuration";
 
-const Study_Main = () => {
+const Study_Main = ({study}) => {
+  console.log("studyin -> ", study)
   const [category, setCategory] = useState("info");
   const pageComponent = {
-    info: <Study_Info></Study_Info>,
-    member: <Study_Member></Study_Member>,
-    schedule: <Study_Schedule></Study_Schedule>,
-    configuration: <Study_Configuration></Study_Configuration>,
+    info: <Study_Info study={study}></Study_Info>,
+    member: <Study_Member study={study}></Study_Member>,
+    schedule: <Study_Schedule study={study}></Study_Schedule>,
+    configuration: <Study_Configuration study={study}></Study_Configuration>,
   };
 
   const handleOnClick = (category) => {
@@ -22,8 +23,8 @@ const Study_Main = () => {
   return (
     <S.Grid_Container_style>
       <S.Study_Title_style>
-        <span>Title</span>
-        <span>Path</span>
+        <span>{study && study.title}</span>
+        <span>{study && study.path}</span>
       </S.Study_Title_style>
       <S.Study_Draft_style>
         <span>draft</span>

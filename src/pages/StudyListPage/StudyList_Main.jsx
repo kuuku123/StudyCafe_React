@@ -3,11 +3,17 @@ import StudyApi from "../../lib/StudyApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import * as S from "./StudyListPage_style";
 import DOMPurify from "dompurify";
+import { useNavigate } from "react-router-dom";
 
 const StudyList_Main = () => {
   const [studies, setStudies] = useState([]);
+  const navigate = useNavigate();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
+  const handleClick = (study) => {
+    console.log("study => " , study)
+    navigate("/study/" + study.path, { state: study });
+  };
   const handleStudies = (studies) => {
     const sanitizedStudies = Array.isArray(studies)
       ? studies.map((study) => ({
@@ -33,7 +39,7 @@ const StudyList_Main = () => {
         {/* Check if studies is an array and has items */}
         {Array.isArray(studies) && studies.length > 0 ? (
           studies.map((study, index) => (
-            <S.Card key={index}>
+            <S.Card key={index} onClick={() => handleClick(study)}>
               {/* Space for the image */}
               <S.CardImage>
                 <img src={study.image} alt={study.title} />
@@ -44,7 +50,9 @@ const StudyList_Main = () => {
                 <p>Short Description: {study.shortDescription}</p>
                 <S.FullDescription>
                   <summary>Full Description</summary>
-                  <div dangerouslySetInnerHTML={{ __html: study.fullDescription}} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: study.fullDescription }}
+                  />
                 </S.FullDescription>
               </S.CardBody>
             </S.Card>
