@@ -28,10 +28,18 @@ export const Card = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: fit-content;
 
   &:hover {
     transform: scale(1.05);
   }
+
+  ${({ index }) => `
+    &.card-${index}:hover summary + div {
+      display: block;
+      max-height: 1000px;
+    }
+  `}
 `;
 
 export const CardImage = styled.div`
@@ -59,8 +67,39 @@ export const CardBody = styled.div`
   }
 `;
 
-export const FullDescription = styled.details`
-  margin-top: 10px;
+export const FullDescription = styled.div`
+  summary {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    animation: pulse 2s infinite; /* Animation for the periodic size change */
+
+    /* Hover effect to change color slightly */
+    &:hover {
+      color: #555;
+    }
+  }
+
+  /* Initially hide the full description content */
+  summary + div {
+    display: none;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+  }
+
+  /* Define the keyframes for the pulse animation */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1); /* Text gets slightly larger */
+    }
+    100% {
+      transform: scale(1); /* Text returns to original size */
+    }
+  }
 `;
-
-

@@ -39,7 +39,7 @@ const StudyList_Main = () => {
         {/* Check if studies is an array and has items */}
         {Array.isArray(studies) && studies.length > 0 ? (
           studies.map((study, index) => (
-            <S.Card key={index} onClick={() => handleClick(study)}>
+            <S.Card key={index} index={index} className={`card-${index}`} onClick={() => handleClick(study)}>
               {/* Space for the image */}
               <S.CardImage>
                 <img src={study.image} alt={study.title} />
@@ -50,7 +50,7 @@ const StudyList_Main = () => {
                 <p>Short Description: {study.shortDescription}</p>
                 <S.FullDescription>
                   <summary>Full Description</summary>
-                  <div
+                  <div className="full-description"
                     dangerouslySetInnerHTML={{ __html: study.fullDescription }}
                   />
                 </S.FullDescription>
