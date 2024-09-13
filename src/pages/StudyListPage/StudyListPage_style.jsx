@@ -24,14 +24,17 @@ export const Card = styled.li`
   box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.4s;
+  transition: transform 0.1s;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: fit-content;
+  width: fit-content;
+  position: relative;
 
   &:hover {
     transform: scale(1.05);
+    z-index: 10;
   }
 
   ${({ index }) => `
@@ -73,7 +76,6 @@ export const FullDescription = styled.div`
     display: inline-block;
     font-size: 1em;
     font-weight: bold;
-    transition: color 0.3s ease;
     animation: pulse 2s infinite; /* Animation for the periodic size change */
 
     /* Hover effect to change color slightly */
@@ -85,10 +87,7 @@ export const FullDescription = styled.div`
   /* Initially hide the full description content */
   summary + div {
     display: none;
-    transition: max-height 0.3s ease;
-    overflow: hidden;
-    max-height: 0;
-  }
+  } 
 
   /* Define the keyframes for the pulse animation */
   @keyframes pulse {
