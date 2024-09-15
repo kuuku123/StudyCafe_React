@@ -22,7 +22,6 @@ export const Study_ShortDescription_style = styled.div`
   grid-row-end: 4;
   grid-column-start: 10;
   grid-column-end: 16;
-  /* Ensure scroll bar if content overflows */
 `;
 export const Study_FullDescription_style = styled.div`
   display: flex;

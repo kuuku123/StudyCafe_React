@@ -9,7 +9,7 @@ import Study_Configuration from "./ComponentPage/Configuration";
 import { useStudy } from ".";
 
 const Study_Main = () => {
-  const [category, setCategory] = useState("info");
+  const [category, setCategory] = useState("member");
   const study = useStudy();
 
   const pageComponent = {
@@ -25,8 +25,7 @@ const Study_Main = () => {
   return (
     <S.Grid_Container_style>
       <S.Study_Title_style>
-        <span>{study.title}</span>
-        <span>{study.path}</span>
+        <h1>{study.title}</h1>
       </S.Study_Title_style>
       <S.Study_Draft_style>
         <span>draft</span>
