@@ -9,9 +9,7 @@ const fetchProfile = async () => {
 
 const fetchProfileImage = async () => {
   const raw_profile_image = await fetch(
-    `http://localhost:8081/profile-image?user=${sessionStorage.getItem(
-      "user"
-    )}`,
+    `http://localhost:8081/profile-image`,
     {
       credentials: "include",
       method: "GET",

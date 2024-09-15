@@ -4,9 +4,9 @@ const NavItem = ({icon,children}) => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+      <div className="icon-button" onClick={() => setOpen(!open)}>
         {icon}
-      </a>
+      </div>
       {open && children}
     </div>
   );
