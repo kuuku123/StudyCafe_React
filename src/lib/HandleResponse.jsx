@@ -8,13 +8,19 @@ const useHandleResponse = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
 
-  const handleResponse = (response, callback, useNavigate = true) => {
+  const handleResponse = (response, callback, useNavigate = {useNav: true, path: "/"}) => {
     console.log("useNavigate => ", useNavigate);
-    console.log(response)
+    
     if (response.status === "OK") {
-      console.log("response ok~  ", response.data);
       if (callback) callback(response.data);
-      if (useNavigate) navigate("/");
+      if (typeof useNavigate === "boolean") {
+        console.log("do nothing")
+      }
+      else if (useNavigate.useNav)  {
+        console.log("hiihi - ",useNavigate.useNav , useNavigate.path)
+        navigate(useNavigate.path);
+
+      }
     } else if (response.status === 403) {
       console.log("unauthorized");
       openDialog(
