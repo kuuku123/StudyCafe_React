@@ -61,9 +61,9 @@ export const link_style = {
 export const FormControl_Container_style = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-bottom: 20px;
-  text-align: start
+  align-items: center;
+  width: 100%;
 `;
 
 export const Title_style = styled.div`

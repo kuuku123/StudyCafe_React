@@ -11,5 +11,7 @@ export const Header_Input_style = styled.input`
 `;
 
 export const CreateStudy_Main_style = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

@@ -27,16 +27,15 @@ const CreateStudy_Main = () => {
     return errors;
   };
 
-  // const input_style = {width: "1200px", height: "40px"}
   const input_style = {
-    width: "100vh", // Takes full width of the parent container
+    width: "100%", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
     height: "40px",
     minWidth: "200px", // Ensures it doesn't shrink too much
   };
 
   const full_description_style = {
-    width: "100vh", // Takes full width of the parent container
+    width: "100%", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
     height: "200px",
     minWidth: "200px", // Ensures it doesn't shrink too much
@@ -60,6 +59,7 @@ const CreateStudy_Main = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          width: "100%",
         }}
       >
         <FormControl
