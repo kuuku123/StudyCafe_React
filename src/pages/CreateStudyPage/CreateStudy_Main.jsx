@@ -9,7 +9,6 @@ const CreateStudy_Main = () => {
 
   const handleSubmit = async (createStudyForm) => {
     console.log("createSutdyForm = ", createStudyForm);
-    console.log("Server API URL ", SERVER_API_URL)
     const raw_response = await fetch(`${SERVER_API_URL}/new-study`, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",

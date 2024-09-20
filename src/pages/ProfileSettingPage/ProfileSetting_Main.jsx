@@ -34,7 +34,7 @@ const ProfileSetting_Main = () => {
 
   const handleSubmit = async (profileEditInfo) => {
     profileEditInfo["profileImage"] = img;
-    const raw_response = await fetch("http://localhost:8081/settings/profile", {
+    const raw_response = await fetch(`${SERVER_API_URL}/settings/profile`, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },

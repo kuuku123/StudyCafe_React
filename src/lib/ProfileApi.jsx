@@ -1,5 +1,5 @@
 const fetchProfile = async () => {
-  const raw_profile = await fetch(`http://localhost:8081/profile`, {
+  const raw_profile = await fetch(`${SERVER_API_URL}/profile`, {
     credentials: "include",
     method: "GET",
   });
@@ -9,7 +9,7 @@ const fetchProfile = async () => {
 
 const fetchProfileImage = async () => {
   const raw_profile_image = await fetch(
-    `http://localhost:8081/profile-image`,
+    `${SERVER_API_URL}/profile-image`,
     {
       credentials: "include",
       method: "GET",

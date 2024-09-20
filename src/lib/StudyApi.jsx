@@ -1,5 +1,5 @@
 const fetchStudyList = async () => {
-  const raw_studyList = await fetch(`http://localhost:8081/studyList`, {
+  const raw_studyList = await fetch(`${SERVER_API_URL}/studyList`, {
     credentials: "include",
     method: "GET",
   });
@@ -10,7 +10,7 @@ const fetchStudyList = async () => {
 
 const fetchStudyImage = async (path) => {
   const raw_study_image = await fetch(
-    `http://localhost:8081/study/${path}/study-image`,
+    `${SERVER_API_URL}/study/${path}/study-image`,
     {
       credentials: "include",
       method: "GET",
