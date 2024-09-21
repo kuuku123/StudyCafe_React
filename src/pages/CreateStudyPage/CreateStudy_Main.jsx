@@ -8,7 +8,6 @@ const CreateStudy_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleSubmit = async (createStudyForm) => {
-    console.log("createSutdyForm = ", createStudyForm);
     const raw_response = await fetch(`${SERVER_API_URL}/new-study`, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -18,8 +17,7 @@ const CreateStudy_Main = () => {
       body: JSON.stringify(createStudyForm),
     });
     const response = await raw_response.json();
-    console.log(response);
-    handleResponse(response);
+    handleResponse(response,null, {useNav: true, path: "/study"});
   };
 
   const validate = (values) => {

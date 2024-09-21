@@ -9,7 +9,7 @@ export const Study_Picture_style = styled.div`
   width: 100%;
   height: 100%;
   grid-row-start: 3;
-  grid-row-end: 9;
+  grid-row-end: 8;
   grid-column-start: 2;
   grid-column-end: 9;
 `;

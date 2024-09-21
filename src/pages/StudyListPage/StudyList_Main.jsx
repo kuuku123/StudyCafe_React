@@ -18,9 +18,11 @@ const StudyList_Main = () => {
     const sanitizedStudies = Array.isArray(studies)
       ? studies.map((study) => ({
           ...study,
-          cleanHtml: DOMPurify.sanitize(study.fullDescription),
+          fullDescription: DOMPurify.sanitize(study.fullDescription),
+          studyImage: "data:image/png;base64," + study.studyImage
         }))
       : [];
+      console.log("sanitizedStudies => ",sanitizedStudies)
     setStudies(sanitizedStudies);
   };
   useEffect(() => {
@@ -40,9 +42,8 @@ const StudyList_Main = () => {
         {Array.isArray(studies) && studies.length > 0 ? (
           studies.map((study, index) => (
             <S.Card key={index} index={index} className={`card-${index}`} onClick={() => handleClick(study)}>
-              {/* Space for the image */}
               <S.CardImage>
-                <img src={study.image} alt={study.title} />
+                <img src={study.studyImage} alt={study.title} />
               </S.CardImage>
               <S.CardBody>
                 <h3>{study.title}</h3>

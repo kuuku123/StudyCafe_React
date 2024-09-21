@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import * as S from "./StudyPage_style";
-import { Link, useLocation } from "react-router-dom";
-import * as style from "../../../components/Component_style";
 import Study_Info from "./ComponentPage/Info";
 import Study_Member from "./ComponentPage/Member";
 import Study_Schedule from "./ComponentPage/Schedule";
@@ -9,7 +7,7 @@ import Study_Configuration from "./ComponentPage/Configuration";
 import { useStudy } from ".";
 
 const Study_Main = () => {
-  const [category, setCategory] = useState("member");
+  const [category, setCategory] = useState("info");
   const study = useStudy();
 
   const pageComponent = {

@@ -20,13 +20,18 @@ const Study_Info_Main = () => {
       const study_image_json = await StudyApi.fetchStudyImage(path);
       hanldeResponse(study_image_json, handleImage, false);
     };
-    console.log("study_main => " ,study.path)
+    console.log("study_main => ", study.path);
     getStudyImage(study.path);
   }, []);
   return (
     <>
       <S.Study_Picture_style>
-        <img src={img} width="720px" height="360px" style={{maxWidth: "100%", maxHeight:"100%"}}></img>
+        <img
+          src={img}
+          width="400px"
+          height="400px"
+          style={{ maxWidth: "100%", maxHeight: "100%" }}
+        ></img>
         <figcaption style={{ textAlign: "center" }}>Study Image</figcaption>
       </S.Study_Picture_style>
       <S.Study_ShortDescription_style>
