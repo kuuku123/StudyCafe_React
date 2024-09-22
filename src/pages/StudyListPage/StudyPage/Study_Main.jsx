@@ -7,7 +7,7 @@ import Study_Configuration from "./ComponentPage/Configuration";
 import { useStudy } from ".";
 
 const Study_Main = () => {
-  const [category, setCategory] = useState("info");
+  const [category, setCategory] = useState("member");
   const study = useStudy();
 
   const pageComponent = {

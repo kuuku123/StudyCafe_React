@@ -50,6 +50,13 @@ const ProfileSetting_Main = () => {
     const errors = {};
     return errors;
   };
+  
+  const input_style = {
+    width: "100%", // Takes full width of the parent container
+    maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
+    height: "30px",
+    minWidth: "200px", // Ensures it doesn't shrink too much
+  };
 
   return (
     <S.Grid_Container_style>
@@ -89,6 +96,7 @@ const ProfileSetting_Main = () => {
             id="profile-edit-bio"
             name="bio"
             placeholder="간략한 소개를 부탁한다"
+            style={input_style}
           ></MyForm.Field>
           <div>길지 않게 35자이내로 입력하세요</div>
         </FormControl>
@@ -102,6 +110,7 @@ const ProfileSetting_Main = () => {
             id="profile-edit-link"
             name="link"
             placeholder="http://studycafe.com"
+            style={input_style}
           ></MyForm.Field>
           <div>
             블로그 유튜브 또는 포트폴리오나 좋아하는 웹 사이트 등 본인을 표현할
@@ -117,6 +126,7 @@ const ProfileSetting_Main = () => {
             id="profile-edit-job"
             name="job"
             placeholder="어떤 일을 하고 계신가요?"
+            style={input_style}
           ></MyForm.Field>
           <div>개발자? 매니저? 취준생? 대표님?</div>
         </FormControl>
@@ -129,6 +139,7 @@ const ProfileSetting_Main = () => {
             id="profile-edit-location"
             name="location"
             placeholder="어디에 살고 게신가요?"
+            style={input_style}
           ></MyForm.Field>
           <div>
             주요 활동(사는 곳이나 직장을 다니는 곳 또는 놀러 다니는 곳) 지역의

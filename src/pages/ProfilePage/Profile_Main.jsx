@@ -8,6 +8,7 @@ import HandleResponseApi from "../../lib/HandleResponse";
 const Profile_Main = () => {
   const [img, setImage] = useState();
   const [profile, setProfile] = useState({
+    nickname: "default nickName",
     bio: "default bio",
     email: "default email",
   });
@@ -30,6 +31,7 @@ const Profile_Main = () => {
   useEffect(() => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
+      console.log("profile=> ", response)
       hanldeResponse(response, setProfile, false);
     };
     getProfile();
@@ -48,7 +50,7 @@ const Profile_Main = () => {
         <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
       </S.Profile_List_style>
       <S.Profile_Name_style>
-        {sessionStorage.getItem("user")}
+        {profile.nickname}
       </S.Profile_Name_style>
       <S.Profile_Info_style>
         {profile.bio || "default bio"}

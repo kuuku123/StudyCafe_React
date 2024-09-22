@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 import * as S from "./StudyListPage_style";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
-import StudyList_Main from './StudyList_Main';
+import StudyList_Main from "./StudyList_Main";
 
 const StudyListPage = () => {
   return (
@@ -21,7 +21,7 @@ const StudyListPage = () => {
         <StudyList_Main></StudyList_Main>
       </Page>
     </div>
-  )
-}
+  );
+};
 
-export default StudyListPage
+export default StudyListPage;
