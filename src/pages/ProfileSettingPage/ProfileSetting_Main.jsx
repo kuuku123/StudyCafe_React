@@ -5,6 +5,7 @@ import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSeting_style";
 import HandleResponseApi from "../../lib/HandleResponse";
 import ProfileApi from "../../lib/ProfileApi";
+import RoutesEnum from "../../lib/RoutesEnum";
 
 const ProfileSetting_Main = () => {
   const [img, setImage] = useState();
@@ -43,7 +44,7 @@ const ProfileSetting_Main = () => {
       body: JSON.stringify(profileEditInfo),
     });
     const response = await raw_response.json();
-    handleResponse(response,null, {useNav:true, path:"/profile"});
+    handleResponse(response,null, {useNav:true, path:RoutesEnum.PROFILE});
   };
 
   const validate = (values) => {

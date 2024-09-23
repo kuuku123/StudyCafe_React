@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
-import * as S from "./StudyPage_style";
+import * as S from "./My_StudyPage_style";
 import CopyRight from "../../../components/CopyRight";
-import Study_Main from "./Study_Main";
+import Study_Main from "./My_Study_Main";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const StudyContext = createContext();
@@ -18,7 +18,7 @@ const StudyPage = () => {
 
   useEffect(() => {
     if (!study) {
-      console.log("it worked")
+      console.log("it worked");
       navigate("/study");
     }
   }, []);

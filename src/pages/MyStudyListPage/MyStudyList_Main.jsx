@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import StudyApi from "../../lib/StudyApi";
 import HandleResponseApi from "../../lib/HandleResponse";
-import * as S from "./StudyListPage_style";
+import * as S from "./MyStudyListPage_style";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const StudyList_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleClick = (study) => {
-    console.log("study => " , study)
+    console.log("study => ", study);
     navigate("/study/" + study.path, { state: study });
   };
   const handleStudies = (studies) => {
@@ -19,10 +19,10 @@ const StudyList_Main = () => {
       ? studies.map((study) => ({
           ...study,
           fullDescription: DOMPurify.sanitize(study.fullDescription),
-          studyImage: "data:image/png;base64," + study.studyImage
+          studyImage: "data:image/png;base64," + study.studyImage,
         }))
       : [];
-      console.log("sanitizedStudies => ",sanitizedStudies)
+    console.log("sanitizedStudies => ", sanitizedStudies);
     setStudies(sanitizedStudies);
   };
   useEffect(() => {
@@ -41,7 +41,12 @@ const StudyList_Main = () => {
         {/* Check if studies is an array and has items */}
         {Array.isArray(studies) && studies.length > 0 ? (
           studies.map((study, index) => (
-            <S.Card key={index} index={index} className={`card-${index}`} onClick={() => handleClick(study)}>
+            <S.Card
+              key={index}
+              index={index}
+              className={`card-${index}`}
+              onClick={() => handleClick(study)}
+            >
               <S.CardImage>
                 <img src={study.studyImage} alt={study.title} />
               </S.CardImage>
@@ -51,7 +56,8 @@ const StudyList_Main = () => {
                 <p>Short Description: {study.shortDescription}</p>
                 <S.FullDescription>
                   <summary>Full Description</summary>
-                  <div className="full-description"
+                  <div
+                    className="full-description"
                     dangerouslySetInnerHTML={{ __html: study.fullDescription }}
                   />
                 </S.FullDescription>

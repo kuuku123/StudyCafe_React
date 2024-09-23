@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./Member_Main_style";
+import * as S from "./My_Study_Member_Main_style";
 import { useStudy } from "../..";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 import StudyApi from "../../../../../lib/StudyApi";
 import ProfileApi from "../../../../../lib/ProfileApi";
 
-const Study_Member_Main = () => {
+const My_Study_Member_Main = () => {
   const [img, setImage] = useState();
   const [studyMembers, setStudyMembers] = useState([]);
   const study = useStudy();
@@ -58,4 +58,4 @@ const Study_Member_Main = () => {
   );
 };
 
-export default Study_Member_Main;
+export default My_Study_Member_Main;

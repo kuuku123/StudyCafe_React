@@ -8,51 +8,52 @@ import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
-import StudyPage from "./pages/StudyListPage/StudyPage";
-import StudyListPage from "./pages/StudyListPage";
+import StudyPage from "./pages/MyStudyListPage/MyStudyPage";
+import MyStudyListPage from "./pages/MyStudyListPage";
 import ErrorPage from "./pages/ErrorPage";
+import RoutesEnum from "./lib/RoutesEnum";
 
 const App = () => {
   const homePage = createBrowserRouter([
     {
-      path: "/",
-      element: <HomePage></HomePage>,
+      path: RoutesEnum.HOME,
+      element: <HomePage />,
     },
     {
-      path: "/sign-up",
-      element: <SignupPage></SignupPage>,
+      path: RoutesEnum.SIGN_UP,
+      element: <SignupPage />,
     },
     {
-      path: "/login",
-      element: <LoginPage></LoginPage>,
+      path: RoutesEnum.LOGIN,
+      element: <LoginPage />,
     },
     {
-      path: "/profile",
-      element: <ProfilePage></ProfilePage>,
+      path: RoutesEnum.PROFILE,
+      element: <ProfilePage />,
     },
     {
-      path: "/profile-setting",
-      element: <ProfileSettingPage></ProfileSettingPage>,
+      path: RoutesEnum.PROFILE_SETTING,
+      element: <ProfileSettingPage />,
     },
     {
-      path: "/email-resend",
-      element: <EmailReSendPage></EmailReSendPage>,
+      path: RoutesEnum.EMAIL_RESEND,
+      element: <EmailReSendPage />,
     },
     {
-      path: "/create-study",
-      element: <CreateStudyPage></CreateStudyPage>,
+      path: RoutesEnum.CREATE_STUDY,
+      element: <CreateStudyPage />,
     },
     {
-      path: "/study",
-      element: <StudyListPage></StudyListPage>,
+      path: RoutesEnum.MY_STUDY_LIST,
+      element: <MyStudyListPage />,
     },
     {
-      path: "/study/:path",
-      element: <StudyPage></StudyPage>,
+      path: RoutesEnum.STUDY(),
+      element: <StudyPage />,
     },
     {
-      path: "*",
-      element: <ErrorPage/>, 
+      path: RoutesEnum.ERROR,
+      element: <ErrorPage />,
     },
   ]);
   return (

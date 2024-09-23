@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./Info_Main_style";
+import * as S from "./My_Study_Info_Main_style";
 import { useStudy } from "../..";
 import StudyApi from "../../../../../lib/StudyApi";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 
-const Study_Info_Main = () => {
+const My_Study_Info_Main = () => {
   const [img, setImage] = useState();
   const study = useStudy();
 
@@ -46,4 +46,4 @@ const Study_Info_Main = () => {
   );
 };
 
-export default Study_Info_Main;
+export default My_Study_Info_Main;

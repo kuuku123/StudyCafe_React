@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import * as S from "./StudyPage_style";
-import Study_Info from "./ComponentPage/Info";
-import Study_Member from "./ComponentPage/Member";
-import Study_Schedule from "./ComponentPage/Schedule";
-import Study_Configuration from "./ComponentPage/Configuration";
+import * as S from "./My_StudyPage_style";
+import My_Study_Info from "./MyStudyComponentPage/MyStudyInfo";
+import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
+import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";
+import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration";
 import { useStudy } from ".";
 
 const Study_Main = () => {
@@ -11,10 +11,10 @@ const Study_Main = () => {
   const study = useStudy();
 
   const pageComponent = {
-    info: <Study_Info></Study_Info>,
-    member: <Study_Member></Study_Member>,
-    schedule: <Study_Schedule></Study_Schedule>,
-    configuration: <Study_Configuration></Study_Configuration>,
+    info: <My_Study_Info></My_Study_Info>,
+    member: <My_Study_Member></My_Study_Member>,
+    schedule: <My_Study_Schedule></My_Study_Schedule>,
+    configuration: <My_Study_Configuration></My_Study_Configuration>,
   };
 
   const handleOnClick = (category) => {

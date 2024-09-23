@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import * as MyLayout from "./MyLayout";
 import Button from "../components/Button";
 import Dialog from "../components/Dialog";
+import RoutesEnum from "./RoutesEnum";
 
 const useHandleResponse = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
 
-  const handleResponse = (response, callback, useNavigate = {useNav: true, path: "/"}) => {
+  const handleResponse = (response, callback, useNavigate = {useNav: true, path: RoutesEnum.HOME}) => {
     console.log("useNavigate => ", useNavigate);
     
     if (response.status === "OK") {
@@ -27,7 +28,7 @@ const useHandleResponse = () => {
         <Dialog
           header={<>Login</>}
           footer={
-            <Button onClick={() => closeDialog("/login")}>
+            <Button onClick={() => closeDialog(RoutesEnum.LOGIN)}>
               네, 알겠습니다
             </Button>
           }

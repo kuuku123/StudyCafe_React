@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import * as S from "./Profile_style";
 import ProfileApi from "../../lib/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
+import RoutesEnum from "../../lib/RoutesEnum";
 
 const Profile_Main = () => {
   const [img, setImage] = useState();
@@ -64,7 +65,7 @@ const Profile_Main = () => {
         <div>email verification</div>
       </S.Profile_Emailverification_style>
       <S.Profile_Edit_style>
-        <Link to={"/profile-setting"}>profile edit</Link>
+        <Link to={RoutesEnum.PROFILE_SETTING}>profile edit</Link>
       </S.Profile_Edit_style>
     </S.Grid_Container_style>
   );

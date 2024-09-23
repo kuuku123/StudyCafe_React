@@ -4,6 +4,7 @@ import * as S from "./CreateStudyPage_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import HandleResponseApi from "../../lib/HandleResponse";
+import RoutesEnum from "../../lib/RoutesEnum";
 const CreateStudy_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
@@ -17,7 +18,7 @@ const CreateStudy_Main = () => {
       body: JSON.stringify(createStudyForm),
     });
     const response = await raw_response.json();
-    handleResponse(response,null, {useNav: true, path: "/study"});
+    handleResponse(response,null, {useNav: true, path: RoutesEnum.MY_STUDY_LIST});
   };
 
   const validate = (values) => {

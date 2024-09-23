@@ -8,6 +8,7 @@ import * as S from "./LoginForm_style";
 import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
+import RoutesEnum from "../../lib/RoutesEnum";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const LoginPage = () => {
       openDialog(
         <Dialog
           header={<>오류</>}
-          footer={<Button onClick={() => closeDialog("/sign-up")}>닫기</Button>}
+          footer={<Button onClick={() => closeDialog(RoutesEnum.SIGN_UP)}>닫기</Button>}
         >
           {response.message}
         </Dialog>
