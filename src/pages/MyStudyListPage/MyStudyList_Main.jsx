@@ -36,7 +36,7 @@ const StudyList_Main = () => {
 
   return (
     <>
-      <h2>Study List</h2>
+      <h2>My Study List</h2>
       <S.List>
         {/* Check if studies is an array and has items */}
         {Array.isArray(studies) && studies.length > 0 ? (
