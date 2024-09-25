@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 
-const Logout = ({setLogin}) => {
+const Logout = ({style, setLogin}) => {
 
   const navigate = useNavigate()
 
@@ -25,7 +25,7 @@ const Logout = ({setLogin}) => {
   };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <span style={style} onClick={handleLogout}>Logout</span>
   )
 }
 

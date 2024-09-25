@@ -26,11 +26,6 @@ export const DropDown_style = styled.ul`
     &:hover {
       background-color: #f5f5f5;
     }
-    &:first-child {
-      &:hover {
-        background-color: white;
-      }
-    }
   }
   /* Target only the first li element within DropDownContainer */
 
@@ -54,6 +49,7 @@ export const Li_style = styled.li`
   font-style: italic;
 `;
 export const link_style = {
+  fontSize: "24px",
   color: "#004080",
   textDecoration: "none",
 };

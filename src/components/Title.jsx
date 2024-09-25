@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
 import { CgBell } from "react-icons/cg";
 import * as S from "./Component_style";
+import RoutesEnum from "../lib/RoutesEnum";
+import Logout from "./Logout";
+import { CgProfile } from "react-icons/cg";
+import { FaBookOpen } from "react-icons/fa6";
 
 const Title = ({ children }) => {
   const [login, setLogin] = useState(false);
@@ -27,10 +31,33 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <CgBell size={"22px"}></CgBell>
-          <Link to="/create-study">
-            <div style={{ fontSize: "22px" }}>create study</div>
-          </Link>
-          <DropDownContainer setLogin={setLogin}></DropDownContainer>
+          <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>
+            <li>
+              <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
+                create study
+              </Link>
+            </li>
+            <li>
+              <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
+                join study
+              </Link>
+            </li>
+          </DropDownContainer>
+          <DropDownContainer profile={<CgProfile size={"22px"}></CgProfile>}>
+            <li>
+              <Link style={S.link_style} to={RoutesEnum.PROFILE}>
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link style={S.link_style} to={RoutesEnum.MY_STUDY_LIST}>
+                Study
+              </Link>
+            </li>
+            <li>
+              <Logout style={S.link_style} setLogin={setLogin}></Logout>
+            </li>
+          </DropDownContainer>
         </S.Login_Signup_style>
       </S.Title_style>
     );
