@@ -9,7 +9,10 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 
 const Title = ({ children }) => {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(() => {
+    const isLogin = sessionStorage.getItem("login");
+    return isLogin === "success";
+  });
 
   useEffect(() => {
     const isLogin = sessionStorage.getItem("login");
@@ -18,7 +21,7 @@ const Title = ({ children }) => {
     } else if (isLogin === null) {
       setLogin(false);
     }
-  }, []);
+  }, [login]);
 
   if (login) {
     return (

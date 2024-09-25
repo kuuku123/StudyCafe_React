@@ -49,7 +49,7 @@ export const Li_style = styled.li`
   font-style: italic;
 `;
 export const link_style = {
-  fontSize: "24px",
+  fontSize: "20px",
   color: "#004080",
   textDecoration: "none",
 };
