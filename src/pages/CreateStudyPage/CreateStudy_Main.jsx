@@ -5,19 +5,12 @@ import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
+import StudyApi from "../../lib/StudyApi";
 const CreateStudy_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleSubmit = async (createStudyForm) => {
-    const raw_response = await fetch(`${SERVER_API_URL}/new-study`, {
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify(createStudyForm),
-    });
-    const response = await raw_response.json();
+    const response = await StudyApi.createStudy(createStudyForm)
     handleResponse(response,null, {useNav: true, path: RoutesEnum.MY_STUDY_LIST});
   };
 

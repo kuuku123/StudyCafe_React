@@ -10,6 +10,7 @@ export const Grid_Container_style = styled.div`
 `;
 
 export const Study_Component_Click_style = styled.span`
+  font-size: ${(props) => props.fontSize || "17px"};
   padding: 10px;
   margin: 5px;
   cursor: pointer;

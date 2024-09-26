@@ -5,10 +5,14 @@ import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
 import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";
 import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration";
 import { useStudy } from ".";
+import StudyApi from "../../../lib/StudyApi";
+import HandleResponseApi from "../../../lib/HandleResponse";
 
 const Study_Main = () => {
   const [category, setCategory] = useState("member");
+  const [draft , setDraft] = useState("DRAFT")
   const study = useStudy();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   const pageComponent = {
     info: <My_Study_Info></My_Study_Info>,
@@ -20,14 +24,27 @@ const Study_Main = () => {
   const handleOnClick = (category) => {
     setCategory(category);
   };
+
+  const handleDraftOnClick = async (path) => {
+    const response = await StudyApi.publishStudy(path);
+    handleResponse(response, () => setDraft("PUBLISHED"), false);
+  };
+
   return (
     <S.Grid_Container_style>
       <S.Study_Title_style>
         <h1>{study.title}</h1>
       </S.Study_Title_style>
       <S.Study_Draft_style>
-        <span>draft</span>
-        <span>off</span>
+        <S.Study_Component_Click_style
+          fontSize="22px"
+          onClick={() => handleDraftOnClick(study.path)}
+        >
+          {draft}
+        </S.Study_Component_Click_style>
+        <S.Study_Component_Click_style fontSize="22px">
+          off
+        </S.Study_Component_Click_style>
       </S.Study_Draft_style>
       <S.Study_Link_style>
         <S.Study_Component_Click_style

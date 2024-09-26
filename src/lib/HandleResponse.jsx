@@ -9,18 +9,20 @@ const useHandleResponse = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
 
-  const handleResponse = (response, callback, useNavigate = {useNav: true, path: RoutesEnum.HOME}) => {
+  const handleResponse = (
+    response,
+    callback,
+    useNavigate = { useNav: true, path: RoutesEnum.HOME }
+  ) => {
     console.log("useNavigate => ", useNavigate);
-    
+
     if (response.status === "OK") {
       if (callback) callback(response.data);
       if (typeof useNavigate === "boolean") {
-        console.log("do nothing")
-      }
-      else if (useNavigate.useNav)  {
-        console.log("hiihi - ",useNavigate.useNav , useNavigate.path)
+        console.log("do nothing");
+      } else if (useNavigate.useNav) {
+        console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
         navigate(useNavigate.path);
-
       }
     } else if (response.status === 403) {
       console.log("unauthorized");
@@ -35,19 +37,23 @@ const useHandleResponse = () => {
         ></Dialog>
       );
     } else {
+      console.log("response => ", response);
       openDialog(
         <Dialog
           header={<>오류</>}
           footer={<Button onClick={() => closeDialog()}>네, 알겠습니다</Button>}
         >
-          <ul>
-            {response.data &&
-              Object.keys(response.data).map((key) => (
+          {response.data ? (
+            <ul>
+              {Object.keys(response.data).map((key) => (
                 <li key={key}>
                   {key} : {response.data[key]}
                 </li>
               ))}
-          </ul>
+            </ul>
+          ) : response.message && (
+            <span>{response.message}</span>
+          )}
         </Dialog>
       );
     }
