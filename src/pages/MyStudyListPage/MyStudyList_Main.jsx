@@ -35,7 +35,7 @@ const StudyList_Main = () => {
   }, []);
 
   return (
-    <>
+    <S.Container>
       <h2>My Study List</h2>
       <S.List>
         {/* Check if studies is an array and has items */}
@@ -68,7 +68,7 @@ const StudyList_Main = () => {
           <S.Card>No studies available</S.Card> // Fallback message when studies is empty or not yet filled
         )}
       </S.List>
-    </>
+    </S.Container>
   );
 };
 

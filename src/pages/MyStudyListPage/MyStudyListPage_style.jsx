@@ -10,6 +10,9 @@ export const Header_Input_style = styled.input`
   height: auto;
 `;
 
+export const Container = styled.div`
+  min-height: 80vh;
+`;
 export const List = styled.ul`
   list-style: none;
   padding: 0;
@@ -87,7 +90,7 @@ export const FullDescription = styled.div`
   /* Initially hide the full description content */
   summary + div {
     display: none;
-  } 
+  }
 
   /* Define the keyframes for the pulse animation */
   @keyframes pulse {

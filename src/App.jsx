@@ -12,7 +12,7 @@ import StudyPage from "./pages/MyStudyListPage/MyStudyPage";
 import MyStudyListPage from "./pages/MyStudyListPage";
 import ErrorPage from "./pages/ErrorPage";
 import RoutesEnum from "./lib/RoutesEnum";
-import PublicStudyPage from "./pages/PublicStudyPage";
+import PublicStudyPage from "./pages/JoinStudyPage";
 
 const App = () => {
   const homePage = createBrowserRouter([

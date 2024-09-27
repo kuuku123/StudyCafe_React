@@ -15,5 +15,5 @@ export const Homeapge_Main_style = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  min-height: 80vh;
 `;

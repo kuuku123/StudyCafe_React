@@ -40,7 +40,14 @@ const My_Study_Info_Main = () => {
       </S.Study_ShortDescription_style>
       <S.Study_FullDescription_style>
         <h2>Full Description</h2>
-        <div dangerouslySetInnerHTML={{ __html: study.fullDescription }} />
+        <div
+          style={{
+            maxHeight: "300px",
+            width: "100%",
+            overflow: "auto",
+          }}
+          dangerouslySetInnerHTML={{ __html: study.fullDescription }}
+        />
       </S.Study_FullDescription_style>
     </>
   );

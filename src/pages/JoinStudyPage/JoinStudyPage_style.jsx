@@ -9,10 +9,3 @@ export const Header_Input_style = styled.input`
   transition: border-color 0.3s ease; /* Smooth transition for border color */
   height: auto;
 `;
-
-export const CreateStudy_Main_style = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 80vh;
-`;
