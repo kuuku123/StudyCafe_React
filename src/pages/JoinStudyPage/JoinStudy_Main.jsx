@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import Select from "react-select"; // Import react-select
+import Select from "react-select"; 
+import * as S from "./JoinStudyPage_style"
 
 // Study data
 const studies = [
@@ -16,74 +16,6 @@ const studies = [
   { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
 ];
 
-// Styling for layout
-const StudyListContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  min-height: 80vh;
-  padding: 20px;
-  gap: 20px;
-`;
-
-const FiltersContainer = styled.div`
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const StudyResultsContainer = styled.div`
-  width: 70%;
-`;
-
-const StudyCard = styled.div`
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.h2`
-  margin: 0 0 10px;
-`;
-
-const Tags = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const Tag = styled.span`
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border-radius: 15px;
-  font-size: 12px;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-`;
-
-const PageButton = styled.button`
-  padding: 8px 16px;
-  border: 1px solid #007bff;
-  background-color: white;
-  color: #007bff;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-
-  &:disabled {
-    background-color: #ddd;
-    color: #888;
-    cursor: not-allowed;
-  }
-`;
 
 const ITEMS_PER_PAGE = 3; // Number of items per page
 
@@ -129,9 +61,9 @@ const JoinStudy_Main = () => {
   };
 
   return (
-    <StudyListContainer>
+    <S.StudyListContainer>
       {/* Filters on the left */}
-      <FiltersContainer>
+      <S.FiltersContainer>
         {/* Searchable Tag Dropdown */}
         <Select
           value={selectedTag}
@@ -149,22 +81,22 @@ const JoinStudy_Main = () => {
           isClearable
           placeholder="Search and select zone..."
         />
-      </FiltersContainer>
+      </S.FiltersContainer>
 
       {/* Study list and pagination on the right */}
-      <StudyResultsContainer>
+      <S.StudyResultsContainer>
         {/* Display Studies */}
         {paginatedStudies.length > 0 ? (
           paginatedStudies.map((study) => (
-            <StudyCard key={study.id}>
-              <Title>{study.title}</Title>
+            <S.StudyCard key={study.id}>
+              <S.Title>{study.title}</S.Title>
               <p>Zone: {study.zone}</p>
-              <Tags>
+              <S.Tags>
                 {study.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <S.Tag key={tag}>{tag}</S.Tag>
                 ))}
-              </Tags>
-            </StudyCard>
+              </S.Tags>
+            </S.StudyCard>
           ))
         ) : (
           <p>No studies found for the selected filters.</p>
@@ -172,23 +104,23 @@ const JoinStudy_Main = () => {
 
         {/* Pagination */}
         {filteredStudies.length > ITEMS_PER_PAGE && (
-          <Pagination>
-            <PageButton onClick={handlePrevPage} disabled={currentPage === 1}>
+          <S.Pagination>
+            <S.PageButton onClick={handlePrevPage} disabled={currentPage === 1}>
               Prev
-            </PageButton>
+            </S.PageButton>
             <span>
               Page {currentPage} of {totalPages}
             </span>
-            <PageButton
+            <S.PageButton
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
               Next
-            </PageButton>
-          </Pagination>
+            </S.PageButton>
+          </S.Pagination>
         )}
-      </StudyResultsContainer>
-    </StudyListContainer>
+      </S.StudyResultsContainer>
+    </S.StudyListContainer>
   );
 };
 
