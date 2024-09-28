@@ -7,24 +7,22 @@ import * as S from "./Homepage_style";
 import ProfileApi from "../../lib/ProfileApi";
 import EmailVerification from "./EmailVerification";
 import HandleResponseApi from "../../lib/HandleResponse";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const handleResponse = HandleResponseApi.useHandleResponse()
-
-
-  const handleProfileResponse = (profile_data) => {
-    setEmailVerified(profile_data.emailVerified)
-    if (sessionStorage.getItem("user")) setLogin(true);
-  }
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const getProfile = async () => {
-        const profile = await ProfileApi.fetchProfile();
-        handleResponse(profile,handleProfileResponse,false)
+    if (isAuthenticated) {
+      setLogin(true);
+      setEmailVerified(user.emailVerified);
+    }
+    const getXsrfToken = async () => {
+      const xsrfToken = await ProfileApi.xsrfToken();
     };
-    getProfile();
+    getXsrfToken();
   }, []);
 
   return (

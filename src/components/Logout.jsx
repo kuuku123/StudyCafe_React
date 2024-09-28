@@ -1,16 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../lib/features/auth/authSlice";
 
-const Logout = ({style, setLogin}) => {
-
-  const navigate = useNavigate()
+const Logout = ({ style }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    sessionStorage.removeItem("login");
-    sessionStorage.removeItem("user");
-    Cookies.remove("JSESSIONID");
-    setLogin(false);
     const response = await fetch("http://localhost:8081/logout", {
       credentials: "include",
       method: "GET",
@@ -19,14 +17,17 @@ const Logout = ({style, setLogin}) => {
       },
     }).then((res) => {
       console.log(res);
-      navigate("/")
+      dispatch(logout());
+      navigate("/");
       return res.json();
     });
   };
 
   return (
-    <span style={style} onClick={handleLogout}>Logout</span>
-  )
-}
+    <span style={style} onClick={handleLogout}>
+      Logout
+    </span>
+  );
+};
 
-export default Logout
+export default Logout;

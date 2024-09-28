@@ -9,10 +9,13 @@ import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
 import RoutesEnum from "../../lib/RoutesEnum";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../lib/features/auth/authSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
+  const dispatch = useDispatch()
 
   const handleSubmit = async (loginInfo) => {
     const raw_response = await fetch("http://localhost:8081/login", {
@@ -25,7 +28,10 @@ const LoginPage = () => {
     });
 
     const response = await raw_response.json();
+    console.log("response ==> ",response)
     if (response.status === "OK") {
+      console.log("response data => ",response.data)
+      dispatch(loginSuccess(response.data))
       sessionStorage.setItem("user", loginInfo.nicknameOrEmail);
       sessionStorage.setItem("login", "success");
       navigate("/");

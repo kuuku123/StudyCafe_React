@@ -1,3 +1,12 @@
+const xsrfToken = async () => {
+  const raw_xsrf_token= await fetch(`${SERVER_API_URL}/xsrf-token`, {
+    credentials: "include",
+    method: "GET",
+  });
+  console.log("raw_xsrf_token ", raw_xsrf_token)
+  return raw_xsrf_token;
+}
+
 const fetchProfile = async () => {
   const raw_profile = await fetch(`${SERVER_API_URL}/profile`, {
     credentials: "include",
@@ -21,6 +30,7 @@ const fetchProfileImage = async () => {
 };
 
 const ProfileApi = {
+  xsrfToken,
   fetchProfile,
   fetchProfileImage,
 };

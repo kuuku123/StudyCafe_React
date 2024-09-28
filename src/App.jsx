@@ -13,6 +13,9 @@ import MyStudyListPage from "./pages/MyStudyListPage";
 import ErrorPage from "./pages/ErrorPage";
 import RoutesEnum from "./lib/RoutesEnum";
 import PublicStudyPage from "./pages/JoinStudyPage";
+import { Provider } from "react-redux";
+import store, { persistor } from "./lib/features/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -62,9 +65,13 @@ const App = () => {
     },
   ]);
   return (
-    <MyLayout.Layout>
-      <RouterProvider router={homePage}></RouterProvider>
-    </MyLayout.Layout>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <MyLayout.Layout>
+          <RouterProvider router={homePage}></RouterProvider>
+        </MyLayout.Layout>
+      </PersistGate>
+    </Provider>
   );
 };
 export default App;

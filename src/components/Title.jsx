@@ -7,23 +7,13 @@ import RoutesEnum from "../lib/RoutesEnum";
 import Logout from "./Logout";
 import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const Title = ({ children }) => {
-  const [login, setLogin] = useState(() => {
-    const isLogin = sessionStorage.getItem("login");
-    return isLogin === "success";
-  });
 
-  useEffect(() => {
-    const isLogin = sessionStorage.getItem("login");
-    if (isLogin === "success") {
-      setLogin(true);
-    } else if (isLogin === null) {
-      setLogin(false);
-    }
-  }, [login]);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  if (login) {
+  if (isAuthenticated) {
     return (
       <S.Title_style>
         <S.Children_style>
@@ -58,7 +48,7 @@ const Title = ({ children }) => {
               </Link>
             </li>
             <li>
-              <Logout style={S.link_style} setLogin={setLogin}></Logout>
+              <Logout style={S.link_style}></Logout>
             </li>
           </DropDownContainer>
         </S.Login_Signup_style>
