@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import * as S from "./Homepage_Main_style";
 
 const EmailVerification = () => {
   return (
-    <div>
-      스터디 카페 가입을 완료하려면 <Link to={"/email-resend"}>계정 인증 이메일을 확인</Link> 하세요.{" "}
-    </div>
+    <S.Email_Verification_style>
+      To finish Study Cafe enrollment <br/>
+      <Link to={"/email-resend"}>check your verification email</Link>
+    </S.Email_Verification_style>
   );
 };
 

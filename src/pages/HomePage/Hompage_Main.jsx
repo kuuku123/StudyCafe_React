@@ -4,11 +4,13 @@ import * as S from "./Homepage_Main_style";
 const Hompage_Main = () => {
   return (
     <S.Homeapge_Main_style>
-      <h1>Welcome To Study Cafe</h1>
-      <h2>
-        태그와 지역 기반으로 스터디를 찾고 참여하세요. 스터디 모임 관리 기능을
-        제공합니다.
-      </h2>
+      <S.Home_Title_style>Welcome To Study Cafe</S.Home_Title_style>
+      <S.Home_Intro_style>
+        Find and participate in studies based on tags and regions. <br />
+      </S.Home_Intro_style>
+      <S.Home_Intro_style>
+        Provides study meeting management.
+      </S.Home_Intro_style>
     </S.Homeapge_Main_style>
   );
 };

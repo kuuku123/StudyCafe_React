@@ -9,7 +9,7 @@ import StudyApi from "../../../lib/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 
 const Study_Main = () => {
-  const [category, setCategory] = useState("info");
+  const [category, setCategory] = useState("configuration");
   const [draft , setDraft] = useState("DRAFT")
   const study = useStudy();
   const handleResponse = HandleResponseApi.useHandleResponse();

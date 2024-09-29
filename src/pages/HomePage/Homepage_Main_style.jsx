@@ -17,3 +17,16 @@ export const Homeapge_Main_style = styled.div`
   align-items: center;
   min-height: 80vh;
 `;
+
+export const Email_Verification_style = styled.div`
+  font-size: 20px;
+`
+
+export const Home_Title_style = styled.h1`
+  height: 100%;
+  font-size: 100px;
+`
+export const Home_Intro_style = styled.h2`
+  height: 100%;
+  font-size: 30px;
+`

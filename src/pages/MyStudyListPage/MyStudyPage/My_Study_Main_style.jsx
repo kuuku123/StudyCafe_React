@@ -10,7 +10,7 @@ export const Grid_Container_style = styled.div`
 `;
 
 export const Study_Component_Click_style = styled.span`
-  font-size: ${(props) => props.fontSize || "17px"};
+  font-size: ${(props) => props.fontSize || "22px"};
   padding: 10px;
   margin: 5px;
   cursor: pointer;
@@ -36,6 +36,7 @@ export const Study_Link_style = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 40px;
   grid-row-start: 2;
   grid-row-end: 3;
   grid-column-start: 2;

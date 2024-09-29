@@ -10,7 +10,6 @@ export const Header_Input_style = styled.input`
   height: auto;
 `;
 
-
 // Styling for layout
 export const StudyListContainer = styled.div`
   display: flex;
