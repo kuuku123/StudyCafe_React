@@ -4,7 +4,7 @@ import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSeting_Main_style";
 import HandleResponseApi from "../../lib/HandleResponse";
-import ProfileApi from "../../lib/ProfileApi";
+import ProfileApi from "../../lib/apis/ProfileApi";
 import RoutesEnum from "../../lib/RoutesEnum";
 
 const ProfileSetting_Main = () => {
@@ -44,14 +44,14 @@ const ProfileSetting_Main = () => {
       body: JSON.stringify(profileEditInfo),
     });
     const response = await raw_response.json();
-    handleResponse(response,null, {useNav:true, path:RoutesEnum.PROFILE});
+    handleResponse(response, null, { useNav: true, path: RoutesEnum.PROFILE });
   };
 
   const validate = (values) => {
     const errors = {};
     return errors;
   };
-  
+
   const input_style = {
     width: "100%", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px

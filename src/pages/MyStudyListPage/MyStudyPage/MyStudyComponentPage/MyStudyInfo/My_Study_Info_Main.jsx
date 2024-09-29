@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Info_Main_style";
 import { useStudy } from "../..";
-import StudyApi from "../../../../../lib/StudyApi";
+import StudyApi from "../../../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 
 const My_Study_Info_Main = () => {

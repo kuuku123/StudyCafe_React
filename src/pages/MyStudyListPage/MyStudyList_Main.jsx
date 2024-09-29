@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import StudyApi from "../../lib/StudyApi";
+import StudyApi from "../../lib/apis/StudyApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import * as S from "./MyStudyList_Main_style";
 import DOMPurify from "dompurify";

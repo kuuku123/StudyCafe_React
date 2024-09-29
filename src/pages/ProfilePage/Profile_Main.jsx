@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CgCalendar, CgMail } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import * as S from "./Profile_Main_style";
-import ProfileApi from "../../lib/ProfileApi";
+import ProfileApi from "../../lib/apis/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
 
@@ -32,7 +32,7 @@ const Profile_Main = () => {
   useEffect(() => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
-      console.log("profile=> ", response)
+      console.log("profile=> ", response);
       hanldeResponse(response, setProfile, false);
     };
     getProfile();
@@ -50,9 +50,7 @@ const Profile_Main = () => {
         </Link>
         <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
       </S.Profile_List_style>
-      <S.Profile_Name_style>
-        {profile.nickname}
-      </S.Profile_Name_style>
+      <S.Profile_Name_style>{profile.nickname}</S.Profile_Name_style>
       <S.Profile_Info_style>
         {profile.bio || "default bio"}
       </S.Profile_Info_style>

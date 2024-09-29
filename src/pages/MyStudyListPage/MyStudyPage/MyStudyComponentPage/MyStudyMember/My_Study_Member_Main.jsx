@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Member_Main_style";
 import { useStudy } from "../..";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
-import StudyApi from "../../../../../lib/StudyApi";
-import ProfileApi from "../../../../../lib/ProfileApi";
+import StudyApi from "../../../../../lib/apis/StudyApi";
+import ProfileApi from "../../../../../lib/apis/ProfileApi";
 
 const My_Study_Member_Main = () => {
   const [img, setImage] = useState();

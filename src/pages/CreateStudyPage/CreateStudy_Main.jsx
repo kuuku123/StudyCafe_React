@@ -5,13 +5,17 @@ import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
-import StudyApi from "../../lib/StudyApi";
+import StudyApi from "../../lib/apis/StudyApi";
+import Button from "../../components/Button";
 const CreateStudy_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleSubmit = async (createStudyForm) => {
-    const response = await StudyApi.createStudy(createStudyForm)
-    handleResponse(response,null, {useNav: true, path: RoutesEnum.MY_STUDY_LIST});
+    const response = await StudyApi.createStudy(createStudyForm);
+    handleResponse(response, null, {
+      useNav: true,
+      path: RoutesEnum.MY_STUDY_LIST,
+    });
   };
 
   const validate = (values) => {
@@ -35,7 +39,7 @@ const CreateStudy_Main = () => {
 
   return (
     <S.CreateStudy_Main_style>
-      <h2>스터디 개설</h2>
+      <h2>Create Study</h2>
       <MyForm.Form
         id="create-study-form"
         initialValue={{
@@ -55,7 +59,7 @@ const CreateStudy_Main = () => {
         }}
       >
         <FormControl
-          label="스터디 path를 작성해주세요"
+          label="write study path"
           htmlFor="path"
           error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
         >
@@ -68,7 +72,7 @@ const CreateStudy_Main = () => {
         </FormControl>
 
         <FormControl
-          label="스터디 이름을 작성해주세요"
+          label="write study title (study name)"
           htmlFor="title"
           error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
         >
@@ -81,7 +85,7 @@ const CreateStudy_Main = () => {
         </FormControl>
 
         <FormControl
-          label="스터디 short description을 작성해주세요"
+          label="write study's short description"
           htmlFor="shrot-description"
           error={
             <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
@@ -96,7 +100,7 @@ const CreateStudy_Main = () => {
         </FormControl>
 
         <FormControl
-          label="스터디 full description 을 작성해주세요"
+          label="wrtie study's full description"
           htmlFor="full-description"
           error={
             <MyForm.ErrorMessage name="full-description"></MyForm.ErrorMessage>
@@ -110,7 +114,7 @@ const CreateStudy_Main = () => {
             as={MyEditor}
           ></MyForm.Field>
         </FormControl>
-        <button type="submit">저장하기</button>
+        <Button type="sumbit">Save</Button>
       </MyForm.Form>
     </S.CreateStudy_Main_style>
   );

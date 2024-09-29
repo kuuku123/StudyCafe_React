@@ -5,12 +5,12 @@ import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
 import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";
 import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration";
 import { useStudy } from ".";
-import StudyApi from "../../../lib/StudyApi";
+import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 
 const Study_Main = () => {
   const [category, setCategory] = useState("configuration");
-  const [draft , setDraft] = useState("DRAFT")
+  const [draft, setDraft] = useState("DRAFT");
   const study = useStudy();
   const handleResponse = HandleResponseApi.useHandleResponse();
 

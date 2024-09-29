@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-// Styling for layout
-export const Study_Configuration_Container_style = styled.div`
+export const Study_Select_Container_style = styled.div`
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -21,3 +20,11 @@ export const Study_Select_style = styled.div`
   width: 80%;
 `;
 
+export const Study_Configuration_Description_style = styled.div`
+  width: 100%;
+  height: 100%;
+  grid-row-start: 3;
+  grid-row-end: 8;
+  grid-column-start: 10;
+  grid-column-end: 14;
+`;

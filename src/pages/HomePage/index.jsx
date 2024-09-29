@@ -4,7 +4,7 @@ import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
 import Hompage_Main from "./Hompage_Main";
 import * as S from "./Homepage_Main_style";
-import ProfileApi from "../../lib/ProfileApi";
+import ProfileApi from "../../lib/apis/ProfileApi";
 import EmailVerification from "./EmailVerification";
 import HandleResponseApi from "../../lib/HandleResponse";
 import { useSelector } from "react-redux";
