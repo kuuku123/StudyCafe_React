@@ -1,6 +1,6 @@
 import React from "react";
 import MyEditor from "../../components/Quill-Editor/MyEditor";
-import * as S from "./CreateStudyPage_style";
+import * as S from "./CreateStudy_Main_style";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
 import HandleResponseApi from "../../lib/HandleResponse";

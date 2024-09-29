@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import StudyApi from "../../lib/StudyApi";
 import HandleResponseApi from "../../lib/HandleResponse";
-import * as S from "./MyStudyListPage_style";
+import * as S from "./MyStudyList_Main_style";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 

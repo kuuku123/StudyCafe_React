@@ -3,7 +3,7 @@ import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
 import SignupForm from "./SignupForm";
-import * as S from "./SignupPage_style";
+import * as S from "./SignupForm_style";
 import HandleResponseApi from "../../lib/HandleResponse";
 
 const SignupPage = () => {

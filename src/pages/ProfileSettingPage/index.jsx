@@ -3,7 +3,7 @@ import ProfileSetting_Main from "./ProfileSetting_Main";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
-import * as S from "./ProfileSeting_style";
+import * as S from "./ProfileSeting_Main_style";
 
 const ProfileSettingPage = () => {
   return (

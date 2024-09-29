@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
-import * as S from "./CreateStudyPage_style";
+import * as S from "./CreateStudy_Main_style";
 import CopyRight from "../../components/CopyRight";
 import CreateStudy_Main from "./CreateStudy_Main";
 

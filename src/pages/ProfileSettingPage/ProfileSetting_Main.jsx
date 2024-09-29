@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
-import * as S from "./ProfileSeting_style";
+import * as S from "./ProfileSeting_Main_style";
 import HandleResponseApi from "../../lib/HandleResponse";
 import ProfileApi from "../../lib/ProfileApi";
 import RoutesEnum from "../../lib/RoutesEnum";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select"; 
-import * as S from "./JoinStudyPage_style"
+import * as S from "./JoinStudy_Main_style"
 
 // Study data
 const studies = [

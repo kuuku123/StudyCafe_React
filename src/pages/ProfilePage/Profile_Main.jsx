@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CgCalendar, CgMail } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import * as S from "./Profile_style";
+import * as S from "./Profile_Main_style";
 import ProfileApi from "../../lib/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";

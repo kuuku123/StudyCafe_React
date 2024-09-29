@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./MyStudyListPage_style";
+import * as S from "./MyStudyList_Main_style";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";

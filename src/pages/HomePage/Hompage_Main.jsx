@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./Homepage_style";
+import * as S from "./Homepage_Main_style";
 
 const Hompage_Main = () => {
   return (

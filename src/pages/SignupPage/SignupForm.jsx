@@ -1,7 +1,7 @@
 import React from "react";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FomrControl";
-import * as S from "./SignupPage_style";
+import * as S from "./SignupForm_style";
 
 const SignupForm = ({ onSubmit }) => {
   const validate = (values) => {

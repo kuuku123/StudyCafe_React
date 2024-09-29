@@ -3,7 +3,7 @@ import JoinStudy_Main from "./JoinStudy_Main";
 import Page from "../../components/Page";
 import CopyRight from "../../components/CopyRight";
 import Title from "../../components/Title";
-import * as S from "./JoinStudyPage_style";
+import * as S from "./JoinStudy_Main_style";
 
 const PublicStudyPage = () => {
   return (

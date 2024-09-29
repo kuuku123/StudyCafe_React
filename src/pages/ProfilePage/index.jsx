@@ -3,7 +3,7 @@ import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
 import Profile_Main from "./Profile_Main";
-import * as S from "./Profile_style";
+import * as S from "./Profile_Main_style";
 
 const ProfilePage = () => {
   return (

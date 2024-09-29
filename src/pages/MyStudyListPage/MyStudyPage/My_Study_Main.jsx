@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "./My_StudyPage_style";
+import * as S from "./My_Study_Main_style";
 import My_Study_Info from "./MyStudyComponentPage/MyStudyInfo";
 import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
 import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";

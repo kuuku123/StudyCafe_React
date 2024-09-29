@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
-import * as S from "./My_StudyPage_style";
+import * as S from "./My_Study_Main_style";
 import CopyRight from "../../../components/CopyRight";
 import Study_Main from "./My_Study_Main";
 import { useLocation, useNavigate } from "react-router-dom";
