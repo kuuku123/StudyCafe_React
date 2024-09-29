@@ -4,6 +4,8 @@ import * as S from "./My_Study_Configuration_Main_style";
 import ZoneApi from "../../../../../lib/apis/ZoneApi";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 import Button from "../../../../../components/Button";
+import { useStudy } from "../..";
+import TagApi from "../../../../../lib/apis/TagApi";
 
 const uniqueTags = [
   { value: "health", label: "health" },
@@ -20,11 +22,13 @@ const uniqueTags = [
   { value: "philosophy", label: "philosophy" },
 ];
 
-const JoinStudy_Main = () => {
+const My_Study_Configuration_Main = () => {
   const [selectedTag, setSelectedTag] = useState(null);
   const [selectedZone, setSelectedZone] = useState(null);
   const [uniqueZones, setUniqueZones] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
+
+  const study = useStudy()
 
   const handleTagChange = (selectedOption) => {
     setSelectedTag(selectedOption);
@@ -33,9 +37,25 @@ const JoinStudy_Main = () => {
     setSelectedZone(selectedOption);
   };
 
+  const handleSelectedTag = async () => {
+      const response = await TagApi.addTag(study.path, selectedTag)
+      handleResponse(response,null,false)
+  };
+  const handleSelectedZone = async () => {
+      const response = await ZoneApi.addZone(study.path, selectedZone)
+      handleResponse(response,null,false)
+  };
+
+  const handleClick = () => {
+    console.log("selectedTag => ", selectedTag);
+    console.log("selectedZones => ", selectedZone);
+    handleSelectedTag()
+    handleSelectedZone()
+  };
+
   const parseZones = (zones) => {
     const mappedCities = zones.map((cityObj) => ({
-      value: cityObj.city,
+      value: { city: cityObj.city, province: cityObj.province },
       label: cityObj.city,
     }));
     setUniqueZones(mappedCities);
@@ -50,10 +70,6 @@ const JoinStudy_Main = () => {
     getZones();
   }, []);
 
-  const button_style = {
-
-  }
-
   return (
     <>
       <S.Study_Select_Container_style>
@@ -64,6 +80,7 @@ const JoinStudy_Main = () => {
             onChange={handleTagChange}
             options={uniqueTags}
             isClearable
+            isMulti
             placeholder="Search and select tag..."
           />
         </S.Study_Select_style>
@@ -77,7 +94,9 @@ const JoinStudy_Main = () => {
             placeholder="Search and select zone..."
           />
         </S.Study_Select_style>
-        <Button size="medium" width="50%" type="submit">save</Button>
+        <Button size="medium" width="50%" type="submit" onClick={handleClick}>
+          save
+        </Button>
       </S.Study_Select_Container_style>
       <S.Study_Configuration_Description_style>
         <h2>Choose tags and Zone and save</h2>
@@ -87,4 +106,4 @@ const JoinStudy_Main = () => {
   );
 };
 
-export default JoinStudy_Main;
+export default My_Study_Configuration_Main;
