@@ -30,7 +30,7 @@ const SignupForm = ({ onSubmit }) => {
       onSubmit={onSubmit}
     >
       <FormControl
-        label="닉네임"
+        label="NickName"
         htmlFor="nickname"
         error={<MyForm.ErrorMessage name="nickname"></MyForm.ErrorMessage>}
       >
@@ -41,8 +41,9 @@ const SignupForm = ({ onSubmit }) => {
           placeholder="write your nickname"
         ></MyForm.Field>
       </FormControl>
+
       <FormControl
-        label="이메일"
+        label="Email"
         htmlFor="email"
         error={<MyForm.ErrorMessage name="email"></MyForm.ErrorMessage>}
       >
@@ -50,11 +51,13 @@ const SignupForm = ({ onSubmit }) => {
           id="email"
           style={S.signup_input_style}
           name="email"
+          type="input"
           placeholder="write your email"
         ></MyForm.Field>
       </FormControl>
+
       <FormControl
-        label="비밀번호"
+        label="Password"
         htmlFor="password"
         error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
       >

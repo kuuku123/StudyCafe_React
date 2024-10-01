@@ -36,12 +36,12 @@ const SignupPage = () => {
       >
         <S.Signup_Main_style>
           <S.Signup_Container_style>
-            <h1>계정 만들기</h1>
+            <h1>Create Account</h1>
           </S.Signup_Container_style>
           <SignupForm onSubmit={handleSubmit}></SignupForm>
           <S.Signup_Container_style>
             <S.SignUp_Button_style type="submit" form="signup-form">
-              가입 하기
+              Enroll
             </S.SignUp_Button_style>
           </S.Signup_Container_style>
         </S.Signup_Main_style>

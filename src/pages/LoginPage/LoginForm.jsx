@@ -24,7 +24,7 @@ const LoginForm = ({ onSubmit }) => {
       onSubmit={onSubmit}
     >
       <FormControl
-        label="닉네임"
+        label="NickName"
         htmlFor="nicknameOrEmail"
         error={
           <MyForm.ErrorMessage name="nicknameOrEmail"></MyForm.ErrorMessage>
@@ -38,7 +38,7 @@ const LoginForm = ({ onSubmit }) => {
         ></MyForm.Field>
       </FormControl>
       <FormControl
-        label="비밀번호"
+        label="Password"
         htmlFor="password"
         error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
       >

@@ -39,8 +39,8 @@ const LoginPage = () => {
       localStorage.removeItem("login");
       openDialog(
         <Dialog
-          header={<>오류</>}
-          footer={<Button onClick={() => closeDialog(RoutesEnum.SIGN_UP)}>닫기</Button>}
+          header={<>Error</>}
+          footer={<Button onClick={() => closeDialog(RoutesEnum.SIGN_UP)}>Close</Button>}
         >
           {response.message}
         </Dialog>
@@ -60,12 +60,12 @@ const LoginPage = () => {
       >
         <S.Login_Main_style>
           <S.Login_Container_style>
-            <h1>로그인 하기</h1>
+            <h1>Login</h1>
           </S.Login_Container_style>
           <LoginForm onSubmit={handleSubmit}></LoginForm>
           <S.Login_Container_style>
             <S.Login_Button_style type="submit" form="login-form">
-              로그인
+              Login
             </S.Login_Button_style>
           </S.Login_Container_style>
         </S.Login_Main_style>

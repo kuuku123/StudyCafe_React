@@ -65,10 +65,10 @@ const Title = ({ children }) => {
       </S.Children_style>
       <S.Login_Signup_style>
         <Link style={S.link_style} to="/login">
-          로그인
+          Login
         </Link>
         <Link style={S.link_style} to="/sign-up">
-          가입
+          Sign-Up
         </Link>
       </S.Login_Signup_style>
     </S.Title_style>

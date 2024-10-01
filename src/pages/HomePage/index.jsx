@@ -12,12 +12,23 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const handleResponse = HandleResponseApi.useHandleResponse();
+
+  const handleEmailVerfieid = (profile) => {
+    console.log("email verified => ",profile.emailVerified)
+    setEmailVerified(profile.emailVerified);
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
+      const getProfile = async () => {
+        const profile = await ProfileApi.fetchProfile();
+        console.log("profile => ", profile)
+        handleResponse(profile, handleEmailVerfieid, false);
+      };
+      getProfile()
       setLogin(true);
-      setEmailVerified(user.emailVerified);
     }
     const getXsrfToken = async () => {
       const xsrfToken = await ProfileApi.xsrfToken();
