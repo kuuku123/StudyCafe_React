@@ -23,34 +23,46 @@ const uniqueTags = [
 ];
 
 const My_Study_Configuration_Main = () => {
+  const [willSelectedTag, setWillSelectedTag] = useState(null);
+  const [willSelectedZone, setWillSelectedZone] = useState(null);
   const [selectedTag, setSelectedTag] = useState(null);
   const [selectedZone, setSelectedZone] = useState(null);
   const [uniqueZones, setUniqueZones] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const study = useStudy()
+  const study = useStudy();
 
   const handleTagChange = (selectedOption) => {
-    setSelectedTag(selectedOption);
+    setWillSelectedTag(selectedOption);
   };
   const handleZoneChange = (selectedOption) => {
-    setSelectedZone(selectedOption);
+    setWillSelectedZone(selectedOption);
   };
 
-  const handleSelectedTag = async () => {
-      const response = await TagApi.addTag(study.path, selectedTag)
-      handleResponse(response,null,false)
+  const handleWillSelectedTag = async () => {
+    const response = await TagApi.addTag(study.path, willSelectedTag);
+    handleResponse(response, null, false);
   };
-  const handleSelectedZone = async () => {
-      const response = await ZoneApi.addZone(study.path, selectedZone)
-      handleResponse(response,null,false)
+  const handleWillSelectedZone = async () => {
+    const response = await ZoneApi.addZone(study.path, willSelectedZone);
+    handleResponse(response, null, false);
   };
+
+  const setSelectedTags = async (tags) => {
+    console.log("tags => ",tags)
+    setSelectedTag(tags)
+  }
+
+  const setSelectedZones = async (zones) => {
+    console.log("zones => ",zones)
+    setSelectedZone(zones)
+  }
 
   const handleClick = () => {
-    console.log("selectedTag => ", selectedTag);
-    console.log("selectedZones => ", selectedZone);
-    handleSelectedTag()
-    handleSelectedZone()
+    console.log("selectedTag => ", willSelectedTag);
+    console.log("selectedZones => ", willSelectedZone);
+    handleWillSelectedTag();
+    handleWillSelectedZone();
   };
 
   const parseZones = (zones) => {
@@ -61,13 +73,28 @@ const My_Study_Configuration_Main = () => {
     setUniqueZones(mappedCities);
   };
 
+
   useEffect(() => {
-    const getZones = async () => {
-      const response = await ZoneApi.getZones();
+    const getAllZones = async () => {
+      const response = await ZoneApi.getAllZones();
       console.log("response => ", response);
       handleResponse(response, parseZones, false);
     };
+
+    const getTags = async() => {
+      const response = await TagApi.getTags(study.path)
+      console.log("getTags => ", response);
+      handleResponse(response,setSelectedTags,false)
+    }
+    const getZones = async() => {
+      const response = await ZoneApi.getZones(study.path)
+      console.log("getZones => ", response);
+      handleResponse(response,setSelectedZones,false)
+    }
+    getTags();
     getZones();
+    getAllZones();
+
   }, []);
 
   return (
@@ -76,7 +103,7 @@ const My_Study_Configuration_Main = () => {
         <S.Study_Select_style>
           {/* Searchable Tag Dropdown */}
           <Select
-            value={selectedTag}
+            value={willSelectedTag}
             onChange={handleTagChange}
             options={uniqueTags}
             isClearable
@@ -87,10 +114,11 @@ const My_Study_Configuration_Main = () => {
         <S.Study_Select_style>
           {/* Searchable Zone Dropdown */}
           <Select
-            value={selectedZone}
+            value={willSelectedZone}
             onChange={handleZoneChange}
             options={uniqueZones}
             isClearable
+            isMulti
             placeholder="Search and select zone..."
           />
         </S.Study_Select_style>
@@ -101,6 +129,31 @@ const My_Study_Configuration_Main = () => {
       <S.Study_Configuration_Description_style>
         <h2>Choose tags and Zone and save</h2>
         <h3>this study will have Tags and Zone you have chosen</h3>
+        <S.Selected_Items_Container_style>
+          <S.Selected_Tags_Container_style>
+            <h4>Selected Tags:</h4>
+            {selectedTag && selectedTag.length > 0 ? (
+              selectedTag.map((tag) => (
+                <S.Tag_Pill_style key={tag.id}>{tag.title}</S.Tag_Pill_style>
+              ))
+            ) : (
+              <p>No tags selected</p>
+            )}
+          </S.Selected_Tags_Container_style>
+
+          <S.Selected_Zones_Container_style>
+            <h4>Selected Zones:</h4>
+            {selectedZone && selectedZone.length > 0 ? (
+              selectedZone.map((zone) => (
+                <S.Zone_Pill_style key={zone.id}>
+                  `{zone.city} [{zone.localNameOfCity}]`
+                </S.Zone_Pill_style>
+              ))
+            ) : (
+              <p>No zones selected</p>
+            )}
+          </S.Selected_Zones_Container_style>
+        </S.Selected_Items_Container_style>
       </S.Study_Configuration_Description_style>
     </>
   );

@@ -1,12 +1,24 @@
-const getZones = async () => {
-  const raw_zones = await fetch(`${SERVER_API_URL}/getZones`, {
+const getAllZones = async () => {
+  const raw_response = await fetch(`${SERVER_API_URL}/get-all-zones`, {
     credentials: "include",
     method: "GET",
   });
-  console.log("raw_zones=> ", raw_zones);
-  const zones_json = await raw_zones.json();
-  return zones_json;
+  console.log("raw_all_zones=> ", raw_response);
+  const all_zones_json = await raw_response.json();
+  return all_zones_json;
 };
+
+const getZones = async(path) => {
+  const raw_response = await fetch(
+    `${SERVER_API_URL}/study/${path}/settings/zones`,{
+      credentials: "include",
+      method: "GET",
+    }
+  )
+  console.log("raw_get_zone => ",raw_response)
+  const get_zone_json = await raw_response.json();
+  return get_zone_json;
+}
 
 const addZone = async (path, zoneData) => {
   const raw_response = await fetch(
@@ -26,6 +38,7 @@ const addZone = async (path, zoneData) => {
 };
 
 const ZoneApi = {
+  getAllZones,
   getZones,
   addZone,
 };

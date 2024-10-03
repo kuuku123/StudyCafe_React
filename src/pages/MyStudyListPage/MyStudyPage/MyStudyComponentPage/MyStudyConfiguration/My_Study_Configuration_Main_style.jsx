@@ -28,3 +28,39 @@ export const Study_Configuration_Description_style = styled.div`
   grid-column-start: 10;
   grid-column-end: 14;
 `;
+export const Selected_Items_Container_style = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
+export const Selected_Tags_Container_style = styled.div`
+  flex: 1;
+  margin-right: 20px;
+`;
+
+export const Selected_Zones_Container_style = styled.div`
+  flex: 1;
+`;
+
+export const Tag_Pill_style = styled.div`
+  display: inline-block;
+  background-color: #e0f7fa;
+  color: #00796b;
+  border-radius: 12px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+`;
+
+export const Zone_Pill_style = styled.div`
+  display: inline-block;
+  background-color: #e1bee7;
+  color: #6a1b9a;
+  border-radius: 12px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+`;
