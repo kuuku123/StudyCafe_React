@@ -52,17 +52,22 @@ const My_Study_Configuration_Main = () => {
         ),
       ];
       console.log("updatedTags => ", updatedTags);
-      
+
       // remove tags that currently doesn't exist in selectedOption
       const removedTags = updatedTags.filter((tag) =>
         selectedOption.some((option) => option.value === tag.title)
       );
 
-      console.log("removedTags => ",removedTags)
-      const finalTags = [...removedTags, ...defaultTags.filter(
-        (defaultTag) => 
-          !removedTags.some((removeTag) => removeTag.title === defaultTag.title)
-      )]
+      console.log("removedTags => ", removedTags);
+      const finalTags = [
+        ...removedTags,
+        ...defaultTags.filter(
+          (defaultTag) =>
+            !removedTags.some(
+              (removeTag) => removeTag.title === defaultTag.title
+            )
+        ),
+      ];
       return finalTags;
     });
   };
@@ -82,19 +87,23 @@ const My_Study_Configuration_Main = () => {
         ),
       ];
 
-      console.log("selected Options => ",selectedOption)
+      console.log("selected Options => ", selectedOption);
 
       // remove Zones that currently doesn't exist in selectedOption
       const removedZones = updatedZones.filter((zone) =>
         selectedOption.some((option) => option.value.city === zone.city)
       );
 
-
-      console.log("removedZones => ",removedZones)
-      const finalZones = [...removedZones, ...defaultZones.filter(
-        (defaultZone) => 
-          !removedZones.some((removeZone) => removeZone.city === defaultZone.city)
-      )]
+      console.log("removedZones => ", removedZones);
+      const finalZones = [
+        ...removedZones,
+        ...defaultZones.filter(
+          (defaultZone) =>
+            !removedZones.some(
+              (removeZone) => removeZone.city === defaultZone.city
+            )
+        ),
+      ];
 
       return finalZones;
     });
@@ -106,7 +115,11 @@ const My_Study_Configuration_Main = () => {
   };
   const handleWillSelectedZone = async () => {
     const response = await ZoneApi.addZone(study.path, willSelectedZones);
-    handleResponse(response, () => setWillSelectedZones(null), false);
+    handleResponse(response, () => setWillSelectedZones(null), {
+      useNav: false,
+      path: null,
+      dialog: "Saved",
+    });
   };
 
   const handleClick = () => {

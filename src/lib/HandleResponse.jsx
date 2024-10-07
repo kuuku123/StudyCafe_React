@@ -12,7 +12,7 @@ const useHandleResponse = () => {
   const handleResponse = (
     response,
     callback,
-    useNavigate = { useNav: true, path: RoutesEnum.HOME }
+    useNavigate = { useNav: true, path: RoutesEnum.HOME, dialog: "" }
   ) => {
     console.log("useNavigate => ", useNavigate);
 
@@ -23,6 +23,17 @@ const useHandleResponse = () => {
       } else if (useNavigate.useNav) {
         console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
         navigate(useNavigate.path);
+      } else if (useNavigate.dialog !== "") {
+        openDialog(
+          <Dialog
+            header={<>Login</>}
+            footer={
+              <Button onClick={() => closeDialog()}>
+                {useNavigate.dialog}
+              </Button>
+            }
+          ></Dialog>
+        );
       }
     } else if (response.status === 403) {
       console.log("unauthorized");
@@ -51,8 +62,8 @@ const useHandleResponse = () => {
                 </li>
               ))}
             </ul>
-          ) : response.message && (
-            <span>{response.message}</span>
+          ) : (
+            response.message && <span>{response.message}</span>
           )}
         </Dialog>
       );
