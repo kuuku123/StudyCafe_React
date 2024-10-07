@@ -9,7 +9,7 @@ import TagApi from "../../../../../lib/apis/TagApi";
 
 const uniqueTags = [
   { value: "health", label: "health" },
-  { value: "computer-science", label: "computer science" },
+  { value: "computer-science", label: "computer-science" },
   { value: "mathematics", label: "mathematics" },
   { value: "physics", label: "physics" },
   { value: "biology", label: "biology" },
@@ -23,44 +23,95 @@ const uniqueTags = [
 ];
 
 const My_Study_Configuration_Main = () => {
-  const [willSelectedTag, setWillSelectedTag] = useState(null);
-  const [willSelectedZone, setWillSelectedZone] = useState(null);
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [selectedZone, setSelectedZone] = useState(null);
+  const [willSelectedTags, setWillSelectedTags] = useState(null);
+  const [willSelectedZones, setWillSelectedZones] = useState(null);
+  const [selectedTags, setSelectedTags] = useState(null);
+  const [selectedZones, setSelectedZones] = useState(null);
+  const [defaultTags, setDefaultTags] = useState([]);
+  const [defaultZones, setDefaultZones] = useState([]);
   const [uniqueZones, setUniqueZones] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const study = useStudy();
 
   const handleTagChange = (selectedOption) => {
-    setWillSelectedTag(selectedOption);
+    setWillSelectedTags(selectedOption);
+    setSelectedTags((prevTags) => {
+      console.log("prevTags => ", prevTags);
+      const newTags = selectedOption.map((tag) => ({
+        id: tag.value,
+        title: tag.label,
+      }));
+
+      // Combine the previous tags and the new tags
+      const updatedTags = [
+        ...prevTags,
+        ...newTags.filter(
+          (newTag) =>
+            !prevTags.some((prevTag) => prevTag.title === newTag.title)
+        ),
+      ];
+      console.log("updatedTags => ", updatedTags);
+      
+      // remove tags that currently doesn't exist in selectedOption
+      const removedTags = updatedTags.filter((tag) =>
+        selectedOption.some((option) => option.value === tag.title)
+      );
+
+      console.log("removedTags => ",removedTags)
+      const finalTags = [...removedTags, ...defaultTags.filter(
+        (defaultTag) => 
+          !removedTags.some((removeTag) => removeTag.title === defaultTag.title)
+      )]
+      return finalTags;
+    });
   };
   const handleZoneChange = (selectedOption) => {
-    setWillSelectedZone(selectedOption);
+    setWillSelectedZones(selectedOption);
+    setSelectedZones((prevZones) => {
+      const newZones = selectedOption.map((zone) => ({
+        city: zone.value.city,
+        province: zone.value.province,
+      }));
+
+      const updatedZones = [
+        ...prevZones,
+        ...newZones.filter(
+          (newZone) =>
+            !prevZones.some((prevZone) => prevZone.city === newZone.city)
+        ),
+      ];
+
+      console.log("selected Options => ",selectedOption)
+
+      // remove Zones that currently doesn't exist in selectedOption
+      const removedZones = updatedZones.filter((zone) =>
+        selectedOption.some((option) => option.value.city === zone.city)
+      );
+
+
+      console.log("removedZones => ",removedZones)
+      const finalZones = [...removedZones, ...defaultZones.filter(
+        (defaultZone) => 
+          !removedZones.some((removeZone) => removeZone.city === defaultZone.city)
+      )]
+
+      return finalZones;
+    });
   };
 
   const handleWillSelectedTag = async () => {
-    const response = await TagApi.addTag(study.path, willSelectedTag);
-    handleResponse(response, null, false);
+    const response = await TagApi.addTag(study.path, willSelectedTags);
+    handleResponse(response, () => setWillSelectedTags(null), false);
   };
   const handleWillSelectedZone = async () => {
-    const response = await ZoneApi.addZone(study.path, willSelectedZone);
-    handleResponse(response, null, false);
+    const response = await ZoneApi.addZone(study.path, willSelectedZones);
+    handleResponse(response, () => setWillSelectedZones(null), false);
   };
 
-  const setSelectedTags = async (tags) => {
-    console.log("tags => ",tags)
-    setSelectedTag(tags)
-  }
-
-  const setSelectedZones = async (zones) => {
-    console.log("zones => ",zones)
-    setSelectedZone(zones)
-  }
-
   const handleClick = () => {
-    console.log("selectedTag => ", willSelectedTag);
-    console.log("selectedZones => ", willSelectedZone);
+    console.log("selectedTag => ", willSelectedTags);
+    console.log("selectedZones => ", willSelectedZones);
     handleWillSelectedTag();
     handleWillSelectedZone();
   };
@@ -73,6 +124,14 @@ const My_Study_Configuration_Main = () => {
     setUniqueZones(mappedCities);
   };
 
+  const handleInitTags = (tags) => {
+    setSelectedTags(tags);
+    setDefaultTags(tags);
+  };
+  const handleInitZones = (zones) => {
+    setSelectedZones(zones);
+    setDefaultZones(zones);
+  };
 
   useEffect(() => {
     const getAllZones = async () => {
@@ -81,20 +140,19 @@ const My_Study_Configuration_Main = () => {
       handleResponse(response, parseZones, false);
     };
 
-    const getTags = async() => {
-      const response = await TagApi.getTags(study.path)
+    const getTags = async () => {
+      const response = await TagApi.getTags(study.path);
       console.log("getTags => ", response);
-      handleResponse(response,setSelectedTags,false)
-    }
-    const getZones = async() => {
-      const response = await ZoneApi.getZones(study.path)
+      handleResponse(response, handleInitTags, false);
+    };
+    const getZones = async () => {
+      const response = await ZoneApi.getZones(study.path);
       console.log("getZones => ", response);
-      handleResponse(response,setSelectedZones,false)
-    }
+      handleResponse(response, handleInitZones, false);
+    };
     getTags();
     getZones();
     getAllZones();
-
   }, []);
 
   return (
@@ -103,7 +161,7 @@ const My_Study_Configuration_Main = () => {
         <S.Study_Select_style>
           {/* Searchable Tag Dropdown */}
           <Select
-            value={willSelectedTag}
+            value={willSelectedTags}
             onChange={handleTagChange}
             options={uniqueTags}
             isClearable
@@ -114,7 +172,7 @@ const My_Study_Configuration_Main = () => {
         <S.Study_Select_style>
           {/* Searchable Zone Dropdown */}
           <Select
-            value={willSelectedZone}
+            value={willSelectedZones}
             onChange={handleZoneChange}
             options={uniqueZones}
             isClearable
@@ -132,8 +190,8 @@ const My_Study_Configuration_Main = () => {
         <S.Selected_Items_Container_style>
           <S.Selected_Tags_Container_style>
             <h4>Selected Tags:</h4>
-            {selectedTag && selectedTag.length > 0 ? (
-              selectedTag.map((tag) => (
+            {selectedTags && selectedTags.length > 0 ? (
+              selectedTags.map((tag) => (
                 <S.Tag_Pill_style key={tag.id}>{tag.title}</S.Tag_Pill_style>
               ))
             ) : (
@@ -143,10 +201,10 @@ const My_Study_Configuration_Main = () => {
 
           <S.Selected_Zones_Container_style>
             <h4>Selected Zones:</h4>
-            {selectedZone && selectedZone.length > 0 ? (
-              selectedZone.map((zone) => (
+            {selectedZones && selectedZones.length > 0 ? (
+              selectedZones.map((zone) => (
                 <S.Zone_Pill_style key={zone.id}>
-                  `{zone.city} [{zone.localNameOfCity}]`
+                  `{zone.city} [{zone.province}]`
                 </S.Zone_Pill_style>
               ))
             ) : (

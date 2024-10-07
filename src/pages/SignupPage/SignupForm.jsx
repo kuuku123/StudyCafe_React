@@ -38,6 +38,7 @@ const SignupForm = ({ onSubmit }) => {
           id="signup-nickname"
           style={S.signup_input_style}
           name="nickname"
+          type="input"
           placeholder="write your nickname"
         ></MyForm.Field>
       </FormControl>
