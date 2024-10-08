@@ -78,6 +78,7 @@ const My_Study_Configuration_Main = () => {
         province: zone.value.province,
       }));
 
+      console.log("selected Options => ", selectedOption);
       const updatedZones = [
         ...prevZones,
         ...newZones.filter(
@@ -86,14 +87,14 @@ const My_Study_Configuration_Main = () => {
         ),
       ];
 
-      console.log("selected Options => ", selectedOption);
-
+      console.log(updatedZones)
       // remove Zones that currently doesn't exist in selectedOption
       const removedZones = updatedZones.filter((zone) =>
         selectedOption.some((option) => option.value.city === zone.city)
       );
 
       console.log("removedZones => ", removedZones);
+      console.log("defaultZone => ",defaultZones)
       const finalZones = [
         ...removedZones,
         ...defaultZones.filter(
@@ -108,13 +109,11 @@ const My_Study_Configuration_Main = () => {
     });
   };
 
-  const handleWillSelectedTag = async () => {
-    const response = await TagApi.addTag(study.path, willSelectedTags);
-    handleResponse(response, null, false);
-  };
-  const handleWillSelectedZone = async () => {
-    const response = await ZoneApi.addZone(study.path, willSelectedZones);
-    handleResponse(response, null, {
+  const handleWillSelectedTagAndZones = async () => {
+    const response1 = await TagApi.addTag(study.path, willSelectedTags);
+    const response2 = await ZoneApi.addZone(study.path, willSelectedZones);
+    handleResponse(response1, null, false);
+    handleResponse(response2, null, {
       useNav: true,
       path: "" / study / " + study.path, { state: study }",
     });
@@ -123,8 +122,7 @@ const My_Study_Configuration_Main = () => {
   const handleClick = () => {
     console.log("selectedTag => ", willSelectedTags);
     console.log("selectedZones => ", willSelectedZones);
-    handleWillSelectedTag();
-    handleWillSelectedZone();
+    handleWillSelectedTagAndZones();
   };
 
   const parseZones = (zones) => {
@@ -154,7 +152,16 @@ const My_Study_Configuration_Main = () => {
       console.log("filteredTags => ", filteredTags);
       setUniqueTags(filteredTags);
     }
-  }, [defaultTags]);
+    if (defaultZones.length > 0) {
+      const filteredZones = uniqueZones.filter(
+        (zone) =>
+          !defaultZones.some((defaultZone) => defaultZone.city=== zone.label)
+      );
+      console.log("defaultZones => ",defaultZones)
+      console.log("filteredZones => ", filteredZones);
+      setUniqueZones(filteredZones);
+    }
+  }, [defaultTags, defaultZones]);
 
   useEffect(() => {
     const getAllZones = async () => {
