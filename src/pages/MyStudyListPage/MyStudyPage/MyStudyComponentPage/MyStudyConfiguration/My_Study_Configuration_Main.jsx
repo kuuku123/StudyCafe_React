@@ -7,22 +7,21 @@ import Button from "../../../../../components/Button";
 import { useStudy } from "../..";
 import TagApi from "../../../../../lib/apis/TagApi";
 
-const uniqueTags = [
-  { value: "health", label: "health" },
-  { value: "computer-science", label: "computer-science" },
-  { value: "mathematics", label: "mathematics" },
-  { value: "physics", label: "physics" },
-  { value: "biology", label: "biology" },
-  { value: "chemistry", label: "chemistry" },
-  { value: "literature", label: "literature" },
-  { value: "history", label: "history" },
-  { value: "economics", label: "economics" },
-  { value: "psychology", label: "psychology" },
-  { value: "engineering", label: "engineering" },
-  { value: "philosophy", label: "philosophy" },
-];
-
 const My_Study_Configuration_Main = () => {
+  const [uniqueTags, setUniqueTags] = useState([
+    { value: "health", label: "health" },
+    { value: "computer-science", label: "computer-science" },
+    { value: "mathematics", label: "mathematics" },
+    { value: "physics", label: "physics" },
+    { value: "biology", label: "biology" },
+    { value: "chemistry", label: "chemistry" },
+    { value: "literature", label: "literature" },
+    { value: "history", label: "history" },
+    { value: "economics", label: "economics" },
+    { value: "psychology", label: "psychology" },
+    { value: "engineering", label: "engineering" },
+    { value: "philosophy", label: "philosophy" },
+  ]);
   const [willSelectedTags, setWillSelectedTags] = useState(null);
   const [willSelectedZones, setWillSelectedZones] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
@@ -111,14 +110,13 @@ const My_Study_Configuration_Main = () => {
 
   const handleWillSelectedTag = async () => {
     const response = await TagApi.addTag(study.path, willSelectedTags);
-    handleResponse(response, () => setWillSelectedTags(null), false);
+    handleResponse(response, null, false);
   };
   const handleWillSelectedZone = async () => {
     const response = await ZoneApi.addZone(study.path, willSelectedZones);
-    handleResponse(response, () => setWillSelectedZones(null), {
-      useNav: false,
-      path: null,
-      dialog: "Saved",
+    handleResponse(response, null, {
+      useNav: true,
+      path: "" / study / " + study.path, { state: study }",
     });
   };
 
@@ -145,6 +143,18 @@ const My_Study_Configuration_Main = () => {
     setSelectedZones(zones);
     setDefaultZones(zones);
   };
+
+  useEffect(() => {
+    if (defaultTags.length > 0) {
+      const filteredTags = uniqueTags.filter(
+        (tag) =>
+          !defaultTags.some((defaultTag) => defaultTag.title === tag.value)
+      );
+      console.log("defaultTags => ",defaultTags)
+      console.log("filteredTags => ", filteredTags);
+      setUniqueTags(filteredTags);
+    }
+  }, [defaultTags]);
 
   useEffect(() => {
     const getAllZones = async () => {
