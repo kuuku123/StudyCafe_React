@@ -33,14 +33,27 @@ const My_Study_Configuration_Main = () => {
 
   const study = useStudy();
 
+  const changeTagLabelToTitile = (tags) => {
+    const newTags = tags.map((tag) => ({
+      id: tag.value,
+      title: tag.label,
+    }));
+    return newTags;
+  };
+
+  const changeZoneLabelToCity = (zones) => {
+      const newZones = zones.map((zone) => ({
+        city: zone.value.city,
+        province: zone.value.province,
+      }));
+      return newZones;
+  }
+
   const handleTagChange = (selectedOption) => {
     setWillSelectedTags(selectedOption);
     setSelectedTags((prevTags) => {
       console.log("prevTags => ", prevTags);
-      const newTags = selectedOption.map((tag) => ({
-        id: tag.value,
-        title: tag.label,
-      }));
+      const newTags = changeTagLabelToTitile(selectedOption);
 
       // Combine the previous tags and the new tags
       const updatedTags = [
@@ -73,10 +86,7 @@ const My_Study_Configuration_Main = () => {
   const handleZoneChange = (selectedOption) => {
     setWillSelectedZones(selectedOption);
     setSelectedZones((prevZones) => {
-      const newZones = selectedOption.map((zone) => ({
-        city: zone.value.city,
-        province: zone.value.province,
-      }));
+      const newZones = changeZoneLabelToCity(selectedOption)
 
       console.log("selected Options => ", selectedOption);
       const updatedZones = [
@@ -87,14 +97,14 @@ const My_Study_Configuration_Main = () => {
         ),
       ];
 
-      console.log(updatedZones)
+      console.log(updatedZones);
       // remove Zones that currently doesn't exist in selectedOption
       const removedZones = updatedZones.filter((zone) =>
         selectedOption.some((option) => option.value.city === zone.city)
       );
 
       console.log("removedZones => ", removedZones);
-      console.log("defaultZone => ",defaultZones)
+      console.log("defaultZone => ", defaultZones);
       const finalZones = [
         ...removedZones,
         ...defaultZones.filter(
@@ -110,8 +120,10 @@ const My_Study_Configuration_Main = () => {
   };
 
   const handleWillSelectedTagAndZones = async () => {
-    const response1 = await TagApi.addTag(study.path, willSelectedTags);
-    const response2 = await ZoneApi.addZone(study.path, willSelectedZones);
+    const newTags = changeTagLabelToTitile(willSelectedTags);
+    const newZones = changeZoneLabelToCity(willSelectedZones)
+    const response1 = await TagApi.addTag(study.path, newTags);
+    const response2 = await ZoneApi.addZone(study.path, newZones);
     handleResponse(response1, null, false);
     handleResponse(response2, null, {
       useNav: true,
@@ -148,16 +160,16 @@ const My_Study_Configuration_Main = () => {
         (tag) =>
           !defaultTags.some((defaultTag) => defaultTag.title === tag.value)
       );
-      console.log("defaultTags => ",defaultTags)
+      console.log("defaultTags => ", defaultTags);
       console.log("filteredTags => ", filteredTags);
       setUniqueTags(filteredTags);
     }
     if (defaultZones.length > 0) {
       const filteredZones = uniqueZones.filter(
         (zone) =>
-          !defaultZones.some((defaultZone) => defaultZone.city=== zone.label)
+          !defaultZones.some((defaultZone) => defaultZone.city === zone.label)
       );
-      console.log("defaultZones => ",defaultZones)
+      console.log("defaultZones => ", defaultZones);
       console.log("filteredZones => ", filteredZones);
       setUniqueZones(filteredZones);
     }
