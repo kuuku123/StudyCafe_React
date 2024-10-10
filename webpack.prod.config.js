@@ -1,8 +1,9 @@
 const { merge } = require("webpack-merge");
 const common = require("./webpack.config");
+const webpack = require("webpack");
 require("dotenv").config({ path: ".env.prod" });
 
-module.exports = merge(common, {
+module.exports = merge(common(), {
   mode: "production",
   output: {
     filename: "bundle.[hash].js",
