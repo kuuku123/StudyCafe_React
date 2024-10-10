@@ -18,7 +18,7 @@ it is a website that is used for creating study , and let other people join stud
 currently no deployment pipe line
 - **manual way**
 	- docker need to be installed
-	- deploy https://github.com/kuuku123/StudyCafe_Server_For_React
+	- first deploy https://github.com/kuuku123/StudyCafe_Server_For_React
 	- and then deploy with following command
 	```bash
 	git clone https://github.com/kuuku123/StudyCafe_React.git
