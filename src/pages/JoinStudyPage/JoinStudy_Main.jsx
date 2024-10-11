@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Select from "react-select"; 
-import * as S from "./JoinStudy_Main_style"
+import Select from "react-select";
+import * as S from "./JoinStudy_Main_style";
+import { GiConsoleController } from "react-icons/gi";
 
 // Study data
 const studies = [
@@ -16,8 +17,7 @@ const studies = [
   { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
 ];
 
-
-const ITEMS_PER_PAGE = 3; // Number of items per page
+const ITEMS_PER_PAGE = 1; // Number of items per page
 
 // Extract unique tags and zones for dropdowns
 const uniqueTags = [...new Set(studies.flatMap((study) => study.tags))].map(
@@ -34,8 +34,19 @@ const JoinStudy_Main = () => {
 
   // Filter studies based on selected tag and zone
   const filteredStudies = studies.filter((study) => {
-    const matchesTag = !selectedTag || study.tags.includes(selectedTag.value);
-    const matchesZone = !selectedZone || study.zone === selectedZone.value;
+    let matchesTag =
+      selectedTag &&
+      selectedTag.some((tag) => study.tags.includes(tag.value));
+
+    let matchesZone =
+      selectedZone &&
+      selectedZone.some((zone) => study.zone.includes(zone.value));
+    if (!selectedTag) {
+      matchesTag = true
+    }
+    if (!selectedZone) {
+      matchesZone = true
+    }
     return matchesTag && matchesZone;
   });
 
@@ -70,6 +81,7 @@ const JoinStudy_Main = () => {
           onChange={handleTagChange}
           options={uniqueTags}
           isClearable
+          isMulti
           placeholder="Search and select tag..."
         />
 
@@ -79,6 +91,7 @@ const JoinStudy_Main = () => {
           onChange={handleZoneChange}
           options={uniqueZones}
           isClearable
+          isMulti
           placeholder="Search and select zone..."
         />
       </S.FiltersContainer>
