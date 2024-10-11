@@ -35,7 +35,6 @@ const My_Study_Configuration_Main = () => {
 
   const changeTagLabelToTitile = (tags) => {
     const newTags = tags.map((tag) => ({
-      id: tag.value,
       title: tag.label,
     }));
     return newTags;

@@ -60,11 +60,25 @@ const publishStudy = async (path) => {
   return publicshed_study_json;
 };
 
+const fetchStudyByTagsAndZones = async (tags, zones) => {
+  const raw_studies = await fetch(
+    `${SERVER_API_URL}/get-study-by-tags-and-zones`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
+  console.log("raw_studies => ", raw_studies);
+  const studies_json = await raw_studies.json();
+  return studies_json;
+};
+
 const StudyApi = {
   createStudy,
   fetchStudyList,
   fetchStudyMembers,
   fetchStudyImage,
+  fetchStudyByTagsAndZones,
   publishStudy,
 };
 
