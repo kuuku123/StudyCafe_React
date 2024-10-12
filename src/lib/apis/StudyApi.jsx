@@ -60,18 +60,58 @@ const publishStudy = async (path) => {
   return publicshed_study_json;
 };
 
-const fetchStudyByTagsAndZones = async (tags, zones) => {
-  const raw_studies = await fetch(
-    `${SERVER_API_URL}/get-study-by-tags-and-zones`,
-    {
-      credentials: "include",
-      method: "GET",
+const fetchStudyByTagsAndZones = async (tags, zones, page = 1, size = 3) => {
+  try {
+    // Handle tags and zones being null or undefined
+    const tagParams = tags && tags.length > 0 
+      ? tags.map((tag) => `tags=${encodeURIComponent(tag.title)}`).join("&") 
+      : ""; // If no tags, return an empty string
+
+    const zoneParams = zones && zones.length > 0
+      ? zones
+          .map(
+            (zone) =>
+              `cities=${encodeURIComponent(
+                zone.city
+              )}&provinces=${encodeURIComponent(zone.province)}`
+          )
+          .join("&")
+      : ""; // If no zones, return an empty string
+
+    // Add page and size params
+    const paginationParams = `page=${page}&size=${size}`;
+
+    // Combine all query parameters, ensuring no extra '&' if tags or zones are missing
+    const queryParams = [tagParams, zoneParams, paginationParams]
+      .filter((param) => param) // Filter out empty strings
+      .join("&");
+
+    console.log("queryParams => ", queryParams);
+
+    // Make the fetch request with the constructed query params
+    const raw_studies = await fetch(
+      `${SERVER_API_URL}/get-study-by-tags-and-zones?${queryParams}`,
+      {
+        credentials: "include",
+        method: "GET",
+      }
+    );
+
+    // Check if the request was successful
+    if (!raw_studies.ok) {
+      throw new Error("Failed to fetch studies");
     }
-  );
-  console.log("raw_studies => ", raw_studies);
-  const studies_json = await raw_studies.json();
-  return studies_json;
+
+    // Parse the JSON response
+    const studies_json = await raw_studies.json();
+    console.log("study_json => ",studies_json)
+    return studies_json;
+  } catch (error) {
+    console.error("Error fetching studies:", error);
+    throw error;
+  }
 };
+
 
 const StudyApi = {
   createStudy,
@@ -81,5 +121,7 @@ const StudyApi = {
   fetchStudyByTagsAndZones,
   publishStudy,
 };
+
+
 
 export default StudyApi;

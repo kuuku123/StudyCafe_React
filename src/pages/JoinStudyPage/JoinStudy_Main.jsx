@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import * as S from "./JoinStudy_Main_style";
 import { GiConsoleController } from "react-icons/gi";
+import StudyApi from "../../lib/apis/StudyApi";
+import TagApi from "../../lib/apis/TagApi";
+import ZoneApi from "../../lib/apis/ZoneApi";
 
 // Study data
 const studies = [
@@ -17,7 +20,7 @@ const studies = [
   { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
 ];
 
-const ITEMS_PER_PAGE = 1; // Number of items per page
+const ITEMS_PER_PAGE = 2; // Number of items per page
 
 // Extract unique tags and zones for dropdowns
 const uniqueTags = [...new Set(studies.flatMap((study) => study.tags))].map(
@@ -35,17 +38,16 @@ const JoinStudy_Main = () => {
   // Filter studies based on selected tag and zone
   const filteredStudies = studies.filter((study) => {
     let matchesTag =
-      selectedTag &&
-      selectedTag.some((tag) => study.tags.includes(tag.value));
+      selectedTag && selectedTag.some((tag) => study.tags.includes(tag.value));
 
     let matchesZone =
       selectedZone &&
       selectedZone.some((zone) => study.zone.includes(zone.value));
     if (!selectedTag) {
-      matchesTag = true
+      matchesTag = true;
     }
     if (!selectedZone) {
-      matchesZone = true
+      matchesZone = true;
     }
     return matchesTag && matchesZone;
   });
@@ -62,6 +64,7 @@ const JoinStudy_Main = () => {
   const handleNextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const handlePrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
   const handleTagChange = (selectedOption) => {
     setSelectedTag(selectedOption);
     setCurrentPage(1); // Reset to first page when tag changes
@@ -70,6 +73,22 @@ const JoinStudy_Main = () => {
     setSelectedZone(selectedOption);
     setCurrentPage(1); // Reset to first page when zone changes
   };
+
+  useEffect(() => {
+    console.log("useEffect");
+    console.log("selectedTag => ", selectedTag);
+    const newTags = selectedTag
+      ? TagApi.changeTagLabelToTitile(selectedTag)
+      : null;
+    const newZones = selectedZone
+      ? ZoneApi.changeZoneLabelToCity(selectedZone)
+      : null;
+    if (!newTags && !newZones) {
+      console.log("get whole studies");
+    } else {
+      StudyApi.fetchStudyByTagsAndZones(newTags, newZones);
+    }
+  }, [selectedTag, selectedZone]);
 
   return (
     <S.StudyListContainer>

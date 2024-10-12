@@ -8,17 +8,18 @@ const getAllZones = async () => {
   return all_zones_json;
 };
 
-const getZones = async(path) => {
+const getZones = async (path) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/zones`,{
+    `${SERVER_API_URL}/study/${path}/settings/zones`,
+    {
       credentials: "include",
       method: "GET",
     }
-  )
-  console.log("raw_get_zone => ",raw_response)
+  );
+  console.log("raw_get_zone => ", raw_response);
   const get_zone_json = await raw_response.json();
   return get_zone_json;
-}
+};
 
 const addZone = async (path, zoneData) => {
   const raw_response = await fetch(
@@ -37,10 +38,19 @@ const addZone = async (path, zoneData) => {
   return response_json;
 };
 
+const changeZoneLabelToCity = (zones) => {
+  const newZones = zones.map((zone) => ({
+    city: zone.value.city,
+    province: zone.value.province,
+  }));
+  return newZones;
+};
+
 const ZoneApi = {
   getAllZones,
   getZones,
   addZone,
+  changeZoneLabelToCity,
 };
 
 export default ZoneApi;

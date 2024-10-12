@@ -33,26 +33,11 @@ const My_Study_Configuration_Main = () => {
 
   const study = useStudy();
 
-  const changeTagLabelToTitile = (tags) => {
-    const newTags = tags.map((tag) => ({
-      title: tag.label,
-    }));
-    return newTags;
-  };
-
-  const changeZoneLabelToCity = (zones) => {
-      const newZones = zones.map((zone) => ({
-        city: zone.value.city,
-        province: zone.value.province,
-      }));
-      return newZones;
-  }
-
   const handleTagChange = (selectedOption) => {
     setWillSelectedTags(selectedOption);
     setSelectedTags((prevTags) => {
       console.log("prevTags => ", prevTags);
-      const newTags = changeTagLabelToTitile(selectedOption);
+      const newTags = TagApi.changeTagLabelToTitile(selectedOption);
 
       // Combine the previous tags and the new tags
       const updatedTags = [
@@ -85,7 +70,7 @@ const My_Study_Configuration_Main = () => {
   const handleZoneChange = (selectedOption) => {
     setWillSelectedZones(selectedOption);
     setSelectedZones((prevZones) => {
-      const newZones = changeZoneLabelToCity(selectedOption)
+      const newZones = ZoneApi.changeZoneLabelToCity(selectedOption)
 
       console.log("selected Options => ", selectedOption);
       const updatedZones = [
@@ -119,8 +104,8 @@ const My_Study_Configuration_Main = () => {
   };
 
   const handleWillSelectedTagAndZones = async () => {
-    const newTags = changeTagLabelToTitile(willSelectedTags);
-    const newZones = changeZoneLabelToCity(willSelectedZones)
+    const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
+    const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones)
     const response1 = await TagApi.addTag(study.path, newTags);
     const response2 = await ZoneApi.addZone(study.path, newZones);
     handleResponse(response1, null, false);
