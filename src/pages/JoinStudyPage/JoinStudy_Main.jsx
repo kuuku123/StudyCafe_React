@@ -5,51 +5,71 @@ import { GiConsoleController } from "react-icons/gi";
 import StudyApi from "../../lib/apis/StudyApi";
 import TagApi from "../../lib/apis/TagApi";
 import ZoneApi from "../../lib/apis/ZoneApi";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 // Study data
-const studies = [
-  { id: 1, title: "Study 1", tags: ["health", "nutrition"], zone: "North" },
-  { id: 2, title: "Study 2", tags: ["fitness", "wellness"], zone: "South" },
-  { id: 3, title: "Study 3", tags: ["nutrition", "wellness"], zone: "East" },
-  { id: 4, title: "Study 4", tags: ["health", "fitness"], zone: "West" },
-  { id: 5, title: "Study 5", tags: ["science", "research"], zone: "North" },
-  { id: 6, title: "Study 6", tags: ["technology", "innovation"], zone: "East" },
-  { id: 7, title: "Study 7", tags: ["health", "technology"], zone: "South" },
-  { id: 8, title: "Study 8", tags: ["nutrition", "research"], zone: "West" },
-  { id: 9, title: "Study 9", tags: ["wellness", "science"], zone: "North" },
-  { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
-];
+// const studies = [
+//   { id: 1, title: "Study 1", tags: ["health", "nutrition"], zone: "North" },
+//   { id: 2, title: "Study 2", tags: ["fitness", "wellness"], zone: "South" },
+//   { id: 3, title: "Study 3", tags: ["nutrition", "wellness"], zone: "East" },
+//   { id: 4, title: "Study 4", tags: ["health", "fitness"], zone: "West" },
+//   { id: 5, title: "Study 5", tags: ["science", "research"], zone: "North" },
+//   { id: 6, title: "Study 6", tags: ["technology", "innovation"], zone: "East" },
+//   { id: 7, title: "Study 7", tags: ["health", "technology"], zone: "South" },
+//   { id: 8, title: "Study 8", tags: ["nutrition", "research"], zone: "West" },
+//   { id: 9, title: "Study 9", tags: ["wellness", "science"], zone: "North" },
+//   { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
+// ];
 
 const ITEMS_PER_PAGE = 2; // Number of items per page
 
-// Extract unique tags and zones for dropdowns
-const uniqueTags = [...new Set(studies.flatMap((study) => study.tags))].map(
-  (tag) => ({ value: tag, label: tag })
-);
-const uniqueZones = [...new Set(studies.map((study) => study.zone))].map(
-  (zone) => ({ value: zone, label: zone })
-);
-
 const JoinStudy_Main = () => {
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [selectedZone, setSelectedZone] = useState(null);
+  const [selectedTag, setSelectedTag] = useState([]);
+  const [selectedZone, setSelectedZone] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [studies, setStudies] = useState([]);
+  const [uniqueZones, setUniqueZones] = useState([]);
+  const [uniqueTags, setUniqueTags] = useState([
+    { value: "health", label: "health" },
+    { value: "computer-science", label: "computer-science" },
+    { value: "mathematics", label: "mathematics" },
+    { value: "physics", label: "physics" },
+    { value: "biology", label: "biology" },
+    { value: "chemistry", label: "chemistry" },
+    { value: "literature", label: "literature" },
+    { value: "history", label: "history" },
+    { value: "economics", label: "economics" },
+    { value: "psychology", label: "psychology" },
+    { value: "engineering", label: "engineering" },
+    { value: "philosophy", label: "philosophy" },
+  ]);
+
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   // Filter studies based on selected tag and zone
   const filteredStudies = studies.filter((study) => {
+    console.log("study => ", study);
+    console.log("selectedZone ", selectedZone);
     let matchesTag =
-      selectedTag && selectedTag.some((tag) => study.tags.includes(tag.value));
-
+      selectedTag &&
+      selectedTag.some((tag) =>
+        study.tagDtoList.some((tagDto) => tagDto.title === tag.value)
+      );
     let matchesZone =
       selectedZone &&
-      selectedZone.some((zone) => study.zone.includes(zone.value));
-    if (!selectedTag) {
+      selectedZone.some((zone) =>
+        study.zoneDtoList.some((zoneDto) => zoneDto.city === zone.value.city)
+      );
+
+    if (selectedTag.length == 0) {
       matchesTag = true;
     }
-    if (!selectedZone) {
+    if (selectedZone.length == 0) {
       matchesZone = true;
     }
-    return matchesTag && matchesZone;
+
+    console.log("matchesTag, matchesZone ", matchesTag, matchesZone);
+    return matchesTag || matchesZone;
   });
 
   // Pagination logic
@@ -58,6 +78,12 @@ const JoinStudy_Main = () => {
   const paginatedStudies = filteredStudies.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
+  );
+  console.log(
+    "totalPages, startIndex, paginatedStudies ",
+    totalPages,
+    startIndex,
+    paginatedStudies
   );
 
   // Handlers
@@ -74,9 +100,25 @@ const JoinStudy_Main = () => {
     setCurrentPage(1); // Reset to first page when zone changes
   };
 
+  const parseZones = (zones) => {
+    const mappedCities = zones.map((cityObj) => ({
+      value: { city: cityObj.city, province: cityObj.province },
+      label: cityObj.city,
+    }));
+    setUniqueZones(mappedCities);
+  };
+
   useEffect(() => {
     console.log("useEffect");
     console.log("selectedTag => ", selectedTag);
+    const getFetchStudyByTagsAndZones = async (newTags, newZones) => {
+      const response = await StudyApi.fetchStudyByTagsAndZones(
+        newTags,
+        newZones
+      );
+      console.log("fetchStudyBytagsAndZones => ", response);
+      handleResponse(response, setStudies, false);
+    };
     const newTags = selectedTag
       ? TagApi.changeTagLabelToTitile(selectedTag)
       : null;
@@ -86,9 +128,18 @@ const JoinStudy_Main = () => {
     if (!newTags && !newZones) {
       console.log("get whole studies");
     } else {
-      StudyApi.fetchStudyByTagsAndZones(newTags, newZones);
+      getFetchStudyByTagsAndZones(newTags, newZones);
     }
   }, [selectedTag, selectedZone]);
+
+  useEffect(() => {
+    const getAllZones = async () => {
+      const response = await ZoneApi.getAllZones();
+      console.log("response => ", response);
+      handleResponse(response, parseZones, false);
+    };
+    getAllZones();
+  }, []);
 
   return (
     <S.StudyListContainer>
@@ -122,10 +173,15 @@ const JoinStudy_Main = () => {
           paginatedStudies.map((study) => (
             <S.StudyCard key={study.id}>
               <S.Title>{study.title}</S.Title>
-              <p>Zone: {study.zone}</p>
+              {study.shortDescription}
+              <S.Zones>
+                {study.zoneDtoList.map((zone) => (
+                  <S.Zone>{zone.city}</S.Zone>
+                ))}
+              </S.Zones>
               <S.Tags>
-                {study.tags.map((tag) => (
-                  <S.Tag key={tag}>{tag}</S.Tag>
+                {study.tagDtoList.map((tag) => (
+                  <S.Tag key={tag.title}>{tag.title}</S.Tag>
                 ))}
               </S.Tags>
             </S.StudyCard>

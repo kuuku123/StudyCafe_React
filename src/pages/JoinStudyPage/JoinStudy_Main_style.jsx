@@ -32,6 +32,9 @@ export const StudyResultsContainer = styled.div`
 `;
 
 export const StudyCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -52,6 +55,18 @@ export const Tags = styled.div`
 export const Tag = styled.span`
   padding: 5px 10px;
   background-color: #007bff;
+  color: white;
+  border-radius: 15px;
+  font-size: 12px;
+`;
+export const Zones = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const Zone = styled.span`
+  padding: 5px 10px;
+  background-color: red;
   color: white;
   border-radius: 15px;
   font-size: 12px;
