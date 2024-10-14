@@ -92,4 +92,9 @@ export const PageButton = styled.button`
     color: #888;
     cursor: not-allowed;
   }
+
+  &.active {
+    background-color: #007bff;
+    color: white;
+  }
 `;

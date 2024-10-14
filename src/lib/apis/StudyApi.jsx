@@ -60,23 +60,25 @@ const publishStudy = async (path) => {
   return publicshed_study_json;
 };
 
-const fetchStudyByTagsAndZones = async (tags, zones, page = 1, size = 3) => {
+const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
   try {
     // Handle tags and zones being null or undefined
-    const tagParams = tags && tags.length > 0 
-      ? tags.map((tag) => `tags=${encodeURIComponent(tag.title)}`).join("&") 
-      : ""; // If no tags, return an empty string
+    const tagParams =
+      tags && tags.length > 0
+        ? tags.map((tag) => `tags=${encodeURIComponent(tag.title)}`).join("&")
+        : ""; // If no tags, return an empty string
 
-    const zoneParams = zones && zones.length > 0
-      ? zones
-          .map(
-            (zone) =>
-              `cities=${encodeURIComponent(
-                zone.city
-              )}&provinces=${encodeURIComponent(zone.province)}`
-          )
-          .join("&")
-      : ""; // If no zones, return an empty string
+    const zoneParams =
+      zones && zones.length > 0
+        ? zones
+            .map(
+              (zone) =>
+                `cities=${encodeURIComponent(
+                  zone.city
+                )}&provinces=${encodeURIComponent(zone.province)}`
+            )
+            .join("&")
+        : ""; // If no zones, return an empty string
 
     // Add page and size params
     const paginationParams = `page=${page}&size=${size}`;
@@ -104,7 +106,7 @@ const fetchStudyByTagsAndZones = async (tags, zones, page = 1, size = 3) => {
 
     // Parse the JSON response
     const studies_json = await raw_studies.json();
-    console.log("study_json => ",studies_json)
+    console.log("study_json => ", studies_json);
     return studies_json;
   } catch (error) {
     console.error("Error fetching studies:", error);
@@ -112,6 +114,15 @@ const fetchStudyByTagsAndZones = async (tags, zones, page = 1, size = 3) => {
   }
 };
 
+const fetchTotalStudiesCount = async () => {
+  const raw_totalStudiesCount = await fetch(`${SERVER_API_URL}/total-study`, {
+    credentials: "include",
+    method: "GET",
+  });
+  const totalStudiesCount = await raw_totalStudiesCount.json();
+  console.log(totalStudiesCount);
+  return totalStudiesCount;
+};
 
 const StudyApi = {
   createStudy,
@@ -120,8 +131,7 @@ const StudyApi = {
   fetchStudyImage,
   fetchStudyByTagsAndZones,
   publishStudy,
+  fetchTotalStudiesCount,
 };
-
-
 
 export default StudyApi;

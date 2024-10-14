@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import * as S from "./JoinStudy_Main_style";
-import { GiConsoleController } from "react-icons/gi";
 import StudyApi from "../../lib/apis/StudyApi";
 import TagApi from "../../lib/apis/TagApi";
 import ZoneApi from "../../lib/apis/ZoneApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 
-// Study data
-// const studies = [
-//   { id: 1, title: "Study 1", tags: ["health", "nutrition"], zone: "North" },
-//   { id: 2, title: "Study 2", tags: ["fitness", "wellness"], zone: "South" },
-//   { id: 3, title: "Study 3", tags: ["nutrition", "wellness"], zone: "East" },
-//   { id: 4, title: "Study 4", tags: ["health", "fitness"], zone: "West" },
-//   { id: 5, title: "Study 5", tags: ["science", "research"], zone: "North" },
-//   { id: 6, title: "Study 6", tags: ["technology", "innovation"], zone: "East" },
-//   { id: 7, title: "Study 7", tags: ["health", "technology"], zone: "South" },
-//   { id: 8, title: "Study 8", tags: ["nutrition", "research"], zone: "West" },
-//   { id: 9, title: "Study 9", tags: ["wellness", "science"], zone: "North" },
-//   { id: 10, title: "Study 10", tags: ["fitness", "nutrition"], zone: "South" },
-// ];
-
-const ITEMS_PER_PAGE = 2; // Number of items per page
-
 const JoinStudy_Main = () => {
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedZone, setSelectedZone] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageGroupStart, setPageGroupStart] = useState(1);
+  const [totalStudiesCount, setTotalStudiesCount] = useState(0);
   const [studies, setStudies] = useState([]);
   const [uniqueZones, setUniqueZones] = useState([]);
   const [uniqueTags, setUniqueTags] = useState([
@@ -45,6 +30,9 @@ const JoinStudy_Main = () => {
   ]);
 
   const handleResponse = HandleResponseApi.useHandleResponse();
+
+  const ITEMS_PER_PAGE = 1; // Number of items per page
+  const pagesToShow = 5; // How many page numbers you want to display at a time
 
   // Filter studies based on selected tag and zone
   const filteredStudies = studies.filter((study) => {
@@ -73,24 +61,48 @@ const JoinStudy_Main = () => {
   });
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredStudies.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const totalPages = Math.ceil(totalStudiesCount / ITEMS_PER_PAGE);
+
+  const startIndex = ((currentPage - 1) * ITEMS_PER_PAGE) % pagesToShow;
   const paginatedStudies = filteredStudies.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
   console.log(
-    "totalPages, startIndex, paginatedStudies ",
+    "totalPages,filteredStudies , startIndex, paginatedStudies, pageGroupStart ",
     totalPages,
+    filteredStudies,
     startIndex,
-    paginatedStudies
+    paginatedStudies,
+    pageGroupStart
+  );
+
+  const handleNextGroup = () => {
+    const nextStart = pageGroupStart + pagesToShow;
+    if (nextStart <= totalPages) {
+      setPageGroupStart(nextStart);
+      setCurrentPage(nextStart);
+    }
+  };
+
+  const handlePrevGroup = () => {
+    const prevStart = pageGroupStart - pagesToShow;
+    if (prevStart > 0) {
+      setPageGroupStart(prevStart);
+      setCurrentPage(prevStart);
+    }
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
+  const pageNumbers = Array.from(
+    { length: Math.min(pagesToShow, totalPages - pageGroupStart + 1) },
+    (_, i) => pageGroupStart + i
   );
 
   // Handlers
-  const handleNextPage = () =>
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  const handlePrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-
   const handleTagChange = (selectedOption) => {
     setSelectedTag(selectedOption);
     setCurrentPage(1); // Reset to first page when tag changes
@@ -107,14 +119,20 @@ const JoinStudy_Main = () => {
     }));
     setUniqueZones(mappedCities);
   };
-
   useEffect(() => {
     console.log("useEffect");
     console.log("selectedTag => ", selectedTag);
-    const getFetchStudyByTagsAndZones = async (newTags, newZones) => {
+    const getFetchStudyByTagsAndZones = async (
+      newTags,
+      newZones,
+      page,
+      size
+    ) => {
       const response = await StudyApi.fetchStudyByTagsAndZones(
         newTags,
-        newZones
+        newZones,
+        page,
+        size
       );
       console.log("fetchStudyBytagsAndZones => ", response);
       handleResponse(response, setStudies, false);
@@ -125,20 +143,26 @@ const JoinStudy_Main = () => {
     const newZones = selectedZone
       ? ZoneApi.changeZoneLabelToCity(selectedZone)
       : null;
-    if (!newTags && !newZones) {
-      console.log("get whole studies");
-    } else {
-      getFetchStudyByTagsAndZones(newTags, newZones);
-    }
-  }, [selectedTag, selectedZone]);
+    getFetchStudyByTagsAndZones(
+      newTags,
+      newZones,
+      Math.ceil(pageGroupStart / pagesToShow),
+      pagesToShow * ITEMS_PER_PAGE
+    );
+  }, [selectedTag, selectedZone, pageGroupStart]);
 
   useEffect(() => {
     const getAllZones = async () => {
       const response = await ZoneApi.getAllZones();
-      console.log("response => ", response);
       handleResponse(response, parseZones, false);
     };
+    const getTotalStudiesCount = async () => {
+      const response = await StudyApi.fetchTotalStudiesCount();
+      console.log("response => ", response);
+      handleResponse(response, setTotalStudiesCount, false);
+    };
     getAllZones();
+    getTotalStudiesCount();
   }, []);
 
   return (
@@ -189,24 +213,30 @@ const JoinStudy_Main = () => {
         ) : (
           <p>No studies found for the selected filters.</p>
         )}
-
         {/* Pagination */}
-        {filteredStudies.length > ITEMS_PER_PAGE && (
-          <S.Pagination>
-            <S.PageButton onClick={handlePrevPage} disabled={currentPage === 1}>
-              Prev
-            </S.PageButton>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
+        <S.Pagination>
+          <S.PageButton
+            onClick={handlePrevGroup}
+            disabled={pageGroupStart === 1}
+          >
+            Prev
+          </S.PageButton>
+          {pageNumbers.map((page) => (
             <S.PageButton
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
+              key={page}
+              onClick={() => handlePageClick(page)}
+              className={currentPage === page ? "active" : ""}
             >
-              Next
+              {page}
             </S.PageButton>
-          </S.Pagination>
-        )}
+          ))}
+          <S.PageButton
+            onClick={handleNextGroup}
+            disabled={pageGroupStart + pagesToShow > totalPages}
+          >
+            Next
+          </S.PageButton>
+        </S.Pagination>
       </S.StudyResultsContainer>
     </S.StudyListContainer>
   );
