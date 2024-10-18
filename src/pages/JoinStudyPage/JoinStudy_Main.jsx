@@ -11,7 +11,6 @@ const JoinStudy_Main = () => {
   const [selectedZone, setSelectedZone] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageGroupStart, setPageGroupStart] = useState(1);
-  const [totalStudiesCount, setTotalStudiesCount] = useState(0);
   const [studies, setStudies] = useState([]);
   const [uniqueZones, setUniqueZones] = useState([]);
   const [uniqueTags, setUniqueTags] = useState([
@@ -61,7 +60,7 @@ const JoinStudy_Main = () => {
   });
 
   // Pagination logic
-  const totalPages = Math.ceil(totalStudiesCount / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(studies.length / ITEMS_PER_PAGE);
 
   const startIndex = ((currentPage - 1) * ITEMS_PER_PAGE) % pagesToShow;
   const paginatedStudies = filteredStudies.slice(
@@ -156,13 +155,7 @@ const JoinStudy_Main = () => {
       const response = await ZoneApi.getAllZones();
       handleResponse(response, parseZones, false);
     };
-    const getTotalStudiesCount = async () => {
-      const response = await StudyApi.fetchTotalStudiesCount();
-      console.log("response => ", response);
-      handleResponse(response, setTotalStudiesCount, false);
-    };
     getAllZones();
-    getTotalStudiesCount();
   }, []);
 
   return (
