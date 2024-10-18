@@ -16,45 +16,6 @@ export const Study_Select_Container_style = styled.div`
   width: 100%;
 `;
 
-export const Study_List_style = styled.div`
-  display: flex;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 2;
-  grid-column-end: 5;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: 2px;
-  margin-right: 13px;
-`;
-export const Study_List_Element_style = styled.button`
-  background-color: green;
-  color: white;
-  padding: 0.375rem 0.75rem;
-  font-size: 30px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  /* Hover effect */
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  /* Active effect */
-  &:active {
-    background-color: #004080;
-  }
-
-  /* Disabled styles */
-  &:disabled {
-    background-color: #b3b3b3;
-    color: #666666;
-    cursor: not-allowed;
-  }
-`;
-
 export const Study_Select_style = styled.div`
   width: 80%;
 `;

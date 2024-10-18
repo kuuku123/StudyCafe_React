@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Main_style";
 import My_Study_Info from "./MyStudyComponentPage/MyStudyInfo";
 import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
@@ -29,6 +29,12 @@ const Study_Main = () => {
     const response = await StudyApi.publishStudy(path);
     handleResponse(response, () => setDraft("PUBLISHED"), false);
   };
+
+  useEffect(() => {
+    if (study.published) {
+      setDraft("PUBLISHED");
+    }
+  }, []);
 
   return (
     <S.Grid_Container_style>
