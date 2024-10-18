@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Grid_Container_style = styled.div`
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(16, 100px);
+  grid-template-rows: repeat(8, 100px);
   min-height: 80vh;
   justify-items: center;
   align-items: center;

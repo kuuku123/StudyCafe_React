@@ -10,7 +10,6 @@ import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 const Title = ({ children }) => {
-
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   if (isAuthenticated) {

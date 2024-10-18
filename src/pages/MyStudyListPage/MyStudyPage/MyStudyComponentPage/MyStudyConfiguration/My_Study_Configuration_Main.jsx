@@ -8,7 +8,7 @@ import Study_Title_Main from "./StudyTitle/Study_Title_Main";
 import Study_Life_Main from "./StudyLife/Study_Life_Main";
 
 const My_Study_Configuration_Main = () => {
-  const [category, setCategory] = useState("TagsAndZones");
+  const [category, setCategory] = useState("StudyDescription");
   const study = useStudy();
   const pageComponent = {
     StudyDescription: <Study_Description_Main></Study_Description_Main>,
