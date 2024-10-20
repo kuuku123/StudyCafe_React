@@ -11,7 +11,9 @@ const My_Study_Configuration_Main = () => {
   const [category, setCategory] = useState("StudyDescription");
   const study = useStudy();
   const pageComponent = {
-    StudyDescription: <Study_Description_Main></Study_Description_Main>,
+    StudyDescription: (
+      <Study_Description_Main study={study}></Study_Description_Main>
+    ),
     StudyBannerImage: <Study_Banner_Image></Study_Banner_Image>,
     StudyTitle: <Study_Title_Main></Study_Title_Main>,
     TagsAndZones: <Tags_And_Zones_Main study={study}></Tags_And_Zones_Main>,

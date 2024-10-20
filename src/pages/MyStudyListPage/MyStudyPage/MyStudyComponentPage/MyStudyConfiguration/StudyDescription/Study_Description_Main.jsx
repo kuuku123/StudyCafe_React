@@ -6,10 +6,12 @@ import FormControl from "../../../../../../components/FomrControl";
 import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
 
-const Study_Description_Main = () => {
+const Study_Description_Main = ({ study }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
-
-  const handleSubmit = async (createStudyForm) => {};
+  console.log("Description => ", study);
+  const handleSubmit = async (createStudyForm) => {
+    console.log("createStudyForm => ",createStudyForm)
+  };
   const validate = (values) => {
     const errors = {};
     return errors;
@@ -49,33 +51,36 @@ const Study_Description_Main = () => {
         }}
       >
         <FormControl
-          label="write study path"
+          label="study path"
           htmlFor="path"
           error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
             id="create-study-path"
             name="path"
-            placeholder="write path for your study group"
+            placeholder={study.path}
+            value={study.path}
             style={input_style}
+            readonly="readonly"
+            title="You cannot edit path" 
           ></MyForm.Field>
         </FormControl>
 
         <FormControl
-          label="write study title (study name)"
+          label="edit study title (study name)"
           htmlFor="title"
           error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
             id="create-study-title"
             name="title"
-            placeholder="write title for your study group"
+            placeholder={study.title}
             style={input_style}
           ></MyForm.Field>
         </FormControl>
 
         <FormControl
-          label="write study's short description"
+          label="edit study's short description"
           htmlFor="shrot-description"
           error={
             <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
@@ -84,7 +89,7 @@ const Study_Description_Main = () => {
           <MyForm.Field
             id="create-study-shrot-description"
             name="shortDescription"
-            placeholder="write short-description for your study group"
+            placeholder={study.shortDescription}
             style={input_style}
           ></MyForm.Field>
         </FormControl>
@@ -99,7 +104,7 @@ const Study_Description_Main = () => {
           <MyForm.Field
             id="create-study-full-description"
             name="fullDescription"
-            placeholder="write full-description for your study group"
+            placeholder={study.fullDescription}
             style={full_description_style}
             as={MyEditor}
           ></MyForm.Field>

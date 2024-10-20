@@ -9,5 +9,5 @@ export const Study_Description_Main_style = styled.div`
   grid-row-end: 8;
   grid-column-start: 6;
   grid-column-end: 16;
-  width: 100%;
+  width: 90%;
 `;
