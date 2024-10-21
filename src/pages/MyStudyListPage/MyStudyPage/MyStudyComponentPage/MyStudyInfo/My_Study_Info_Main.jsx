@@ -4,9 +4,8 @@ import { useStudy } from "../..";
 import StudyApi from "../../../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 
-const My_Study_Info_Main = () => {
+const My_Study_Info_Main = ({study}) => {
   const [img, setImage] = useState();
-  const study = useStudy();
 
   const hanldeResponse = HandleResponseApi.useHandleResponse();
 

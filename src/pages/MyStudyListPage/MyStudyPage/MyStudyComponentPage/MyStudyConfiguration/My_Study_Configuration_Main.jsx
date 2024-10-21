@@ -7,9 +7,9 @@ import Study_Banner_Image from "./StudyBannerImage/Study_Banner_Image";
 import Study_Title_Main from "./StudyTitle/Study_Title_Main";
 import Study_Life_Main from "./StudyLife/Study_Life_Main";
 
-const My_Study_Configuration_Main = () => {
+const My_Study_Configuration_Main = ({study}) => {
+  console.log("mystudyconfig ",study)
   const [category, setCategory] = useState("StudyDescription");
-  const study = useStudy();
   const pageComponent = {
     StudyDescription: (
       <Study_Description_Main study={study}></Study_Description_Main>

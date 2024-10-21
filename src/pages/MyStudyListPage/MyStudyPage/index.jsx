@@ -1,29 +1,32 @@
-import React, { createContext, useContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
 import * as S from "./My_Study_Main_style";
 import CopyRight from "../../../components/CopyRight";
 import Study_Main from "./My_Study_Main";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const StudyContext = createContext();
-export const useStudy = () => useContext(StudyContext);
+import RoutesEnum from "../../../lib/RoutesEnum";
+import StudyApi from "../../../lib/apis/StudyApi";
+import HandleResponseApi from "../../../lib/HandleResponse";
 
 const StudyPage = () => {
+  const [study, setStudy] = useState();
+
+  const handleResponse = HandleResponseApi.useHandleResponse();
   const location = useLocation();
-  const study = location.state;
-  console.log("study => ", study);
+  const path = location.pathname.split("/")[2];
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!study) {
-      console.log("it worked");
-      navigate("/study");
-    }
+    const getStudy = async (path) => {
+      const response = await StudyApi.fetchStudy(path);
+      handleResponse(response, setStudy, false);
+    };
+    getStudy(path);
   }, []);
 
-  if (!study) return null;
+  if (!study) navigate(RoutesEnum.ERROR);
 
   return (
     <div>
@@ -37,9 +40,7 @@ const StudyPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <StudyContext.Provider value={study}>
-          <Study_Main study={study}></Study_Main>
-        </StudyContext.Provider>
+        {study && <Study_Main study={study}></Study_Main>}
       </Page>
     </div>
   );

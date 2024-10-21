@@ -6,13 +6,20 @@ import FormControl from "../../../../../../components/FomrControl";
 import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
 import StudyApi from "../../../../../../lib/apis/StudyApi";
+import RoutesEnum from "../../../../../../lib/RoutesEnum";
 
 const Study_Description_Main = ({ study }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {
-    console.log("updateStudyForm => ", updateStudyForm)
-    const response = await StudyApi.updateStudyInfo(updateStudyForm, study.path)
-    handleResponse(response,null, {useNav: true, path: RoutesEnum.MY_STUDY_LIST})
+    console.log("updateStudyForm => ", updateStudyForm);
+    const response = await StudyApi.updateStudyInfo(
+      updateStudyForm,
+      study.path
+    );
+    handleResponse(response, null, {
+      useNav: true,
+      path: "" / study / " + study.path",
+    });
   };
   const validate = (values) => {
     const errors = {};
@@ -64,7 +71,7 @@ const Study_Description_Main = ({ study }) => {
             value={study.path}
             style={input_style}
             readonly="readonly"
-            title="You cannot edit path" 
+            title="You cannot edit path"
           ></MyForm.Field>
         </FormControl>
 

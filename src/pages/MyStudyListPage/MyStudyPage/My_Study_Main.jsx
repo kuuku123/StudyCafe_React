@@ -4,22 +4,24 @@ import My_Study_Info from "./MyStudyComponentPage/MyStudyInfo";
 import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
 import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";
 import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration";
-import { useStudy } from ".";
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
+import { useLocation } from "react-router-dom";
 
-const Study_Main = () => {
-  const [category, setCategory] = useState("configuration");
-  const [draft, setDraft] = useState("DRAFT");
-  const study = useStudy();
+const Study_Main = ({study}) => {
+  console.log("Study_Main ", study)
+  const [category, setCategory] = useState("info");
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const pageComponent = {
-    info: <My_Study_Info></My_Study_Info>,
-    member: <My_Study_Member></My_Study_Member>,
-    schedule: <My_Study_Schedule></My_Study_Schedule>,
-    configuration: <My_Study_Configuration></My_Study_Configuration>,
+    info: <My_Study_Info study={study}></My_Study_Info>,
+    member: <My_Study_Member study={study}></My_Study_Member>,
+    schedule: <My_Study_Schedule study={study}></My_Study_Schedule>,
+    configuration: <My_Study_Configuration study={study}></My_Study_Configuration>,
   };
+
 
   const handleOnClick = (category) => {
     setCategory(category);
@@ -27,14 +29,9 @@ const Study_Main = () => {
 
   const handleDraftOnClick = async (path) => {
     const response = await StudyApi.publishStudy(path);
-    handleResponse(response, () => setDraft("PUBLISHED"), false);
+    handleResponse(response, null, false);
   };
 
-  useEffect(() => {
-    if (study.published) {
-      setDraft("PUBLISHED");
-    }
-  }, []);
 
   return (
     <S.Grid_Container_style>
@@ -44,9 +41,9 @@ const Study_Main = () => {
       <S.Study_Draft_style>
         <S.Study_Component_Click_style
           fontSize="22px"
-          onClick={() => handleDraftOnClick(study.path)}
+          onClick={() => handleDraftOnClick(path)}
         >
-          {draft}
+          {study.published}
         </S.Study_Component_Click_style>
         <S.Study_Component_Click_style fontSize="22px">
           off

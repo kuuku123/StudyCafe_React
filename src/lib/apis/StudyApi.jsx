@@ -1,3 +1,12 @@
+const fetchStudy = async (path) => {
+  const raw_study = await fetch(`${SERVER_API_URL}/get-study/${path}`, {
+    credentials: "include",
+    method: "GET",
+  });
+  const study = await raw_study.json();
+  console.log(study);
+  return study;
+};
 const fetchStudyList = async () => {
   const raw_studyList = await fetch(`${SERVER_API_URL}/study-list`, {
     credentials: "include",
@@ -124,21 +133,25 @@ const fetchTotalStudiesCount = async () => {
   return totalStudiesCount;
 };
 
-const updateStudyInfo = async (updateStudyForm,path) => {
-  const raw_updateStudyInfo = await fetch(`${SERVER_API_URL}/study/${path}/settings/update-study`, {
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    credentials: "include",
-    method: "POST",
-    body: JSON.stringify(updateStudyForm),
-  });
+const updateStudyInfo = async (updateStudyForm, path) => {
+  const raw_updateStudyInfo = await fetch(
+    `${SERVER_API_URL}/study/${path}/settings/update-study`,
+    {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify(updateStudyForm),
+    }
+  );
   const updateStudyInfo = await raw_updateStudyInfo.json();
-  console.log(updateStudyInfo)
-  return updateStudyInfo
+  console.log(updateStudyInfo);
+  return updateStudyInfo;
 };
 
 const StudyApi = {
+  fetchStudy,
   createStudy,
   fetchStudyList,
   fetchStudyMembers,

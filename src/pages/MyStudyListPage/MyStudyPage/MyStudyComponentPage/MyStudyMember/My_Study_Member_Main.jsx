@@ -5,10 +5,9 @@ import HandleResponseApi from "../../../../../lib/HandleResponse";
 import StudyApi from "../../../../../lib/apis/StudyApi";
 import ProfileApi from "../../../../../lib/apis/ProfileApi";
 
-const My_Study_Member_Main = () => {
+const My_Study_Member_Main = ({study}) => {
   const [img, setImage] = useState();
   const [studyMembers, setStudyMembers] = useState([]);
-  const study = useStudy();
 
   const handleResponse = HandleResponseApi.useHandleResponse();
 
