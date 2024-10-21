@@ -124,6 +124,20 @@ const fetchTotalStudiesCount = async () => {
   return totalStudiesCount;
 };
 
+const updateStudyInfo = async (updateStudyForm,path) => {
+  const raw_updateStudyInfo = await fetch(`${SERVER_API_URL}/study/${path}/settings/update-study`, {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    credentials: "include",
+    method: "POST",
+    body: JSON.stringify(updateStudyForm),
+  });
+  const updateStudyInfo = await raw_updateStudyInfo.json();
+  console.log(updateStudyInfo)
+  return updateStudyInfo
+};
+
 const StudyApi = {
   createStudy,
   fetchStudyList,
@@ -132,6 +146,7 @@ const StudyApi = {
   fetchStudyByTagsAndZones,
   publishStudy,
   fetchTotalStudiesCount,
+  updateStudyInfo,
 };
 
 export default StudyApi;

@@ -5,12 +5,14 @@ import HandleResponseApi from "../../../../../../lib/HandleResponse";
 import FormControl from "../../../../../../components/FomrControl";
 import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
+import StudyApi from "../../../../../../lib/apis/StudyApi";
 
 const Study_Description_Main = ({ study }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
-  console.log("Description => ", study);
-  const handleSubmit = async (createStudyForm) => {
-    console.log("createStudyForm => ",createStudyForm)
+  const handleSubmit = async (updateStudyForm) => {
+    console.log("updateStudyForm => ", updateStudyForm)
+    const response = await StudyApi.updateStudyInfo(updateStudyForm, study.path)
+    handleResponse(response,null, {useNav: true, path: RoutesEnum.MY_STUDY_LIST})
   };
   const validate = (values) => {
     const errors = {};
@@ -35,7 +37,7 @@ const Study_Description_Main = ({ study }) => {
       <MyForm.Form
         id="create-study-form"
         initialValue={{
-          path: "",
+          path: study.path,
           title: "",
           shortDescription: "",
           fullDescription: "",
