@@ -108,7 +108,7 @@ const Tags_And_Zones_Main = ({ study }) => {
     handleResponse(response1, null, false);
     handleResponse(response2, null, {
       useNav: true,
-      path: "" / study / " + study.path, { state: study }",
+      path: 0,
     });
   };
 

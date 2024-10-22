@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./Study_Description_Main style";
 import * as MyForm from "../../../../../../lib/MyForm";
 import HandleResponseApi from "../../../../../../lib/HandleResponse";
@@ -6,7 +6,7 @@ import FormControl from "../../../../../../components/FomrControl";
 import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
 import StudyApi from "../../../../../../lib/apis/StudyApi";
-import RoutesEnum from "../../../../../../lib/RoutesEnum";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Study_Description_Main = ({ study }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
@@ -18,8 +18,12 @@ const Study_Description_Main = ({ study }) => {
     );
     handleResponse(response, null, {
       useNav: true,
-      path: "" / study / " + study.path",
+      path: 0,
     });
+  };
+
+  const handleClick = () => {
+    console.log("u clicked");
   };
   const validate = (values) => {
     const errors = {};
@@ -66,13 +70,20 @@ const Study_Description_Main = ({ study }) => {
         >
           <MyForm.Field
             id="create-study-path"
+            data-tooltip-id="customTooltip"
             name="path"
             placeholder={study.path}
             value={study.path}
             style={input_style}
             readonly="readonly"
-            title="You cannot edit path"
+            onClick={handleClick}
           ></MyForm.Field>
+          {/* Tooltip with custom styles */}
+          {
+            <ReactTooltip id="customTooltip" effect="solid" place="top">
+              You cannot edit path!
+            </ReactTooltip>
+          }
         </FormControl>
 
         <FormControl

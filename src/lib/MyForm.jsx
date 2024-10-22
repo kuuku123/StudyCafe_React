@@ -99,7 +99,6 @@ export const Form = ({ id, style, children, ...rest }) => {
 };
 
 export const Field = ({ as = "input", children, ...rest }) => {
-  console.log("..rest ",rest)
   const { getFieldProps } = React.useContext(formContext);
   return React.createElement(
     as,
