@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 
 const Study_Main = ({study}) => {
   console.log("Study_Main ", study)
-  const [category, setCategory] = useState("info");
+  const [category, setCategory] = useState("configuration");
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const handleResponse = HandleResponseApi.useHandleResponse();

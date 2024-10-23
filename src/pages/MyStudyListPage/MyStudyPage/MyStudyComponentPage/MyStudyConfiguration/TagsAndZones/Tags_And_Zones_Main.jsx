@@ -5,6 +5,7 @@ import HandleResponseApi from "../../../../../../lib/HandleResponse";
 import ZoneApi from "../../../../../../lib/apis/ZoneApi";
 import TagApi from "../../../../../../lib/apis/TagApi";
 import Button from "../../../../../../components/Button";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Tags_And_Zones_Main = ({ study }) => {
   const [uniqueTags, setUniqueTags] = useState([
@@ -118,6 +119,25 @@ const Tags_And_Zones_Main = ({ study }) => {
     handleWillSelectedTagAndZones();
   };
 
+  const handleDeleteTag = async (tag) => {
+    const response = await TagApi.removeTag(study.path, { title: tag });
+    handleResponse(response, null, {
+      useNav: true,
+      path: 0,
+    });
+  };
+
+  const handleDeleteZone = async (city, province) => {
+    const response = await ZoneApi.removeZone(study.path, {
+      city: city,
+      province: province,
+    });
+    handleResponse(response, null, {
+      useNav: true,
+      path: 0,
+    });
+  };
+
   const parseZones = (zones) => {
     const mappedCities = zones.map((cityObj) => ({
       value: { city: cityObj.city, province: cityObj.province },
@@ -214,7 +234,22 @@ const Tags_And_Zones_Main = ({ study }) => {
             <h4>Selected Tags:</h4>
             {selectedTags && selectedTags.length > 0 ? (
               selectedTags.map((tag) => (
-                <S.Tag_Pill_style key={tag.id}>{tag.title}</S.Tag_Pill_style>
+                <>
+                  <S.Tag_Pill_style
+                    data-tooltip-id="customTooltipTag"
+                    key={tag.id}
+                    onClick={() => handleDeleteTag(tag.title)}
+                  >
+                    {tag.title}
+                  </S.Tag_Pill_style>
+                  <ReactTooltip
+                    id="customTooltipTag"
+                    effect="solid"
+                    place="top"
+                  >
+                    click to delete tag
+                  </ReactTooltip>
+                </>
               ))
             ) : (
               <p>No tags selected</p>
@@ -225,9 +260,22 @@ const Tags_And_Zones_Main = ({ study }) => {
             <h4>Selected Zones:</h4>
             {selectedZones && selectedZones.length > 0 ? (
               selectedZones.map((zone) => (
-                <S.Zone_Pill_style key={zone.id}>
-                  `{zone.city} [{zone.province}]`
-                </S.Zone_Pill_style>
+                <>
+                  <S.Zone_Pill_style
+                    key={zone.id}
+                    data-tooltip-id="customTooltipZone"
+                    onClick={() => handleDeleteZone(zone.city, zone.province)}
+                  >
+                    `{zone.city} [{zone.province}]`
+                  </S.Zone_Pill_style>
+                  <ReactTooltip
+                    id="customTooltipZone"
+                    effect="solid"
+                    place="top"
+                  >
+                    click to delete zone
+                  </ReactTooltip>
+                </>
               ))
             ) : (
               <p>No zones selected</p>

@@ -38,6 +38,23 @@ const addZone = async (path, zoneData) => {
   return response_json;
 };
 
+const removeZone = async (path, zoneData) => {
+  const raw_response = await fetch(
+    `${SERVER_API_URL}/study/${path}/settings/zones/remove`,
+    {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(zoneData),
+    }
+  );
+  console.log("raw_response => ", raw_response);
+  const response_json = raw_response.json();
+  return response_json;
+};
+
 const changeZoneLabelToCity = (zones) => {
   const newZones = zones.map((zone) => ({
     city: zone.value.city,
@@ -50,6 +67,7 @@ const ZoneApi = {
   getAllZones,
   getZones,
   addZone,
+  removeZone,
   changeZoneLabelToCity,
 };
 

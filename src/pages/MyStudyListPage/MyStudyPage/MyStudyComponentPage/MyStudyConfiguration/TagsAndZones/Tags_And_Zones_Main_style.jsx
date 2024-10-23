@@ -52,6 +52,11 @@ export const Tag_Pill_style = styled.div`
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 14px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.4);
+  }
 `;
 
 export const Zone_Pill_style = styled.div`
@@ -63,4 +68,9 @@ export const Zone_Pill_style = styled.div`
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 14px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.4);
+  }
 `;
