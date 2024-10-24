@@ -101,16 +101,30 @@ const Tags_And_Zones_Main = ({ study }) => {
     });
   };
 
+  const getTags = async () => {
+    const response = await TagApi.getTags(study.path);
+    console.log("getTags => ", response);
+    handleResponse(response, handleInitTags, false);
+  };
+  const getZones = async () => {
+    const response = await ZoneApi.getZones(study.path);
+    console.log("getZones => ", response);
+    handleResponse(response, handleInitZones, false);
+  };
+
+  const reset = () => {
+    getTags();
+    getZones();
+    setWillSelectedTags(null);
+    setWillSelectedZones(null);
+  };
+
   const handleWillSelectedTagAndZones = async () => {
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
     const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones);
-    const response1 = await TagApi.addTag(study.path, newTags);
-    const response2 = await ZoneApi.addZone(study.path, newZones);
-    handleResponse(response1, null, false);
-    handleResponse(response2, null, {
-      useNav: true,
-      path: 0,
-    });
+    await TagApi.addTag(study.path, newTags);
+    await ZoneApi.addZone(study.path, newZones);
+    reset();
   };
 
   const handleClick = () => {
@@ -120,22 +134,16 @@ const Tags_And_Zones_Main = ({ study }) => {
   };
 
   const handleDeleteTag = async (tag) => {
-    const response = await TagApi.removeTag(study.path, { title: tag });
-    handleResponse(response, null, {
-      useNav: true,
-      path: 0,
-    });
+    await TagApi.removeTag(study.path, { title: tag });
+    reset();
   };
 
   const handleDeleteZone = async (city, province) => {
-    const response = await ZoneApi.removeZone(study.path, {
+    await ZoneApi.removeZone(study.path, {
       city: city,
       province: province,
     });
-    handleResponse(response, null, {
-      useNav: true,
-      path: 0,
-    });
+    reset();
   };
 
   const parseZones = (zones) => {
@@ -155,6 +163,7 @@ const Tags_And_Zones_Main = ({ study }) => {
     setDefaultZones(zones);
   };
 
+  // remove already choosen tags and zones
   useEffect(() => {
     if (defaultTags.length > 0) {
       const filteredTags = uniqueTags.filter(
@@ -183,16 +192,6 @@ const Tags_And_Zones_Main = ({ study }) => {
       handleResponse(response, parseZones, false);
     };
 
-    const getTags = async () => {
-      const response = await TagApi.getTags(study.path);
-      console.log("getTags => ", response);
-      handleResponse(response, handleInitTags, false);
-    };
-    const getZones = async () => {
-      const response = await ZoneApi.getZones(study.path);
-      console.log("getZones => ", response);
-      handleResponse(response, handleInitZones, false);
-    };
     getTags();
     getZones();
     getAllZones();

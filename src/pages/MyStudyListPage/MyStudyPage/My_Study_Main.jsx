@@ -8,8 +8,8 @@ import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import { useLocation } from "react-router-dom";
 
-const Study_Main = ({study}) => {
-  console.log("Study_Main ", study)
+const Study_Main = ({ study }) => {
+  console.log("Study_Main ", study);
   const [category, setCategory] = useState("configuration");
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -19,9 +19,10 @@ const Study_Main = ({study}) => {
     info: <My_Study_Info study={study}></My_Study_Info>,
     member: <My_Study_Member study={study}></My_Study_Member>,
     schedule: <My_Study_Schedule study={study}></My_Study_Schedule>,
-    configuration: <My_Study_Configuration study={study}></My_Study_Configuration>,
+    configuration: (
+      <My_Study_Configuration study={study}></My_Study_Configuration>
+    ),
   };
-
 
   const handleOnClick = (category) => {
     setCategory(category);
@@ -31,7 +32,6 @@ const Study_Main = ({study}) => {
     const response = await StudyApi.publishStudy(path);
     handleResponse(response, null, false);
   };
-
 
   return (
     <S.Grid_Container_style>
@@ -43,7 +43,7 @@ const Study_Main = ({study}) => {
           fontSize="22px"
           onClick={() => handleDraftOnClick(path)}
         >
-          {study.published}
+          {study.published ? "Published" : "Draft"}
         </S.Study_Component_Click_style>
         <S.Study_Component_Click_style fontSize="22px">
           off
