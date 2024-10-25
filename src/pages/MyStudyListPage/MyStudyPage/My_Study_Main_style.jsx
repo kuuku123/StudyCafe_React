@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Grid_Container_style = styled.div`
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
+  grid-template-columns: repeat(18, 1fr);
   grid-template-rows: repeat(8, 10vh);
   min-height: 80vh;
   justify-items: center;
@@ -51,7 +51,7 @@ export const Study_Draft_style = styled.div`
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 14;
-  grid-column-end: 16;
+  grid-column-end: 18;
   width: 100%;
 `;
 
@@ -61,7 +61,7 @@ export const Study_Link_Horizontal_Line_style = styled.div`
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 2;
-  grid-column-end: 16;
+  grid-column-end: 18;
   align-self: self-start;
   width: 100%;
 

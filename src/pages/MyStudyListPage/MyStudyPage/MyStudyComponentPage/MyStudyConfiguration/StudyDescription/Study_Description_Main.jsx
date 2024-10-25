@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./Study_Description_Main style";
 import * as MyForm from "../../../../../../lib/MyForm";
 import HandleResponseApi from "../../../../../../lib/HandleResponse";
@@ -9,6 +9,15 @@ import StudyApi from "../../../../../../lib/apis/StudyApi";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Study_Description_Main = ({ study }) => {
+  const [img, setImage] = useState();
+  const onChange = (e) => {
+    const img = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {
     console.log("updateStudyForm => ", updateStudyForm);
@@ -43,95 +52,120 @@ const Study_Description_Main = ({ study }) => {
     height: "200px",
     minWidth: "200px", // Ensures it doesn't shrink too much
   };
+
+  const handleImage = (study_image_base64_encoded) => {
+    const base64Image = "data:image/png;base64," + study_image_base64_encoded;
+    setImage(base64Image);
+  };
+
+  useEffect(() => {
+    const getStudyImage = async () => {
+      const study_image_json = await StudyApi.fetchStudyImage(study.path);
+      handleResponse(study_image_json, handleImage, false);
+    };
+    getStudyImage();
+  }, []);
   return (
-    <S.Study_Description_Main_style>
-      <MyForm.Form
-        id="create-study-form"
-        initialValue={{
-          path: study.path,
-          title: "",
-          shortDescription: "",
-          fullDescription: "",
-          fullDescriptionText: "",
-        }}
-        validate={validate}
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <FormControl
-          label="study path"
-          htmlFor="path"
-          error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
+    <>
+      <S.Study_Description_Main_style>
+        <MyForm.Form
+          id="create-study-form"
+          initialValue={{
+            path: study.path,
+            title: "",
+            shortDescription: "",
+            fullDescription: "",
+            fullDescriptionText: "",
+          }}
+          validate={validate}
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+          }}
         >
-          <MyForm.Field
-            id="create-study-path"
-            data-tooltip-id="customTooltip"
-            name="path"
-            placeholder={study.path}
-            value={study.path}
-            style={input_style}
-            readonly="readonly"
-            onClick={handleClick}
-          ></MyForm.Field>
-          {/* Tooltip with custom styles */}
-          {
-            <ReactTooltip id="customTooltip" effect="solid" place="top">
-              You cannot edit path!
-            </ReactTooltip>
-          }
-        </FormControl>
+          <FormControl
+            label="study path"
+            htmlFor="path"
+            error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
+          >
+            <MyForm.Field
+              id="create-study-path"
+              data-tooltip-id="customTooltip"
+              name="path"
+              placeholder={study.path}
+              value={study.path}
+              style={input_style}
+              readonly="readonly"
+              onClick={handleClick}
+            ></MyForm.Field>
+            {/* Tooltip with custom styles */}
+            {
+              <ReactTooltip id="customTooltip" effect="solid" place="top">
+                You cannot edit path!
+              </ReactTooltip>
+            }
+          </FormControl>
 
-        <FormControl
-          label="edit study title (study name)"
-          htmlFor="title"
-          error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
-        >
-          <MyForm.Field
-            id="create-study-title"
-            name="title"
-            placeholder={study.title}
-            style={input_style}
-          ></MyForm.Field>
-        </FormControl>
+          <FormControl
+            label="edit study title (study name)"
+            htmlFor="title"
+            error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
+          >
+            <MyForm.Field
+              id="create-study-title"
+              name="title"
+              placeholder={study.title}
+              style={input_style}
+            ></MyForm.Field>
+          </FormControl>
 
-        <FormControl
-          label="edit study's short description"
-          htmlFor="shrot-description"
-          error={
-            <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
-          }
-        >
-          <MyForm.Field
-            id="create-study-shrot-description"
-            name="shortDescription"
-            placeholder={study.shortDescription}
-            style={input_style}
-          ></MyForm.Field>
-        </FormControl>
+          <FormControl
+            label="edit study's short description"
+            htmlFor="shrot-description"
+            error={
+              <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
+            }
+          >
+            <MyForm.Field
+              id="create-study-shrot-description"
+              name="shortDescription"
+              placeholder={study.shortDescription}
+              style={input_style}
+            ></MyForm.Field>
+          </FormControl>
 
-        <FormControl
-          label="wrtie study's full description"
-          htmlFor="full-description"
-          error={
-            <MyForm.ErrorMessage name="full-description"></MyForm.ErrorMessage>
-          }
-        >
-          <MyForm.Field
-            id="create-study-full-description"
-            name="fullDescription"
-            placeholder={study.fullDescription}
-            style={full_description_style}
-            as={MyEditor}
-          ></MyForm.Field>
-        </FormControl>
-        <Button type="sumbit">Save</Button>
-      </MyForm.Form>
-    </S.Study_Description_Main_style>
+          <FormControl
+            label="wrtie study's full description"
+            htmlFor="full-description"
+            error={
+              <MyForm.ErrorMessage name="full-description"></MyForm.ErrorMessage>
+            }
+          >
+            <MyForm.Field
+              id="create-study-full-description"
+              name="fullDescription"
+              placeholder={study.fullDescription}
+              style={full_description_style}
+              as={MyEditor}
+            ></MyForm.Field>
+          </FormControl>
+          <Button type="sumbit">Save</Button>
+        </MyForm.Form>
+      </S.Study_Description_Main_style>
+      <S.Study_Image_style>
+        <img src={img} width="240px" height="240px"></img>
+        <figcaption style={{ textAlign: "center" }}>Study Image</figcaption>
+        <input
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          name="study_img"
+          onChange={onChange}
+        ></input>
+      </S.Study_Image_style>
+    </>
   );
 };
 

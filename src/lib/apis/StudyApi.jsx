@@ -45,7 +45,7 @@ const fetchStudyMembers = async (path) => {
 
 const fetchStudyImage = async (path) => {
   const raw_study_image = await fetch(
-    `${SERVER_API_URL}/study/${path}/study-image`,
+    `${SERVER_API_URL}/study/${path}/settings/study-image`,
     {
       credentials: "include",
       method: "GET",

@@ -10,9 +10,30 @@ export const Header_Input_style = styled.input`
   height: auto;
 `;
 
+export const Grid_Container_style = styled.div`
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  min-height: 80vh;
+  justify-items: center;
+  align-items: center;
+`;
+
 export const CreateStudy_Main_style = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-height: 80vh;
+  align-self: flex-start;
+  justify-self: flex-start;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 9;
+  width: 100%;
+`;
+
+export const Study_Image_style = styled.figure`
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 9;
+  grid-column-end: 14;
 `;

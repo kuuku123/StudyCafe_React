@@ -35,15 +35,7 @@ const ProfileSetting_Main = () => {
 
   const handleSubmit = async (profileEditInfo) => {
     profileEditInfo["profileImage"] = img;
-    const raw_response = await fetch(`${SERVER_API_URL}/settings/profile`, {
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify(profileEditInfo),
-    });
-    const response = await raw_response.json();
+    const response = await ProfileApi.updatePorfile(profileEditInfo)
     handleResponse(response, null, { useNav: true, path: RoutesEnum.PROFILE });
   };
 
