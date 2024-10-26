@@ -18,7 +18,7 @@ const LoginPage = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = async (loginInfo) => {
-    const raw_response = await fetch("http://localhost:8081/login", {
+    const raw_response = await fetch(`${SERVER_API_URL}/login`, {
       credentials: "include",
       method: "POST",
       headers: {
