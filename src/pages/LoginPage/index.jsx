@@ -15,7 +15,7 @@ import { loginSuccess } from "../../lib/features/auth/authSlice";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = async (loginInfo) => {
     const raw_response = await fetch(`${SERVER_API_URL}/login`, {
@@ -28,19 +28,20 @@ const LoginPage = () => {
     });
 
     const response = await raw_response.json();
-    console.log("response ==> ",response)
+    console.log("response ==> ", response);
     if (response.status === "OK") {
-      console.log("response data => ",response.data)
-      dispatch(loginSuccess(response.data))
-      sessionStorage.setItem("user", loginInfo.nicknameOrEmail);
-      sessionStorage.setItem("login", "success");
+      console.log("response data => ", response.data);
+      dispatch(loginSuccess(response.data));
       navigate("/");
     } else {
-      localStorage.removeItem("login");
       openDialog(
         <Dialog
           header={<>Error</>}
-          footer={<Button onClick={() => closeDialog(RoutesEnum.SIGN_UP)}>Close</Button>}
+          footer={
+            <Button onClick={() => closeDialog(RoutesEnum.SIGN_UP)}>
+              Close
+            </Button>
+          }
         >
           {response.message}
         </Dialog>
@@ -68,11 +69,19 @@ const LoginPage = () => {
               Login
             </S.Login_Button_style>
           </S.Login_Container_style>
-            <S.Social_Login_Button_Container_style>
-              <S.Social_Login_Button_style src={"images/social/google.png"}></S.Social_Login_Button_style>
-              <S.Social_Login_Button_style src={"images/social/kakao.png"}></S.Social_Login_Button_style>
-              <S.Social_Login_Button_style src={"images/social/naver.png"}></S.Social_Login_Button_style>
-            </S.Social_Login_Button_Container_style>
+          <S.Social_Login_Button_Container_style>
+            <a href={`${SERVER_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:8080/login/oauth2/code/google`}>
+              <S.Social_Login_Button_style
+                src={"images/social/google.png"}
+              ></S.Social_Login_Button_style>
+            </a>
+            <S.Social_Login_Button_style
+              src={"images/social/kakao.png"}
+            ></S.Social_Login_Button_style>
+            <S.Social_Login_Button_style
+              src={"images/social/naver.png"}
+            ></S.Social_Login_Button_style>
+          </S.Social_Login_Button_Container_style>
         </S.Login_Main_style>
       </Page>
     </div>

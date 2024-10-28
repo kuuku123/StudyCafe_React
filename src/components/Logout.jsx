@@ -19,7 +19,6 @@ const Logout = ({ style }) => {
       console.log(res);
       dispatch(logout());
       navigate("/");
-      return res.json();
     });
   };
 
