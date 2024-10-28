@@ -68,6 +68,11 @@ const LoginPage = () => {
               Login
             </S.Login_Button_style>
           </S.Login_Container_style>
+            <S.Social_Login_Button_Container_style>
+              <S.Social_Login_Button_style src={"images/social/google.png"}></S.Social_Login_Button_style>
+              <S.Social_Login_Button_style src={"images/social/kakao.png"}></S.Social_Login_Button_style>
+              <S.Social_Login_Button_style src={"images/social/naver.png"}></S.Social_Login_Button_style>
+            </S.Social_Login_Button_Container_style>
         </S.Login_Main_style>
       </Page>
     </div>

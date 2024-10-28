@@ -48,6 +48,25 @@ export const Login_Button_style = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export const Social_Login_Button_Container_style = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 30px;
+  width: 600px;
+`;
+export const Social_Login_Button_style = styled.img`
+  height: 50px;
+  width: 50px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Adjust shadow size and color */
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 export const login_input_style = {
   fontSize: "1rem",
   border: "1px solid #ccc",

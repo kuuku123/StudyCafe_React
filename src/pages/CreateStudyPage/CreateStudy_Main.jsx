@@ -50,7 +50,7 @@ const CreateStudy_Main = () => {
   return (
     <S.Grid_Container_style>
       <S.CreateStudy_Main_style>
-      <h2>Create Study</h2>
+        <h2>Create Study</h2>
         <MyForm.Form
           id="create-study-form"
           initialValue={{
