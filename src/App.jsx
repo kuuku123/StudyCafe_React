@@ -16,6 +16,9 @@ import PublicStudyPage from "./pages/JoinStudyPage";
 import { Provider } from "react-redux";
 import store, { persistor } from "./lib/features/store";
 import { PersistGate } from "redux-persist/integration/react";
+import AlreadyMergedAccount from "./pages/LoginPage/social/AlreadyMergedAccount";
+import MergeAccount from "./pages/LoginPage/social/MergeAccount";
+import SocialAccountSetPassword from "./pages/LoginPage/social/SocialAccountSetPassword";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -30,6 +33,15 @@ const App = () => {
     {
       path: RoutesEnum.LOGIN,
       element: <LoginPage />,
+    },
+    {
+      path: RoutesEnum.ALREADY_MERGED_ACCOUNT,
+      element: <AlreadyMergedAccount></AlreadyMergedAccount>,
+    },
+    { path: RoutesEnum.MERGE_ACCOUNT, element: <MergeAccount></MergeAccount> },
+    {
+      path: RoutesEnum.SOCIAL_ACCOUNT_SET_PASSWORD,
+      element: <SocialAccountSetPassword></SocialAccountSetPassword>,
     },
     {
       path: RoutesEnum.PROFILE,
