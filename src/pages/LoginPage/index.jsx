@@ -70,7 +70,9 @@ const LoginPage = () => {
             </S.Login_Button_style>
           </S.Login_Container_style>
           <S.Social_Login_Button_Container_style>
-            <a href={`${SERVER_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:8080/login/oauth2/code/google`}>
+            <a
+              href={`${SERVER_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:8080/login/oauth2/code/google`}
+            >
               <S.Social_Login_Button_style
                 src={"images/social/google.png"}
               ></S.Social_Login_Button_style>

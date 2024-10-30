@@ -13,7 +13,7 @@ export const Login_Main_style = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 40vh;
+  min-height: 80vh;
 `;
 export const Login_Container_style = styled.div`
   display: flex;

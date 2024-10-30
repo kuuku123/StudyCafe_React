@@ -16,9 +16,11 @@ import PublicStudyPage from "./pages/JoinStudyPage";
 import { Provider } from "react-redux";
 import store, { persistor } from "./lib/features/store";
 import { PersistGate } from "redux-persist/integration/react";
-import AlreadyMergedAccount from "./pages/LoginPage/social/AlreadyMergedAccount";
-import MergeAccount from "./pages/LoginPage/social/MergeAccount";
-import SocialAccountSetPassword from "./pages/LoginPage/social/SocialAccountSetPassword";
+import MergeAccount from "./pages/LoginPage/social/MergeAccountPage/MergeAccount_Main";
+import SocialAccountSetPassword from "./pages/LoginPage/social/SocialAccountSetPassword/SocialAccountSetPassword_Main";
+import SocialAccountSetPasswordPage from "./pages/LoginPage/social/SocialAccountSetPassword";
+import MergeAccountPage from "./pages/LoginPage/social/MergeAccountPage";
+import AlreadyMergedAccountPage from "./pages/LoginPage/social/AlreadyMergedAccountPage";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -36,12 +38,14 @@ const App = () => {
     },
     {
       path: RoutesEnum.ALREADY_MERGED_ACCOUNT,
-      element: <AlreadyMergedAccount></AlreadyMergedAccount>,
+      element: <AlreadyMergedAccountPage></AlreadyMergedAccountPage>
     },
-    { path: RoutesEnum.MERGE_ACCOUNT, element: <MergeAccount></MergeAccount> },
+    { path: RoutesEnum.MERGE_ACCOUNT, 
+      element: <MergeAccountPage></MergeAccountPage>
+    },
     {
       path: RoutesEnum.SOCIAL_ACCOUNT_SET_PASSWORD,
-      element: <SocialAccountSetPassword></SocialAccountSetPassword>,
+      element: <SocialAccountSetPasswordPage></SocialAccountSetPasswordPage>
     },
     {
       path: RoutesEnum.PROFILE,
