@@ -4,6 +4,7 @@ import HandleResponseApi from "../../lib/HandleResponse";
 import * as S from "./MyStudyList_Main_style";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
+import RoutesEnum from "../../lib/RoutesEnum";
 
 const StudyList_Main = () => {
   const [studies, setStudies] = useState([]);
@@ -12,7 +13,7 @@ const StudyList_Main = () => {
 
   const handleClick = (study) => {
     console.log("study => ", study);
-    navigate("/study/" + study.path, { state: study });
+    navigate(RoutesEnum.STUDY(study.path), { state: study });
   };
   const handleStudies = (studies) => {
     const sanitizedStudies = Array.isArray(studies)

@@ -8,9 +8,9 @@ import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import { useLocation } from "react-router-dom";
 
-const Study_Main = ({ study }) => {
-  console.log("Study_Main ", study);
+const Study_Main = ({ study}) => {
   const [category, setCategory] = useState("configuration");
+  const [published, setPublished] = useState(study.published)
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const handleResponse = HandleResponseApi.useHandleResponse();
@@ -30,7 +30,8 @@ const Study_Main = ({ study }) => {
 
   const handleDraftOnClick = async (path) => {
     const response = await StudyApi.publishStudy(path);
-    handleResponse(response, null, false);
+    console.log("handleDraftOnCLick => ", response)
+    handleResponse(response, setPublished, false);
   };
 
   return (
@@ -43,7 +44,7 @@ const Study_Main = ({ study }) => {
           fontSize="22px"
           onClick={() => handleDraftOnClick(path)}
         >
-          {study.published ? "Published" : "Draft"}
+          {published ? "Published" : "Draft"}
         </S.Study_Component_Click_style>
         <S.Study_Component_Click_style fontSize="22px">
           off
