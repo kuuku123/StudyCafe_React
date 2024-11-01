@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import * as S from "./MergeAccount_Main_style";
 import SocialApi from "../../../../lib/apis/SocialApi";
 import HandleResponseApi from "../../../../lib/HandleResponse";
+import RoutesEnum from "../../../../lib/RoutesEnum";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../../../lib/features/auth/authSlice";
 
 const MergeAccount_Main = () => {
   const[email, setEmail] = useState("")
+  const dispatch = useDispatch()
 
-  const hanldeResponse = HandleResponseApi.useHandleResponse();
+  const handleResponse = HandleResponseApi.useHandleResponse();
   const handleMerge = async () => {
-    await SocialApi.mergeAccount();
+    const response = await SocialApi.mergeAccount();
+    handleResponse(response,(data) => dispatch(loginSuccess(data)), {useNav:true , path: RoutesEnum.HOME})
   };
 
   const handleCancel = async () => {
@@ -19,7 +24,7 @@ const MergeAccount_Main = () => {
     const getEmail = async () => {
       const response = await SocialApi.getEmail();
       console.log("email => ", response);
-      hanldeResponse(response, setEmail , false);
+      handleResponse(response, setEmail , false);
     };
     getEmail();
   }, []);
