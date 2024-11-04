@@ -14,7 +14,7 @@ const Profile_Main = () => {
     email: "default email",
   });
 
-  const hanldeResponse = HandleResponseApi.useHandleResponse();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleImage = (profile_image_base64_encoded) => {
     const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
@@ -24,7 +24,7 @@ const Profile_Main = () => {
   useEffect(() => {
     const getProfileImage = async () => {
       const profile_image_json = await ProfileApi.fetchProfileImage();
-      hanldeResponse(profile_image_json, handleImage, false);
+      handleResponse(profile_image_json, handleImage, false);
     };
     getProfileImage();
   }, []);
@@ -33,7 +33,7 @@ const Profile_Main = () => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
       console.log("profile=> ", response);
-      hanldeResponse(response, setProfile, false);
+      handleResponse(response, setProfile, false);
     };
     getProfile();
   }, []);

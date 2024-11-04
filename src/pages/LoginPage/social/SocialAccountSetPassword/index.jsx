@@ -16,7 +16,17 @@ const SocialAccountSetPasswordPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        <SocialAccountSetPassword_Main></SocialAccountSetPassword_Main>
+        <S.Set_Password_Main_style>
+          <S.Set_Password_Container_style>
+            <h1>Set Account's Password</h1>
+          </S.Set_Password_Container_style>
+          <SocialAccountSetPassword_Main></SocialAccountSetPassword_Main>
+          <S.Set_Password_Container_style>
+            <S.Set_Password_Button_style type="submit" form="social-set-password">
+              Set Password
+            </S.Set_Password_Button_style>
+          </S.Set_Password_Container_style>
+        </S.Set_Password_Main_style>
       </Page>
     </>
   );

@@ -37,6 +37,15 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
       });
     }
   };
+  const handleFocus = (e, source, editor) => {
+    if (e.target === undefined) {
+    } else {
+      setTouched({
+        ...touched,
+        [e.target.name]: true,
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
     console.log("MyForm handleSumbit called");
@@ -59,12 +68,14 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
   const getFieldProps = (name) => {
     const value = values[name];
     const onBlur = handleBlur;
+    const onFocus = handleFocus;
     const onChange = handleChange;
 
     return {
       name,
       value,
       onBlur,
+      onFocus,
       onChange,
     };
   };
@@ -102,7 +113,7 @@ export const Field = ({ as = "input", children, ...rest }) => {
   const { getFieldProps } = React.useContext(formContext);
   return React.createElement(
     as,
-    {...getFieldProps(rest.name), ...rest },
+    { ...getFieldProps(rest.name), ...rest },
     children
   );
 };

@@ -1,8 +1,12 @@
 import React from "react";
 import * as MyForm from "../../../../lib/MyForm";
 import FormControl from "../../../../components/FomrControl";
+import * as S from "./SocialAccountSetPassword_Main_style";
+import HandleResponseApi from "../../../../lib/HandleResponse";
+import RoutesEnum from "../../../../lib/RoutesEnum";
 
 const SocialAccountSetPassword_Main = () => {
+  const handleResponse = HandleResponseApi.useHandleResponse();
   const onSubmit = async (passwordInfo) => {
     const response = await fetch(`${SERVER_API_URL}/settings/password`, {
       credentials: "include",
@@ -11,32 +15,60 @@ const SocialAccountSetPassword_Main = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(passwordInfo),
-    }
-  ).then((res) => {
+    }).then((res) => {
       console.log(res);
       return res.json();
     });
-    handleResopnse(response)
+    handleResponse(response, null, {useNav: true, path: RoutesEnum.HOME});
+  };
+
+  const validate = (values) => {
+    console.log("values ==> ", values);
+    const errors = {};
+    if (values.newPassword !== values.newPasswordConfirm) {
+      console.log("not same!!");
+      errors.newPasswordConfirm = "password is not same";
+    }
+    return errors;
   };
 
   return (
     <MyForm.Form
       id="social-set-password"
       initialValue={{
-        password: "",
+        newPassword: "",
+        newPasswordConfirm: "",
       }}
       onSubmit={onSubmit}
+      validate={validate}
     >
       <FormControl
-        label="Password"
-        htmlFor="password"
-        error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
+        label="newPassword"
+        htmlFor="newPassword"
+        error={<MyForm.ErrorMessage name="newPassword"></MyForm.ErrorMessage>}
       >
         <MyForm.Field
-          id="password"
-          name="password"
+          id="newPassword"
+          style={S.Set_Password_Input_style}
+          name="newPassword"
           type="password"
-          placeholder="write your password"
+          placeholder="write your new password"
+        ></MyForm.Field>
+      </FormControl>
+
+      <FormControl
+        label="newPasswordConfirm"
+        htmlFor="newPasswordConfirm"
+        error={
+          <MyForm.ErrorMessage name="newPasswordConfirm"></MyForm.ErrorMessage>
+        }
+      >
+        <MyForm.Field
+          id="newPasswordConfirm"
+          style={S.Set_Password_Input_style}
+          name="newPasswordConfirm"
+          type="password"
+          placeholder="confirm your new password"
         ></MyForm.Field>
       </FormControl>
     </MyForm.Form>
