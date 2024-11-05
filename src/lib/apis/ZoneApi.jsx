@@ -56,11 +56,13 @@ const removeZone = async (path, zoneData) => {
 };
 
 const changeZoneLabelToCity = (zones) => {
-  const newZones = zones.map((zone) => ({
-    city: zone.value.city,
-    province: zone.value.province,
-  }));
-  return newZones;
+  if (zones != null) {
+    const newZones = zones.map((zone) => ({
+      city: zone.value.city,
+      province: zone.value.province,
+    }));
+    return newZones;
+  }
 };
 
 const ZoneApi = {

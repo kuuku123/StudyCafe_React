@@ -4,8 +4,11 @@ import FormControl from "../../../../components/FomrControl";
 import * as S from "./SocialAccountSetPassword_Main_style";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../../../lib/features/auth/authSlice";
 
 const SocialAccountSetPassword_Main = () => {
+  const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const onSubmit = async (passwordInfo) => {
     const response = await fetch(`${SERVER_API_URL}/settings/password`, {
@@ -19,7 +22,11 @@ const SocialAccountSetPassword_Main = () => {
       console.log(res);
       return res.json();
     });
-    handleResponse(response, null, {useNav: true, path: RoutesEnum.HOME});
+    handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+      useNav: true,
+      path: RoutesEnum.HOME,
+      dialog: "now you can login with your email as id and password you just sent"
+    },);
   };
 
   const validate = (values) => {

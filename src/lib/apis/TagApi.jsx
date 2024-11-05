@@ -45,10 +45,12 @@ const removeTag = async (path, tagData) => {
 };
 
 const changeTagLabelToTitile = (tags) => {
-  const newTags = tags.map((tag) => ({
-    title: tag.label,
-  }));
-  return newTags;
+  if (tags != null) {
+    const newTags = tags.map((tag) => ({
+      title: tag.label,
+    }));
+    return newTags;
+  }
 };
 
 const TagApi = {

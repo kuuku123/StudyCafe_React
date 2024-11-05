@@ -20,20 +20,21 @@ const useHandleResponse = () => {
       if (callback) callback(response.data);
       if (typeof useNavigate === "boolean") {
         console.log("do nothing");
-      } else if (useNavigate.useNav) {
-        console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
-        navigate(useNavigate.path);
-      } else if (useNavigate.dialog !== "") {
+      } else if (useNavigate.useNav && useNavigate.dialog !== undefined) {
+        console.log("dialog => ", useNavigate.dialog)
         openDialog(
           <Dialog
             header={<>Login</>}
             footer={
-              <Button onClick={() => closeDialog()}>
+              <Button onClick={() => closeDialog(useNavigate.path)}>
                 {useNavigate.dialog}
               </Button>
             }
           ></Dialog>
         );
+      } else if (useNavigate.useNav) {
+        console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
+        navigate(useNavigate.path);
       }
     } else if (response.status === 403) {
       console.log("unauthorized");
