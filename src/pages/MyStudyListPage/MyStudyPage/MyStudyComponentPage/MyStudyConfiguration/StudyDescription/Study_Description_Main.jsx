@@ -20,6 +20,7 @@ const Study_Description_Main = ({ study }) => {
   };
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {
+    updateStudyForm["studyImage"] = img;
     console.log("updateStudyForm => ", updateStudyForm);
     const response = await StudyApi.updateStudyInfo(
       updateStudyForm,

@@ -18,6 +18,7 @@ export const Study_Select_Container_style = styled.div`
 
 export const Study_List_style = styled.div`
   display: flex;
+  justify-content: center;
   grid-row-start: 3;
   grid-row-end: 8;
   grid-column-start: 2;

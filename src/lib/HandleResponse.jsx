@@ -12,7 +12,7 @@ const useHandleResponse = () => {
   const handleResponse = (
     response,
     callback,
-    useNavigate = { useNav: true, path: RoutesEnum.HOME, dialog: "" }
+    useNavigate = { useNav: true, path: RoutesEnum.HOME, dialog: undefined }
   ) => {
     console.log("useNavigate => ", useNavigate);
 
