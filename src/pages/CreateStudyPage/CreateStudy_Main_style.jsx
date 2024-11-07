@@ -12,8 +12,8 @@ export const Header_Input_style = styled.input`
 
 export const Grid_Container_style = styled.div`
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(18, 100px);
+  grid-template-rows: repeat(8, 100px);
   min-height: 80vh;
   justify-items: center;
   align-items: center;
@@ -26,14 +26,17 @@ export const CreateStudy_Main_style = styled.div`
   justify-self: flex-start;
   grid-row-start: 1;
   grid-row-end: 3;
-  grid-column-start: 2;
-  grid-column-end: 9;
+  grid-column-start: 4;
+  grid-column-end: 11;
   width: 100%;
 `;
 
 export const Study_Image_style = styled.figure`
-  grid-row-start: 1;
-  grid-row-end: 3;
-  grid-column-start: 9;
-  grid-column-end: 14;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  grid-column-start: 11;
+  grid-column-end: 16;
 `;

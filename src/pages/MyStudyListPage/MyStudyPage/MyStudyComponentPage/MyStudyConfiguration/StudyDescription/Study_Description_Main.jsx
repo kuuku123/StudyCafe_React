@@ -102,12 +102,9 @@ const Study_Description_Main = ({ study }) => {
               readonly="readonly"
               onClick={handleClick}
             ></MyForm.Field>
-            {/* Tooltip with custom styles */}
-            {
-              <ReactTooltip id="customTooltip" effect="solid" place="top">
-                You cannot edit path!
-              </ReactTooltip>
-            }
+            <ReactTooltip id="customTooltip" effect="solid" place="top">
+              You cannot edit path!
+            </ReactTooltip>
           </FormControl>
 
           <FormControl

@@ -3,7 +3,7 @@ import Page from "../../../components/Page";
 import Title from "../../../components/Title";
 import * as S from "./My_Study_Main_style";
 import CopyRight from "../../../components/CopyRight";
-import Study_Main from "./My_Study_Main";
+import My_Study_Main from "./My_Study_Main";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoutesEnum from "../../../lib/RoutesEnum";
 import StudyApi from "../../../lib/apis/StudyApi";
@@ -32,15 +32,13 @@ const StudyPage = () => {
     <div>
       <Page
         header={
-          <>
-            <Title>
-              <S.Header_Input_style></S.Header_Input_style>
-            </Title>
-          </>
+          <Title>
+            <S.Header_Input_style></S.Header_Input_style>
+          </Title>
         }
         footer={<CopyRight></CopyRight>}
       >
-        {study && <Study_Main study={study}></Study_Main>}
+        {study && <My_Study_Main study={study}></My_Study_Main>}
       </Page>
     </div>
   );

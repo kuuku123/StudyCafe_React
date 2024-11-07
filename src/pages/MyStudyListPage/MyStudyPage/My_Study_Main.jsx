@@ -7,10 +7,11 @@ import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration"
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import { useLocation } from "react-router-dom";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Study_Main = ({ study}) => {
+const My_Study_Main = ({ study }) => {
   const [category, setCategory] = useState("configuration");
-  const [published, setPublished] = useState(study.published)
+  const [published, setPublished] = useState(study.published);
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const handleResponse = HandleResponseApi.useHandleResponse();
@@ -30,7 +31,7 @@ const Study_Main = ({ study}) => {
 
   const handleDraftOnClick = async (path) => {
     const response = await StudyApi.publishStudy(path);
-    console.log("handleDraftOnCLick => ", response)
+    console.log("handleDraftOnCLick => ", response);
     handleResponse(response, setPublished, false);
   };
 
@@ -41,11 +42,15 @@ const Study_Main = ({ study}) => {
       </S.Study_Title_style>
       <S.Study_Draft_style>
         <S.Study_Component_Click_style
+          data-tooltip-id="draftTooltip"
           fontSize="22px"
           onClick={() => handleDraftOnClick(path)}
         >
           {published ? "Published" : "Draft"}
         </S.Study_Component_Click_style>
+        <ReactTooltip id="draftTooltip" effect="solid" place="top">
+          Click to Pubslih Study to Others
+        </ReactTooltip>
         <S.Study_Component_Click_style fontSize="22px">
           off
         </S.Study_Component_Click_style>
@@ -86,4 +91,4 @@ const Study_Main = ({ study}) => {
   );
 };
 
-export default Study_Main;
+export default My_Study_Main;

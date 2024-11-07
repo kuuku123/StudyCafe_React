@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+export const Page_style = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Header_style = styled.header`
+ // flex-shrink: 0; /* Keeps header in place */
+`;
+
+export const Main_style = styled.main`
+  //flex-grow: 0; /* Allows main to take up available space */
+`;
+
+export const Footer_style = styled.footer`
+  //flex-shrink: 0; /* Keeps footer in place */
+`;
+
 export const CopyRight_style = styled.div`
   display: flex;
   flex-direction: row;
