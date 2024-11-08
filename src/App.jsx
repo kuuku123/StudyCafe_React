@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
-import ProfileSettingPage from "./pages/ProfileSettingPage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
@@ -16,11 +15,10 @@ import PublicStudyPage from "./pages/JoinStudyPage";
 import { Provider } from "react-redux";
 import store, { persistor } from "./lib/features/store";
 import { PersistGate } from "redux-persist/integration/react";
-import MergeAccount from "./pages/LoginPage/social/MergeAccountPage/MergeAccount_Main";
-import SocialAccountSetPassword from "./pages/LoginPage/social/SocialAccountSetPassword/SocialAccountSetPassword_Main";
 import SocialAccountSetPasswordPage from "./pages/LoginPage/social/SocialAccountSetPassword";
 import MergeAccountPage from "./pages/LoginPage/social/MergeAccountPage";
 import AlreadyMergedAccountPage from "./pages/LoginPage/social/AlreadyMergedAccountPage";
+import ProfileSettingPage from "./pages/ProfileSettingPage";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -38,14 +36,15 @@ const App = () => {
     },
     {
       path: RoutesEnum.ALREADY_MERGED_ACCOUNT,
-      element: <AlreadyMergedAccountPage></AlreadyMergedAccountPage>
+      element: <AlreadyMergedAccountPage></AlreadyMergedAccountPage>,
     },
-    { path: RoutesEnum.MERGE_ACCOUNT, 
-      element: <MergeAccountPage></MergeAccountPage>
+    {
+      path: RoutesEnum.MERGE_ACCOUNT,
+      element: <MergeAccountPage></MergeAccountPage>,
     },
     {
       path: RoutesEnum.SOCIAL_ACCOUNT_SET_PASSWORD,
-      element: <SocialAccountSetPasswordPage></SocialAccountSetPasswordPage>
+      element: <SocialAccountSetPasswordPage></SocialAccountSetPasswordPage>,
     },
     {
       path: RoutesEnum.PROFILE,
@@ -53,7 +52,7 @@ const App = () => {
     },
     {
       path: RoutesEnum.PROFILE_SETTING,
-      element: <ProfileSettingPage />,
+      element: <ProfileSettingPage></ProfileSettingPage>,
     },
     {
       path: RoutesEnum.EMAIL_RESEND,

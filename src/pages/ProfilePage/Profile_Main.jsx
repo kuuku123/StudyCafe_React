@@ -45,10 +45,12 @@ const Profile_Main = () => {
         <figcaption style={{ textAlign: "center" }}>Profile Image</figcaption>
       </S.Profile_Pic_style>
       <S.Profile_List_style>
-        <Link to={"/profile"}>
+        <Link to={RoutesEnum.PROFILE}>
           <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
         </Link>
-        <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
+        <Link to={RoutesEnum.MY_STUDY_LIST}>
+          <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
+        </Link>
       </S.Profile_List_style>
       <S.Profile_Name_style>{profile.nickname}</S.Profile_Name_style>
       <S.Profile_Info_style>
