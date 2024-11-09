@@ -9,6 +9,8 @@ const initialState = {
     location: "default location",
     email: "default email",
     emailVerified: false,
+    tags: [],
+    zones: [],
   },
   isAuthenticated: false,
 };

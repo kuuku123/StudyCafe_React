@@ -1,4 +1,4 @@
-const getTags = async (path) => {
+const getStudyTags = async (path) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/tags`,
     {
@@ -11,7 +11,7 @@ const getTags = async (path) => {
   return get_tag_json;
 };
 
-const addTag = async (path, tagData) => {
+const addStudyTag = async (path, tagData) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/tags/add`,
     {
@@ -27,7 +27,7 @@ const addTag = async (path, tagData) => {
   const response_json = raw_response.json();
   return response_json;
 };
-const removeTag = async (path, tagData) => {
+const removeStudyTag = async (path, tagData) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/tags/remove`,
     {
@@ -44,6 +44,30 @@ const removeTag = async (path, tagData) => {
   return response_json;
 };
 
+const getAccountTags = async () => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags`, {
+    credentials: "include",
+    method: "GET",
+  });
+  console.log("raw_get_zone => ", raw_response);
+  const get_tag_json = await raw_response.json();
+  return get_tag_json;
+};
+
+const addAccountTag = async (tagData) => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags/add`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tagData),
+  });
+  console.log("raw_response => ", raw_response);
+  const response_json = raw_response.json();
+  return response_json;
+};
+
 const changeTagLabelToTitile = (tags) => {
   if (tags != null) {
     const newTags = tags.map((tag) => ({
@@ -54,9 +78,11 @@ const changeTagLabelToTitile = (tags) => {
 };
 
 const TagApi = {
-  getTags,
-  addTag,
-  removeTag,
+  getStudyTags,
+  addStudyTag,
+  removeStudyTag,
+  getAccountTags,
+  addAccountTag,
   changeTagLabelToTitile,
 };
 

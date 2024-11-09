@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import * as S from "./ProfileTagsAndZones_Main_style";
+import HandleResponseApi from "../../../../lib/HandleResponse";
 import Select from "react-select";
-import * as S from "./Tags_And_Zones_Main_style";
-import HandleResponseApi from "../../../../../../lib/HandleResponse";
-import ZoneApi from "../../../../../../lib/apis/ZoneApi";
-import TagApi from "../../../../../../lib/apis/TagApi";
-import Button from "../../../../../../components/Button";
+import TagApi from "../../../../lib/apis/TagApi";
+import ZoneApi from "../../../../lib/apis/ZoneApi";
+import Button from "../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Tags_And_Zones_Main = ({ study }) => {
+const ProfileTagsAndZones_Main = () => {
   const [uniqueTags, setUniqueTags] = useState([
     { value: "health", label: "health" },
     { value: "computer-science", label: "computer-science" },
@@ -37,12 +37,13 @@ const Tags_And_Zones_Main = ({ study }) => {
       console.log("prevTags => ", prevTags);
       const newTags = TagApi.changeTagLabelToTitile(selectedOption);
 
+      console.log("newTags => ", newTags);
       // Combine the previous tags and the new tags
       const updatedTags = [
-        ...prevTags,
+        ...(prevTags || []),
         ...newTags.filter(
           (newTag) =>
-            !prevTags.some((prevTag) => prevTag.title === newTag.title)
+            !(prevTags || []).some((prevTag) => prevTag.title === newTag.title)
         ),
       ];
       console.log("updatedTags => ", updatedTags);
@@ -72,14 +73,17 @@ const Tags_And_Zones_Main = ({ study }) => {
 
       console.log("selected Options => ", selectedOption);
       const updatedZones = [
-        ...prevZones,
+        ...(prevZones || []), // Use an empty array if prevZones is null or undefined
         ...newZones.filter(
           (newZone) =>
-            !prevZones.some((prevZone) => prevZone.city === newZone.city)
+            !(prevZones || []).some(
+              (prevZone) => prevZone.city === newZone.city
+            )
         ),
       ];
 
       console.log(updatedZones);
+
       // remove Zones that currently doesn't exist in selectedOption
       const removedZones = updatedZones.filter((zone) =>
         selectedOption.some((option) => option.value.city === zone.city)
@@ -102,14 +106,14 @@ const Tags_And_Zones_Main = ({ study }) => {
   };
 
   const getTags = async () => {
-    const response = await TagApi.getStudyTags(study.path);
+    const response = await TagApi.getAccountTags();
     console.log("getTags => ", response);
     handleResponse(response, handleInitTags, false);
   };
   const getZones = async () => {
-    const response = await ZoneApi.getStudyZones(study.path);
-    console.log("getZones => ", response);
-    handleResponse(response, handleInitZones, false);
+    // const response = await ZoneApi.getZones(study.path);
+    // console.log("getZones => ", response);
+    // handleResponse(response, handleInitZones, false);
   };
 
   const reset = () => {
@@ -122,8 +126,9 @@ const Tags_And_Zones_Main = ({ study }) => {
   const handleWillSelectedTagAndZones = async () => {
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
     const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones);
-    await TagApi.addStudyTag(study.path, newTags);
-    await ZoneApi.addStudyZone(study.path, newZones);
+    const response = await TagApi.addAccountTag(newTags);
+    console.log("response data => ", response);
+    // await ZoneApi.addZone(study.path, newZones);
     reset();
   };
 
@@ -134,12 +139,12 @@ const Tags_And_Zones_Main = ({ study }) => {
   };
 
   const handleDeleteTag = async (tag) => {
-    await TagApi.removeStudyTag(study.path, { title: tag });
+    await TagApi.removeTag(study.path, { title: tag });
     reset();
   };
 
   const handleDeleteZone = async (city, province) => {
-    await ZoneApi.removeStudyZone(study.path, {
+    await ZoneApi.removeZone(study.path, {
       city: city,
       province: province,
     });
@@ -198,8 +203,8 @@ const Tags_And_Zones_Main = ({ study }) => {
   }, []);
   return (
     <>
-      <S.Study_Select_Container_style>
-        <S.Study_Select_style>
+      <S.Profile_Select_Container_style>
+        <S.Profile_Select_style>
           {/* Searchable Tag Dropdown */}
           <Select
             value={willSelectedTags}
@@ -209,8 +214,8 @@ const Tags_And_Zones_Main = ({ study }) => {
             isMulti
             placeholder="Search and select tag..."
           />
-        </S.Study_Select_style>
-        <S.Study_Select_style>
+        </S.Profile_Select_style>
+        <S.Profile_Select_style>
           {/* Searchable Zone Dropdown */}
           <Select
             value={willSelectedZones}
@@ -220,12 +225,12 @@ const Tags_And_Zones_Main = ({ study }) => {
             isMulti
             placeholder="Search and select zone..."
           />
-        </S.Study_Select_style>
+        </S.Profile_Select_style>
         <Button size="medium" width="50%" type="submit" onClick={handleClick}>
           save
         </Button>
-      </S.Study_Select_Container_style>
-      <S.Study_Configuration_Description_style>
+      </S.Profile_Select_Container_style>
+      <S.Profile_Configuration_Description_style>
         <h2>Choose tags and Zone and save</h2>
         <h3>this study will have Tags and Zone you have chosen</h3>
         <S.Selected_Items_Container_style>
@@ -281,9 +286,9 @@ const Tags_And_Zones_Main = ({ study }) => {
             )}
           </S.Selected_Zones_Container_style>
         </S.Selected_Items_Container_style>
-      </S.Study_Configuration_Description_style>
+      </S.Profile_Configuration_Description_style>
     </>
   );
 };
 
-export default Tags_And_Zones_Main;
+export default ProfileTagsAndZones_Main;

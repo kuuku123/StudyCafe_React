@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Grid_Container_style = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(18, 100px);
+  grid-template-rows: repeat(8, 100px);
   min-height: 80vh;
   justify-items: center;
   align-items: center;
@@ -12,8 +12,8 @@ export const Profile_List_style = styled.div`
   display: flex;
   grid-row-start: 2;
   grid-row-end: 5;
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 4;
   flex-direction: column;
   gap: 2px;
   margin-right: 13px;
@@ -46,22 +46,6 @@ export const Profile_List_Element_style = styled.button`
   }
 `;
 
-export const Profile_Edit_style = {
-  gridRowStart: "2",
-  gridRowEnd: "7",
-  gridColumnStart: "2",
-  gridColumnEnd: "4",
-  alignSelf: "stretch",
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-};
-export const Profile_Image_style = styled.figure`
-  grid-row-start: 2;
-  grid-row-end: 6;
-  grid-column-start: 4;
-  grid-column-end: 5;
-`;
 export const Header_Input_style = styled.input`
   margin-left: 10px;
   font-size: 24px;

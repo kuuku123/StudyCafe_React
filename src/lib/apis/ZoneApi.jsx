@@ -8,7 +8,7 @@ const getAllZones = async () => {
   return all_zones_json;
 };
 
-const getZones = async (path) => {
+const getStudyZones = async (path) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/zones`,
     {
@@ -21,7 +21,7 @@ const getZones = async (path) => {
   return get_zone_json;
 };
 
-const addZone = async (path, zoneData) => {
+const addStudyZone = async (path, zoneData) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/zones/add`,
     {
@@ -38,7 +38,7 @@ const addZone = async (path, zoneData) => {
   return response_json;
 };
 
-const removeZone = async (path, zoneData) => {
+const removeStudyZone = async (path, zoneData) => {
   const raw_response = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/zones/remove`,
     {
@@ -67,9 +67,9 @@ const changeZoneLabelToCity = (zones) => {
 
 const ZoneApi = {
   getAllZones,
-  getZones,
-  addZone,
-  removeZone,
+  getStudyZones,
+  addStudyZone,
+  removeStudyZone,
   changeZoneLabelToCity,
 };
 

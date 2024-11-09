@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './auth/authSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./auth/authSlice";
 // Import other reducers if you have them
 import {
   persistStore,
@@ -10,13 +10,13 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // This defaults to localStorage
+} from "redux-persist";
+import storage from "redux-persist/lib/storage"; // This defaults to localStorage
 
 const persistConfig = {
-  key: 'auth', // Key to store the auth state in localStorage
+  key: "auth", // Key to store the auth state in localStorage
   storage, // Use localStorage (or sessionStorage, depending on your use case)
-  whitelist: ['user', 'isAuthenticated'], // Only persist these keys
+  whitelist: ["user", "isAuthenticated"], // Only persist these keys
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

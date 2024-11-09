@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../components/FomrControl";
 import * as S from "./ProfileSetting_Main_style";
-import ProfileApi from "../../lib/apis/ProfileApi";
 import RoutesEnum from "../../lib/RoutesEnum";
-import HandleResponseApi from "../../lib/HandleResponse";
 import ProfileEdit_Main from "./ProfileComponent/ProfileEditPage/ProfileEdit_Main";
-import ProfileTagAndZone_Main from "./ProfileComponent/ProfileTagAndZonePage/ProfileTagAndZone_Main";
+import ProfileTagsAndZones_Main from "./ProfileComponent/ProfileTagsAndZonesPage/ProfileTagsAndZones_Main";
 import ProfilePassword_Main from "./ProfileComponent/ProfilePasswordPage/ProfilePassword_Main";
 import ProfileAlarm_Main from "./ProfileComponent/ProfileAlarmPage/ProfileAlarm_Main";
 import ProfileAccount_Main from "./ProfileComponent/ProfileAccountPage/ProfileAccount_Main";
 
 const ProfileSetting_Main = () => {
-  const [category, setCategory] = useState("profileEdit");
+  const [category, setCategory] = useState("tagsAndZones");
 
   const pageComponet = {
     profileEdit: <ProfileEdit_Main></ProfileEdit_Main>,
     password: <ProfilePassword_Main></ProfilePassword_Main>,
     alarm: <ProfileAlarm_Main></ProfileAlarm_Main>,
-    tagAndZone: <ProfileTagAndZone_Main></ProfileTagAndZone_Main>,
+    tagsAndZones: <ProfileTagsAndZones_Main></ProfileTagsAndZones_Main>,
     account: <ProfileAccount_Main></ProfileAccount_Main>,
   };
 
@@ -45,7 +41,7 @@ const ProfileSetting_Main = () => {
           Alaram
         </S.Profile_List_Element_style>
         <S.Profile_List_Element_style
-          onClick={() => handleOnClick("tagAndZone")}
+          onClick={() => handleOnClick("tagsAndZones")}
         >
           Tag and Zone
         </S.Profile_List_Element_style>

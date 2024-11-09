@@ -21,7 +21,7 @@ const useHandleResponse = () => {
       if (typeof useNavigate === "boolean") {
         console.log("do nothing");
       } else if (useNavigate.useNav && useNavigate.dialog !== undefined) {
-        console.log("dialog => ", useNavigate.dialog)
+        console.log("dialog => ", useNavigate.dialog);
         openDialog(
           <Dialog
             header={<>Login</>}
