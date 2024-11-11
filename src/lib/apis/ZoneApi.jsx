@@ -55,6 +55,44 @@ const removeStudyZone = async (path, zoneData) => {
   return response_json;
 };
 
+const getAccountZones = async () => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones`, {
+    credentials: "include",
+    method: "GET",
+  });
+  console.log("raw_get_zone => ", raw_response);
+  const get_zone_json = await raw_response.json();
+  return get_zone_json;
+};
+
+const addAccountZone = async (zoneData) => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones/add`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(zoneData),
+  });
+  console.log("raw_response => ", raw_response);
+  const response_json = raw_response.json();
+  return response_json;
+};
+
+const removeAccountZone = async (zoneData) => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones/remove`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(zoneData),
+  });
+  console.log("raw_response => ", raw_response);
+  const response_json = raw_response.json();
+  return response_json;
+};
+
 const changeZoneLabelToCity = (zones) => {
   if (zones != null) {
     const newZones = zones.map((zone) => ({
@@ -70,6 +108,9 @@ const ZoneApi = {
   getStudyZones,
   addStudyZone,
   removeStudyZone,
+  getAccountZones,
+  addAccountZone,
+  removeAccountZone,
   changeZoneLabelToCity,
 };
 

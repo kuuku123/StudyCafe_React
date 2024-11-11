@@ -111,9 +111,9 @@ const ProfileTagsAndZones_Main = () => {
     handleResponse(response, handleInitTags, false);
   };
   const getZones = async () => {
-    // const response = await ZoneApi.getZones(study.path);
-    // console.log("getZones => ", response);
-    // handleResponse(response, handleInitZones, false);
+    const response = await ZoneApi.getAccountZones();
+    console.log("getZones => ", response);
+    handleResponse(response, handleInitZones, false);
   };
 
   const reset = () => {
@@ -126,9 +126,8 @@ const ProfileTagsAndZones_Main = () => {
   const handleWillSelectedTagAndZones = async () => {
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
     const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones);
-    const response = await TagApi.addAccountTag(newTags);
-    console.log("response data => ", response);
-    // await ZoneApi.addZone(study.path, newZones);
+    await TagApi.addAccountTag(newTags);
+    await ZoneApi.addAccountZone(newZones)
     reset();
   };
 
@@ -139,12 +138,12 @@ const ProfileTagsAndZones_Main = () => {
   };
 
   const handleDeleteTag = async (tag) => {
-    await TagApi.removeTag(study.path, { title: tag });
+    await TagApi.removeAccountTag({ title: tag });
     reset();
   };
 
   const handleDeleteZone = async (city, province) => {
-    await ZoneApi.removeZone(study.path, {
+    await ZoneApi.removeAccountZone({
       city: city,
       province: province,
     });

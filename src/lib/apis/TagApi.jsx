@@ -68,6 +68,20 @@ const addAccountTag = async (tagData) => {
   return response_json;
 };
 
+const removeAccountTag = async (tagData) => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags/remove`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tagData),
+  });
+  console.log("raw_response => ", raw_response);
+  const response_json = raw_response.json();
+  return response_json;
+};
+
 const changeTagLabelToTitile = (tags) => {
   if (tags != null) {
     const newTags = tags.map((tag) => ({
@@ -83,6 +97,7 @@ const TagApi = {
   removeStudyTag,
   getAccountTags,
   addAccountTag,
+  removeAccountTag,
   changeTagLabelToTitile,
 };
 
