@@ -6,22 +6,13 @@ import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../lib/features/auth/authSlice";
+import ProfileApi from "../../../../lib/apis/ProfileApi";
 
 const SocialAccountSetPassword_Main = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const onSubmit = async (passwordInfo) => {
-    const response = await fetch(`${SERVER_API_URL}/settings/password`, {
-      credentials: "include",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(passwordInfo),
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    });
+    const response = await ProfileApi.updatePassword(passwordInfo)
     handleResponse(response, (data) => dispatch(loginSuccess(data)), {
       useNav: true,
       path: RoutesEnum.HOME,

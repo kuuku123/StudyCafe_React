@@ -39,11 +39,25 @@ const updatePorfile = async (profileEditInfo) => {
   return response;
 };
 
+const updatePassword = async (passwordInfo) => {
+  const raw_response = await fetch(`${SERVER_API_URL}/settings/password`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(passwordInfo),
+  });
+  const response = await raw_response.json();
+  return response;
+};
+
 const ProfileApi = {
   xsrfToken,
   fetchProfile,
   fetchProfileImage,
   updatePorfile,
+  updatePassword,
 };
 
 export default ProfileApi;

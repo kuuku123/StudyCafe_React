@@ -9,7 +9,7 @@ import ProfileAlarm_Main from "./ProfileComponent/ProfileAlarmPage/ProfileAlarm_
 import ProfileAccount_Main from "./ProfileComponent/ProfileAccountPage/ProfileAccount_Main";
 
 const ProfileSetting_Main = () => {
-  const [category, setCategory] = useState("tagsAndZones");
+  const [category, setCategory] = useState("password");
 
   const pageComponet = {
     profileEdit: <ProfileEdit_Main></ProfileEdit_Main>,
