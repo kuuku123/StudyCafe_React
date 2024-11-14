@@ -32,7 +32,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
   const [defaultZones, setDefaultZones] = useState([]);
   const [uniqueZones, setUniqueZones] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { openDialog, closeDialog } = MyLayout.useDialog();
+  const { startLoading, finishLoading } = MyLayout.useLoading();
 
   const handleTagChange = (selectedOption) => {
     setWillSelectedTags(selectedOption);
@@ -122,27 +122,15 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     setWillSelectedZones(null);
   };
 
+
   const handleWillSelectedTagAndZones = async () => {
+    startLoading("configuring....");
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
     const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones);
-    const response1 = await TagApi.addStudyTag(study.path, newTags);
-    const response2 = await ZoneApi.addStudyZone(study.path, newZones);
-    if (response1.status === "OK" && response2.status === "OK") {
-      openDialog(
-        <Dialog
-          header={<>Success</>}
-          footer={
-            <Button
-              onClick={() => closeDialog(() => setCategory("TagsAndZones"))}
-            >
-              Success
-            </Button>
-          }
-        ></Dialog>
-      );
-    }
-
+    await TagApi.addStudyTag(study.path, newTags);
+    await ZoneApi.addStudyZone(study.path, newZones);
     reset();
+    finishLoading();
   };
 
   const handleClick = () => {
