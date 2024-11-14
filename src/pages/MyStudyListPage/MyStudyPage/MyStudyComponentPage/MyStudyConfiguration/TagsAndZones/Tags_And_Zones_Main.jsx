@@ -6,8 +6,10 @@ import ZoneApi from "../../../../../../lib/apis/ZoneApi";
 import TagApi from "../../../../../../lib/apis/TagApi";
 import Button from "../../../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import * as MyLayout from "../../../../../../lib/MyLayout";
+import Dialog from "../../../../../../components/Dialog";
 
-const Tags_And_Zones_Main = ({ study }) => {
+const Tags_And_Zones_Main = ({ study, setCategory }) => {
   const [uniqueTags, setUniqueTags] = useState([
     { value: "health", label: "health" },
     { value: "computer-science", label: "computer-science" },
@@ -30,6 +32,7 @@ const Tags_And_Zones_Main = ({ study }) => {
   const [defaultZones, setDefaultZones] = useState([]);
   const [uniqueZones, setUniqueZones] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
+  const { openDialog, closeDialog } = MyLayout.useDialog();
 
   const handleTagChange = (selectedOption) => {
     setWillSelectedTags(selectedOption);
@@ -122,8 +125,23 @@ const Tags_And_Zones_Main = ({ study }) => {
   const handleWillSelectedTagAndZones = async () => {
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
     const newZones = ZoneApi.changeZoneLabelToCity(willSelectedZones);
-    await TagApi.addStudyTag(study.path, newTags);
-    await ZoneApi.addStudyZone(study.path, newZones);
+    const response1 = await TagApi.addStudyTag(study.path, newTags);
+    const response2 = await ZoneApi.addStudyZone(study.path, newZones);
+    if (response1.status === "OK" && response2.status === "OK") {
+      openDialog(
+        <Dialog
+          header={<>Success</>}
+          footer={
+            <Button
+              onClick={() => closeDialog(() => setCategory("TagsAndZones"))}
+            >
+              Success
+            </Button>
+          }
+        ></Dialog>
+      );
+    }
+
     reset();
   };
 

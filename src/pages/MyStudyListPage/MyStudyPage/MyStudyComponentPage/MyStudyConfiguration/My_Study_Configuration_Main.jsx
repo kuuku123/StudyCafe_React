@@ -11,7 +11,7 @@ const My_Study_Configuration_Main = ({ study }) => {
     StudyDescription: (
       <Study_Description_Main study={study}></Study_Description_Main>
     ),
-    TagsAndZones: <Tags_And_Zones_Main study={study}></Tags_And_Zones_Main>,
+    TagsAndZones: <Tags_And_Zones_Main study={study} setCategory={setCategory}></Tags_And_Zones_Main>,
     StudySetting: <Study_Setting_Main></Study_Setting_Main>,
   };
   const handleOnClick = (category) => {

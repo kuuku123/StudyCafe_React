@@ -15,7 +15,11 @@ const ProfileSetting_Main = () => {
     profileEdit: <ProfileEdit_Main></ProfileEdit_Main>,
     password: <ProfilePassword_Main></ProfilePassword_Main>,
     alarm: <ProfileAlarm_Main></ProfileAlarm_Main>,
-    tagsAndZones: <ProfileTagsAndZones_Main></ProfileTagsAndZones_Main>,
+    tagsAndZones: (
+      <ProfileTagsAndZones_Main
+        setCategory={setCategory}
+      ></ProfileTagsAndZones_Main>
+    ),
     account: <ProfileAccount_Main></ProfileAccount_Main>,
   };
 
