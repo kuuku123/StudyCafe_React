@@ -6,7 +6,7 @@ export const Page_style = styled.div`
 `;
 
 export const Header_style = styled.header`
- // flex-shrink: 0; /* Keeps header in place */
+  // flex-shrink: 0; /* Keeps header in place */
 `;
 
 export const Main_style = styled.main`

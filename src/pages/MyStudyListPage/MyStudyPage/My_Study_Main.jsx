@@ -10,11 +10,17 @@ import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const My_Study_Main = ({ study }) => {
-  const [category, setCategory] = useState("configuration");
+  const [category, setCategory] = useState(() => {
+    return sessionStorage.getItem("My_Study_Main_category") || "info";
+  });
   const [published, setPublished] = useState(study.published);
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const handleResponse = HandleResponseApi.useHandleResponse();
+
+  useEffect(() => {
+    sessionStorage.setItem("My_Study_Main_category", category);
+  }, [category]);
 
   const pageComponent = {
     info: <My_Study_Info study={study}></My_Study_Info>,

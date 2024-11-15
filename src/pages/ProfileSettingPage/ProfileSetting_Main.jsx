@@ -9,7 +9,13 @@ import ProfileAlarm_Main from "./ProfileComponent/ProfileAlarmPage/ProfileAlarm_
 import ProfileAccount_Main from "./ProfileComponent/ProfileAccountPage/ProfileAccount_Main";
 
 const ProfileSetting_Main = () => {
-  const [category, setCategory] = useState("password");
+  const [category, setCategory] = useState(() => {
+    return sessionStorage.getItem("ProfileSetting_Main_category") || "profileEdit";
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem("ProfileSetting_Main_category", category);
+  }, [category]);
 
   const pageComponet = {
     profileEdit: <ProfileEdit_Main></ProfileEdit_Main>,
