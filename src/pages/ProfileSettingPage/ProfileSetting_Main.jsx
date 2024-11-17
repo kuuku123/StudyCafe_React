@@ -10,7 +10,9 @@ import ProfileAccount_Main from "./ProfileComponent/ProfileAccountPage/ProfileAc
 
 const ProfileSetting_Main = () => {
   const [category, setCategory] = useState(() => {
-    return sessionStorage.getItem("ProfileSetting_Main_category") || "profileEdit";
+    return (
+      sessionStorage.getItem("ProfileSetting_Main_category") || "profileEdit"
+    );
   });
 
   useEffect(() => {
@@ -36,14 +38,14 @@ const ProfileSetting_Main = () => {
   return (
     <S.Grid_Container_style>
       <S.Profile_List_style>
+        <Link to={RoutesEnum.PROFILE}>
+          <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+        </Link>
         <S.Profile_List_Element_style
           onClick={() => handleOnClick("profileEdit")}
         >
           Profile Edit
         </S.Profile_List_Element_style>
-        <Link to={RoutesEnum.PROFILE}>
-          <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
-        </Link>
         <S.Profile_List_Element_style onClick={() => handleOnClick("password")}>
           Password
         </S.Profile_List_Element_style>
