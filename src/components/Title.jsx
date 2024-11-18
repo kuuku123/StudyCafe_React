@@ -8,6 +8,7 @@ import Logout from "./Logout";
 import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import Bell from "./Bell/Bell";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -22,7 +23,8 @@ const Title = ({ children }) => {
           {children}
         </S.Children_style>
         <S.Login_Signup_style>
-          <CgBell size={"22px"}></CgBell>
+          {/* <CgBell size={"22px"}></CgBell> */}
+          <Bell></Bell>
           <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>
             <li>
               <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import ToggleButton from "../../../../components/ToggleSwitch";
+import ToggleButton from "../../../../components/ToogleSwitch/ToggleSwitch";
 import * as S from "./ProfileAlarm_Main_style";
 
 const ProfileAlarm_Main = () => {
-  const [tagAndZoneWeb, setTagAndZoneWeb] = useState(false);
+  const [tagAndZoneWeb, setTagAndZoneWeb] = useState(true);
   const [tagAndZoneEmail, setTagAndZoneEmail] = useState(false);
-  const [joinWeb, setJoinWeb] = useState(false);
+  const [joinWeb, setJoinWeb] = useState(true);
   const [joinEmail, setJoinEmail] = useState(false);
-  const [alreadyJoinWeb, setAlreadyJoinWeb] = useState(false);
+  const [alreadyJoinWeb, setAlreadyJoinWeb] = useState(true);
   const [alreadyJoinEmail, setAlreadyJoinEmail] = useState(false);
 
   const handleToggle = (state, setState) => {
