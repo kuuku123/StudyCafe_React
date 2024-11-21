@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
@@ -13,12 +13,13 @@ import ErrorPage from "./pages/ErrorPage";
 import RoutesEnum from "./lib/RoutesEnum";
 import PublicStudyPage from "./pages/JoinStudyPage";
 import { Provider } from "react-redux";
-import store, { persistor } from "./lib/features/store";
+import store, { persistor } from "./lib/features/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import SocialAccountSetPasswordPage from "./pages/LoginPage/social/SocialAccountSetPassword";
 import MergeAccountPage from "./pages/LoginPage/social/MergeAccountPage";
 import AlreadyMergedAccountPage from "./pages/LoginPage/social/AlreadyMergedAccountPage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
+import { sseService } from "./lib/features/SSEService";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -79,6 +80,10 @@ const App = () => {
       element: <ErrorPage />,
     },
   ]);
+
+
+
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

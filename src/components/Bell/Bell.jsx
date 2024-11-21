@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./Bell_style";
+import { useSelector } from "react-redux";
 
 const Bell = () => {
-  const [notificationCount, setNotificationCount] = useState(0)
+
+  const {count} = useSelector((state) => state.notifications.messages);
+
+  
   return (
     <S.BellIconWrapper>
       <S.BellIcon />
-      {notificationCount > 0 && (
-        <S.NotificationBadge>{notificationCount}</S.NotificationBadge>
-      )}
+      {count > 0 && <S.NotificationBadge>{count}</S.NotificationBadge>}
     </S.BellIconWrapper>
   );
 };

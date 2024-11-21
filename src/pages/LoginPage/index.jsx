@@ -10,7 +10,8 @@ import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
 import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../lib/features/auth/authSlice";
+import { loginSuccess } from "../../lib/features/redux/authSlice";
+import { sseService } from "../../lib/features/SSEService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -31,8 +32,9 @@ const LoginPage = () => {
     console.log("response ==> ", response);
     if (response.status === "OK") {
       console.log("response data => ", response.data);
-      dispatch(loginSuccess(response.data));
       navigate("/");
+      dispatch(loginSuccess(response.data));
+      sseService.connect();
     } else {
       openDialog(
         <Dialog

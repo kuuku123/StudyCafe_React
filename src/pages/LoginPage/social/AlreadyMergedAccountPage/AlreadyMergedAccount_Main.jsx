@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../../../lib/features/auth/authSlice";
+import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 

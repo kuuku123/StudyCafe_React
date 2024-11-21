@@ -6,21 +6,18 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
   const [touched, setTouched] = React.useState({});
 
   const handleChange = (e, delta, source, editor) => {
-    console.log("handle Change");
     if (e.target === undefined) {
       const text = editor.getText().replace(/\n$/, "");
       const html = editor.getHTML();
       if (source === "api") {
         return; // to prevent infitie loop when SetValues triggered
       }
-      console.log("e.target undefined = ", values);
       setValues({
         ...values,
         fullDescription: html,
         fullDescriptionText: text,
       });
     } else {
-      console.log(values);
       setValues({
         ...values,
         [e.target.name]: e.target.value,
@@ -48,7 +45,6 @@ export const useForm = ({ initialValue, validate, onSubmit }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log("MyForm handleSumbit called");
 
     e.preventDefault();
 

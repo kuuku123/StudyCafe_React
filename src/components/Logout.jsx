@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../lib/features/auth/authSlice";
+import { logout } from "../lib/features/redux/authSlice";
 
 const Logout = ({ style }) => {
   const navigate = useNavigate();

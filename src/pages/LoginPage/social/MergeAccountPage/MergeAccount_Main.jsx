@@ -4,7 +4,7 @@ import SocialApi from "../../../../lib/apis/SocialApi";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../../../lib/features/auth/authSlice";
+import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 
 const MergeAccount_Main = () => {
   const[email, setEmail] = useState("")

@@ -5,7 +5,7 @@ import * as S from "./SocialAccountSetPassword_Main_style";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../../../lib/features/auth/authSlice";
+import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 
 const SocialAccountSetPassword_Main = () => {

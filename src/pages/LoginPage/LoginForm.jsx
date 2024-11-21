@@ -9,7 +9,6 @@ const LoginForm = ({ onSubmit }) => {
     if (!values.nicknameOrEmail) {
       errors.nicknameOrEmail = "write nickname or email for login";
     }
-    console.log("errors => ", errors);
     return errors;
   };
 

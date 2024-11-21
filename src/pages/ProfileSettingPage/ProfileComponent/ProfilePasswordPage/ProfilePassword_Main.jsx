@@ -5,7 +5,7 @@ import * as MyForm from "../../../../lib/MyForm";
 import FormControl from "../../../../components/FomrControl";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
-import { loginSuccess } from "../../../../lib/features/auth/authSlice";
+import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import * as S from "./ProfilePassword_Main_style";
 
 const ProfilePassword_Main = () => {

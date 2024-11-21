@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
-import { CgBell } from "react-icons/cg";
 import * as S from "./Component_style";
 import RoutesEnum from "../lib/RoutesEnum";
 import Logout from "./Logout";
@@ -9,10 +8,10 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
+import { sseService } from "../lib/features/SSEService";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-
   if (isAuthenticated) {
     return (
       <S.Title_style>
@@ -23,7 +22,6 @@ const Title = ({ children }) => {
           {children}
         </S.Children_style>
         <S.Login_Signup_style>
-          {/* <CgBell size={"22px"}></CgBell> */}
           <Bell></Bell>
           <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>
             <li>
