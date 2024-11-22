@@ -1,4 +1,4 @@
-import { addMessage } from "./redux/notificationSlice";
+import { addMessage, addStudyCreate } from "./redux/notificationSlice";
 import store from "./redux/store"; // Import your Redux store
 
 class SSEService {
@@ -15,12 +15,10 @@ class SSEService {
         console.log("eventSource is opened");
       };
 
-      this.eventSource.onmessage = (event) => {
-        console.log("onMessage => ", event)
-        // const data = JSON.parse(event.data);
-        // Dispatch the message to the Redux store
-        store.dispatch(addMessage(event.data));
-      };
+      this.eventSource.addEventListener("StudyCreate", (event) => {
+        console.log("StudyCreated Notification => ", event)
+        store.dispatch(addStudyCreate(event.data))
+      });
 
       this.eventSource.onerror = () => {
         console.error("SSE connection error, reconnecting...");

@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./Bell_style";
 import { useSelector } from "react-redux";
 
 const Bell = () => {
 
-  const {count} = useSelector((state) => state.notifications.messages);
 
-  
+  const studyCount = useSelector(
+    (state) => state.notifications.messages.studyCreate.count
+  );
+  console.log("StudyCount => ", studyCount)
+  const totalCount = studyCount
+
+
   return (
     <S.BellIconWrapper>
       <S.BellIcon />
-      {count > 0 && <S.NotificationBadge>{count}</S.NotificationBadge>}
+      {totalCount> 0 && <S.NotificationBadge>{totalCount}</S.NotificationBadge>}
     </S.BellIconWrapper>
   );
 };

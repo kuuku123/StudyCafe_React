@@ -2,22 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   messages: {
-    count: 0,
-  }, // Stores notifications
+    studyCreate: {
+      count: 0,
+      study: {
+        path: "",
+      },
+    },
+  },
 };
 
 const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    addMessage(state, action) {
-      state.messages.count = action.payload;
+    addStudyCreate(state, action) {
+      state.messages.studyCreate.path = action.payload;
+      state.messages.studyCreate.count += 1;
     },
-    clearMessages(state) {
-      state.messages.count = 0;
+    clearStudyCreate(state) {
+      state.messages.studyCreate.count = 0;
     },
   },
 });
 
-export const { addMessage, clearMessages } = notificationSlice.actions;
+export const { addStudyCreate, clearStudyCreate } = notificationSlice.actions;
 export default notificationSlice.reducer;
