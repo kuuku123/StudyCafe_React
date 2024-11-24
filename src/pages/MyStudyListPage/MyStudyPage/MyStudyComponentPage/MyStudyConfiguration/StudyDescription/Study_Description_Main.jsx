@@ -60,11 +60,7 @@ const Study_Description_Main = ({ study }) => {
   };
 
   useEffect(() => {
-    const getStudyImage = async () => {
-      const study_image_json = await StudyApi.fetchStudyImage(study.path);
-      handleResponse(study_image_json, handleImage, false);
-    };
-    getStudyImage();
+    handleImage(study.studyImage)
   }, []);
   return (
     <>

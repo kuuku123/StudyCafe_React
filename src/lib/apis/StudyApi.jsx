@@ -43,6 +43,19 @@ const fetchStudyMembers = async (path) => {
   return studyMemberList;
 };
 
+const fetchStudyManagers = async (path) => {
+  const raw_studyManagerList = await fetch(
+    `${SERVER_API_URL}/${path}/study-managers`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
+  const studyManagerList = await raw_studyManagerList.json();
+  console.log(studyManagerList);
+  return studyManagerList;
+};
+
 const fetchStudyImage = async (path) => {
   const raw_study_image = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/study-image`,
@@ -155,6 +168,7 @@ const StudyApi = {
   createStudy,
   fetchStudyList,
   fetchStudyMembers,
+  fetchStudyManagers,
   fetchStudyImage,
   fetchStudyByTagsAndZones,
   publishStudy,

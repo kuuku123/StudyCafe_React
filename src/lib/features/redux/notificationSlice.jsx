@@ -5,7 +5,7 @@ const initialState = {
     studyCreate: {
       count: 0,
       study: {
-        path: "",
+        path: [],
       },
     },
   },
@@ -16,7 +16,7 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     addStudyCreate(state, action) {
-      state.messages.studyCreate.path = action.payload;
+      state.messages.studyCreate.study.path.push(action.payload)
       state.messages.studyCreate.count += 1;
     },
     clearStudyCreate(state) {

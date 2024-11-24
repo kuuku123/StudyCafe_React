@@ -16,24 +16,17 @@ const Profile_Main = () => {
 
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleImage = (profile_image_base64_encoded) => {
-    const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
+  const handleProfile =(profile) => {
+    setProfile(profile)
+    const base64Image = "data:image/png;base64," + profile.profileImage;
     setImage(base64Image);
-  };
-
-  useEffect(() => {
-    const getProfileImage = async () => {
-      const profile_image_json = await ProfileApi.fetchProfileImage();
-      handleResponse(profile_image_json, handleImage, false);
-    };
-    getProfileImage();
-  }, []);
+  }
 
   useEffect(() => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
       console.log("profile=> ", response);
-      handleResponse(response, setProfile, false);
+      handleResponse(response, handleProfile, false);
     };
     getProfile();
   }, []);

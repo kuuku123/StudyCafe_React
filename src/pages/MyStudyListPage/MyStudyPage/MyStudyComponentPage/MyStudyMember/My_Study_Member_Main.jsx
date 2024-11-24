@@ -28,8 +28,10 @@ const My_Study_Member_Main = ({study}) => {
     };
 
     const getStudyManager = async () => {
-      const study_manager_image_json = await ProfileApi.fetchProfileImage();
-      handleResponse(study_manager_image_json, handleImage, false);
+      const study_manager = await StudyApi.fetchStudyManagers(study.path)
+      console.log("study_manager => ", study_manager.data[0])
+      handleResponse(study_manager, handleImage, false);
+      handleImage(study_manager.data[0].profileImage)
     };
 
     getStudyMembers(study.path);

@@ -12,6 +12,9 @@ import { sseService } from "../lib/features/SSEService";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const studyPath = useSelector(
+    (state) => state.notifications.messages.studyCreate.study.path
+  );
   if (isAuthenticated) {
     return (
       <S.Title_style>
@@ -22,7 +25,21 @@ const Title = ({ children }) => {
           {children}
         </S.Children_style>
         <S.Login_Signup_style>
-          <Bell></Bell>
+          <DropDownContainer profile={<Bell></Bell>}>
+            {studyPath && studyPath.length > 0 ? (
+              <>
+                {studyPath.map((path, index) => (
+                  <li key={index}>
+                    <Link style={S.link_style} to={RoutesEnum.STUDY(path)}>
+                      [Study Created]{path}
+                    </Link>
+                  </li>
+                ))}
+              </>
+            ) : (
+              <p>No Notifications</p>
+            )}
+          </DropDownContainer>
           <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>
             <li>
               <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>

@@ -5,6 +5,8 @@ import StudyApi from "../../lib/apis/StudyApi";
 import TagApi from "../../lib/apis/TagApi";
 import ZoneApi from "../../lib/apis/ZoneApi";
 import HandleResponseApi from "../../lib/HandleResponse";
+import { Link } from "react-router-dom";
+import RoutesEnum from "../../lib/RoutesEnum";
 
 const JoinStudy_Main = () => {
   const [selectedTag, setSelectedTag] = useState([]);
@@ -188,20 +190,22 @@ const JoinStudy_Main = () => {
         {/* Display Studies */}
         {paginatedStudies.length > 0 ? (
           paginatedStudies.map((study) => (
-            <S.StudyCard key={study.id}>
-              <S.Title>{study.title}</S.Title>
-              {study.shortDescription}
-              <S.Zones>
-                {study.zoneDtoList.map((zone) => (
-                  <S.Zone>{zone.city}</S.Zone>
-                ))}
-              </S.Zones>
-              <S.Tags>
-                {study.tagDtoList.map((tag) => (
-                  <S.Tag key={tag.title}>{tag.title}</S.Tag>
-                ))}
-              </S.Tags>
-            </S.StudyCard>
+            <Link to={RoutesEnum.STUDY(study.path)}>
+              <S.StudyCard key={study.id}>
+                <S.Title>{study.title}</S.Title>
+                {study.shortDescription}
+                <S.Zones>
+                  {study.zoneDtoList.map((zone) => (
+                    <S.Zone>{zone.city}</S.Zone>
+                  ))}
+                </S.Zones>
+                <S.Tags>
+                  {study.tagDtoList.map((tag) => (
+                    <S.Tag key={tag.title}>{tag.title}</S.Tag>
+                  ))}
+                </S.Tags>
+              </S.StudyCard>
+            </Link>
           ))
         ) : (
           <p>No studies found for the selected filters.</p>
