@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Info_Main_style";
-import { useStudy } from "../..";
-import StudyApi from "../../../../../lib/apis/StudyApi";
-import HandleResponseApi from "../../../../../lib/HandleResponse";
 
 const My_Study_Info_Main = ({study}) => {
   const [img, setImage] = useState();
-
-  const hanldeResponse = HandleResponseApi.useHandleResponse();
-
+  
   const handleImage = (profile_image_base64_encoded) => {
     const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
     setImage(base64Image);
   };
 
   useEffect(() => {
-    const getStudyImage = async (path) => {
-      const study_image_json = await StudyApi.fetchStudyImage(path);
-      hanldeResponse(study_image_json, handleImage, false);
-    };
-    console.log("study_main => ", study.path);
-    getStudyImage(study.path);
+    handleImage(study.studyImage)
   }, []);
+
   return (
     <>
       <S.Study_Picture_style>

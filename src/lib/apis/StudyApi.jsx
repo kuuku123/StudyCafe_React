@@ -56,19 +56,6 @@ const fetchStudyManagers = async (path) => {
   return studyManagerList;
 };
 
-const fetchStudyImage = async (path) => {
-  const raw_study_image = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/study-image`,
-    {
-      credentials: "include",
-      method: "GET",
-    }
-  );
-  console.log("raw_study_image => ", raw_study_image);
-  const study_image_json = await raw_study_image.json();
-  return study_image_json;
-};
-
 const publishStudy = async (path) => {
   const raw_published_study = await fetch(
     `${SERVER_API_URL}/study/${path}/settings/publish`,
@@ -169,7 +156,6 @@ const StudyApi = {
   fetchStudyList,
   fetchStudyMembers,
   fetchStudyManagers,
-  fetchStudyImage,
   fetchStudyByTagsAndZones,
   publishStudy,
   fetchTotalStudiesCount,

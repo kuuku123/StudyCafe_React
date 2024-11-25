@@ -16,16 +16,6 @@ const fetchProfile = async () => {
   return profile;
 };
 
-const fetchProfileImage = async () => {
-  const raw_profile_image = await fetch(`${SERVER_API_URL}/profile-image`, {
-    credentials: "include",
-    method: "GET",
-  });
-  console.log("raw_profile_image => ", raw_profile_image);
-  const profile_image_json = await raw_profile_image.json();
-  return profile_image_json;
-};
-
 const updatePorfile = async (profileEditInfo) => {
   const raw_response = await fetch(`${SERVER_API_URL}/settings/profile`, {
     headers: {
@@ -55,7 +45,6 @@ const updatePassword = async (passwordInfo) => {
 const ProfileApi = {
   xsrfToken,
   fetchProfile,
-  fetchProfileImage,
   updatePorfile,
   updatePassword,
 };

@@ -10,17 +10,18 @@ const ProfileEdit_Main = () => {
   const [img, setImage] = useState();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleImage = (profile_image_base64_encoded) => {
-    const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
+  const handleProfile =(profile) => {
+    const base64Image = "data:image/png;base64," + profile.profileImage;
     setImage(base64Image);
-  };
+  }
 
   useEffect(() => {
-    const getProfileImage = async () => {
-      const profile_image_json = await ProfileApi.fetchProfileImage();
-      handleResponse(profile_image_json, handleImage, false);
+    const getProfile = async () => {
+      const response = await ProfileApi.fetchProfile();
+      console.log("profile=> ", response);
+      handleResponse(response, handleProfile, false);
     };
-    getProfileImage();
+    getProfile();
   }, []);
 
   const onChange = (e) => {
