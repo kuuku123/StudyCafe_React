@@ -7,7 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
-import StudyPage from "./pages/MyStudyListPage/MyStudyPage";
+import StudyAdminPage from "./pages/MyStudyListPage/MyStudyAdminPage";
 import MyStudyListPage from "./pages/MyStudyListPage";
 import ErrorPage from "./pages/ErrorPage";
 import RoutesEnum from "./lib/RoutesEnum";
@@ -20,6 +20,7 @@ import MergeAccountPage from "./pages/LoginPage/social/MergeAccountPage";
 import AlreadyMergedAccountPage from "./pages/LoginPage/social/AlreadyMergedAccountPage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
 import { sseService } from "./lib/features/SSEService";
+import StudyGuestPage from "./pages/MyStudyListPage/MyStudyGuestPage";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -72,17 +73,18 @@ const App = () => {
       element: <MyStudyListPage />,
     },
     {
-      path: RoutesEnum.STUDY(),
-      element: <StudyPage />,
+      path: RoutesEnum.STUDY_ADMIN(),
+      element: <StudyAdminPage />,
+    },
+    {
+      path: RoutesEnum.STUDY_GUEST(),
+      element: <StudyGuestPage />,
     },
     {
       path: RoutesEnum.ERROR,
       element: <ErrorPage />,
     },
   ]);
-
-
-
 
   return (
     <Provider store={store}>

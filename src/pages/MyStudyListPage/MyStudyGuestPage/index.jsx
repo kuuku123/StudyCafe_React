@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
-import * as S from "./My_Study_Main_style";
+import * as S from "./My_Study_Guest_Main_style";
 import CopyRight from "../../../components/CopyRight";
-import My_Study_Main from "./My_Study_Main";
+import My_Study_Guest_Main from "./My_Study_Guest_Main";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoutesEnum from "../../../lib/RoutesEnum";
 import StudyApi from "../../../lib/apis/StudyApi";
@@ -14,7 +14,7 @@ const StudyPage = () => {
 
   const handleResponse = HandleResponseApi.useHandleResponse();
   const location = useLocation();
-  const path = location.pathname.split("/")[2];
+  const path = location.pathname.split("/")[3];
 
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const StudyPage = () => {
         }
         footer={<CopyRight></CopyRight>}
       >
-        {study && <My_Study_Main study={study}></My_Study_Main>}
+        {study && <My_Study_Guest_Main study={study}></My_Study_Guest_Main>}
       </Page>
     </div>
   );
