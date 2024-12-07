@@ -50,8 +50,8 @@ export const Study_Draft_style = styled.div`
   justify-content: space-evenly;
   grid-row-start: 1;
   grid-row-end: 2;
-  grid-column-start: 14;
-  grid-column-end: 18;
+  grid-column-start: 10;
+  grid-column-end: 14;
   width: 100%;
 `;
 
@@ -61,7 +61,7 @@ export const Study_Link_Horizontal_Line_style = styled.div`
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 2;
-  grid-column-end: 18;
+  grid-column-end: 15;
   align-self: self-start;
   width: 100%;
 
