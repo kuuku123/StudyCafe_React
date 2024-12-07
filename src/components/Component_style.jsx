@@ -85,6 +85,7 @@ export const Title_style = styled.div`
   flex-direction: row;
   align-items: center;
   background-color: #c2b4b4;
+  width: 100%;
 `;
 
 export const Children_style = styled.div`
