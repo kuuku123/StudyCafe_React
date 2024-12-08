@@ -22,8 +22,12 @@ const notificationSlice = createSlice({
     clearStudyCreate(state) {
       state.messages.studyCreate.count = 0;
     },
+    minusStudyCreate(state, action) {
+      state.messages.studyCreate.study.path.pop(action.payload)
+      state.messages.studyCreate.count -= 1;
+    },
   },
 });
 
-export const { addStudyCreate, clearStudyCreate } = notificationSlice.actions;
+export const { addStudyCreate, clearStudyCreate, minusStudyCreate } = notificationSlice.actions;
 export default notificationSlice.reducer;

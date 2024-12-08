@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const Bell = () => {
 
-
   const studyCount = useSelector(
     (state) => state.notifications.messages.studyCreate.count
   );
@@ -15,7 +14,7 @@ const Bell = () => {
   return (
     <S.BellIconWrapper>
       <S.BellIcon />
-      {totalCount> 0 && <S.NotificationBadge>{totalCount}</S.NotificationBadge>}
+      {totalCount > 0 && <S.NotificationBadge>{totalCount}</S.NotificationBadge>}
     </S.BellIconWrapper>
   );
 };
