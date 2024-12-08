@@ -25,8 +25,8 @@ export const Study_Configuration_Description_style = styled.div`
   height: 100%;
   grid-row-start: 3;
   grid-row-end: 8;
-  grid-column-start: 11;
-  grid-column-end: 16;
+  grid-column-start: 11; 
+  grid-column-end: 15;
 `;
 export const Selected_Items_Container_style = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ export const Zone_Pill_style = styled.div`
   background-color: #e1bee7;
   color: #6a1b9a;
   border-radius: 12px;
-  padding: 5px 10px;
+  padding: 5px 5px;
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 14px;

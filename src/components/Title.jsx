@@ -30,7 +30,7 @@ const Title = ({ children }) => {
               <>
                 {studyPath.map((path, index) => (
                   <li key={index}>
-                    <Link style={S.link_style} to={RoutesEnum.STUDY(path)}>
+                    <Link style={S.link_style} to={RoutesEnum.STUDY_GUEST(path)}>
                       [Study Created]{path}
                     </Link>
                   </li>
