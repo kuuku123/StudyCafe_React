@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const Bell = () => {
 
   const studyCount = useSelector(
-    (state) => state.notifications.messages.studyCreate.count
+    (state) => state.notifications.messages.count
   );
   console.log("StudyCount => ", studyCount)
   const totalCount = studyCount

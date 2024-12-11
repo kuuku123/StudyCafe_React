@@ -49,8 +49,8 @@ export const Profile_List_Element_style = styled.button`
 export const Profile_Pic_style = styled.div`
   grid-row-start: 3;
   grid-row-end: 6;
-  grid-column-start: 14;
-  grid-column-end: 16;
+  grid-column-start: 13;
+  grid-column-end: 15;
 `;
 export const Profile_Name_style = styled.div`
   grid-row-start: 3;
@@ -62,15 +62,15 @@ export const Profile_Name_style = styled.div`
 export const Profile_Info_style = styled.div`
   grid-row-start: 4;
   grid-row-end: 5;
-  grid-column-start: 9;
-  grid-column-end: 12;
+  grid-column-start: 8;
+  grid-column-end: 11;
   font-size: 20px;
 `;
 export const Profile_Email_style = styled.div`
   grid-row-start: 5;
   grid-row-end: 6;
-  grid-column-start: 9;
-  grid-column-end: 12;
+  grid-column-start: 8;
+  grid-column-end: 11;
   display: flex;
   justify-content: center;
   font-size: 30px;
@@ -78,8 +78,8 @@ export const Profile_Email_style = styled.div`
 export const Profile_Emailverification_style = styled.div`
   grid-row-start: 6;
   grid-row-end: 7;
-  grid-column-start: 9;
-  grid-column-end: 12;
+  grid-column-start: 8;
+  grid-column-end: 11;
   display: flex;
   justify-content: center;
   font-size: 30px;
@@ -87,8 +87,8 @@ export const Profile_Emailverification_style = styled.div`
 export const Profile_Edit_style = styled.div`
   grid-row-start: 7;
   grid-row-end: 8;
-  grid-column-start: 9;
-  grid-column-end: 12;
+  grid-column-start: 8;
+  grid-column-end: 11;
   display: flex;
   justify-content: center;
   font-size: 30px;

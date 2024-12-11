@@ -15,7 +15,7 @@ const Title = ({ children }) => {
   const studyPath = useSelector(
     (state) => {
       console.log("state ",state)
-      return state.notifications.messages.studyCreate.study.path
+      return state.notifications.messages.studyCreated.study.path
     }
   );
   if (isAuthenticated) {
