@@ -23,7 +23,12 @@ const notificationSlice = createSlice({
       state.messages.count = 0;
     },
     minusStudyCreated(state, action) {
-      state.messages.studyCreated.study.path.pop(action.payload);
+      console.log("action.payload => ", action.payload);
+      state.messages.studyCreated.study.path =
+        state.messages.studyCreated.study.path.filter(
+          (path) => path !== action.payload
+        );
+      console.log("state path => ", state.messages.studyCreated.study.path);
       state.messages.count -= 1;
     },
   },

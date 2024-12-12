@@ -24,7 +24,7 @@ const StudyPage = () => {
       handleResponse(response, setStudy, false);
     };
     getStudy(path);
-  }, []);
+  }, [path]);
 
   if (!study) navigate(RoutesEnum.ERROR);
 
