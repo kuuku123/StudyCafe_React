@@ -26,14 +26,12 @@ const Study_Description_Main = ({ study }) => {
       updateStudyForm,
       study.path
     );
-    handleResponse(response, null, {
-      useNav: true,
-      path: 0,
-    });
+    handleResponse(response, null, false);
   };
 
   const handleClick = () => {
     console.log("u clicked");
+    console.log("submitted => ",submitted)
   };
   const validate = (values) => {
     const errors = {};

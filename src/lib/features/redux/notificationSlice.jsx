@@ -8,6 +8,11 @@ const initialState = {
         path: [],
       },
     },
+    studyUpdated: {
+      study:{
+        path:[],
+      }
+    }
   },
 };
 
@@ -22,6 +27,13 @@ const notificationSlice = createSlice({
     clearStudyCreated(state) {
       state.messages.count = 0;
     },
+    addStudyUpdated(state, action) {
+      state.messages.studyUpdated.study.path.push(action.payload);
+      state.messages.count += 1;
+    },
+    clearStudyUpdated(state) {
+      state.messages.count = 0;
+    },
     minusStudyCreated(state, action) {
       console.log("action.payload => ", action.payload);
       state.messages.studyCreated.study.path =
@@ -31,12 +43,26 @@ const notificationSlice = createSlice({
       console.log("state path => ", state.messages.studyCreated.study.path);
       state.messages.count -= 1;
     },
+    minusStudyUpdated(state, action) {
+      console.log("action.payload => ", action.payload);
+      state.messages.studyUpdated.study.path =
+        state.messages.studyUpdated.study.path.filter(
+          (path) => path !== action.payload
+        );
+      console.log("state path => ", state.messages.studyUpdated.study.path);
+      state.messages.count -= 1;
+    },
   },
 });
 
 export const {
   addStudyCreated: addStudyCreated,
+  addStudyUpdated: addStudyUpdated,
   clearStudyCreated: clearStudyCreated,
+  clearStudyUpdated: clearStudyUpdated,
   minusStudyCreated: minusStudyCreated,
+  minusStudyUpdated: minusStudyUpdated,
+
+
 } = notificationSlice.actions;
 export default notificationSlice.reducer;
