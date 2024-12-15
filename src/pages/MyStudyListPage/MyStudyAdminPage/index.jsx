@@ -16,6 +16,7 @@ const StudyAdminPage = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[3];
 
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const StudyAdminPage = () => {
       handleResponse(response, setStudy, false);
     };
     getStudy(path);
-  }, []);
+  }, [location.search]);
 
   if (!study) navigate(RoutesEnum.ERROR);
 
