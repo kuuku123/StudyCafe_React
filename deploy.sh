@@ -13,7 +13,7 @@ docker build -t react-apache-app .
 
 # Step 3: Run the Docker container
 echo "Running Docker container..."
-docker run -d -p 3000:80 react-apache-app
+docker run -d -p 3000:80 --name react-apache react-apache-app 
 
 echo "Deployment completed! Your app is running at http://localhost:3000"
 
