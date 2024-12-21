@@ -6,7 +6,6 @@ import TagApi from "../../../../lib/apis/TagApi";
 import ZoneApi from "../../../../lib/apis/ZoneApi";
 import Button from "../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import Dialog from "../../../../components/Dialog";
 import * as MyLayout from "../../../../lib/MyLayout";
 
 const ProfileTagsAndZones_Main = ({ setCategory }) => {

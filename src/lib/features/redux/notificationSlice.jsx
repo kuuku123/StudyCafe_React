@@ -2,12 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   messages: {
-    studyCreate: {
-      count: 0,
+    count: 0,
+    studyCreated: {
       study: {
         path: [],
       },
     },
+    studyUpdated: {
+      study:{
+        path:[],
+      }
+    }
   },
 };
 
@@ -15,15 +20,49 @@ const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    addStudyCreate(state, action) {
-      state.messages.studyCreate.study.path.push(action.payload)
-      state.messages.studyCreate.count += 1;
+    addStudyCreated(state, action) {
+      state.messages.studyCreated.study.path.push(action.payload);
+      state.messages.count += 1;
     },
-    clearStudyCreate(state) {
-      state.messages.studyCreate.count = 0;
+    clearStudyCreated(state) {
+      state.messages.count = 0;
+    },
+    addStudyUpdated(state, action) {
+      state.messages.studyUpdated.study.path.push(action.payload);
+      state.messages.count += 1;
+    },
+    clearStudyUpdated(state) {
+      state.messages.count = 0;
+    },
+    minusStudyCreated(state, action) {
+      console.log("action.payload => ", action.payload);
+      state.messages.studyCreated.study.path =
+        state.messages.studyCreated.study.path.filter(
+          (path) => path !== action.payload
+        );
+      console.log("state path => ", state.messages.studyCreated.study.path);
+      state.messages.count -= 1;
+    },
+    minusStudyUpdated(state, action) {
+      console.log("action.payload => ", action.payload);
+      state.messages.studyUpdated.study.path =
+        state.messages.studyUpdated.study.path.filter(
+          (path) => path !== action.payload
+        );
+      console.log("state path => ", state.messages.studyUpdated.study.path);
+      state.messages.count -= 1;
     },
   },
 });
 
-export const { addStudyCreate, clearStudyCreate } = notificationSlice.actions;
+export const {
+  addStudyCreated: addStudyCreated,
+  addStudyUpdated: addStudyUpdated,
+  clearStudyCreated: clearStudyCreated,
+  clearStudyUpdated: clearStudyUpdated,
+  minusStudyCreated: minusStudyCreated,
+  minusStudyUpdated: minusStudyUpdated,
+
+
+} = notificationSlice.actions;
 export default notificationSlice.reducer;

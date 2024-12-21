@@ -1,44 +1,30 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./My_Study_Main_style";
-import My_Study_Info from "./MyStudyComponentPage/MyStudyInfo";
-import My_Study_Member from "./MyStudyComponentPage/MyStudyMember";
-import My_Study_Schedule from "./MyStudyComponentPage/MyStudySchedule";
-import My_Study_Configuration from "./MyStudyComponentPage/MyStudyConfiguration";
-import StudyApi from "../../../lib/apis/StudyApi";
-import HandleResponseApi from "../../../lib/HandleResponse";
+import * as S from "./My_Study_Guest_Main_style";
 import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import My_Study_Guest_Schedule from "./MyStudyGuestComponentPage/MyStudyGuestSchedule";
+import My_Study_Guest_Info from "./MyStudyGuestComponentPage/MyStudyGuestInfo";
+import My_Study_Guest_Member from "./MyStudyGuestComponentPage/MyStudyGuestMember";
 
-const My_Study_Main = ({ study }) => {
+const My_Study_Guest_Main = ({ study }) => {
   const [category, setCategory] = useState(() => {
-    return sessionStorage.getItem("My_Study_Main_category") || "info";
+    return sessionStorage.getItem("My_Study_Guest_Main_category") || "info";
   });
-  const [published, setPublished] = useState(study.published);
   const location = useLocation();
   const path = location.pathname.split("/")[2];
-  const handleResponse = HandleResponseApi.useHandleResponse();
 
   useEffect(() => {
-    sessionStorage.setItem("My_Study_Main_category", category);
+    sessionStorage.setItem("My_Study_Guest_Main_category", category);
   }, [category]);
 
   const pageComponent = {
-    info: <My_Study_Info study={study}></My_Study_Info>,
-    member: <My_Study_Member study={study}></My_Study_Member>,
-    schedule: <My_Study_Schedule study={study}></My_Study_Schedule>,
-    configuration: (
-      <My_Study_Configuration study={study}></My_Study_Configuration>
-    ),
+    info: <My_Study_Guest_Info study={study}></My_Study_Guest_Info>,
+    member: <My_Study_Guest_Member study={study}></My_Study_Guest_Member>,
+    schedule: <My_Study_Guest_Schedule study={study}></My_Study_Guest_Schedule>,
   };
 
   const handleOnClick = (category) => {
     setCategory(category);
-  };
-
-  const handleDraftOnClick = async (path) => {
-    const response = await StudyApi.publishStudy(path);
-    console.log("handleDraftOnCLick => ", response);
-    handleResponse(response, setPublished, false);
   };
 
   return (
@@ -51,15 +37,10 @@ const My_Study_Main = ({ study }) => {
           data-tooltip-id="draftTooltip"
           fontSize="22px"
           onClick={() => handleDraftOnClick(path)}
-        >
-          {published ? "Published" : "Draft"}
-        </S.Study_Component_Click_style>
+        ></S.Study_Component_Click_style>
         <ReactTooltip id="draftTooltip" effect="solid" place="top">
           Click to Pubslih Study to Others
         </ReactTooltip>
-        <S.Study_Component_Click_style fontSize="22px">
-          off
-        </S.Study_Component_Click_style>
       </S.Study_Draft_style>
       <S.Study_Link_style>
         <S.Study_Component_Click_style
@@ -82,13 +63,6 @@ const My_Study_Main = ({ study }) => {
         >
           Schedule
         </S.Study_Component_Click_style>
-
-        <S.Study_Component_Click_style
-          clicked={"configuration" === category}
-          onClick={() => handleOnClick("configuration")}
-        >
-          Configuration
-        </S.Study_Component_Click_style>
       </S.Study_Link_style>
 
       <S.Study_Link_Horizontal_Line_style></S.Study_Link_Horizontal_Line_style>
@@ -97,4 +71,4 @@ const My_Study_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Main;
+export default My_Study_Guest_Main;

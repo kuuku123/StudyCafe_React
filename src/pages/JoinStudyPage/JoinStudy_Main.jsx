@@ -190,7 +190,7 @@ const JoinStudy_Main = () => {
         {/* Display Studies */}
         {paginatedStudies.length > 0 ? (
           paginatedStudies.map((study) => (
-            <Link to={RoutesEnum.STUDY(study.path)}>
+            <Link to={RoutesEnum.STUDY_GUEST(study.path)}>
               <S.StudyCard key={study.id}>
                 <S.Title>{study.title}</S.Title>
                 {study.shortDescription}

@@ -13,7 +13,7 @@ const StudyList_Main = () => {
 
   const handleClick = (study) => {
     console.log("study => ", study);
-    navigate(RoutesEnum.STUDY(study.path), { state: study });
+    navigate(RoutesEnum.STUDY_ADMIN(study.path), { state: study });
   };
   const handleStudies = (studies) => {
     const sanitizedStudies = Array.isArray(studies)

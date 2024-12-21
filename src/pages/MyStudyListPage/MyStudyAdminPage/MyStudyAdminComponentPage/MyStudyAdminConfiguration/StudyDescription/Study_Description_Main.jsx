@@ -7,8 +7,11 @@ import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
 import StudyApi from "../../../../../../lib/apis/StudyApi";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { useNavigate } from "react-router-dom";
+import RoutesEnum from "../../../../../../lib/RoutesEnum";
 
 const Study_Description_Main = ({ study }) => {
+  const navigate = useNavigate();
   const [img, setImage] = useState();
   const onChange = (e) => {
     const img = e.target.files[0];
@@ -18,6 +21,10 @@ const Study_Description_Main = ({ study }) => {
       setImage(reader.result);
     };
   };
+  const submitSuccessCallback = () => {
+    console.log("submitSuccess called")
+    navigate(`${RoutesEnum.STUDY_ADMIN(study.path)}?refresh=${Date.now()}`, { state: study });
+  };
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {
     updateStudyForm["studyImage"] = img;
@@ -26,14 +33,12 @@ const Study_Description_Main = ({ study }) => {
       updateStudyForm,
       study.path
     );
-    handleResponse(response, null, {
-      useNav: true,
-      path: 0,
-    });
+    handleResponse(response, submitSuccessCallback, false);
   };
 
   const handleClick = () => {
     console.log("u clicked");
+    console.log("submitted => ", submitted);
   };
   const validate = (values) => {
     const errors = {};
@@ -60,7 +65,7 @@ const Study_Description_Main = ({ study }) => {
   };
 
   useEffect(() => {
-    handleImage(study.studyImage)
+    handleImage(study.studyImage);
   }, []);
   return (
     <>

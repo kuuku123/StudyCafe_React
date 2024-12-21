@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
+import NotificationDropDownElement from "./NotifcationDropDownElement";
 import * as S from "./Component_style";
 import RoutesEnum from "../lib/RoutesEnum";
 import Logout from "./Logout";
@@ -8,13 +9,24 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
-import { sseService } from "../lib/features/SSEService";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const studyPath = useSelector(
-    (state) => state.notifications.messages.studyCreate.study.path
-  );
+  const { studyCreatedPath, studyUpdatedPath } = useSelector((state) => {
+    console.log("state ", state);
+    return {
+      studyCreatedPath: state.notifications.messages.studyCreated.study.path,
+      studyUpdatedPath: state.notifications.messages.studyUpdated.study.path,
+    };
+  });
+
+  const combinedPaths = [
+    ...studyCreatedPath.map((path) => ({ path, type: "Created" })),
+    ...studyUpdatedPath.map((path) => ({ path, type: "Updated" })),
+  ];
+
+  console.log("combinedPath => ",combinedPaths)
+
   if (isAuthenticated) {
     return (
       <S.Title_style>
@@ -26,12 +38,15 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <DropDownContainer profile={<Bell></Bell>}>
-            {studyPath && studyPath.length > 0 ? (
+            {combinedPaths.length > 0 ? (
               <>
-                {studyPath.map((path, index) => (
-                  <li key={index}>
-                    <Link style={S.link_style} to={RoutesEnum.STUDY(path)}>
-                      [Study Created]{path}
+                {combinedPaths.map(({ path, type }, index) => (
+                  <li key={`${type}-${index}`}>
+                    <Link
+                      style={S.link_style}
+                      to={RoutesEnum.STUDY_GUEST(path)}
+                    >
+                      <NotificationDropDownElement path={path} type={type}/>
                     </Link>
                   </li>
                 ))}

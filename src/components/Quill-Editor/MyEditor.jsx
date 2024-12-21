@@ -12,7 +12,6 @@ const MyEditor = ({ style, ...rest }) => {
   };
 
   const combinedStyle = { ...defaultStyle, ...style };
-  console.log("rest = " + JSON.stringify(rest));
   return (
       <ReactQuill preserveWhitespace style={combinedStyle} {...rest}></ReactQuill>
   );
