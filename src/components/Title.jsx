@@ -12,12 +12,21 @@ import Bell from "./Bell/Bell";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const studyPath = useSelector(
-    (state) => {
-      console.log("state ",state)
-      return state.notifications.messages.studyCreated.study.path
-    }
-  );
+  const { studyCreatedPath, studyUpdatedPath } = useSelector((state) => {
+    console.log("state ", state);
+    return {
+      studyCreatedPath: state.notifications.messages.studyCreated.study.path,
+      studyUpdatedPath: state.notifications.messages.studyUpdated.study.path,
+    };
+  });
+
+  const combinedPaths = [
+    ...studyCreatedPath.map((path) => ({ path, type: "Created" })),
+    ...studyUpdatedPath.map((path) => ({ path, type: "Updated" })),
+  ];
+
+  console.log("combinedPath => ",combinedPaths)
+
   if (isAuthenticated) {
     return (
       <S.Title_style>
@@ -29,12 +38,15 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <DropDownContainer profile={<Bell></Bell>}>
-            {studyPath && studyPath.length > 0 ? (
+            {combinedPaths.length > 0 ? (
               <>
-                {studyPath.map((path, index) => (
-                  <li key={index}>
-                    <Link style={S.link_style} to={RoutesEnum.STUDY_GUEST(path)}>
-                      <NotificationDropDownElement path={path}></NotificationDropDownElement>
+                {combinedPaths.map(({ path, type }, index) => (
+                  <li key={`${type}-${index}`}>
+                    <Link
+                      style={S.link_style}
+                      to={RoutesEnum.STUDY_GUEST(path)}
+                    >
+                      <NotificationDropDownElement path={path} type={type}/>
                     </Link>
                   </li>
                 ))}
