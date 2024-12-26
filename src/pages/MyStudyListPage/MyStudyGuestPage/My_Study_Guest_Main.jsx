@@ -5,13 +5,16 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import My_Study_Guest_Schedule from "./MyStudyGuestComponentPage/MyStudyGuestSchedule";
 import My_Study_Guest_Info from "./MyStudyGuestComponentPage/MyStudyGuestInfo";
 import My_Study_Guest_Member from "./MyStudyGuestComponentPage/MyStudyGuestMember";
+import StudyApi from "../../../lib/apis/StudyApi";
+import HandleResponseApi from "../../../lib/HandleResponse";
 
 const My_Study_Guest_Main = ({ study }) => {
   const [category, setCategory] = useState(() => {
     return sessionStorage.getItem("My_Study_Guest_Main_category") || "info";
   });
   const location = useLocation();
-  const path = location.pathname.split("/")[2];
+  const path = location.pathname.split("/")[3];
+  const handleResponse = HandleResponseApi .useHandleResponse();
 
   useEffect(() => {
     sessionStorage.setItem("My_Study_Guest_Main_category", category);
@@ -27,6 +30,12 @@ const My_Study_Guest_Main = ({ study }) => {
     setCategory(category);
   };
 
+  const handleJoinOnClick = async (path) => {
+    const response = await StudyApi.joinStudy(path);
+    console.log("handleJoinOnCLick => ", response);
+    handleResponse(response, null, false);
+  }
+
   return (
     <S.Grid_Container_style>
       <S.Study_Title_style>
@@ -36,10 +45,12 @@ const My_Study_Guest_Main = ({ study }) => {
         <S.Study_Component_Click_style
           data-tooltip-id="draftTooltip"
           fontSize="22px"
-          onClick={() => handleDraftOnClick(path)}
-        ></S.Study_Component_Click_style>
+          onClick={() => handleJoinOnClick(path)}
+        >
+          Join
+        </S.Study_Component_Click_style>
         <ReactTooltip id="draftTooltip" effect="solid" place="top">
-          Click to Pubslih Study to Others
+          Click to join current Study
         </ReactTooltip>
       </S.Study_Draft_style>
       <S.Study_Link_style>

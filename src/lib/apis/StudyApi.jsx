@@ -69,6 +69,19 @@ const publishStudy = async (path) => {
   return publicshed_study_json;
 };
 
+const joinStudy = async (path) => {
+  const raw_data = await fetch(
+    `${SERVER_API_URL}/study/${path}/join`,
+    {
+      credentials: "include",
+      method: "POST",
+    }
+  );
+  const json_data = await raw_data.json();
+  console.log("joinStudy => ", json_data);
+  return json_data;
+};
+
 const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
   try {
     // Handle tags and zones being null or undefined
@@ -158,6 +171,7 @@ const StudyApi = {
   fetchStudyManagers,
   fetchStudyByTagsAndZones,
   publishStudy,
+  joinStudy,
   fetchTotalStudiesCount,
   updateStudyInfo,
 };
