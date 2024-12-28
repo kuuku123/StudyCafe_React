@@ -79,6 +79,16 @@ const joinStudy = async (path) => {
   return json_data;
 };
 
+const checkStudyJoined = async (path) => {
+  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/checkJoined`, {
+    credentials: "include",
+    method: "GET",
+  });
+  const json_data = await raw_data.json();
+  console.log("checkJoined => ", json_data);
+  return json_data;
+};
+
 const leaveStudy = async (path) => {
   const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/leave`, {
     credentials: "include",
@@ -179,6 +189,7 @@ const StudyApi = {
   fetchStudyByTagsAndZones,
   publishStudy,
   joinStudy,
+  checkStudyJoined,
   leaveStudy,
   fetchTotalStudiesCount,
   updateStudyInfo,
