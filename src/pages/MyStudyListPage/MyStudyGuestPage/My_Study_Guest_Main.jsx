@@ -12,9 +12,10 @@ const My_Study_Guest_Main = ({ study }) => {
   const [category, setCategory] = useState(() => {
     return sessionStorage.getItem("My_Study_Guest_Main_category") || "info";
   });
+  const [joined, setJoined] = useState(false);
   const location = useLocation();
   const path = location.pathname.split("/")[3];
-  const handleResponse = HandleResponseApi .useHandleResponse();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   useEffect(() => {
     sessionStorage.setItem("My_Study_Guest_Main_category", category);
@@ -31,10 +32,15 @@ const My_Study_Guest_Main = ({ study }) => {
   };
 
   const handleJoinOnClick = async (path) => {
-    const response = await StudyApi.joinStudy(path);
+    let response = null;
+    if (joined) {
+      response = await StudyApi.leaveStudy(path);
+    } else {
+      response = await StudyApi.joinStudy(path);
+    }
     console.log("handleJoinOnCLick => ", response);
-    handleResponse(response, null, false);
-  }
+    handleResponse(response, () => setJoined(!joined), false);
+  };
 
   return (
     <S.Grid_Container_style>
@@ -47,10 +53,10 @@ const My_Study_Guest_Main = ({ study }) => {
           fontSize="22px"
           onClick={() => handleJoinOnClick(path)}
         >
-          Join
+          {!joined ? "Join" : "Leave"}
         </S.Study_Component_Click_style>
         <ReactTooltip id="draftTooltip" effect="solid" place="top">
-          Click to join current Study
+          {!joined ? "Click to join current Study" : "Click to Leave Study"}
         </ReactTooltip>
       </S.Study_Draft_style>
       <S.Study_Link_style>

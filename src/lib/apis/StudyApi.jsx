@@ -70,15 +70,22 @@ const publishStudy = async (path) => {
 };
 
 const joinStudy = async (path) => {
-  const raw_data = await fetch(
-    `${SERVER_API_URL}/study/${path}/join`,
-    {
-      credentials: "include",
-      method: "POST",
-    }
-  );
+  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/join`, {
+    credentials: "include",
+    method: "POST",
+  });
   const json_data = await raw_data.json();
   console.log("joinStudy => ", json_data);
+  return json_data;
+};
+
+const leaveStudy = async (path) => {
+  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/leave`, {
+    credentials: "include",
+    method: "POST",
+  });
+  const json_data = await raw_data.json();
+  console.log("leaveStudy => ", json_data);
   return json_data;
 };
 
@@ -172,6 +179,7 @@ const StudyApi = {
   fetchStudyByTagsAndZones,
   publishStudy,
   joinStudy,
+  leaveStudy,
   fetchTotalStudiesCount,
   updateStudyInfo,
 };

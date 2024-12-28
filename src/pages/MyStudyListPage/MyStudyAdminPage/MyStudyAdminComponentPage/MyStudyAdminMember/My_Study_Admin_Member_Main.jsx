@@ -50,7 +50,9 @@ const My_Study_Admin_Member_Main = ({ study }) => {
       </S.Study_Manager_Picture_style>
       <S.Study_Members_style>
         {Array.isArray(studyMembers) && studyMembers.length > 0 ? (
-          studyMembers.map((member, index) => <></>)
+          studyMembers.map((member, index) => (
+            <div key={index}>{member.nickname}</div>
+          ))
         ) : (
           <>no members</>
         )}
