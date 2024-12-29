@@ -7,7 +7,6 @@ import ProfilePage from "./pages/ProfilePage";
 import * as MyLayout from "./lib/MyLayout";
 import EmailReSendPage from "./pages/EmailReSendPage";
 import CreateStudyPage from "./pages/CreateStudyPage";
-import StudyAdminPage from "./pages/MyStudyListPage/MyStudyAdminPage";
 import MyStudyListPage from "./pages/MyStudyListPage";
 import ErrorPage from "./pages/ErrorPage";
 import RoutesEnum from "./lib/RoutesEnum";
@@ -19,8 +18,9 @@ import SocialAccountSetPasswordPage from "./pages/LoginPage/social/SocialAccount
 import MergeAccountPage from "./pages/LoginPage/social/MergeAccountPage";
 import AlreadyMergedAccountPage from "./pages/LoginPage/social/AlreadyMergedAccountPage";
 import ProfileSettingPage from "./pages/ProfileSettingPage";
-import { sseService } from "./lib/features/SSEService";
-import StudyGuestPage from "./pages/MyStudyListPage/MyStudyGuestPage";
+import StudyGuestPage from "./pages/MyStudyListPage/MyStudyMemberPage";
+import StudyManagerPage from "./pages/MyStudyListPage/MyStudyManagerPage";
+import StudyMemberPage from "./pages/MyStudyListPage/MyStudyMemberPage";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -73,12 +73,12 @@ const App = () => {
       element: <MyStudyListPage />,
     },
     {
-      path: RoutesEnum.STUDY_ADMIN(),
-      element: <StudyAdminPage />,
+      path: RoutesEnum.STUDY_MANAGER(),
+      element: <StudyManagerPage />,
     },
     {
-      path: RoutesEnum.STUDY_GUEST(),
-      element: <StudyGuestPage />,
+      path: RoutesEnum.STUDY_MEMBER(),
+      element: <StudyMemberPage/>,
     },
     {
       path: RoutesEnum.ERROR,

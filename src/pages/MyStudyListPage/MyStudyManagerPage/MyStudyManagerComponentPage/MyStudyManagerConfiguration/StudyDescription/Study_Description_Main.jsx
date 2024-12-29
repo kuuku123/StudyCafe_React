@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React , { useEffect, useState } from "react";
 import * as S from "./Study_Description_Main style";
 import * as MyForm from "../../../../../../lib/MyForm";
 import HandleResponseApi from "../../../../../../lib/HandleResponse";
@@ -22,8 +22,10 @@ const Study_Description_Main = ({ study }) => {
     };
   };
   const submitSuccessCallback = () => {
-    console.log("submitSuccess called")
-    navigate(`${RoutesEnum.STUDY_ADMIN(study.path)}?refresh=${Date.now()}`, { state: study });
+    console.log("submitSuccess called");
+    navigate(`${RoutesEnum.STUDY_MANAGER(study.path)}?refresh=${Date.now()}`, {
+      state: study,
+    });
   };
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {

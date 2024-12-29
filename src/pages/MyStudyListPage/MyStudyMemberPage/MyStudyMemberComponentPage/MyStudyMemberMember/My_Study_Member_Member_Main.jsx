@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./My_Study_Admin_Member_Main_style";
-import { useStudy } from "../..";
+import * as S from "./My_Study_Member_Member_Main_style";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
-import StudyApi from "../../../../../lib/apis/StudyApi";
-import ProfileApi from "../../../../../lib/apis/ProfileApi";
+import StudyMemberApi from "../../../../../lib/apis/StudyMemberApi";
 
-const My_Study_Admin_Member_Main = ({ study }) => {
+const My_Study_Guest_Member_Main = ({ study }) => {
   const [img, setImage] = useState();
   const [studyMembers, setStudyMembers] = useState([]);
 
@@ -23,19 +21,19 @@ const My_Study_Admin_Member_Main = ({ study }) => {
 
   useEffect(() => {
     const getStudyMembers = async (path) => {
-      const response = await StudyApi.fetchStudyMembers(path);
+      const response = await StudyMemberApi.fetchStudyMembers(path);
       handleResponse(response, handleStudyMembers, false);
     };
 
-    const getStudyManager = async () => {
-      const study_manager = await StudyApi.fetchStudyManagers(study.path);
+    const getStudyManager = async (path) => {
+      const study_manager = await StudyMemberApi.fetchStudyManagers(path);
+      console.log("study_manager=> ", study_manager);
       console.log("study_manager => ", study_manager.data[0]);
       handleResponse(study_manager, handleImage, false);
       handleImage(study_manager.data[0].profileImage);
     };
-
     getStudyMembers(study.path);
-    getStudyManager();
+    getStudyManager(study.path);
   }, []);
   return (
     <>
@@ -50,7 +48,9 @@ const My_Study_Admin_Member_Main = ({ study }) => {
       </S.Study_Manager_Picture_style>
       <S.Study_Members_style>
         {Array.isArray(studyMembers) && studyMembers.length > 0 ? (
-          studyMembers.map((member, index) => <></>)
+          studyMembers.map((member, index) => (
+            <div key={index}>{member.nickname}</div>
+          ))
         ) : (
           <>no members</>
         )}
@@ -59,4 +59,4 @@ const My_Study_Admin_Member_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Admin_Member_Main;
+export default My_Study_Guest_Member_Main;

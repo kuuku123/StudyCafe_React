@@ -7,7 +7,6 @@ import TagApi from "../../../../../../lib/apis/TagApi";
 import Button from "../../../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as MyLayout from "../../../../../../lib/MyLayout";
-import Dialog from "../../../../../../components/Dialog";
 
 const Tags_And_Zones_Main = ({ study, setCategory }) => {
   const [uniqueTags, setUniqueTags] = useState([
