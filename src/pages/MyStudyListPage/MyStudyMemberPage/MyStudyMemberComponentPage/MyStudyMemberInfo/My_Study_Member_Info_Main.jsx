@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./My_Study_Admin_Info_Main_style";
+import * as S from "./My_Study_Member_Info_Main_style";
 
-const My_Study_Admin_Info_Main = ({ study }) => {
+const My_Study_Member_Info_Main = ({study}) => {
   const [img, setImage] = useState();
-
+  
   const handleImage = (profile_image_base64_encoded) => {
     const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
     setImage(base64Image);
   };
 
   useEffect(() => {
-    handleImage(study.studyImage);
+    handleImage(study.studyImage)
   }, []);
 
   return (
@@ -43,4 +43,4 @@ const My_Study_Admin_Info_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Admin_Info_Main;
+export default My_Study_Member_Info_Main;

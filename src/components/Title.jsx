@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./DropDownContainer";
 import NotificationDropDownElement from "./NotifcationDropDownElement";
@@ -25,7 +25,7 @@ const Title = ({ children }) => {
     ...studyUpdatedPath.map((path) => ({ path, type: "Updated" })),
   ];
 
-  console.log("combinedPath => ",combinedPaths)
+  console.log("combinedPath => ", combinedPaths);
 
   if (isAuthenticated) {
     return (
@@ -44,9 +44,9 @@ const Title = ({ children }) => {
                   <li key={`${type}-${index}`}>
                     <Link
                       style={S.link_style}
-                      to={RoutesEnum.STUDY_GUEST(path)}
+                      to={RoutesEnum.STUDY_MEMBER(path)}
                     >
-                      <NotificationDropDownElement path={path} type={type}/>
+                      <NotificationDropDownElement path={path} type={type} />
                     </Link>
                   </li>
                 ))}

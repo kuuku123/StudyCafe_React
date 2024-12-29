@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./My_Study_Guest_Main_style";
+import * as S from "./My_Study_Member_Main_style";
 import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import My_Study_Guest_Schedule from "./MyStudyGuestComponentPage/MyStudyGuestSchedule";
-import My_Study_Guest_Info from "./MyStudyGuestComponentPage/MyStudyGuestInfo";
-import My_Study_Guest_Member from "./MyStudyGuestComponentPage/MyStudyGuestMember";
+import My_Study_Member_Schedule from "./MyStudyMemberComponentPage/MyStudyMemberSchedule";
+import My_Study_Member_Info from "./MyStudyMemberComponentPage/MyStudyMemberInfo";
+import My_Study_Member_Member from "./MyStudyMemberComponentPage/MyStudyMemberMember";
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 
-const My_Study_Guest_Main = ({ study }) => {
+const My_Study_Member_Main = ({ study }) => {
   const [category, setCategory] = useState(() => {
-    return sessionStorage.getItem("My_Study_Guest_Main_category") || "info";
+    return sessionStorage.getItem("My_Study_Member_Main_category") || "info";
   });
   const [joined, setJoined] = useState(false);
   const location = useLocation();
@@ -18,13 +18,15 @@ const My_Study_Guest_Main = ({ study }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   useEffect(() => {
-    sessionStorage.setItem("My_Study_Guest_Main_category", category);
+    sessionStorage.setItem("My_Study_Member_Main_category", category);
   }, [category]);
 
   const pageComponent = {
-    info: <My_Study_Guest_Info study={study}></My_Study_Guest_Info>,
-    member: <My_Study_Guest_Member study={study}></My_Study_Guest_Member>,
-    schedule: <My_Study_Guest_Schedule study={study}></My_Study_Guest_Schedule>,
+    info: <My_Study_Member_Info study={study}></My_Study_Member_Info>,
+    member: <My_Study_Member_Member study={study}></My_Study_Member_Member>,
+    schedule: (
+      <My_Study_Member_Schedule study={study}></My_Study_Member_Schedule>
+    ),
   };
 
   const handleOnClick = (category) => {
@@ -88,4 +90,4 @@ const My_Study_Guest_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Guest_Main;
+export default My_Study_Member_Main;

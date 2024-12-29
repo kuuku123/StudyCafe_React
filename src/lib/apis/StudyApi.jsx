@@ -7,15 +7,6 @@ const fetchStudy = async (path) => {
   console.log(study);
   return study;
 };
-const fetchStudyList = async () => {
-  const raw_studyList = await fetch(`${SERVER_API_URL}/study-list`, {
-    credentials: "include",
-    method: "GET",
-  });
-  const studyList = await raw_studyList.json();
-  console.log(studyList);
-  return studyList;
-};
 
 const createStudy = async (createStudyForm) => {
   const raw_response = await fetch(`${SERVER_API_URL}/new-study`, {
@@ -30,31 +21,6 @@ const createStudy = async (createStudyForm) => {
   return response;
 };
 
-const fetchStudyMembers = async (path) => {
-  const raw_studyMemberList = await fetch(
-    `${SERVER_API_URL}/${path}/study-members`,
-    {
-      credentials: "include",
-      method: "GET",
-    }
-  );
-  const studyMemberList = await raw_studyMemberList.json();
-  console.log(studyMemberList);
-  return studyMemberList;
-};
-
-const fetchStudyManagers = async (path) => {
-  const raw_studyManagerList = await fetch(
-    `${SERVER_API_URL}/${path}/study-managers`,
-    {
-      credentials: "include",
-      method: "GET",
-    }
-  );
-  const studyManagerList = await raw_studyManagerList.json();
-  console.log(studyManagerList);
-  return studyManagerList;
-};
 
 const publishStudy = async (path) => {
   const raw_published_study = await fetch(
@@ -173,9 +139,6 @@ const updateStudyInfo = async (updateStudyForm, path) => {
 const StudyApi = {
   fetchStudy,
   createStudy,
-  fetchStudyList,
-  fetchStudyMembers,
-  fetchStudyManagers,
   fetchStudyByTagsAndZones,
   publishStudy,
   joinStudy,

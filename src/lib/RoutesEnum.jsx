@@ -11,8 +11,8 @@ const RoutesEnum = {
   CREATE_STUDY: "/create-study",
   JOIN_STUDY: "/join-study",
   MY_STUDY_LIST: "/my-study-list",
-  STUDY_ADMIN: (path = ":path") => `/study/admin/${path}`,
-  STUDY_GUEST: (path = ":path") => `/study/guest/${path}`,
+  STUDY_MANAGER: (path = ":path") => `/study/manager/${path}`,
+  STUDY_MEMBER: (path = ":path") => `/study/member/${path}`,
   ERROR: "*",
 };
 

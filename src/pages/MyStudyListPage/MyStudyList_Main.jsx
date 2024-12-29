@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import StudyApi from "../../lib/apis/StudyApi";
+import StudyManagerApi from "../../lib/apis/StudyManagerApi";
+import StudyMemberApi from "../../lib/apis/StudyMemberApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import * as S from "./MyStudyList_Main_style";
 import DOMPurify from "dompurify";
@@ -7,15 +8,16 @@ import { useNavigate } from "react-router-dom";
 import RoutesEnum from "../../lib/RoutesEnum";
 
 const StudyList_Main = () => {
-  const [studies, setStudies] = useState([]);
+  const [mangerStudies, setManagerStudies] = useState([]);
+  const [memberStudies, setMemberStudies] = useState([]);
   const navigate = useNavigate();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleClick = (study) => {
     console.log("study => ", study);
-    navigate(RoutesEnum.STUDY_ADMIN(study.path), { state: study });
+    navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
   };
-  const handleStudies = (studies) => {
+  const handleManagerStudies = (studies) => {
     const sanitizedStudies = Array.isArray(studies)
       ? studies.map((study) => ({
           ...study,
@@ -24,15 +26,34 @@ const StudyList_Main = () => {
         }))
       : [];
     console.log("sanitizedStudies => ", sanitizedStudies);
-    setStudies(sanitizedStudies);
+    setManagerStudies(sanitizedStudies);
   };
-  useEffect(() => {
-    const getStudyList = async () => {
-      const response = await StudyApi.fetchStudyList();
 
-      handleResponse(response, handleStudies, false);
+  const handleMemberStudies = (studies) => {
+    const sanitizedStudies = Array.isArray(studies)
+      ? studies.map((study) => ({
+          ...study,
+          fullDescription: DOMPurify.sanitize(study.fullDescription),
+          studyImage: "data:image/png;base64," + study.studyImage,
+        }))
+      : [];
+    console.log("handleMemberStudies => ", sanitizedStudies);
+    setMemberStudies(sanitizedStudies);
+  };
+
+  useEffect(() => {
+    const getManagerStudyList = async () => {
+      const response = await StudyManagerApi.fetchStudyList();
+
+      handleResponse(response, handleManagerStudies, false);
     };
-    getStudyList();
+    const getMemberStudyList = async () => {
+      const response = await StudyMemberApi.fetchStudyList();
+
+      handleResponse(response, handleMemberStudies, false);
+    };
+    getManagerStudyList();
+    getMemberStudyList();
   }, []);
 
   return (
@@ -40,8 +61,8 @@ const StudyList_Main = () => {
       <h2>My Study List</h2>
       <S.List>
         {/* Check if studies is an array and has items */}
-        {Array.isArray(studies) && studies.length > 0 ? (
-          studies.map((study, index) => (
+        {Array.isArray(mangerStudies) && mangerStudies.length > 0 ? (
+          mangerStudies.map((study, index) => (
             <S.Card
               key={index}
               index={index}
@@ -52,6 +73,7 @@ const StudyList_Main = () => {
                 <img src={study.studyImage} alt={study.title} />
               </S.CardImage>
               <S.CardBody>
+                <h3>MANAGER</h3>
                 <h3>{study.title}</h3>
                 <p>Path: {study.path}</p>
                 <p>Short Description: {study.shortDescription}</p>
@@ -66,7 +88,37 @@ const StudyList_Main = () => {
             </S.Card>
           ))
         ) : (
-          <S.Card>No studies available</S.Card> // Fallback message when studies is empty or not yet filled
+          <S.Card>No manager studies available</S.Card> // Fallback message when studies is empty or not yet filled
+        )}
+        {/* Check if studies is an array and has items */}
+        {Array.isArray(memberStudies) && memberStudies.length > 0 ? (
+          memberStudies.map((study, index) => (
+            <S.Card
+              key={index}
+              index={index}
+              className={`card-${index}`}
+              onClick={() => handleClick(study)}
+            >
+              <S.CardImage>
+                <img src={study.studyImage} alt={study.title} />
+              </S.CardImage>
+              <S.CardBody>
+                <h3>MEMBER</h3>
+                <h3>{study.title}</h3>
+                <p>Path: {study.path}</p>
+                <p>Short Description: {study.shortDescription}</p>
+                <S.FullDescription>
+                  <summary>Full Description</summary>
+                  <div
+                    className="full-description"
+                    dangerouslySetInnerHTML={{ __html: study.fullDescription }}
+                  />
+                </S.FullDescription>
+              </S.CardBody>
+            </S.Card>
+          ))
+        ) : (
+          <S.Card>No member studies available</S.Card> // Fallback message when studies is empty or not yet filled
         )}
       </S.List>
     </S.Container>
