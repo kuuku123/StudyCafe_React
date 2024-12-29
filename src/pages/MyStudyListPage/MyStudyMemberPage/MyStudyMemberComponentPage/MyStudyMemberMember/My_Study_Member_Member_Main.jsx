@@ -27,12 +27,10 @@ const My_Study_Guest_Member_Main = ({ study }) => {
 
     const getStudyManager = async (path) => {
       const study_manager = await StudyMemberApi.fetchStudyManagers(path);
-      console.log("study_manager=> ", study_manager)
-      // if (study_manager.data.length() > 0) {
-      //   console.log("study_manager => ", study_manager.data[0]);
-      //   handleResponse(study_manager, handleImage, false);
-      //   handleImage(study_manager.data[0].profileImage);
-      // }
+      console.log("study_manager=> ", study_manager);
+      console.log("study_manager => ", study_manager.data[0]);
+      handleResponse(study_manager, handleImage, false);
+      handleImage(study_manager.data[0].profileImage);
     };
     getStudyMembers(study.path);
     getStudyManager(study.path);

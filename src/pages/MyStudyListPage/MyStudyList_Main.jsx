@@ -13,9 +13,14 @@ const StudyList_Main = () => {
   const navigate = useNavigate();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleClick = (study) => {
+  const handleClick = (study, isManager) => {
     console.log("study => ", study);
-    navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
+    if (isManager) {
+      navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
+    }
+    else {
+      navigate(RoutesEnum.STUDY_MEMBER(study.path), { state: study });
+    }
   };
   const handleManagerStudies = (studies) => {
     const sanitizedStudies = Array.isArray(studies)
@@ -67,7 +72,7 @@ const StudyList_Main = () => {
               key={index}
               index={index}
               className={`card-${index}`}
-              onClick={() => handleClick(study)}
+              onClick={() => handleClick(study, true)}
             >
               <S.CardImage>
                 <img src={study.studyImage} alt={study.title} />
@@ -97,7 +102,7 @@ const StudyList_Main = () => {
               key={index}
               index={index}
               className={`card-${index}`}
-              onClick={() => handleClick(study)}
+              onClick={() => handleClick(study, false)}
             >
               <S.CardImage>
                 <img src={study.studyImage} alt={study.title} />
