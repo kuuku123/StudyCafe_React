@@ -21,6 +21,19 @@ const My_Study_Member_Main = ({ study }) => {
     sessionStorage.setItem("My_Study_Member_Main_category", category);
   }, [category]);
 
+  useEffect(() => {
+    async function checkStudyJoined() {
+      try {
+        const response = await StudyApi.checkStudyJoined(path)
+        console.log("checkStudyJoined => " ,response)
+        setJoined(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    checkStudyJoined();
+  })
+
   const pageComponent = {
     info: <My_Study_Member_Info study={study}></My_Study_Member_Info>,
     member: <My_Study_Member_Member study={study}></My_Study_Member_Member>,
