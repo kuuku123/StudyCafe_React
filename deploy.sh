@@ -18,9 +18,20 @@ npm run build
 echo "Building Docker image..."
 docker build -t react-apache-app .
 
-# Step 3: Run the Docker container
+# Step 3: Tag the Docker image
+echo "Tagging Docker image..."
+docker tag react-apache-app:latest kuuku123/react-apache-app:latest
+
+# Step 4: Push the Docker image to Docker Hub (if logged in)
+if docker info | grep -q "Username"; then
+  echo "Pushing Docker image to Docker Hub..."
+  docker push kuuku123/react-apache-app:latest
+else
+  echo "Not logged into Docker. Skipping Docker image push."
+fi
+
+# Step 5: Run the Docker container
 echo "Running Docker container..."
 docker run -d -p 3000:80 --name react-apache react-apache-app
 
 echo "Deployment completed! Your app is running at http://localhost:3000"
-
