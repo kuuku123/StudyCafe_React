@@ -9,7 +9,7 @@ const Logout = ({ style }) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    const response = await fetch("http://localhost:8081/logout", {
+    const response = await fetch(`${SERVER_API_URL}/logout`, {
       credentials: "include",
       method: "GET",
       headers: {

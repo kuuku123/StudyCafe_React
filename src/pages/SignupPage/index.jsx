@@ -9,7 +9,7 @@ import HandleResponseApi from "../../lib/HandleResponse";
 const SignupPage = () => {
   const handleResopnse = HandleResponseApi.useHandleResponse()
   const handleSubmit = async (signupInfo) => {
-    const response = await fetch("http://localhost:8081/sign-up", {
+    const response = await fetch(`${SERVER_API_URL}/sign-up`, {
       credentials: "include",
       method: "POST",
       headers: {
