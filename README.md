@@ -16,6 +16,7 @@ it is a website that is used for creating study , and let other people join stud
 ## Installation
 
 currently no deployment pipe line
+- deployed at http://tonylimtest123.duckdns.org/
 - **manual way**
 	- docker need to be installed
 	- first deploy https://github.com/kuuku123/StudyCafe_Server_For_React
