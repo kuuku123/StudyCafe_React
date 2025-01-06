@@ -17,7 +17,8 @@ it is a website that is used for creating study , and let other people join stud
 
 currently no deployment pipe line
 - deployed at http://tonylimtest123.duckdns.org/
-- **manual way**
+- react (apache web server) + [spring+redis+mysql] (docker-compose)
+- **manual way** (currently doesn't work, url not for local, only for production)
 	- docker need to be installed
 	- first deploy https://github.com/kuuku123/StudyCafe_Server_For_React
 	- and then deploy with following command
