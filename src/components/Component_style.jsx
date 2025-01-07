@@ -24,6 +24,10 @@ export const CopyRight_style = styled.div`
   align-items: center;
 `;
 
+export const NavItem_style = styled.div`
+  position: relative;
+`
+
 export const DropDown_style = styled.ul`
   position: absolute;
   z-index: 100000;
@@ -66,9 +70,10 @@ export const Li_style = styled.li`
   font-style: italic;
 `;
 export const link_style = {
-  fontSize: "20px",
+  fontSize: "22px",
   color: "#004080",
   textDecoration: "none",
+  whiteSpace: "nowrap",
 };
 
 export const FormControl_Container_style = styled.div`
@@ -85,6 +90,7 @@ export const Title_style = styled.div`
   flex-direction: row;
   align-items: center;
   background-color: #c2b4b4;
+  width: 1400px;
 `;
 
 export const Children_style = styled.div`

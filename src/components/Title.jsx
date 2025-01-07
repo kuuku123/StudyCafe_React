@@ -52,7 +52,7 @@ const Title = ({ children }) => {
                 ))}
               </>
             ) : (
-              <p>No Notifications</p>
+              <p style={S.link_style}>No Notifications</p>
             )}
           </DropDownContainer>
           <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>

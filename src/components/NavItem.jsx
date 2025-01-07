@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { NavItem_style } from "./Component_style";
 
 const NavItem = ({ icon, children }) => {
   const [open, setOpen] = useState(false);
@@ -8,23 +9,23 @@ const NavItem = ({ icon, children }) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setOpen(false);
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    return() => {
-      console.log("will unmount")
+    return () => {
+      console.log("will unmount");
       document.removeEventListener("mousedown", handleClickOutside);
-    }
-  },[])
+    };
+  }, []);
 
   return (
-    <div ref={dropdownRef}>
+    <NavItem_style ref={dropdownRef}>
       <div className="icon-button" onClick={() => setOpen(!open)}>
         {icon}
       </div>
       {open && children}
-    </div>
+    </NavItem_style>
   );
 };
 
