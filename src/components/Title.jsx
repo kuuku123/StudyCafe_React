@@ -9,6 +9,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
+import { sseService } from "../lib/features/SSEService";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -28,6 +29,7 @@ const Title = ({ children }) => {
   console.log("combinedPath => ", combinedPaths);
 
   if (isAuthenticated) {
+    sseService.connect();
     return (
       <S.Title_style>
         <S.Children_style>

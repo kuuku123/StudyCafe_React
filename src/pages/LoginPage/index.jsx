@@ -34,7 +34,6 @@ const LoginPage = () => {
       console.log("response data => ", response.data);
       navigate("/");
       dispatch(loginSuccess(response.data));
-      sseService.connect();
     } else {
       openDialog(
         <Dialog

@@ -90,7 +90,8 @@ export const Title_style = styled.div`
   flex-direction: row;
   align-items: center;
   background-color: #c2b4b4;
-  width: 1400px;
+  width: 100%;
+  min-width: 1400px;
 `;
 
 export const Children_style = styled.div`
