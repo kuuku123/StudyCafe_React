@@ -9,7 +9,8 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
-import { sseService } from "../lib/features/SSEService";
+import NotificationPage from "../pages/NotificationPage";
+import Notification_Main from "../pages/NotificationPage/Notification_Main";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -29,7 +30,6 @@ const Title = ({ children }) => {
   console.log("combinedPath => ", combinedPaths);
 
   if (isAuthenticated) {
-    sseService.connect();
     return (
       <S.Title_style>
         <S.Children_style>
@@ -40,34 +40,29 @@ const Title = ({ children }) => {
         </S.Children_style>
         <S.Login_Signup_style>
           <DropDownContainer profile={<Bell></Bell>}>
-            {combinedPaths.length > 0 ? (
-              <>
-                {combinedPaths.map(({ path, type }, index) => (
-                  <li key={`${type}-${index}`}>
-                    <Link
-                      style={S.link_style}
-                      to={RoutesEnum.STUDY_MEMBER(path)}
-                    >
-                      <NotificationDropDownElement path={path} type={type} />
-                    </Link>
-                  </li>
-                ))}
-              </>
-            ) : (
-              <p style={S.link_style}>No Notifications</p>
-            )}
+            <Notification_Main name={"Notification"}>
+              {combinedPaths.map(({ path, type }, index) => (
+                <li key={`${type}-${index}`}>
+                  <Link style={S.link_style} to={RoutesEnum.STUDY_GUEST(path)}>
+                    <NotificationDropDownElement path={path} type={type} />
+                  </Link>
+                </li>
+              ))}
+            </Notification_Main>
           </DropDownContainer>
           <DropDownContainer profile={<FaBookOpen size={"22px"}></FaBookOpen>}>
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
-                create study
-              </Link>
-            </li>
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
-                join study
-              </Link>
-            </li>
+            <Notification_Main name={"Study"}>
+              <li>
+                <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
+                  create study
+                </Link>
+              </li>
+              <li>
+                <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
+                  join study
+                </Link>
+              </li>
+            </Notification_Main>
           </DropDownContainer>
           <DropDownContainer profile={<CgProfile size={"22px"}></CgProfile>}>
             <li>
