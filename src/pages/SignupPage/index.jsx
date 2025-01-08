@@ -5,9 +5,13 @@ import CopyRight from "../../components/CopyRight";
 import SignupForm from "./SignupForm";
 import * as S from "./SignupForm_style";
 import HandleResponseApi from "../../lib/HandleResponse";
+import RoutesEnum from "../../lib/RoutesEnum";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../lib/features/redux/authSlice";
 
 const SignupPage = () => {
-  const handleResopnse = HandleResponseApi.useHandleResponse()
+  const dispatch = useDispatch();
+  const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (signupInfo) => {
     const response = await fetch(`${SERVER_API_URL}/sign-up`, {
       credentials: "include",
@@ -16,12 +20,14 @@ const SignupPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signupInfo),
-    }
-  ).then((res) => {
-      console.log(res);
+    }).then((res) => {
+      console.log("signup => ", res);
       return res.json();
     });
-    handleResopnse(response)
+    handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+      useNav: true,
+      path: RoutesEnum.HOME,
+    });
   };
 
   return (
