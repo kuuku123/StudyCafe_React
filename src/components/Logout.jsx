@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../lib/features/redux/authSlice";
@@ -23,9 +22,9 @@ const Logout = ({ style }) => {
   };
 
   return (
-    <span style={style} onClick={handleLogout}>
-      Logout
-    </span>
+    <div style={style} onClick={handleLogout}>
+      <li>Logout</li>
+    </div>
   );
 };
 

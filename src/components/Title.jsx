@@ -29,7 +29,7 @@ const Title = ({ children }) => {
   console.log("combinedPath => ", combinedPaths);
 
   if (isAuthenticated) {
-    sseService.connect()
+    sseService.connect();
     return (
       <S.Title_style>
         <S.Children_style>
@@ -41,45 +41,35 @@ const Title = ({ children }) => {
         <S.Login_Signup_style>
           <DropDownContainer profile={<Bell></Bell>} header={"Notification"}>
             {combinedPaths.map(({ path, type }, index) => (
-              <li key={`${type}-${index}`}>
-                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
+              <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
+                <li key={`${type}-${index}`}>
                   <NotificationDropDownElement path={path} type={type} />
-                </Link>
-              </li>
+                </li>
+              </Link>
             ))}
           </DropDownContainer>
           <DropDownContainer
             profile={<FaBookOpen size={"22px"}></FaBookOpen>}
             header={"Study"}
           >
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
-                create study
-              </Link>
-            </li>
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
-                join study
-              </Link>
-            </li>
+            <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
+              <li>create study</li>
+            </Link>
+            <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
+              <li>join study</li>
+            </Link>
           </DropDownContainer>
           <DropDownContainer
             profile={<CgProfile size={"22px"}></CgProfile>}
             header={"Profile"}
           >
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.PROFILE}>
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link style={S.link_style} to={RoutesEnum.MY_STUDY_LIST}>
-                Study
-              </Link>
-            </li>
-            <li>
+            <Link style={S.link_style} to={RoutesEnum.PROFILE}>
+              <li>Profile</li>
+            </Link>
+            <Link style={S.link_style} to={RoutesEnum.MY_STUDY_LIST}>
+              <li>Study</li>
+            </Link>
               <Logout style={S.link_style}></Logout>
-            </li>
           </DropDownContainer>
         </S.Login_Signup_style>
       </S.Title_style>
