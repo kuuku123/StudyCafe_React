@@ -3,7 +3,7 @@ import * as S from "./My_Study_Member_Member_Main_style";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 import StudyMemberApi from "../../../../../lib/apis/StudyMemberApi";
 
-const My_Study_Guest_Member_Main = ({ study }) => {
+const My_Study_Member_Member_Main = ({ study }) => {
   const [img, setImage] = useState();
   const [studyMembers, setStudyMembers] = useState([]);
 
@@ -59,4 +59,4 @@ const My_Study_Guest_Member_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Guest_Member_Main;
+export default My_Study_Member_Member_Main;

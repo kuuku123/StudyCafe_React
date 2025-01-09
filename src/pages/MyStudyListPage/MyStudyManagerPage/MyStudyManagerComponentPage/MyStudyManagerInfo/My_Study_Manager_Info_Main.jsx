@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Manager_Info_Main_style";
 
-const My_Study_Admin_Info_Main = ({ study }) => {
+const My_Study_Manager_Info_Main = ({ study }) => {
   const [img, setImage] = useState();
 
   const handleImage = (profile_image_base64_encoded) => {
@@ -43,4 +43,4 @@ const My_Study_Admin_Info_Main = ({ study }) => {
   );
 };
 
-export default My_Study_Admin_Info_Main;
+export default My_Study_Manager_Info_Main;

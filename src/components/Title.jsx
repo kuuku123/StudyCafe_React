@@ -9,8 +9,6 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
-import NotificationPage from "../pages/NotificationPage";
-import Notification_Main from "../pages/NotificationPage/Notification_Main";
 import { sseService } from "../lib/features/SSEService";
 
 const Title = ({ children }) => {
@@ -44,7 +42,7 @@ const Title = ({ children }) => {
           <DropDownContainer profile={<Bell></Bell>} header={"Notification"}>
             {combinedPaths.map(({ path, type }, index) => (
               <li key={`${type}-${index}`}>
-                <Link style={S.link_style} to={RoutesEnum.STUDY_GUEST(path)}>
+                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
                   <NotificationDropDownElement path={path} type={type} />
                 </Link>
               </li>
