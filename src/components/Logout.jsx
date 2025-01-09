@@ -23,9 +23,9 @@ const Logout = ({ style }) => {
   };
 
   return (
-    <span style={style} onClick={handleLogout}>
-      Logout
-    </span>
+    <div style={style} onClick={handleLogout}>
+      <li>Logout</li>
+    </div>
   );
 };
 
