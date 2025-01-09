@@ -2,10 +2,11 @@ import React from "react";
 import NavItem from "./NavItem";
 import * as S from "./Component_style";
 
-const DropDownContainer = ({ profile, children }) => {
+const DropDownContainer = ({ profile, header,children }) => {
   return (
     <NavItem icon={profile}>
       <S.DropDown_style>
+        <S.DropDown_Header_style>{header}</S.DropDown_Header_style>
         {children}
       </S.DropDown_style>
     </NavItem>
