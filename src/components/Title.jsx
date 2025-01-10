@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DropDownContainer from "./DropDownContainer";
-import NotificationDropDownElement from "./NotifcationDropDownElement";
+import DropDownContainer from "./Dropdown/DropDownContainer";
 import * as S from "./Component_style";
 import RoutesEnum from "../lib/RoutesEnum";
 import Logout from "./Logout";
@@ -10,6 +9,9 @@ import { FaBookOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Bell from "./Bell/Bell";
 import { sseService } from "../lib/features/SSEService";
+import NotificationHeader from "./Dropdown/NotificationHeader/NotificationHeader";
+import StudyCreatedEvent from "./Dropdown/Event/StudyCreatedEvent";
+import StudyUpdatedEvent from "./Dropdown/Event/StudyUpdatedEvent";
 
 const Title = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -20,13 +22,6 @@ const Title = ({ children }) => {
       studyUpdatedPath: state.notifications.messages.studyUpdated.study.path,
     };
   });
-
-  const combinedPaths = [
-    ...studyCreatedPath.map((path) => ({ path, type: "Created" })),
-    ...studyUpdatedPath.map((path) => ({ path, type: "Updated" })),
-  ];
-
-  console.log("combinedPath => ", combinedPaths);
 
   if (isAuthenticated) {
     sseService.connect();
@@ -39,14 +34,26 @@ const Title = ({ children }) => {
           {children}
         </S.Children_style>
         <S.Login_Signup_style>
-          <DropDownContainer profile={<Bell></Bell>} header={"Notification"}>
-            {combinedPaths.map(({ path, type }, index) => (
-              <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
-                <li key={`${type}-${index}`}>
-                  <NotificationDropDownElement path={path} type={type} />
-                </li>
-              </Link>
-            ))}
+          <DropDownContainer
+            profile={<Bell></Bell>}
+            header={<NotificationHeader />}
+          >
+            {studyCreatedPath.length > 0 &&
+              studyCreatedPath.map((path, index) => (
+                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
+                  <li key={`${index}`}>
+                    <StudyCreatedEvent path={path} />
+                  </li>
+                </Link>
+              ))}
+            {studyUpdatedPath.length > 0 &&
+              studyUpdatedPath.map((path, index) => (
+                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
+                  <li key={`${index}`}>
+                    <StudyUpdatedEvent path={path} />
+                  </li>
+                </Link>
+              ))}
           </DropDownContainer>
           <DropDownContainer
             profile={<FaBookOpen size={"22px"}></FaBookOpen>}
