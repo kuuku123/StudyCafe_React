@@ -76,11 +76,7 @@ const Title = ({ children }) => {
             <Link style={S.link_style} to={RoutesEnum.MY_STUDY_LIST}>
               <li>Study</li>
             </Link>
-<<<<<<< HEAD
-              <Logout style={S.link_style}></Logout>
-=======
             <Logout style={S.link_style}></Logout>
->>>>>>> 62df6247f021964187c18291dd9354c17056e15b
           </DropDownContainer>
         </S.Login_Signup_style>
       </S.Title_style>
