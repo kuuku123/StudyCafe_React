@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./Dropdown/DropDownContainer";
 import * as S from "./Component_style";
@@ -14,14 +14,8 @@ import StudyCreatedEvent from "./Dropdown/Event/StudyCreatedEvent";
 import StudyUpdatedEvent from "./Dropdown/Event/StudyUpdatedEvent";
 
 const Title = ({ children }) => {
+  const [notifications, setNotifications] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { studyCreatedPath, studyUpdatedPath } = useSelector((state) => {
-    console.log("state ", state);
-    return {
-      studyCreatedPath: state.notifications.messages.studyCreated.study.path,
-      studyUpdatedPath: state.notifications.messages.studyUpdated.study.path,
-    };
-  });
 
   if (isAuthenticated) {
     sseService.connect();
@@ -36,21 +30,18 @@ const Title = ({ children }) => {
         <S.Login_Signup_style>
           <DropDownContainer
             profile={<Bell></Bell>}
-            header={<NotificationHeader />}
+            header={<NotificationHeader setNotifications={setNotifications} />}
           >
-            {studyCreatedPath.length > 0 &&
-              studyCreatedPath.map((path, index) => (
+            {notifications.length > 0 &&
+              notifications.map(({ path, type }, index) => (
                 <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
                   <li key={`${index}`}>
-                    <StudyCreatedEvent path={path} />
-                  </li>
-                </Link>
-              ))}
-            {studyUpdatedPath.length > 0 &&
-              studyUpdatedPath.map((path, index) => (
-                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
-                  <li key={`${index}`}>
-                    <StudyUpdatedEvent path={path} />
+                    {type === "studyCreated" && (
+                      <StudyCreatedEvent path={path} />
+                    )}
+                    {type === "studyUpdated" && (
+                      <StudyUpdatedEvent path={path} />
+                    )}
                   </li>
                 </Link>
               ))}
