@@ -38,18 +38,18 @@ const notificationSlice = createSlice({
       console.log("action.payload => ", action.payload);
       state.messages.studyCreated.study.path =
         state.messages.studyCreated.study.path.filter(
-          (path) => path !== action.payload
+          (event) => event.id !== action.payload
         );
-      console.log("state path => ", state.messages.studyCreated.study.path);
+      console.log("minus state path => ", state.messages.studyCreated.study.path);
       state.messages.count -= 1;
     },
     minusStudyUpdated(state, action) {
       console.log("action.payload => ", action.payload);
       state.messages.studyUpdated.study.path =
         state.messages.studyUpdated.study.path.filter(
-          (path) => path !== action.payload
+          (event) => event.id !== action.payload
         );
-      console.log("state path => ", state.messages.studyUpdated.study.path);
+      console.log("minus state path => ", state.messages.studyUpdated.study.path);
       state.messages.count -= 1;
     },
   },

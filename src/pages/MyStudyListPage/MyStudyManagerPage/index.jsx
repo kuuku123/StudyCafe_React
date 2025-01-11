@@ -37,7 +37,8 @@ const StudyManagerPage = () => {
       const newUrl = location.pathname + (newSearch ? `?${newSearch}` : "");
 
       // Use navigate to replace the URL without reloading
-      navigate(newUrl, { replace: true });
+      console.log("newUrl => ", newUrl)
+      navigate(newUrl);
     }
   }, [location.search]);
 

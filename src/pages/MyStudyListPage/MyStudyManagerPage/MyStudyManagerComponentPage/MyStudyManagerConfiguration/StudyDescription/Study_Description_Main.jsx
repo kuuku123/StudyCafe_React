@@ -9,9 +9,11 @@ import StudyApi from "../../../../../../lib/apis/StudyApi";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import RoutesEnum from "../../../../../../lib/RoutesEnum";
+import * as MyLayout from "../../../../../../lib/MyLayout"
 
 const Study_Description_Main = ({ study }) => {
   const navigate = useNavigate();
+  const {startLoading, finishLoading} = MyLayout.useLoading()
   const [img, setImage] = useState();
   const onChange = (e) => {
     const img = e.target.files[0];
@@ -26,9 +28,11 @@ const Study_Description_Main = ({ study }) => {
     navigate(`${RoutesEnum.STUDY_MANAGER(study.path)}?refresh=${Date.now()}`, {
       state: study,
     });
+    finishLoading();
   };
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (updateStudyForm) => {
+    startLoading("configuring....");
     updateStudyForm["studyImage"] = img;
     console.log("updateStudyForm => ", updateStudyForm);
     const response = await StudyApi.updateStudyInfo(
@@ -38,10 +42,7 @@ const Study_Description_Main = ({ study }) => {
     handleResponse(response, submitSuccessCallback, false);
   };
 
-  const handleClick = () => {
-    console.log("u clicked");
-    console.log("submitted => ", submitted);
-  };
+
   const validate = (values) => {
     const errors = {};
     return errors;
@@ -103,7 +104,6 @@ const Study_Description_Main = ({ study }) => {
               value={study.path}
               style={input_style}
               readonly="readonly"
-              onClick={handleClick}
             ></MyForm.Field>
             <ReactTooltip id="customTooltip" effect="solid" place="top">
               You cannot edit path!

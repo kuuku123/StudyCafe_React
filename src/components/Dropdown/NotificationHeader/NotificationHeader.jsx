@@ -14,8 +14,8 @@ const NotificationHeader = ({ setNotifications }) => {
 
   const handleClick = (tab) => {
     console.log("studyCreatedPath => ", studyCreatedPath);
-    const createNotifications = (paths, type) =>
-      paths.map((path) => ({ path, type }));
+    const createNotifications = (events, type) =>
+      events.map(({id,path}) => ({ id, path, type }));
 
     let currentNotifications = [];
 

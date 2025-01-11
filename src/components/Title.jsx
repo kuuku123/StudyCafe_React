@@ -33,14 +33,24 @@ const Title = ({ children }) => {
             header={<NotificationHeader setNotifications={setNotifications} />}
           >
             {notifications.length > 0 &&
-              notifications.map(({ path, type }, index) => (
+              notifications.map(({ id, path, type }, index) => (
                 <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
                   <li key={`${index}`}>
                     {type === "studyCreated" && (
-                      <StudyCreatedEvent path={path} />
+                      <StudyCreatedEvent
+                        id={id}
+                        path={path}
+                        notifications={notifications}
+                        setNotifications={setNotifications}
+                      />
                     )}
                     {type === "studyUpdated" && (
-                      <StudyUpdatedEvent path={path} />
+                      <StudyUpdatedEvent
+                        id={id}
+                        path={path}
+                        notifications={notifications}
+                        setNotifications={setNotifications}
+                      />
                     )}
                   </li>
                 </Link>
