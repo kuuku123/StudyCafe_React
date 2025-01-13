@@ -34,7 +34,6 @@ const Title = ({ children }) => {
           >
             {notifications.length > 0 &&
               notifications.map(({ id, path, type }, index) => (
-                <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
                   <li key={`${index}`}>
                     {type === "studyCreated" && (
                       <StudyCreatedEvent
@@ -53,7 +52,6 @@ const Title = ({ children }) => {
                       />
                     )}
                   </li>
-                </Link>
               ))}
           </DropDownContainer>
           <DropDownContainer

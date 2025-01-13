@@ -34,10 +34,24 @@ const fetchStudyManagers = async (path) => {
   return studyManagerList;
 };
 
+const isMember = async (path) => {
+  const raw_isMember = await fetch(
+    `${SERVER_API_URL}/member/${path}/isMember`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
+  const isMember = await raw_isMember.json();
+  console.log(isMember);
+  return isMember;
+};
+
 const StudyMemberApi = {
   fetchStudyList,
   fetchStudyManagers,
   fetchStudyMembers,
+  isMember,
 };
 
 export default StudyMemberApi;
