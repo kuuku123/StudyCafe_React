@@ -27,14 +27,14 @@ const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
   if (isManager) {
     return (
       <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(path)}>
-        <div onClick={handleClick}>[Study Updated] {path}</div>
+        <div onClick={handleClick}>[Study Created] {path}</div>
       </Link>
     );
   }
 
   return (
     <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
-      <div onClick={handleClick}>[Study Updated] {path}</div>
+      <div onClick={handleClick}>[Study Created] {path}</div>
     </Link>
   );
 };
