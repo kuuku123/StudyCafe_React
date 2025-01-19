@@ -1,17 +1,19 @@
+import { useSelector } from "react-redux";
 import { addStudyCreated, addStudyUpdated } from "./redux/notificationSlice";
 import store from "./redux/store"; // Import your Redux store
 import { v4 as uuidv4 } from "uuid";
 
 class SSEService {
+
   constructor(url) {
     this.url = url;
     this.eventSource = null;
   }
 
-  connect() {
+  connect(user) {
     console.log("EventSource => ", this.eventSource);
     if (!this.eventSource) {
-      this.eventSource = new EventSource(this.url, { withCredentials: true });
+      this.eventSource = new EventSource(`${this.url}/notifications?email=${user.email}`);
 
       this.eventSource.onopen = () => {
         console.log("eventSource is opened");
@@ -53,4 +55,4 @@ class SSEService {
   }
 }
 
-export const sseService = new SSEService(`${SERVER_API_URL}/sse/subscribe`);
+export const sseService = new SSEService(`${NOTIFICATION_API_URL}`);

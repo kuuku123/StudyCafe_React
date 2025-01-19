@@ -15,10 +15,11 @@ import StudyUpdatedEvent from "./Dropdown/Event/StudyUpdatedEvent";
 
 const Title = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   if (isAuthenticated) {
-    sseService.connect();
+    console.log("user => ", user)
+    sseService.connect(user);
     return (
       <S.Title_style>
         <S.Children_style>
