@@ -4,14 +4,10 @@ const initialState = {
   messages: {
     count: 0,
     studyCreated: {
-      study: {
-        path: [],
-      },
+      events:[]
     },
     studyUpdated: {
-      study:{
-        path:[],
-      }
+      events:[]
     }
   },
 };
@@ -21,14 +17,14 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     addStudyCreated(state, action) {
-      state.messages.studyCreated.study.path.push(action.payload);
+      state.messages.studyCreated.events.push(JSON.parse(action.payload));
       state.messages.count += 1;
     },
     clearStudyCreated(state) {
       state.messages.count = 0;
     },
     addStudyUpdated(state, action) {
-      state.messages.studyUpdated.study.path.push(action.payload);
+      state.messages.studyUpdated.events.push(JSON.parse(action.payload));
       state.messages.count += 1;
     },
     clearStudyUpdated(state) {
@@ -36,20 +32,20 @@ const notificationSlice = createSlice({
     },
     minusStudyCreated(state, action) {
       console.log("action.payload => ", action.payload);
-      state.messages.studyCreated.study.path =
-        state.messages.studyCreated.study.path.filter(
+      state.messages.studyCreated.events =
+        state.messages.studyCreated.events.filter(
           (event) => event.id !== action.payload
         );
-      console.log("minus state path => ", state.messages.studyCreated.study.path);
+      console.log("minus state path => ", state.messages.studyCreated.events);
       state.messages.count -= 1;
     },
     minusStudyUpdated(state, action) {
       console.log("action.payload => ", action.payload);
-      state.messages.studyUpdated.study.path =
-        state.messages.studyUpdated.study.path.filter(
+      state.messages.studyUpdated.events =
+        state.messages.studyUpdated.events.filter(
           (event) => event.id !== action.payload
         );
-      console.log("minus state path => ", state.messages.studyUpdated.study.path);
+      console.log("minus state path => ", state.messages.studyUpdated.events);
       state.messages.count -= 1;
     },
   },

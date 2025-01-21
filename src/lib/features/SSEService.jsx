@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux";
 import { addStudyCreated, addStudyUpdated } from "./redux/notificationSlice";
 import store from "./redux/store"; // Import your Redux store
 import { v4 as uuidv4 } from "uuid";
 
 class SSEService {
-
   constructor(url) {
     this.url = url;
     this.eventSource = null;
@@ -13,7 +11,9 @@ class SSEService {
   connect(user) {
     console.log("EventSource => ", this.eventSource);
     if (!this.eventSource) {
-      this.eventSource = new EventSource(`${this.url}/notifications?email=${user.email}`);
+      this.eventSource = new EventSource(
+        `${this.url}/notifications?email=${user.email}`
+      );
 
       this.eventSource.onopen = () => {
         console.log("eventSource is opened");
@@ -21,22 +21,12 @@ class SSEService {
 
       this.eventSource.addEventListener("StudyCreated", (event) => {
         console.log("StudyCreated Notification => ", event);
-        store.dispatch(
-          addStudyCreated({
-            id: uuidv4(),
-            path: event.data,
-          })
-        );
+        store.dispatch(addStudyCreated(event.data));
       });
 
       this.eventSource.addEventListener("StudyUpdated", (event) => {
         console.log("StudyUpdated Notification => ", event);
-        store.dispatch(
-          addStudyUpdated({
-            id: uuidv4(),
-            path: event.data,
-          })
-        );
+        store.dispatch(addStudyUpdated(event.data));
       });
 
       this.eventSource.onerror = () => {

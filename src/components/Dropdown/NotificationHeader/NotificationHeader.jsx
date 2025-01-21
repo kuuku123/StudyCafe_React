@@ -7,15 +7,17 @@ const NotificationHeader = ({ setNotifications }) => {
   const { studyCreatedPath, studyUpdatedPath } = useSelector((state) => {
     console.log("state ", state);
     return {
-      studyCreatedPath: state.notifications.messages.studyCreated.study.path,
-      studyUpdatedPath: state.notifications.messages.studyUpdated.study.path,
+      studyCreatedPath: state.notifications.messages.studyCreated.events,
+      studyUpdatedPath: state.notifications.messages.studyUpdated.events,
     };
   });
 
   const handleClick = (tab) => {
     console.log("studyCreatedPath => ", studyCreatedPath);
-    const createNotifications = (events, type) =>
-      events.map(({id,path}) => ({ id, path, type }));
+    const createNotifications = (events, type) => {
+      console.log("events => ",events)
+      return events.map(({id,path}) => ({ id, path, type }));
+    }
 
     let currentNotifications = [];
 
