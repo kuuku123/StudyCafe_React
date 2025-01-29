@@ -32,7 +32,7 @@ class SSEService {
       this.eventSource.onerror = () => {
         console.error("SSE connection error, reconnecting...");
         this.disconnect();
-        setTimeout(() => this.connect(), 3000); // Reconnect after 3s
+        setTimeout(() => this.connect(user), 3000); // Reconnect after 3s
       };
     }
   }

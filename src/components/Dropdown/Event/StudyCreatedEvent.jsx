@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import RoutesEnum from "../../../lib/RoutesEnum";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import StudyManagerApi from "../../../lib/apis/StudyManagerApi";
+import NotificationApi from "../../../lib/apis/NotificationApi";
 
 const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
   console.log("path", path, id);
@@ -14,6 +15,7 @@ const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
   const handleClick = () => {
     store.dispatch(minusStudyCreated(id));
     setNotifications(notifications.filter((noti) => noti.id !== id));
+    NotificationApi.markNotificationRead(id)
   };
 
   useEffect(() => {
