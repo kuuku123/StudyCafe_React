@@ -12,10 +12,11 @@ const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
   console.log("path", path, id);
   const handleResponse = HandleResponseApi.useHandleResponse();
   const [isManager, setIsManager] = useState(false);
+  
   const handleClick = () => {
     store.dispatch(minusStudyCreated(id));
     setNotifications(notifications.filter((noti) => noti.id !== id));
-    NotificationApi.markNotificationRead(id)
+    NotificationApi.markNotificationChecked(id);
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./Dropdown/DropDownContainer";
 import * as S from "./Component_style";
@@ -12,13 +12,57 @@ import { sseService } from "../lib/features/SSEService";
 import NotificationHeader from "./Dropdown/NotificationHeader/NotificationHeader";
 import StudyCreatedEvent from "./Dropdown/Event/StudyCreatedEvent";
 import StudyUpdatedEvent from "./Dropdown/Event/StudyUpdatedEvent";
+import NotificationApi from "../lib/apis/NotificationApi";
+import HandleResponseApi from "../lib/HandleResponse";
+import store from "../lib/features/redux/store";
+import {
+  addStudyCreated,
+  addStudyUpdated,
+} from "../lib/features/redux/notificationSlice";
 
 const Title = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
+  const handleResponse = HandleResponseApi.useHandleResponse();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { studyCreated, studyUpdated } = useSelector((state) => {
+    console.log("state ", state);
+    return {
+      studyCreated: state.notifications.messages.studyCreated.events,
+      studyUpdated: state.notifications.messages.studyUpdated.events,
+    };
+  });
+
+  const addUnReadNotification = (dataList) => {
+    dataList.forEach((data) => {
+      if (data.message === "study updated") {
+        const exists = studyUpdated.some((item) => item.id === data.id);
+        if (!exists) {
+          console.log("Adding new study updated notification => ", data);
+          store.dispatch(addStudyUpdated(JSON.stringify(data))); // No need for JSON.stringify
+        }
+      } else if (data.message === "study created") {
+        const exists = studyCreated.some((item) => item.id === data.id);
+        if (!exists) {
+          console.log("Adding new study created notification => ", data);
+          store.dispatch(addStudyCreated(JSON.stringify(data)));
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getNotificationsUnRead = async () => {
+        const resposne = await NotificationApi.getNotificationUnRead();
+        console.log("getNotficationsUnRead => ", resposne);
+        handleResponse(resposne, addUnReadNotification, false);
+      };
+      getNotificationsUnRead();
+    }
+  }, []);
 
   if (isAuthenticated) {
-    console.log("user => ", user)
+    console.log("user => ", user);
     sseService.connect(user);
     return (
       <S.Title_style>
@@ -34,25 +78,25 @@ const Title = ({ children }) => {
             header={<NotificationHeader setNotifications={setNotifications} />}
           >
             {notifications.length > 0 &&
-              notifications.map(({ id, path, type }, index) => (
-                  <li key={`${index}`}>
-                    {type === "studyCreated" && (
-                      <StudyCreatedEvent
-                        id={id}
-                        path={path}
-                        notifications={notifications}
-                        setNotifications={setNotifications}
-                      />
-                    )}
-                    {type === "studyUpdated" && (
-                      <StudyUpdatedEvent
-                        id={id}
-                        path={path}
-                        notifications={notifications}
-                        setNotifications={setNotifications}
-                      />
-                    )}
-                  </li>
+              notifications.map(({ id, studyPath, type }, index) => (
+                <li key={`${index}`}>
+                  {type === "studyCreated" && (
+                    <StudyCreatedEvent
+                      id={id}
+                      studyPath={studyPath}
+                      notifications={notifications}
+                      setNotifications={setNotifications}
+                    />
+                  )}
+                  {type === "studyUpdated" && (
+                    <StudyUpdatedEvent
+                      id={id}
+                      studyPath={studyPath}
+                      notifications={notifications}
+                      setNotifications={setNotifications}
+                    />
+                  )}
+                </li>
               ))}
           </DropDownContainer>
           <DropDownContainer

@@ -4,11 +4,11 @@ const initialState = {
   messages: {
     count: 0,
     studyCreated: {
-      events:[]
+      events: [],
     },
     studyUpdated: {
-      events:[]
-    }
+      events: [],
+    },
   },
 };
 
@@ -24,6 +24,7 @@ const notificationSlice = createSlice({
       state.messages.count = 0;
     },
     addStudyUpdated(state, action) {
+      console.log("addStudyUpdated => ", action.payload);
       state.messages.studyUpdated.events.push(JSON.parse(action.payload));
       state.messages.count += 1;
     },
@@ -52,13 +53,11 @@ const notificationSlice = createSlice({
 });
 
 export const {
-  addStudyCreated: addStudyCreated,
-  addStudyUpdated: addStudyUpdated,
-  clearStudyCreated: clearStudyCreated,
-  clearStudyUpdated: clearStudyUpdated,
-  minusStudyCreated: minusStudyCreated,
-  minusStudyUpdated: minusStudyUpdated,
-
-
+  addStudyCreated,
+  addStudyUpdated,
+  clearStudyCreated,
+  clearStudyUpdated,
+  minusStudyCreated,
+  minusStudyUpdated,
 } = notificationSlice.actions;
 export default notificationSlice.reducer;

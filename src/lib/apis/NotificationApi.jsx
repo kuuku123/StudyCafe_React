@@ -1,6 +1,17 @@
-const markNotificationRead = async (id) => {
+const markNotificationChecked = async (id) => {
+  const raw_data = await fetch( `${SERVER_API_URL}/mark-notification-checked?notificationId=${id}`,
+    {
+      credentials: "include",
+      method: "POST",
+    }
+  );
+  const raw_data_json = await raw_data.json();
+  return raw_data_json;
+};
+
+const getNotificationUnRead = async () => {
   const raw_data = await fetch(
-    `${SERVER_API_URL}/mark-notification?notificationId=${id}`,
+    `${SERVER_API_URL}/notifications`,
     {
       credentials: "include",
       method: "GET",
@@ -10,9 +21,9 @@ const markNotificationRead = async (id) => {
   return raw_data_json;
 };
 
-
 const NotificationApi = {
-  markNotificationRead,
+  markNotificationChecked,
+  getNotificationUnRead,
 };
 
 export default NotificationApi;

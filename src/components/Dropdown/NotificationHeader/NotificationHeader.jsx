@@ -15,9 +15,11 @@ const NotificationHeader = ({ setNotifications }) => {
   const handleClick = (tab) => {
     console.log("studyCreatedPath => ", studyCreatedPath);
     const createNotifications = (events, type) => {
-      console.log("events => ",events)
-      return events.map(({id,path}) => ({ id, path, type }));
-    }
+      console.log("events => ", events);
+      return events.map(({ id, studyPath }) => ({ id, studyPath, type }));
+    };
+
+    
 
     let currentNotifications = [];
 
@@ -50,7 +52,7 @@ const NotificationHeader = ({ setNotifications }) => {
 
   useEffect(() => {
     handleClick("All");
-    setFirstHovered(true)
+    setFirstHovered(true);
   }, []);
 
   return (

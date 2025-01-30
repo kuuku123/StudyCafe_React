@@ -13,6 +13,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // This defaults to localStorage
+import sessionStorage from "redux-persist/es/storage/session";
+
 
 const persistAuthConfig = {
   key: "auth", // Key to store the auth state in localStorage
@@ -21,7 +23,7 @@ const persistAuthConfig = {
 };
 const persistNotificationConfig = {
   key: "notifications", // Key to store the auth state in localStorage
-  storage, // Use localStorage (or sessionStorage, depending on your use case)
+  storage: sessionStorage, // Use localStorage (or sessionStorage, depending on your use case)
   whitelist: ["messages"], // Only persist these keys
 };
 
@@ -31,7 +33,7 @@ const persistedNotificationReducer = persistReducer(persistNotificationConfig, n
 const store = configureStore({
   reducer: {
     auth: persistedAuthReducer, // Apply the persisted reducer to the auth slice
-    notifications: persistedNotificationReducer,
+    notifications: notificationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

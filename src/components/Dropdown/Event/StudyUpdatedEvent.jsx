@@ -8,19 +8,29 @@ import StudyManagerApi from "../../../lib/apis/StudyManagerApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import NotificationApi from "../../../lib/apis/NotificationApi";
 
-const StudyUpdatedEvent = ({ id, path, notifications, setNotifications }) => {
+const StudyUpdatedEvent = ({
+  id,
+  studyPath,
+  notifications,
+  setNotifications,
+}) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const [isManager, setIsManager] = useState(false);
-  console.log("path", path, id);
+  console.log("path", studyPath, id , notifications);
   const handleClick = () => {
     store.dispatch(minusStudyUpdated(id));
-    setNotifications(notifications.filter((noti) => noti.id !== id));
-    NotificationApi.markNotificationRead(id)
+    setNotifications(
+      notifications.filter((noti) => {
+        console.log("Checking notification:", noti, " ", id); // Log each notification before filtering
+        return noti.id !== id;
+      })
+    );
+    NotificationApi.markNotificationChecked(id);
   };
 
   useEffect(() => {
     const isManager = async () => {
-      const response = await StudyManagerApi.isManager(path);
+      const response = await StudyManagerApi.isManager(studyPath);
       handleResponse(response, setIsManager, false);
     };
     isManager();
@@ -28,15 +38,19 @@ const StudyUpdatedEvent = ({ id, path, notifications, setNotifications }) => {
 
   if (isManager) {
     return (
-      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(path)}>
-        <div onClick={handleClick}>[Study Updated] {path}</div>
+      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(studyPath)}>
+        <div onClick={handleClick}>
+          [(M) Study Updated {id}] {studyPath}
+        </div>
       </Link>
     );
   }
 
   return (
-    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
-      <div onClick={handleClick}>[Study Updated] {path}</div>
+    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(studyPath)}>
+      <div onClick={handleClick}>
+        [Study Updated {id}] {studyPath}
+      </div>
     </Link>
   );
 };
