@@ -19,11 +19,14 @@ import {
   addStudyCreated,
   addStudyUpdated,
 } from "../lib/features/redux/notificationSlice";
+import { checkFirstLoggedIn } from "../lib/features/redux/authSlice";
 
 const Title = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, firstLoggedIn } = useSelector(
+    (state) => state.auth
+  );
   const { studyCreated, studyUpdated } = useSelector((state) => {
     console.log("state ", state);
     return {
@@ -51,7 +54,8 @@ const Title = ({ children }) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !firstLoggedIn) {
+      store.dispatch(checkFirstLoggedIn());
       const getNotificationsUnRead = async () => {
         const resposne = await NotificationApi.getNotificationUnRead();
         console.log("getNotficationsUnRead => ", resposne);

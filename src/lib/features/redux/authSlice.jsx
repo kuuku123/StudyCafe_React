@@ -13,6 +13,7 @@ const initialState = {
     zones: [],
   },
   isAuthenticated: false,
+  firstLoggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -27,10 +28,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
     },
+    checkFirstLoggedIn(state) {
+      state.firstLoggedIn = true;
+    },
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logout } =
-  authSlice.actions;
+export const { loginSuccess, logout, checkFirstLoggedIn} = authSlice.actions;
 
 export default authSlice.reducer;

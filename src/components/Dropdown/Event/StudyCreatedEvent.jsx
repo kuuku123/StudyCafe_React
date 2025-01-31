@@ -8,8 +8,8 @@ import HandleResponseApi from "../../../lib/HandleResponse";
 import StudyManagerApi from "../../../lib/apis/StudyManagerApi";
 import NotificationApi from "../../../lib/apis/NotificationApi";
 
-const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
-  console.log("path", path, id);
+const StudyCreatedEvent = ({ id, studyPath, notifications, setNotifications }) => {
+  console.log("path", studyPath, id);
   const handleResponse = HandleResponseApi.useHandleResponse();
   const [isManager, setIsManager] = useState(false);
   
@@ -21,7 +21,7 @@ const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
 
   useEffect(() => {
     const isManager = async () => {
-      const response = await StudyManagerApi.isManager(path);
+      const response = await StudyManagerApi.isManager(studyPath);
       handleResponse(response, setIsManager, false);
     };
     isManager();
@@ -29,15 +29,15 @@ const StudyCreatedEvent = ({ id, path, notifications, setNotifications }) => {
 
   if (isManager) {
     return (
-      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(path)}>
-        <div onClick={handleClick}>[Study Created] {path}</div>
+      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(studyPath)}>
+        <div onClick={handleClick}>[Study Created] {studyPath}</div>
       </Link>
     );
   }
 
   return (
-    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(path)}>
-      <div onClick={handleClick}>[Study Created] {path}</div>
+    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(studyPath)}>
+      <div onClick={handleClick}>[Study Created] {studyPath}</div>
     </Link>
   );
 };
