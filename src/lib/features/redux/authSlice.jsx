@@ -14,6 +14,7 @@ const initialState = {
   },
   isAuthenticated: false,
   firstLoggedIn: false,
+  csrfToken: "",
 };
 
 const authSlice = createSlice({
@@ -31,9 +32,12 @@ const authSlice = createSlice({
     checkFirstLoggedIn(state) {
       state.firstLoggedIn = true;
     },
+    addCsrfToken(state, action) {
+      state.csrfToken = action.payload
+    }
   },
 });
 
-export const { loginSuccess, logout, checkFirstLoggedIn} = authSlice.actions;
+export const { loginSuccess, logout, checkFirstLoggedIn, addCsrfToken} = authSlice.actions;
 
 export default authSlice.reducer;

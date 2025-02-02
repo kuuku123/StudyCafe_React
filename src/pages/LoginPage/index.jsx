@@ -19,7 +19,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (loginInfo) => {
-    const raw_response = await fetch(`${SERVER_API_URL}/login`, {
+    const raw_response = await fetch(`${API_GATEWAY}/auth/login`, {
       credentials: "include",
       method: "POST",
       headers: {
