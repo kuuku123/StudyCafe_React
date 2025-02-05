@@ -13,7 +13,7 @@ const SignupPage = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (signupInfo) => {
-    const response = await fetch(`${SERVER_API_URL}/sign-up`, {
+    const jwtResponse = await fetch(`${API_GATEWAY_URL}/auth/sign-up`, {
       credentials: "include",
       method: "POST",
       headers: {
@@ -24,6 +24,22 @@ const SignupPage = () => {
       console.log("signup => ", res);
       return res.json();
     });
+
+    console.log("jwt =>", jwtResponse)
+
+
+    const response = await fetch(`${API_GATEWAY_URL}/app/sign-up`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jwtResponse.data,
+    }).then((res) => {
+      console.log("signup => ", res);
+      return res.json();
+    });
+
     handleResponse(response, (data) => dispatch(loginSuccess(data)), {
       useNav: true,
       path: RoutesEnum.HOME,

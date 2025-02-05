@@ -30,10 +30,6 @@ const HomePage = () => {
       getProfile()
       setLogin(true);
     }
-    const getXsrfToken = async () => {
-      const xsrfToken = await ProfileApi.xsrfToken();
-    };
-    getXsrfToken();
   }, []);
 
   return (

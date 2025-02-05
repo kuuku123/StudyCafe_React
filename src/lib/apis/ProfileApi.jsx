@@ -1,5 +1,5 @@
 const xsrfToken = async () => {
-  const raw_xsrf_token = await fetch(`${API_GATEWAY}/auth/xsrf-token`, {
+  const raw_xsrf_token = await fetch(`${API_GATEWAY_URL}/auth/xsrf-token`, {
     credentials: "include",
     method: "GET",
   });
