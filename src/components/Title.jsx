@@ -68,7 +68,7 @@ const Title = ({ children }) => {
 
   if (isAuthenticated) {
     console.log("user => ", user);
-    sseService.connect(user);
+    sseService.connect(user, jwt);
     return (
       <S.Title_style>
         <S.Children_style>

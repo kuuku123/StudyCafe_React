@@ -1,5 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
 import { addStudyCreated, addStudyUpdated } from "./redux/notificationSlice";
 import store from "./redux/store"; // Import your Redux store
+import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import { v4 as uuidv4 } from "uuid";
 
 class SSEService {
@@ -8,11 +10,17 @@ class SSEService {
     this.eventSource = null;
   }
 
-  connect(user) {
-    console.log("EventSource => ", this.eventSource);
+  connect(user, jwt) {
+    console.log("EventSource => ", this.eventSource , user, jwt);
     if (!this.eventSource) {
+      const EventSource = EventSourcePolyfill || NativeEventSource;
       this.eventSource = new EventSource(
-        `${this.url}/notifications?email=${user.email}`
+        `${this.url}/notifications?email=${user.email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
       );
 
       this.eventSource.onopen = () => {

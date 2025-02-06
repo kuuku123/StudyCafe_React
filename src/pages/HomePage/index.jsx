@@ -7,13 +7,12 @@ import * as S from "./Homepage_Main_style";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import EmailVerification from "./EmailVerification";
 import HandleResponseApi from "../../lib/HandleResponse";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const { isAuthenticated, jwt } = useSelector((state) => state.auth);
-  const handleResponse = HandleResponseApi.useHandleResponse();
+  const { user, isAuthenticated, jwt } = useSelector((state) => state.auth);
 
   const handleEmailVerfieid = (profile) => {
     console.log("email verified => ",profile.emailVerified)
@@ -22,12 +21,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const getProfile = async () => {
-        const profile = await ProfileApi.fetchProfile(jwt);
-        console.log("profile => ", profile)
-        handleResponse(profile, handleEmailVerfieid, false);
-      };
-      getProfile()
+      handleEmailVerfieid(user.emailVerified)
       setLogin(true);
     }
   }, []);

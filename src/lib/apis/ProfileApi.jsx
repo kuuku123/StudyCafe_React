@@ -12,7 +12,6 @@ const fetchProfile = async (jwt) => {
     credentials: "include",
     method: "GET",
     headers: {
-      // Include the JWT as a Bearer token in the Authorization header
       Authorization: `Bearer ${jwt}`,
     },
   });
