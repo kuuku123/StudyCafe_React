@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, jwt } = useSelector((state) => state.auth);
   const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleEmailVerfieid = (profile) => {
@@ -23,7 +23,7 @@ const HomePage = () => {
   useEffect(() => {
     if (isAuthenticated) {
       const getProfile = async () => {
-        const profile = await ProfileApi.fetchProfile();
+        const profile = await ProfileApi.fetchProfile(jwt);
         console.log("profile => ", profile)
         handleResponse(profile, handleEmailVerfieid, false);
       };

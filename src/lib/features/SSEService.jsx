@@ -45,4 +45,4 @@ class SSEService {
   }
 }
 
-export const sseService = new SSEService(`${NOTIFICATION_API_URL}`);
+export const sseService = new SSEService(`${API_GATEWAY_URL}/noti`);

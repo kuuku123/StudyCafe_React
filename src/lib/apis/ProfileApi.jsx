@@ -7,10 +7,14 @@ const xsrfToken = async () => {
   return raw_xsrf_token;
 };
 
-const fetchProfile = async () => {
-  const raw_profile = await fetch(`${SERVER_API_URL}/profile`, {
+const fetchProfile = async (jwt) => {
+  const raw_profile = await fetch(`${API_GATEWAY_URL}/app/profile`, {
     credentials: "include",
     method: "GET",
+    headers: {
+      // Include the JWT as a Bearer token in the Authorization header
+      Authorization: `Bearer ${jwt}`,
+    },
   });
   const profile = await raw_profile.json();
   return profile;

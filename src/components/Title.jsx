@@ -24,7 +24,7 @@ import { checkFirstLoggedIn } from "../lib/features/redux/authSlice";
 const Title = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { user, isAuthenticated, firstLoggedIn } = useSelector(
+  const { user, isAuthenticated, firstLoggedIn , jwt} = useSelector(
     (state) => state.auth
   );
   const { studyCreated, studyUpdated } = useSelector((state) => {
@@ -34,6 +34,7 @@ const Title = ({ children }) => {
       studyUpdated: state.notifications.messages.studyUpdated.events,
     };
   });
+
 
   const addUnReadNotification = (dataList) => {
     dataList.forEach((data) => {
@@ -57,7 +58,7 @@ const Title = ({ children }) => {
     if (isAuthenticated && !firstLoggedIn) {
       store.dispatch(checkFirstLoggedIn());
       const getNotificationsUnRead = async () => {
-        const resposne = await NotificationApi.getNotificationUnRead();
+        const resposne = await NotificationApi.getNotificationUnRead(jwt);
         console.log("getNotficationsUnRead => ", resposne);
         handleResponse(resposne, addUnReadNotification, false);
       };

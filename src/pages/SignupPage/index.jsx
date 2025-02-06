@@ -7,7 +7,7 @@ import * as S from "./SignupForm_style";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../lib/features/redux/authSlice";
+import { addJWT, loginSuccess } from "../../lib/features/redux/authSlice";
 
 const SignupPage = () => {
   const dispatch = useDispatch();
@@ -25,8 +25,7 @@ const SignupPage = () => {
       return res.json();
     });
 
-    console.log("jwt =>", jwtResponse)
-
+    dispatch(addJWT(jwtResponse.data));
 
     const response = await fetch(`${API_GATEWAY_URL}/app/sign-up`, {
       credentials: "include",
