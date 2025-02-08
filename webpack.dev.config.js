@@ -15,6 +15,7 @@ module.exports = merge(common(), {
       SERVER_API_URL: JSON.stringify(process.env.SERVER_API_URL),
       NOTIFICATION_API_URL: JSON.stringify(process.env.NOTIFICATION_API_URL),
       API_GATEWAY_URL: JSON.stringify(process.env.API_GATEWAY_URL),
+      AUTH_SERVER_URL: JSON.stringify(process.env.AUTH_SERVER_URL),
     }),
   ],
 });

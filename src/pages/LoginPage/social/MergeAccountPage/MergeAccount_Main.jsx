@@ -5,11 +5,12 @@ import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../lib/features/redux/authSlice";
+import { useSearchParams } from "react-router-dom";
 
 const MergeAccount_Main = () => {
-  const[email, setEmail] = useState("")
   const dispatch = useDispatch()
-
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email")
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleMerge = async () => {
     const response = await SocialApi.mergeAccount();
@@ -20,14 +21,6 @@ const MergeAccount_Main = () => {
     await SocialApi.separateAccount();
   };
 
-  useEffect(() => {
-    const getEmail = async () => {
-      const response = await SocialApi.getEmail();
-      console.log("email => ", response);
-      handleResponse(response, setEmail , false);
-    };
-    getEmail();
-  }, []);
   return (
     <S.Merge_Account_Main_Container_style>
       <S.Merge_Account_Heading_style>
