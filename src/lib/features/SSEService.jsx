@@ -40,7 +40,7 @@ class SSEService {
       this.eventSource.onerror = () => {
         console.error("SSE connection error, reconnecting...");
         this.disconnect();
-        setTimeout(() => this.connect(user), 5000); // Reconnect after 3s
+        setTimeout(() => this.connect(user,jwt), 5000); // Reconnect after 3s
       };
     }
   }

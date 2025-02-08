@@ -10,8 +10,8 @@ import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
 import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../lib/features/redux/authSlice";
-import { sseService } from "../../lib/features/SSEService";
+import { addJWT, loginSuccess } from "../../lib/features/redux/authSlice";
+import ProfileApi from "../../lib/apis/ProfileApi";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,19 +19,22 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (loginInfo) => {
-    const raw_response = await fetch(`${API_GATEWAY}/auth/login`, {
+    const jwtResponse = await fetch(`${API_GATEWAY_URL}/auth/login`, {
       credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(loginInfo),
+    }).then((res) => {
+      return res.json();
     });
+    
+    dispatch(addJWT(jwtResponse.data));
 
-    const response = await raw_response.json();
-    console.log("response ==> ", response);
+    const response = await ProfileApi.fetchProfile(jwtResponse.data);
+
     if (response.status === "OK") {
-      console.log("response data => ", response.data);
       navigate("/");
       dispatch(loginSuccess(response.data));
     } else {
