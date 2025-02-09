@@ -8,9 +8,9 @@ const Logout = ({ style }) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    const response = await fetch(`${SERVER_API_URL}/logout`, {
+    const response = await fetch(`${API_GATEWAY_URL}/auth/logout`, {
       credentials: "include",
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },

@@ -10,16 +10,14 @@ class SSEService {
     this.eventSource = null;
   }
 
-  connect(user, jwt) {
-    console.log("EventSource => ", this.eventSource , user, jwt);
+  connect(user) {
+    console.log("EventSource => ", this.eventSource , user);
     if (!this.eventSource) {
       const EventSource = EventSourcePolyfill || NativeEventSource;
       this.eventSource = new EventSource(
         `${this.url}/notifications?email=${user.email}`,
         {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
+          withCredentials: true
         }
       );
 
@@ -40,7 +38,7 @@ class SSEService {
       this.eventSource.onerror = () => {
         console.error("SSE connection error, reconnecting...");
         this.disconnect();
-        setTimeout(() => this.connect(user,jwt), 5000); // Reconnect after 3s
+        setTimeout(() => this.connect(user), 5000); // Reconnect after 3s
       };
     }
   }

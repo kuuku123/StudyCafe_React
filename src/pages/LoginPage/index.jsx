@@ -12,11 +12,13 @@ import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { addJWT, loginSuccess } from "../../lib/features/redux/authSlice";
 import ProfileApi from "../../lib/apis/ProfileApi";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
   const dispatch = useDispatch();
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
   const handleSubmit = async (loginInfo) => {
     const jwtResponse = await fetch(`${API_GATEWAY_URL}/auth/login`, {
@@ -29,14 +31,14 @@ const LoginPage = () => {
     }).then((res) => {
       return res.json();
     });
-    
-    dispatch(addJWT(jwtResponse.data));
+    console.log("jwtReposnse =>  ", jwtResponse);
 
-    const response = await ProfileApi.fetchProfile(jwtResponse.data);
-
-    if (response.status === "OK") {
-      navigate("/");
-      dispatch(loginSuccess(response.data));
+    if (jwtResponse.status === "OK") {
+      const response = await ProfileApi.fetchProfile();
+      handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+        useNav: true,
+        path: RoutesEnum.HOME,
+      });
     } else {
       openDialog(
         <Dialog
@@ -47,7 +49,7 @@ const LoginPage = () => {
             </Button>
           }
         >
-          {response.message}
+          {jwtResponse.message}
         </Dialog>
       );
     }

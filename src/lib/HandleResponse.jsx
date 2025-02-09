@@ -17,7 +17,10 @@ const useHandleResponse = () => {
     console.log("useNavigate => ", useNavigate);
 
     if (response.status === "OK") {
-      if (callback) callback(response.data);
+      if (useNavigate.dialog == undefined && callback) {
+        console.log("first callback ? ", useNavigate.dialog)
+        callback(response.data)
+      }
       if (typeof useNavigate === "boolean") {
         console.log("do nothing");
       } else if (useNavigate.useNav && useNavigate.dialog !== undefined) {
@@ -26,7 +29,12 @@ const useHandleResponse = () => {
           <Dialog
             header={<>Login</>}
             footer={
-              <Button onClick={() => closeDialog(useNavigate.path)}>
+              <Button onClick={() => {
+                if (callback) {
+                  callback(response.data)
+                }
+                closeDialog(useNavigate.path)
+              }}>
                 {useNavigate.dialog}
               </Button>
             }

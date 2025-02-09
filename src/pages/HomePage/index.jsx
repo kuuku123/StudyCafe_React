@@ -8,20 +8,26 @@ import ProfileApi from "../../lib/apis/ProfileApi";
 import EmailVerification from "./EmailVerification";
 import HandleResponseApi from "../../lib/HandleResponse";
 import { useDispatch, useSelector } from "react-redux";
+import AuthApi from "../../lib/apis/AuthApi";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const { user, isAuthenticated, jwt } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleEmailVerfieid = (profile) => {
-    console.log("email verified => ",profile.emailVerified)
-    setEmailVerified(profile.emailVerified);
+  const handleEmailVerfieid = (data) => {
+    console.log("email verified => ", data);
+    setEmailVerified(data);
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      handleEmailVerfieid(user.emailVerified)
+      const checkEmailVefieid = async () => {
+        const response = await AuthApi.checkEmailVerified();
+        handleResponse(response, handleEmailVerfieid, false);
+      };
+      checkEmailVefieid();
       setLogin(true);
     }
   }, []);

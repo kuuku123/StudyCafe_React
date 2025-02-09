@@ -24,7 +24,7 @@ import { checkFirstLoggedIn } from "../lib/features/redux/authSlice";
 const Title = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { user, isAuthenticated, firstLoggedIn , jwt} = useSelector(
+  const { user, isAuthenticated, firstLoggedIn } = useSelector(
     (state) => state.auth
   );
   const { studyCreated, studyUpdated } = useSelector((state) => {
@@ -58,7 +58,7 @@ const Title = ({ children }) => {
     if (isAuthenticated && !firstLoggedIn) {
       store.dispatch(checkFirstLoggedIn());
       const getNotificationsUnRead = async () => {
-        const resposne = await NotificationApi.getNotificationUnRead(jwt);
+        const resposne = await NotificationApi.getNotificationUnRead();
         console.log("getNotficationsUnRead => ", resposne);
         handleResponse(resposne, addUnReadNotification, false);
       };
@@ -68,7 +68,7 @@ const Title = ({ children }) => {
 
   if (isAuthenticated) {
     console.log("user => ", user);
-    sseService.connect(user, jwt);
+    sseService.connect(user);
     return (
       <S.Title_style>
         <S.Children_style>
@@ -130,7 +130,8 @@ const Title = ({ children }) => {
         </S.Login_Signup_style>
       </S.Title_style>
     );
-  }
+  } else {
+    console.log("auAuthenticated Title ")
   return (
     <S.Title_style>
       <S.Children_style>
@@ -149,6 +150,7 @@ const Title = ({ children }) => {
       </S.Login_Signup_style>
     </S.Title_style>
   );
+  }
 };
 
 export default Title;

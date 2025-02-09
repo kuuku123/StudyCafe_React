@@ -7,17 +7,25 @@ import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
+import AuthApi from "../../../../lib/apis/AuthApi";
 
 const SocialAccountSetPassword_Main = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const onSubmit = async (passwordInfo) => {
-    const response = await ProfileApi.updatePassword(passwordInfo)
-    handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-      useNav: true,
-      path: RoutesEnum.HOME,
-      dialog: "now you can login with your email as id and password you just sent"
-    },);
+    const authResponse = await AuthApi.updatePassword(passwordInfo);
+    handleResponse(authResponse, null, false);
+
+    if (authResponse.status == "OK") {
+      const response = await ProfileApi.fetchProfile();
+      console.log("SoicalAccountSetPassword => ", response);
+      handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+        useNav: true,
+        path: RoutesEnum.HOME,
+        dialog:
+          "now you can login with your email as id and password you just sent",
+      });
+    }
   };
 
   const validate = (values) => {

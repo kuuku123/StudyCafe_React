@@ -1,5 +1,5 @@
 const mergeAccount = async () => {
-  const raw_response = await fetch(`${SERVER_API_URL}/social/merge-account`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/auth/social/merge-account`, {
     credentials: "include",
     method: "GET",
   });

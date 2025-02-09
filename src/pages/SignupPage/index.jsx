@@ -26,14 +26,16 @@ const SignupPage = () => {
       return res.json();
     });
 
-    dispatch(addJWT(jwtResponse.data));
+    handleResponse(jwtResponse, null, false);
 
-    const response = await ProfileApi.fetchProfile(jwtResponse.data);
+    if (jwtResponse.status == "OK") {
+      const response = await ProfileApi.fetchProfile();
 
-    handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-      useNav: true,
-      path: RoutesEnum.HOME,
-    });
+      handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+        useNav: true,
+        path: RoutesEnum.HOME,
+      });
+    }
   };
 
   return (

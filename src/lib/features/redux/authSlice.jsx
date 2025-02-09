@@ -8,13 +8,11 @@ const initialState = {
     occupation: "default occupation",
     location: "default location",
     email: "default email",
-    emailVerified: false,
     tags: [],
     zones: [],
   },
   isAuthenticated: false,
   firstLoggedIn: false,
-  jwt: "",
 };
 
 const authSlice = createSlice({
@@ -32,16 +30,10 @@ const authSlice = createSlice({
     checkFirstLoggedIn(state) {
       state.firstLoggedIn = true;
     },
-    addJWT(state, action) {
-      state.jwt = action.payload;
-    },
-    removeJWT(state) {
-      state.jwt = null;
-    },
   },
 });
 
-export const { loginSuccess, logout, checkFirstLoggedIn, addJWT, removeJWT } =
+export const { loginSuccess, logout, checkFirstLoggedIn} =
   authSlice.actions;
 
 export default authSlice.reducer;

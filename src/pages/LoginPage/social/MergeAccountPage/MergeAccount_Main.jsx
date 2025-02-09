@@ -6,15 +6,23 @@ import RoutesEnum from "../../../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import { useSearchParams } from "react-router-dom";
+import ProfileApi from "../../../../lib/apis/ProfileApi";
 
 const MergeAccount_Main = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const email = searchParams.get("email")
+  const email = searchParams.get("email");
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleMerge = async () => {
-    const response = await SocialApi.mergeAccount();
-    handleResponse(response,(data) => dispatch(loginSuccess(data)), {useNav:true , path: RoutesEnum.HOME})
+    const mergeResponse = await SocialApi.mergeAccount();
+    handleResponse(mergeResponse, null, false);
+    if (mergeResponse.status == "OK") {
+      const response = await ProfileApi.fetchProfile();
+      handleResponse(response, (data) => dispatch(loginSuccess(data)), {
+        useNav: true,
+        path: RoutesEnum.HOME,
+      });
+    }
   };
 
   const handleCancel = async () => {
@@ -27,8 +35,7 @@ const MergeAccount_Main = () => {
         Merge Account
       </S.Merge_Account_Heading_style>
       <S.Merge_Account_Text_style>
-        You already have an account associated with{" "}
-        <strong>{email}</strong>.
+        You already have an account associated with <strong>{email}</strong>.
       </S.Merge_Account_Text_style>
       <S.Merge_Account_Text_style>
         Would you like to merge your social account with the existing account?
