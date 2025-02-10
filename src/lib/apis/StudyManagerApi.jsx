@@ -1,5 +1,5 @@
 const fetchStudyList = async () => {
-  const raw_studyList = await fetch(`${SERVER_API_URL}/manager/study-list`, {
+  const raw_studyList = await fetch(`${API_GATEWAY_URL}/app/manager/study-list`, {
     credentials: "include",
     method: "GET",
   });
@@ -10,7 +10,7 @@ const fetchStudyList = async () => {
 
 const fetchStudyMembers = async (path) => {
   const raw_studyMemberList = await fetch(
-    `${SERVER_API_URL}/manager/${path}/study-members`,
+    `${API_GATEWAY_URL}/app/manager/${path}/study-members`,
     {
       credentials: "include",
       method: "GET",
@@ -23,7 +23,7 @@ const fetchStudyMembers = async (path) => {
 
 const fetchStudyManagers = async (path) => {
   const raw_studyManagerList = await fetch(
-    `${SERVER_API_URL}/manager/${path}/study-managers`,
+    `${API_GATEWAY_URL}/app/manager/${path}/study-managers`,
     {
       credentials: "include",
       method: "GET",
@@ -36,7 +36,7 @@ const fetchStudyManagers = async (path) => {
 
 const isManager = async (path) => {
   const raw_isManager = await fetch(
-    `${SERVER_API_URL}/manager/${path}/isManager`,
+    `${API_GATEWAY_URL}/app/manager/${path}/isManager`,
     {
       credentials: "include",
       method: "GET",

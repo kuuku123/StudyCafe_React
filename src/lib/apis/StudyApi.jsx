@@ -1,5 +1,5 @@
 const fetchStudy = async (path) => {
-  const raw_study = await fetch(`${SERVER_API_URL}/get-study/${path}`, {
+  const raw_study = await fetch(`${API_GATEWAY_URL}/app/get-study/${path}`, {
     credentials: "include",
     method: "GET",
   });
@@ -9,7 +9,7 @@ const fetchStudy = async (path) => {
 };
 
 const createStudy = async (createStudyForm) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/new-study`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/new-study`, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
@@ -24,7 +24,7 @@ const createStudy = async (createStudyForm) => {
 
 const publishStudy = async (path) => {
   const raw_published_study = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/publish`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/publish`,
     {
       credentials: "include",
       method: "POST",
@@ -36,7 +36,7 @@ const publishStudy = async (path) => {
 };
 
 const joinStudy = async (path) => {
-  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/join`, {
+  const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/join`, {
     credentials: "include",
     method: "POST",
   });
@@ -46,7 +46,7 @@ const joinStudy = async (path) => {
 };
 
 const checkStudyJoined = async (path) => {
-  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/checkJoined`, {
+  const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/checkJoined`, {
     credentials: "include",
     method: "GET",
   });
@@ -56,7 +56,7 @@ const checkStudyJoined = async (path) => {
 };
 
 const leaveStudy = async (path) => {
-  const raw_data = await fetch(`${SERVER_API_URL}/study/${path}/leave`, {
+  const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/leave`, {
     credentials: "include",
     method: "POST",
   });
@@ -97,7 +97,7 @@ const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
 
     // Make the fetch request with the constructed query params
     const raw_studies = await fetch(
-      `${SERVER_API_URL}/get-study-by-tags-and-zones?${queryParams}`,
+      `${API_GATEWAY_URL}/app/get-study-by-tags-and-zones?${queryParams}`,
       {
         credentials: "include",
         method: "GET",
@@ -120,7 +120,7 @@ const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
 };
 
 const fetchTotalStudiesCount = async () => {
-  const raw_totalStudiesCount = await fetch(`${SERVER_API_URL}/total-study`, {
+  const raw_totalStudiesCount = await fetch(`${API_GATEWAY_URL}/app/total-study`, {
     credentials: "include",
     method: "GET",
   });
@@ -131,7 +131,7 @@ const fetchTotalStudiesCount = async () => {
 
 const updateStudyInfo = async (updateStudyForm, path) => {
   const raw_updateStudyInfo = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/update-study`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/update-study`,
     {
       headers: {
         "Content-Type": "application/json; charset=utf-8",

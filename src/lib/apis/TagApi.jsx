@@ -1,6 +1,6 @@
 const getStudyTags = async (path) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/tags`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/tags`,
     {
       credentials: "include",
       method: "GET",
@@ -13,7 +13,7 @@ const getStudyTags = async (path) => {
 
 const addStudyTag = async (path, tagData) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/tags/add`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/tags/add`,
     {
       credentials: "include",
       method: "POST",
@@ -29,7 +29,7 @@ const addStudyTag = async (path, tagData) => {
 };
 const removeStudyTag = async (path, tagData) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/tags/remove`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/tags/remove`,
     {
       credentials: "include",
       method: "POST",
@@ -45,7 +45,7 @@ const removeStudyTag = async (path, tagData) => {
 };
 
 const getAccountTags = async () => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/tags`, {
     credentials: "include",
     method: "GET",
   });
@@ -55,7 +55,7 @@ const getAccountTags = async () => {
 };
 
 const addAccountTag = async (tagData) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags/add`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/tags/add`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -69,7 +69,7 @@ const addAccountTag = async (tagData) => {
 };
 
 const removeAccountTag = async (tagData) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/tags/remove`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/tags/remove`, {
     credentials: "include",
     method: "POST",
     headers: {

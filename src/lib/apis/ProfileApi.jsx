@@ -9,7 +9,7 @@ const fetchProfile = async () => {
 };
 
 const updatePorfile = async (profileEditInfo) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/profile`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/profile`, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },

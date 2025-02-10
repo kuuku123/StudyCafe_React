@@ -19,7 +19,7 @@ import sessionStorage from "redux-persist/es/storage/session";
 const persistAuthConfig = {
   key: "auth", // Key to store the auth state in localStorage
   storage, // Use localStorage (or sessionStorage, depending on your use case)
-  whitelist: ["user", "isAuthenticated", "jwt"], // Only persist these keys
+  whitelist: ["user", "isAuthenticated"], // Only persist these keys
 };
 const persistNotificationConfig = {
   key: "notifications", // Key to store the auth state in localStorage

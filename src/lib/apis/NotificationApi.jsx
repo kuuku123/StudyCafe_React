@@ -1,5 +1,5 @@
 const markNotificationChecked = async (id) => {
-  const raw_data = await fetch( `${SERVER_API_URL}/mark-notification-checked?notificationId=${id}`,
+  const raw_data = await fetch( `${API_GATEWAY_URL}/app/mark-notification-checked?notificationId=${id}`,
     {
       credentials: "include",
       method: "POST",

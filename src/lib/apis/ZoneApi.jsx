@@ -1,5 +1,5 @@
 const getAllZones = async () => {
-  const raw_response = await fetch(`${SERVER_API_URL}/get-all-zones`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/get-all-zones`, {
     credentials: "include",
     method: "GET",
   });
@@ -10,7 +10,7 @@ const getAllZones = async () => {
 
 const getStudyZones = async (path) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/zones`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/zones`,
     {
       credentials: "include",
       method: "GET",
@@ -23,7 +23,7 @@ const getStudyZones = async (path) => {
 
 const addStudyZone = async (path, zoneData) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/zones/add`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/zones/add`,
     {
       credentials: "include",
       method: "POST",
@@ -40,7 +40,7 @@ const addStudyZone = async (path, zoneData) => {
 
 const removeStudyZone = async (path, zoneData) => {
   const raw_response = await fetch(
-    `${SERVER_API_URL}/study/${path}/settings/zones/remove`,
+    `${API_GATEWAY_URL}/app/study/${path}/settings/zones/remove`,
     {
       credentials: "include",
       method: "POST",
@@ -56,7 +56,7 @@ const removeStudyZone = async (path, zoneData) => {
 };
 
 const getAccountZones = async () => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/zones`, {
     credentials: "include",
     method: "GET",
   });
@@ -66,7 +66,7 @@ const getAccountZones = async () => {
 };
 
 const addAccountZone = async (zoneData) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones/add`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/zones/add`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -80,7 +80,7 @@ const addAccountZone = async (zoneData) => {
 };
 
 const removeAccountZone = async (zoneData) => {
-  const raw_response = await fetch(`${SERVER_API_URL}/settings/zones/remove`, {
+  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/zones/remove`, {
     credentials: "include",
     method: "POST",
     headers: {
