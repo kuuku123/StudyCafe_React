@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./My_Study_Manager_Member_Main_style";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 import StudyManagerApi from "../../../../../lib/apis/StudyManagerApi";
+import ChatPopup from "../../../../../components/Chat/ChatPopup";
 
 const My_Study_Mananger_Member_Main = ({ study }) => {
   const [img, setImage] = useState();

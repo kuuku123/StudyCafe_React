@@ -21,6 +21,7 @@ import ProfileSettingPage from "./pages/ProfileSettingPage";
 import StudyGuestPage from "./pages/MyStudyListPage/MyStudyMemberPage";
 import StudyManagerPage from "./pages/MyStudyListPage/MyStudyManagerPage";
 import StudyMemberPage from "./pages/MyStudyListPage/MyStudyMemberPage";
+import ChatPopup from "./components/Chat/ChatPopup";
 
 const App = () => {
   const homePage = createBrowserRouter([
@@ -78,7 +79,7 @@ const App = () => {
     },
     {
       path: RoutesEnum.STUDY_MEMBER(),
-      element: <StudyMemberPage/>,
+      element: <StudyMemberPage />,
     },
     {
       path: RoutesEnum.ERROR,
@@ -91,6 +92,7 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <MyLayout.Layout>
           <RouterProvider router={homePage}></RouterProvider>
+          <ChatPopup></ChatPopup>
         </MyLayout.Layout>
       </PersistGate>
     </Provider>
