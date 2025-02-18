@@ -10,10 +10,15 @@ module.exports = (env, options) => {
       publicPath: "/", // Ensure assets are loaded from the root
     },
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
     module: {
       rules: [
+        {
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          use: "ts-loader",
+        },
         {
           test: /\.m?(js|jsx)$/,
           exclude: /(node_modules|bower_components)/,

@@ -1,0 +1,9 @@
+#!/bin/bash
+# This script renames all .jsx files to .tsx recursively
+
+find . -type f -name "*.jsx" | while read -r file; do
+  newfile="${file%.jsx}.tsx"
+  echo "Renaming: $file -> $newfile"
+  mv "$file" "$newfile"
+done
+
