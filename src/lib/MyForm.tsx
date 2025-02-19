@@ -172,22 +172,33 @@ export function Form<T extends Record<string, any>>({
   );
 }
 
-interface FieldProps extends React.HTMLAttributes<HTMLElement> {
-  as?: React.ElementType;
-  children?: React.ReactNode;
+type PolymorphicRef<C extends React.ElementType> =
+  React.ComponentPropsWithRef<C>["ref"];
+
+type PolymorphicComponentProps<
+  C extends React.ElementType,
+  Props = {}
+> = Props & { as?: C } & Omit<React.ComponentPropsWithoutRef<C>, keyof Props>;
+
+interface BaseFieldProps {
   name: string;
 }
 
-export const Field: React.FC<FieldProps> = ({
-  as: Component = "input",
-  children,
+export type FieldProps<C extends React.ElementType = "input"> =
+  PolymorphicComponentProps<C, BaseFieldProps>;
+
+// Make Field a generic component:
+export const Field = <C extends React.ElementType = "input">({
+  as,
+  name,
   ...rest
-}) => {
+}: FieldProps<C>) => {
+  const Component = as || "input";
   const { getFieldProps } = React.useContext(formContext)!;
   return React.createElement(
     Component,
-    { ...getFieldProps(rest.name), ...rest },
-    children
+    { ...getFieldProps(name), ...rest },
+    rest.children
   );
 };
 

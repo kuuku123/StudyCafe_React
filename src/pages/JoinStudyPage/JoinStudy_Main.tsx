@@ -7,15 +7,25 @@ import ZoneApi from "../../lib/apis/ZoneApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import { Link } from "react-router-dom";
 import RoutesEnum from "../../lib/RoutesEnum";
+import {
+  StudyDto,
+  StudyJoinDto,
+  TagDto,
+  TagForm,
+  TagType,
+  ZoneDto,
+  ZoneForm,
+  ZoneType,
+} from "../../utils/type";
 
 const JoinStudy_Main = () => {
-  const [selectedTag, setSelectedTag] = useState([]);
-  const [selectedZone, setSelectedZone] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<TagType[] | null>([]);
+  const [selectedZones, setSelectedZones] = useState<ZoneType[] | null>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageGroupStart, setPageGroupStart] = useState(1);
-  const [studies, setStudies] = useState([]);
-  const [uniqueZones, setUniqueZones] = useState([]);
-  const [uniqueTags, setUniqueTags] = useState([
+  const [studies, setStudies] = useState<StudyJoinDto[]>([]);
+  const [uniqueZones, setUniqueZones] = useState<ZoneType[]>([]);
+  const [uniqueTags, setUniqueTags] = useState<TagType[]>([
     { value: "health", label: "health" },
     { value: "computer-science", label: "computer-science" },
     { value: "mathematics", label: "mathematics" },
@@ -38,22 +48,22 @@ const JoinStudy_Main = () => {
   // Filter studies based on selected tag and zone
   const filteredStudies = studies.filter((study) => {
     console.log("study => ", study);
-    console.log("selectedZone ", selectedZone);
+    console.log("selectedZones ", selectedZones);
     let matchesTag =
-      selectedTag &&
-      selectedTag.some((tag) =>
+      selectedTags &&
+      selectedTags.some((tag) =>
         study.tagDtoList.some((tagDto) => tagDto.title === tag.value)
       );
     let matchesZone =
-      selectedZone &&
-      selectedZone.some((zone) =>
+      selectedZones &&
+      selectedZones.some((zone) =>
         study.zoneDtoList.some((zoneDto) => zoneDto.city === zone.value.city)
       );
 
-    if (selectedTag.length == 0) {
+    if (selectedTags && selectedTags.length == 0) {
       matchesTag = true;
     }
-    if (selectedZone.length == 0) {
+    if (selectedZones && selectedZones.length == 0) {
       matchesZone = true;
     }
 
@@ -94,7 +104,7 @@ const JoinStudy_Main = () => {
     }
   };
 
-  const handlePageClick = (page) => {
+  const handlePageClick = (page: number) => {
     setCurrentPage(page);
   };
 
@@ -104,16 +114,16 @@ const JoinStudy_Main = () => {
   );
 
   // Handlers
-  const handleTagChange = (selectedOption) => {
-    setSelectedTag(selectedOption);
+  const handleTagChange = (selectedOption: TagType[] | null) => {
+    setSelectedTags(selectedOption);
     setCurrentPage(1); // Reset to first page when tag changes
   };
-  const handleZoneChange = (selectedOption) => {
-    setSelectedZone(selectedOption);
+  const handleZoneChange = (selectedOption: ZoneType[] | null) => {
+    setSelectedZones(selectedOption);
     setCurrentPage(1); // Reset to first page when zone changes
   };
 
-  const parseZones = (zones) => {
+  const parseZones = (zones: ZoneDto[]) => {
     const mappedCities = zones.map((cityObj) => ({
       value: { city: cityObj.city, province: cityObj.province },
       label: cityObj.city,
@@ -122,12 +132,12 @@ const JoinStudy_Main = () => {
   };
   useEffect(() => {
     console.log("useEffect");
-    console.log("selectedTag => ", selectedTag);
+    console.log("selectedTags => ", selectedTags);
     const getFetchStudyByTagsAndZones = async (
-      newTags,
-      newZones,
-      page,
-      size
+      newTags: TagForm[] | null,
+      newZones: ZoneForm[] | null,
+      page: number,
+      size: number
     ) => {
       const response = await StudyApi.fetchStudyByTagsAndZones(
         newTags,
@@ -138,11 +148,11 @@ const JoinStudy_Main = () => {
       console.log("fetchStudyBytagsAndZones => ", response);
       handleResponse(response, setStudies, false);
     };
-    const newTags = selectedTag
-      ? TagApi.changeTagLabelToTitile(selectedTag)
+    const newTags = selectedTags
+      ? TagApi.changeTagLabelToTitile(selectedTags)
       : null;
-    const newZones = selectedZone
-      ? ZoneApi.changeZoneLabelToCity(selectedZone)
+    const newZones = selectedZones
+      ? ZoneApi.changeZoneLabelToCity(selectedZones)
       : null;
     getFetchStudyByTagsAndZones(
       newTags,
@@ -150,7 +160,7 @@ const JoinStudy_Main = () => {
       Math.ceil(pageGroupStart / pagesToShow),
       pagesToShow * ITEMS_PER_PAGE
     );
-  }, [selectedTag, selectedZone, pageGroupStart]);
+  }, [selectedTags, selectedZones, pageGroupStart]);
 
   useEffect(() => {
     const getAllZones = async () => {
@@ -166,7 +176,7 @@ const JoinStudy_Main = () => {
       <S.FiltersContainer>
         {/* Searchable Tag Dropdown */}
         <Select
-          value={selectedTag}
+          value={selectedTags}
           onChange={handleTagChange}
           options={uniqueTags}
           isClearable
@@ -176,7 +186,7 @@ const JoinStudy_Main = () => {
 
         {/* Searchable Zone Dropdown */}
         <Select
-          value={selectedZone}
+          value={selectedZones}
           onChange={handleZoneChange}
           options={uniqueZones}
           isClearable

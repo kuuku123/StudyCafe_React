@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { CSSProperties } from "styled-components";
 
-const MyEditor = ({ style, ...rest }) => {
+interface MyEditorProps extends ReactQuillProps {
+  style?: CSSProperties;
+}
+const MyEditor: React.FC<MyEditorProps> = ({ style, ...rest }) => {
   const defaultStyle = {
     marginBottom: "50px",
     width: "100%", // Takes full width of the parent container
@@ -13,7 +17,7 @@ const MyEditor = ({ style, ...rest }) => {
 
   const combinedStyle = { ...defaultStyle, ...style };
   return (
-      <ReactQuill preserveWhitespace style={combinedStyle} {...rest}></ReactQuill>
+    <ReactQuill preserveWhitespace style={combinedStyle} {...rest}></ReactQuill>
   );
 };
 

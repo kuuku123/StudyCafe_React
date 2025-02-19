@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
 export const Page_style = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ export const Li_style = styled.li`
   font-size: 24px;
   font-style: italic;
 `;
-export const link_style = {
+export const link_style: CSSProperties = {
   fontSize: "22px",
   color: "#004080",
   textDecoration: "none",

@@ -5,22 +5,19 @@ import * as S from "./Profile_Main_style";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
+import { AccountDto, Profile } from "../../utils/type";
 
 const Profile_Main = () => {
-  const [img, setImage] = useState();
-  const [profile, setProfile] = useState({
-    nickname: "default nickName",
-    bio: "default bio",
-    email: "default email",
-  });
+  const [img, setImage] = useState<string>();
+  const [profile, setProfile] = useState<AccountDto>();
 
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleProfile =(profile) => {
-    setProfile(profile)
+  const handleProfile = (profile: AccountDto) => {
+    setProfile(profile);
     const base64Image = "data:image/png;base64," + profile.profileImage;
     setImage(base64Image);
-  }
+  };
 
   useEffect(() => {
     const getProfile = async () => {
@@ -45,13 +42,13 @@ const Profile_Main = () => {
           <S.Profile_List_Element_style>Study</S.Profile_List_Element_style>
         </Link>
       </S.Profile_List_style>
-      <S.Profile_Name_style>{profile.nickname}</S.Profile_Name_style>
+      <S.Profile_Name_style>{profile?.nickname}</S.Profile_Name_style>
       <S.Profile_Info_style>
-        {profile.bio || "default bio"}
+        {profile?.bio || "default bio"}
       </S.Profile_Info_style>
       <S.Profile_Email_style>
         <CgMail size={"55px"}></CgMail>
-        {profile.email}
+        {profile?.email}
       </S.Profile_Email_style>
       <S.Profile_Emailverification_style>
         <CgCalendar size={"55px"}></CgCalendar>

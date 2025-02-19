@@ -1,26 +1,30 @@
-import React , { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./Study_Description_Main style";
 import * as MyForm from "../../../../../../lib/MyForm";
 import HandleResponseApi from "../../../../../../lib/HandleResponse";
-import FormControl from "../../../../../../components/FomrControl";
+import FormControl from "../../../../../../components/FormControl";
 import MyEditor from "../../../../../../components/Quill-Editor/MyEditor";
 import Button from "../../../../../../components/Button";
 import StudyApi from "../../../../../../lib/apis/StudyApi";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import RoutesEnum from "../../../../../../lib/RoutesEnum";
-import * as MyLayout from "../../../../../../lib/MyLayout"
+import * as MyLayout from "../../../../../../lib/MyLayout";
+import { StudyDto, StudyForm } from "../../../../../../utils/type";
 
-const Study_Description_Main = ({ study }) => {
+const Study_Description_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const navigate = useNavigate();
-  const {startLoading, finishLoading} = MyLayout.useLoading()
-  const [img, setImage] = useState();
-  const onChange = (e) => {
-    const img = e.target.files[0];
+  const { startLoading, finishLoading } = MyLayout.useLoading();
+  const handleResponse = HandleResponseApi.useHandleResponse();
+  const [img, setImage] = useState<string | null>(null);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const img = e.target.files?.[0];
+    if (!img) return;
     const reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onloadend = () => {
-      setImage(reader.result);
+      setImage(reader.result as string);
     };
   };
   const submitSuccessCallback = () => {
@@ -30,10 +34,10 @@ const Study_Description_Main = ({ study }) => {
     });
     finishLoading();
   };
-  const handleResponse = HandleResponseApi.useHandleResponse();
-  const handleSubmit = async (updateStudyForm) => {
+
+  const handleSubmit = async (updateStudyForm: StudyForm) => {
     startLoading("configuring....");
-    updateStudyForm["studyImage"] = img;
+    updateStudyForm.studyImage = typeof img === "string" ? img : undefined;
     console.log("updateStudyForm => ", updateStudyForm);
     const response = await StudyApi.updateStudyInfo(
       updateStudyForm,
@@ -42,8 +46,7 @@ const Study_Description_Main = ({ study }) => {
     handleResponse(response, submitSuccessCallback, false);
   };
 
-
-  const validate = (values) => {
+  const validate = () => {
     const errors = {};
     return errors;
   };
@@ -62,7 +65,7 @@ const Study_Description_Main = ({ study }) => {
     minWidth: "200px", // Ensures it doesn't shrink too much
   };
 
-  const handleImage = (study_image_base64_encoded) => {
+  const handleImage = (study_image_base64_encoded: string) => {
     const base64Image = "data:image/png;base64," + study_image_base64_encoded;
     setImage(base64Image);
   };
@@ -103,9 +106,9 @@ const Study_Description_Main = ({ study }) => {
               placeholder={study.path}
               value={study.path}
               style={input_style}
-              readonly="readonly"
+              readOnly={true}
             ></MyForm.Field>
-            <ReactTooltip id="customTooltip" effect="solid" place="top">
+            <ReactTooltip id="customTooltip" variant="info" place="top">
               You cannot edit path!
             </ReactTooltip>
           </FormControl>
@@ -153,11 +156,11 @@ const Study_Description_Main = ({ study }) => {
               as={MyEditor}
             ></MyForm.Field>
           </FormControl>
-          <Button type="sumbit">Save</Button>
+          <Button type="submit">Save</Button>
         </MyForm.Form>
       </S.Study_Description_Main_style>
       <S.Study_Image_style>
-        <img src={img} width="240px" height="240px"></img>
+        {img && <img src={img} width="240px" height="240px" />}
         <figcaption style={{ textAlign: "center" }}>Study Image</figcaption>
         <input
           type="file"

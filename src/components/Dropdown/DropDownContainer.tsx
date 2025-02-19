@@ -1,8 +1,18 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import NavItem from "../NavItem";
 import * as S from "./DropDown_style";
 
-const DropDownContainer = ({ profile, header, children }) => {
+interface DropDownContainerProps {
+  profile: ReactNode;
+  header: ReactNode;
+  children?: ReactNode;
+}
+
+const DropDownContainer: React.FC<DropDownContainerProps> = ({
+  profile,
+  header,
+  children,
+}) => {
   return (
     <NavItem icon={profile}>
       <S.DropDown_style>

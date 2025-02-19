@@ -1,12 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { NavItem_style } from "./Component_style";
 
-const NavItem = ({ icon, children }) => {
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
+interface NavItemProps {
+  icon: ReactNode;
+  children?: ReactNode;
+}
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+const NavItem: React.FC<NavItemProps> = ({ icon, children }) => {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setOpen(false);
     }
   };

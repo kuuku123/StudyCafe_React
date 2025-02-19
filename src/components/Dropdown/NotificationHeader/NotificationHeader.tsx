@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./NotificationHeader_style";
 import { useSelector } from "react-redux";
+import {
+  selectStudyCreated,
+  selectStudyUpdated,
+} from "../../../lib/features/redux/notificationSelector";
+import { Notification, NotificationDto } from "../../../utils/type";
 
-const NotificationHeader = ({ setNotifications }) => {
+interface NotificationHeaderProps {
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
+}
+
+
+const NotificationHeader: React.FC<NotificationHeaderProps> = ({
+  setNotifications,
+}) => {
   const [firstHovered, setFirstHovered] = useState(true);
-  const { studyCreatedPath, studyUpdatedPath } = useSelector((state) => {
-    console.log("state ", state);
-    return {
-      studyCreatedPath: state.notifications.messages.studyCreated.events,
-      studyUpdatedPath: state.notifications.messages.studyUpdated.events,
-    };
-  });
 
-  const handleClick = (tab) => {
+  const studyCreatedPath = useSelector(selectStudyCreated);
+  const studyUpdatedPath = useSelector(selectStudyUpdated);
+
+  const handleClick = (tab: string) => {
     console.log("studyCreatedPath => ", studyCreatedPath);
-    const createNotifications = (events, type) => {
+    const createNotifications = (events: NotificationDto[], type: string) => {
       console.log("events => ", events);
       return events.map(({ id, studyPath }) => ({ id, studyPath, type }));
     };
 
-    
-
-    let currentNotifications = [];
+    let currentNotifications: Notification[] = [];
 
     switch (tab) {
       case "All":
@@ -64,11 +70,13 @@ const NotificationHeader = ({ setNotifications }) => {
         All
       </S.Notification_HeaderItem_style>
       <S.Notification_HeaderItem_style
+        isFirstHovered={false}
         onClick={() => handleClick("StudyCreated")}
       >
         Study Created
       </S.Notification_HeaderItem_style>
       <S.Notification_HeaderItem_style
+        isFirstHovered={false}
         onClick={() => handleClick("StudyUpdated")}
       >
         Study Updated

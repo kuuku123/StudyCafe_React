@@ -1,6 +1,6 @@
 import React from "react";
 import * as MyForm from "../../../../lib/MyForm";
-import FormControl from "../../../../components/FomrControl";
+import FormControl from "../../../../components/FormControl";
 import * as S from "./SocialAccountSetPassword_Main_style";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import RoutesEnum from "../../../../lib/RoutesEnum";
@@ -8,11 +8,12 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 import AuthApi from "../../../../lib/apis/AuthApi";
+import { PasswordForm } from "../../../../utils/type";
 
 const SocialAccountSetPassword_Main = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const onSubmit = async (passwordInfo) => {
+  const onSubmit = async (passwordInfo: PasswordForm) => {
     const authResponse = await AuthApi.updatePassword(passwordInfo);
     handleResponse(authResponse, null, false);
 
@@ -28,9 +29,9 @@ const SocialAccountSetPassword_Main = () => {
     }
   };
 
-  const validate = (values) => {
+  const validate = (values: PasswordForm) => {
     console.log("values ==> ", values);
-    const errors = {};
+    const errors: Record<string, any> = {};
     if (values.newPassword !== values.newPasswordConfirm) {
       console.log("not same!!");
       errors.newPasswordConfirm = "password is not same";

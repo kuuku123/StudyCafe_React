@@ -2,8 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../lib/features/redux/authSlice";
+import { CSSProperties } from "styled-components";
 
-const Logout = ({ style }) => {
+interface LogoutProps {
+  style?: CSSProperties;
+}
+
+const Logout: React.FC<LogoutProps> = ({ style }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

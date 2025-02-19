@@ -1,4 +1,6 @@
-const fetchStudy = async (path) => {
+import { StudyForm, TagForm, ZoneForm } from "../../utils/type";
+
+const fetchStudy = async (path: string) => {
   const raw_study = await fetch(`${API_GATEWAY_URL}/app/get-study/${path}`, {
     credentials: "include",
     method: "GET",
@@ -8,7 +10,7 @@ const fetchStudy = async (path) => {
   return study;
 };
 
-const createStudy = async (createStudyForm) => {
+const createStudy = async (createStudyForm: StudyForm) => {
   const raw_response = await fetch(`${API_GATEWAY_URL}/app/new-study`, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -21,8 +23,7 @@ const createStudy = async (createStudyForm) => {
   return response;
 };
 
-
-const publishStudy = async (path) => {
+const publishStudy = async (path: string) => {
   const raw_published_study = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/publish`,
     {
@@ -35,7 +36,7 @@ const publishStudy = async (path) => {
   return publicshed_study_json;
 };
 
-const joinStudy = async (path) => {
+const joinStudy = async (path: string) => {
   const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/join`, {
     credentials: "include",
     method: "POST",
@@ -45,17 +46,20 @@ const joinStudy = async (path) => {
   return json_data;
 };
 
-const checkStudyJoined = async (path) => {
-  const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/checkJoined`, {
-    credentials: "include",
-    method: "GET",
-  });
+const checkStudyJoined = async (path: string) => {
+  const raw_data = await fetch(
+    `${API_GATEWAY_URL}/app/study/${path}/checkJoined`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
   const json_data = await raw_data.json();
   console.log("checkJoined => ", json_data);
   return json_data;
 };
 
-const leaveStudy = async (path) => {
+const leaveStudy = async (path: string) => {
   const raw_data = await fetch(`${API_GATEWAY_URL}/app/study/${path}/leave`, {
     credentials: "include",
     method: "POST",
@@ -65,7 +69,12 @@ const leaveStudy = async (path) => {
   return json_data;
 };
 
-const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
+const fetchStudyByTagsAndZones = async (
+  tags: TagForm[] | null,
+  zones: ZoneForm[] | null,
+  page: number,
+  size: number
+) => {
   try {
     // Handle tags and zones being null or undefined
     const tagParams =
@@ -120,16 +129,19 @@ const fetchStudyByTagsAndZones = async (tags, zones, page, size) => {
 };
 
 const fetchTotalStudiesCount = async () => {
-  const raw_totalStudiesCount = await fetch(`${API_GATEWAY_URL}/app/total-study`, {
-    credentials: "include",
-    method: "GET",
-  });
+  const raw_totalStudiesCount = await fetch(
+    `${API_GATEWAY_URL}/app/total-study`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
   const totalStudiesCount = await raw_totalStudiesCount.json();
   console.log(totalStudiesCount);
   return totalStudiesCount;
 };
 
-const updateStudyInfo = async (updateStudyForm, path) => {
+const updateStudyInfo = async (updateStudyForm: StudyForm, path: string) => {
   const raw_updateStudyInfo = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/update-study`,
     {

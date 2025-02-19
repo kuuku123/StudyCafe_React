@@ -7,9 +7,16 @@ import TagApi from "../../../../../../lib/apis/TagApi";
 import Button from "../../../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as MyLayout from "../../../../../../lib/MyLayout";
+import {
+  StudyDto,
+  TagDto,
+  TagType,
+  ZoneDto,
+  ZoneType,
+} from "../../../../../../utils/type";
 
-const Tags_And_Zones_Main = ({ study, setCategory }) => {
-  const [uniqueTags, setUniqueTags] = useState([
+const Tags_And_Zones_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
+  const [uniqueTags, setUniqueTags] = useState<TagType[]>([
     { value: "health", label: "health" },
     { value: "computer-science", label: "computer-science" },
     { value: "mathematics", label: "mathematics" },
@@ -23,27 +30,38 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     { value: "engineering", label: "engineering" },
     { value: "philosophy", label: "philosophy" },
   ]);
-  const [willSelectedTags, setWillSelectedTags] = useState(null);
-  const [willSelectedZones, setWillSelectedZones] = useState(null);
-  const [selectedTags, setSelectedTags] = useState(null);
-  const [selectedZones, setSelectedZones] = useState(null);
-  const [defaultTags, setDefaultTags] = useState([]);
-  const [defaultZones, setDefaultZones] = useState([]);
-  const [uniqueZones, setUniqueZones] = useState([]);
+  const [willSelectedTags, setWillSelectedTags] = useState<TagType[] | null>(
+    null
+  );
+  const [willSelectedZones, setWillSelectedZones] = useState<ZoneType[] | null>(
+    null
+  );
+  const [selectedTags, setSelectedTags] = useState<TagDto[]>([]);
+  const [selectedZones, setSelectedZones] = useState<ZoneDto[]>([]);
+  const [defaultTags, setDefaultTags] = useState<TagDto[]>([]);
+  const [defaultZones, setDefaultZones] = useState<ZoneDto[]>([]);
+  const [uniqueZones, setUniqueZones] = useState<ZoneType[]>([]);
+
   const handleResponse = HandleResponseApi.useHandleResponse();
   const { startLoading, finishLoading } = MyLayout.useLoading();
 
-  const handleTagChange = (selectedOption) => {
+  const handleTagChange = (selectedOption: TagType[] | null) => {
+    if (!selectedOption) {
+      setWillSelectedTags(null);
+      setSelectedTags([]);
+      return;
+    }
+
     setWillSelectedTags(selectedOption);
     setSelectedTags((prevTags) => {
       console.log("prevTags => ", prevTags);
       const newTags = TagApi.changeTagLabelToTitile(selectedOption);
 
       // Combine the previous tags and the new tags
-      const updatedTags = [
+      const updatedTags: TagDto[] = [
         ...prevTags,
         ...newTags.filter(
-          (newTag) =>
+          (newTag: TagDto) =>
             !prevTags.some((prevTag) => prevTag.title === newTag.title)
         ),
       ];
@@ -67,7 +85,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
       return finalTags;
     });
   };
-  const handleZoneChange = (selectedOption) => {
+  const handleZoneChange = (selectedOption: ZoneType[]) => {
     setWillSelectedZones(selectedOption);
     setSelectedZones((prevZones) => {
       const newZones = ZoneApi.changeZoneLabelToCity(selectedOption);
@@ -76,7 +94,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
       const updatedZones = [
         ...prevZones,
         ...newZones.filter(
-          (newZone) =>
+          (newZone: ZoneDto) =>
             !prevZones.some((prevZone) => prevZone.city === newZone.city)
         ),
       ];
@@ -84,7 +102,9 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
       console.log(updatedZones);
       // remove Zones that currently doesn't exist in selectedOption
       const removedZones = updatedZones.filter((zone) =>
-        selectedOption.some((option) => option.value.city === zone.city)
+        selectedOption.some(
+          (option: ZoneType) => option.value.city === zone.city
+        )
       );
 
       console.log("removedZones => ", removedZones);
@@ -121,7 +141,6 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     setWillSelectedZones(null);
   };
 
-
   const handleWillSelectedTagAndZones = async () => {
     startLoading("configuring....");
     const newTags = TagApi.changeTagLabelToTitile(willSelectedTags);
@@ -138,12 +157,12 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     handleWillSelectedTagAndZones();
   };
 
-  const handleDeleteTag = async (tag) => {
+  const handleDeleteTag = async (tag: string) => {
     await TagApi.removeStudyTag(study.path, { title: tag });
     reset();
   };
 
-  const handleDeleteZone = async (city, province) => {
+  const handleDeleteZone = async (city: string, province: string) => {
     await ZoneApi.removeStudyZone(study.path, {
       city: city,
       province: province,
@@ -151,7 +170,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     reset();
   };
 
-  const parseZones = (zones) => {
+  const parseZones = (zones: ZoneDto[]) => {
     const mappedCities = zones.map((cityObj) => ({
       value: { city: cityObj.city, province: cityObj.province },
       label: cityObj.city,
@@ -159,11 +178,11 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
     setUniqueZones(mappedCities);
   };
 
-  const handleInitTags = (tags) => {
+  const handleInitTags = (tags: TagDto[]) => {
     setSelectedTags(tags);
     setDefaultTags(tags);
   };
-  const handleInitZones = (zones) => {
+  const handleInitZones = (zones: ZoneDto[]) => {
     setSelectedZones(zones);
     setDefaultZones(zones);
   };
@@ -248,7 +267,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
                   </S.Tag_Pill_style>
                   <ReactTooltip
                     id="customTooltipTag"
-                    effect="solid"
+                    variant="info"
                     place="top"
                   >
                     click to delete tag
@@ -274,7 +293,7 @@ const Tags_And_Zones_Main = ({ study, setCategory }) => {
                   </S.Zone_Pill_style>
                   <ReactTooltip
                     id="customTooltipZone"
-                    effect="solid"
+                    variant="info"
                     place="top"
                   >
                     click to delete zone

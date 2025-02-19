@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import * as S from "./My_Study_Member_Main_style";
 import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -7,8 +7,9 @@ import My_Study_Member_Info from "./MyStudyMemberComponentPage/MyStudyMemberInfo
 import My_Study_Member_Member from "./MyStudyMemberComponentPage/MyStudyMemberMember";
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
+import { StudyDto } from "../../../utils/type";
 
-const My_Study_Member_Main = ({ study }) => {
+const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const [category, setCategory] = useState(() => {
     return sessionStorage.getItem("My_Study_Member_Main_category") || "info";
   });
@@ -24,17 +25,17 @@ const My_Study_Member_Main = ({ study }) => {
   useEffect(() => {
     async function checkStudyJoined() {
       try {
-        const response = await StudyApi.checkStudyJoined(path)
-        console.log("checkStudyJoined => " ,response)
-        setJoined(response.data)
+        const response = await StudyApi.checkStudyJoined(path);
+        console.log("checkStudyJoined => ", response);
+        setJoined(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     checkStudyJoined();
-  })
+  });
 
-  const pageComponent = {
+  const pageComponent: Record<string, JSX.Element> = {
     info: <My_Study_Member_Info study={study}></My_Study_Member_Info>,
     member: <My_Study_Member_Member study={study}></My_Study_Member_Member>,
     schedule: (
@@ -42,11 +43,11 @@ const My_Study_Member_Main = ({ study }) => {
     ),
   };
 
-  const handleOnClick = (category) => {
+  const handleOnClick = (category: string) => {
     setCategory(category);
   };
 
-  const handleJoinOnClick = async (path) => {
+  const handleJoinOnClick = async (path: string) => {
     let response = null;
     if (joined) {
       response = await StudyApi.leaveStudy(path);
@@ -70,7 +71,7 @@ const My_Study_Member_Main = ({ study }) => {
         >
           {!joined ? "Join" : "Leave"}
         </S.Study_Component_Click_style>
-        <ReactTooltip id="draftTooltip" effect="solid" place="top">
+        <ReactTooltip id="draftTooltip" variant="info" place="top">
           {!joined ? "Click to join current Study" : "Click to Leave Study"}
         </ReactTooltip>
       </S.Study_Draft_style>

@@ -3,24 +3,23 @@ import Page from "../../components/Page";
 import Title from "../../components/Title";
 import LoginForm from "./LoginForm";
 import CopyRight from "../../components/CopyRight";
-import { useNavigate } from "react-router-dom";
 import * as S from "./LoginForm_style";
 import * as MyLayout from "../../lib/MyLayout";
 import Dialog from "../../components/Dialog";
 import Button from "../../components/Button";
 import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
-import { addJWT, loginSuccess } from "../../lib/features/redux/authSlice";
+import { loginSuccess } from "../../lib/features/redux/authSlice";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
+import { LoginFormType } from "../../utils/type";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleSubmit = async (loginInfo) => {
+  const handleSubmit = async (loginInfo: LoginFormType) => {
     const jwtResponse = await fetch(`${API_GATEWAY_URL}/auth/login`, {
       credentials: "include",
       method: "POST",
@@ -76,9 +75,7 @@ const LoginPage = () => {
             </S.Login_Button_style>
           </S.Login_Container_style>
           <S.Social_Login_Button_Container_style>
-            <a
-              href={`${API_GATEWAY_URL}/auth/oauth2/authorization/google`}
-            >
+            <a href={`${API_GATEWAY_URL}/auth/oauth2/authorization/google`}>
               <S.Social_Login_Button_style
                 src={"images/social/google.png"}
               ></S.Social_Login_Button_style>

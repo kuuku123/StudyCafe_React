@@ -1,11 +1,16 @@
 import React from "react";
 import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../components/FomrControl";
+import FormControl from "../../components/FormControl";
 import * as S from "./LoginForm_style";
+import { LoginFormType } from "../../utils/type";
 
-const LoginForm = ({ onSubmit }) => {
-  const validate = (values) => {
-    const errors = {};
+interface LoginFormProps {
+  onSubmit: (data: LoginFormType) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+  const validate = (values: LoginFormType) => {
+    const errors: Record<string, any> = {};
     if (!values.nicknameOrEmail) {
       errors.nicknameOrEmail = "write nickname or email for login";
     }

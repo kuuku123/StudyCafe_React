@@ -6,13 +6,20 @@ export const Notification_Header_style = styled.div`
   justify-content: space-between;
 `;
 
+interface NotificationHeaderItemProps {
+  isFirstHovered: boolean;
+}
 
-
-export const Notification_HeaderItem_style = styled.div`
+export const Notification_HeaderItem_style = styled.div<NotificationHeaderItemProps>`
   border-radius: 18px;
   background-color: ${(props) =>
-    props.isFirstHovered ? "#f0f0f0" : "#fff"}; /* Default background color or "hover" for first render */
-  color: ${(props) => (props.isFirstHovered ? "#333" : "inherit")}; /* Default text color or "hover" for first render */
+    props.isFirstHovered
+      ? "#f0f0f0"
+      : "#fff"}; /* Default background color or "hover" for first render */
+  color: ${(props) =>
+    props.isFirstHovered
+      ? "#333"
+      : "inherit"}; /* Default text color or "hover" for first render */
   box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.4);
   padding: 10px;
   margin: 10px;

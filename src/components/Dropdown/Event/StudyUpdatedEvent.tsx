@@ -7,8 +7,16 @@ import RoutesEnum from "../../../lib/RoutesEnum";
 import StudyManagerApi from "../../../lib/apis/StudyManagerApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import NotificationApi from "../../../lib/apis/NotificationApi";
+import { Notification } from "../../../utils/type";
 
-const StudyUpdatedEvent = ({
+interface StudyUpdatedEventProps {
+  id: number;
+  studyPath: string;
+  notifications: Notification[];
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
+}
+
+const StudyUpdatedEvent: React.FC<StudyUpdatedEventProps> = ({
   id,
   studyPath,
   notifications,
@@ -16,7 +24,7 @@ const StudyUpdatedEvent = ({
 }) => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const [isManager, setIsManager] = useState(false);
-  console.log("path", studyPath, id , notifications);
+  console.log("path", studyPath, id, notifications);
   const handleClick = () => {
     store.dispatch(minusStudyUpdated(id));
     setNotifications(

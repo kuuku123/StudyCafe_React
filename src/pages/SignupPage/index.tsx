@@ -9,11 +9,12 @@ import RoutesEnum from "../../lib/RoutesEnum";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../lib/features/redux/authSlice";
 import ProfileApi from "../../lib/apis/ProfileApi";
+import { SignUpForm } from "../../utils/type";
 
 const SignupPage = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const handleSubmit = async (signupInfo) => {
+  const handleSubmit = async (signupInfo: SignUpForm) => {
     const jwtResponse = await fetch(`${API_GATEWAY_URL}/auth/sign-up`, {
       credentials: "include",
       method: "POST",
@@ -34,6 +35,7 @@ const SignupPage = () => {
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
         useNav: true,
         path: RoutesEnum.HOME,
+        dialog: undefined,
       });
     }
   };

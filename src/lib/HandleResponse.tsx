@@ -6,24 +6,48 @@ import Dialog from "../components/Dialog";
 import RoutesEnum from "./RoutesEnum";
 import { ApiResponse } from "../utils/type";
 
+interface NavigateOptions {
+  useNav: boolean;
+  path: string;
+  dialog?: string; // or undefined if you prefer
+}
 const useHandleResponse = () => {
   const navigate = useNavigate();
   const { openDialog, closeDialog } = MyLayout.useDialog();
 
   const handleResponse = (
     response: ApiResponse,
-    callback: (data: any) => void,
-    useNavigate = { useNav: true, path: RoutesEnum.HOME, dialog: undefined }
+    callback: ((data: any) => void) | null,
+    useNavigate: NavigateOptions | boolean = {
+      useNav: true,
+      path: RoutesEnum.HOME,
+      dialog: undefined,
+    }
   ) => {
     console.log("useNavigate => ", useNavigate);
 
+    // First, narrow the type if useNavigate is a boolean.
+    if (typeof useNavigate === "boolean") {
+      // In case useNavigate is a boolean, we might:
+      // - Simply call the callback if the response is OK.
+      // - Optionally, navigate if the boolean is true.
+      if (response.status === "OK" && callback) {
+        callback(response.data);
+      }
+      if (useNavigate) {
+        navigate(RoutesEnum.HOME);
+      }
+      return; // Exit early to avoid accessing properties on a boolean.
+    }
+
+    // Now, useNavigate is of type NavigateOptions.
     if (response.status === "OK") {
       if (useNavigate.dialog == undefined && callback) {
         console.log("first callback ? ", useNavigate.dialog);
         callback(response.data);
-      }
-      if (typeof useNavigate === "boolean") {
-        console.log("do nothing");
+        if (useNavigate.path !== undefined) {
+          navigate(useNavigate.path);
+        }
       } else if (useNavigate.useNav && useNavigate.dialog !== undefined) {
         console.log("dialog => ", useNavigate.dialog);
         openDialog(
@@ -41,7 +65,7 @@ const useHandleResponse = () => {
                 {useNavigate.dialog}
               </Button>
             }
-          ></Dialog>
+          />
         );
       } else if (useNavigate.useNav) {
         console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
@@ -57,7 +81,7 @@ const useHandleResponse = () => {
               네, 알겠습니다
             </Button>
           }
-        ></Dialog>
+        />
       );
     } else {
       console.log("response => ", response);
@@ -81,6 +105,7 @@ const useHandleResponse = () => {
       );
     }
   };
+
   return handleResponse;
 };
 

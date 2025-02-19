@@ -9,14 +9,15 @@ import EmailVerification from "./EmailVerification";
 import HandleResponseApi from "../../lib/HandleResponse";
 import { useDispatch, useSelector } from "react-redux";
 import AuthApi from "../../lib/apis/AuthApi";
+import { selectAuth } from "../../lib/features/redux/authSelector";
 
 const HomePage = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [login, setLogin] = useState(false);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector(selectAuth);
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleEmailVerfieid = (data) => {
+  const handleEmailVerfieid = (data: boolean) => {
     console.log("email verified => ", data);
     setEmailVerified(data);
   };

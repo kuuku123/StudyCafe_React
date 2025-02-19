@@ -1,3 +1,5 @@
+import { ZoneDto, ZoneForm, ZoneType } from "../../utils/type";
+
 const getAllZones = async () => {
   const raw_response = await fetch(`${API_GATEWAY_URL}/app/get-all-zones`, {
     credentials: "include",
@@ -8,7 +10,7 @@ const getAllZones = async () => {
   return all_zones_json;
 };
 
-const getStudyZones = async (path) => {
+const getStudyZones = async (path: string) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/zones`,
     {
@@ -21,7 +23,7 @@ const getStudyZones = async (path) => {
   return get_zone_json;
 };
 
-const addStudyZone = async (path, zoneData) => {
+const addStudyZone = async (path: string, zoneData: ZoneForm[]) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/zones/add`,
     {
@@ -38,7 +40,7 @@ const addStudyZone = async (path, zoneData) => {
   return response_json;
 };
 
-const removeStudyZone = async (path, zoneData) => {
+const removeStudyZone = async (path: string, zoneData: ZoneForm) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/zones/remove`,
     {
@@ -65,35 +67,41 @@ const getAccountZones = async () => {
   return get_zone_json;
 };
 
-const addAccountZone = async (zoneData) => {
-  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/zones/add`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(zoneData),
-  });
+const addAccountZone = async (zoneData: ZoneForm[]) => {
+  const raw_response = await fetch(
+    `${API_GATEWAY_URL}/app/settings/zones/add`,
+    {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(zoneData),
+    }
+  );
   console.log("raw_response => ", raw_response);
   const response_json = raw_response.json();
   return response_json;
 };
 
-const removeAccountZone = async (zoneData) => {
-  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/zones/remove`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(zoneData),
-  });
+const removeAccountZone = async (zoneData: ZoneForm) => {
+  const raw_response = await fetch(
+    `${API_GATEWAY_URL}/app/settings/zones/remove`,
+    {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(zoneData),
+    }
+  );
   console.log("raw_response => ", raw_response);
   const response_json = raw_response.json();
   return response_json;
 };
 
-const changeZoneLabelToCity = (zones) => {
+const changeZoneLabelToCity = (zones: ZoneType[] | null) => {
   if (zones != null) {
     const newZones = zones.map((zone) => ({
       city: zone.value.city,
@@ -101,6 +109,7 @@ const changeZoneLabelToCity = (zones) => {
     }));
     return newZones;
   }
+  return [];
 };
 
 const ZoneApi = {

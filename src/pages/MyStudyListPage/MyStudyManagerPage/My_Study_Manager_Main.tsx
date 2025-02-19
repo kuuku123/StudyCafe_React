@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import * as S from "./My_Study_Manager_Main_style";
 import My_Study_Manager_Info from "./MyStudyManagerComponentPage/MyStudyManagerInfo";
 import My_Study_Manager_Member from "./MyStudyManagerComponentPage/MyStudyManagerMember";
@@ -8,8 +8,9 @@ import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { StudyDto } from "../../../utils/type";
 
-const My_Study_Manager_Main = ({ study }) => {
+const My_Study_Manager_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const [category, setCategory] = useState(() => {
     return sessionStorage.getItem("My_Study_Manager_Main_category") || "info";
   });
@@ -22,7 +23,7 @@ const My_Study_Manager_Main = ({ study }) => {
     sessionStorage.setItem("My_Study_Manager_Main_category", category);
   }, [category]);
 
-  const pageComponent = {
+  const pageComponent: Record<string, JSX.Element> = {
     info: <My_Study_Manager_Info study={study}></My_Study_Manager_Info>,
     member: <My_Study_Manager_Member study={study}></My_Study_Manager_Member>,
     schedule: (
@@ -35,11 +36,11 @@ const My_Study_Manager_Main = ({ study }) => {
     ),
   };
 
-  const handleOnClick = (category) => {
+  const handleOnClick = (category: string) => {
     setCategory(category);
   };
 
-  const handleDraftOnClick = async (path) => {
+  const handleDraftOnClick = async (path: string) => {
     const response = await StudyApi.publishStudy(path);
     console.log("handleDraftOnCLick => ", response);
     handleResponse(response, setPublished, false);
@@ -58,7 +59,7 @@ const My_Study_Manager_Main = ({ study }) => {
         >
           {published ? "Published" : "Draft"}
         </S.Study_Component_Click_style>
-        <ReactTooltip id="draftTooltip" effect="solid" place="top">
+        <ReactTooltip id="draftTooltip" variant="info" place="top">
           Click to Pubslih Study to Others
         </ReactTooltip>
         <S.Study_Component_Click_style fontSize="22px">

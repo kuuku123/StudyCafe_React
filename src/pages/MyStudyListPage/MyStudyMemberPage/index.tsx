@@ -19,7 +19,7 @@ const StudyMemberPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getStudy = async (path) => {
+    const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
       handleResponse(response, setStudy, false);
     };

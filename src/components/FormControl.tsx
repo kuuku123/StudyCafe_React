@@ -5,7 +5,7 @@ interface FormControlProps {
   label: string;
   htmlFor: string;
   required?: boolean;
-  error?: string;
+  error?: ReactNode;
   children: ReactNode;
 }
 
@@ -16,7 +16,7 @@ const FormControl: React.FC<FormControlProps> = ({
   error,
   children,
 }) => {
-  const label_style = {
+  const label_style: React.CSSProperties = {
     textAlign: "start",
     width: "100%", // Takes full width of the parent container
     maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px

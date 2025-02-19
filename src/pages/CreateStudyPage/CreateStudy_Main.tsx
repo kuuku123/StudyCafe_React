@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import MyEditor from "../../components/Quill-Editor/MyEditor";
 import * as S from "./CreateStudy_Main_style";
 import * as MyForm from "../../lib/MyForm";
-import FormControl from "../../components/FomrControl";
+import FormControl from "../../components/FormControl";
 import HandleResponseApi from "../../lib/HandleResponse";
 import RoutesEnum from "../../lib/RoutesEnum";
 import StudyApi from "../../lib/apis/StudyApi";
 import Button from "../../components/Button";
+import { StudyForm } from "../../utils/type";
 const CreateStudy_Main = () => {
-  const [img, setImage] = useState();
-  const onChange = (e) => {
+  const [img, setImage] = useState<string>("");
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
     const img = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onloadend = () => {
-      setImage(reader.result);
+      setImage(reader.result as string);
     };
   };
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleSubmit = async (createStudyForm) => {
-    createStudyForm["studyImage"] = img;
+  const handleSubmit = async (createStudyForm: StudyForm) => {
+    createStudyForm.studyImage = typeof img === "string" ? img : undefined;
     const response = await StudyApi.createStudy(createStudyForm);
     handleResponse(response, null, {
       useNav: true,
@@ -28,7 +31,7 @@ const CreateStudy_Main = () => {
     });
   };
 
-  const validate = (values) => {
+  const validate = () => {
     const errors = {};
     return errors;
   };
@@ -125,11 +128,11 @@ const CreateStudy_Main = () => {
               as={MyEditor}
             ></MyForm.Field>
           </FormControl>
-          <Button type="sumbit">Save</Button>
+          <Button type="submit">Save</Button>
         </MyForm.Form>
       </S.CreateStudy_Main_style>
       <S.Study_Image_style>
-        <img src={img} width="240px" height="240px"></img>
+        {img && <img src={img} width="240px" height="240px" />}
         <figcaption style={{ textAlign: "center" }}>Study Image</figcaption>
         <input
           type="file"

@@ -8,9 +8,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RoutesEnum from "../../../lib/RoutesEnum";
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
+import { StudyDto } from "../../../utils/type";
 
 const StudyManagerPage = () => {
-  const [study, setStudy] = useState();
+  const [study, setStudy] = useState<StudyDto>();
 
   const handleResponse = HandleResponseApi.useHandleResponse();
   const location = useLocation();
@@ -22,7 +23,7 @@ const StudyManagerPage = () => {
     const queryParams = new URLSearchParams(location.search);
     const refresh = queryParams.get("refresh");
     // Your logic here (e.g., re-fetch data, etc.)
-    const getStudy = async (path) => {
+    const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
       handleResponse(response, setStudy, false);
     };
@@ -37,7 +38,7 @@ const StudyManagerPage = () => {
       const newUrl = location.pathname + (newSearch ? `?${newSearch}` : "");
 
       // Use navigate to replace the URL without reloading
-      console.log("newUrl => ", newUrl)
+      console.log("newUrl => ", newUrl);
       navigate(newUrl);
     }
   }, [location.search]);

@@ -1,4 +1,6 @@
-const updatePassword = async (passwordInfo) => {
+import { PasswordForm } from "../../utils/type";
+
+const updatePassword = async (passwordInfo: PasswordForm) => {
   const raw_response = await fetch(`${API_GATEWAY_URL}/auth/update-password`, {
     credentials: "include",
     method: "POST",

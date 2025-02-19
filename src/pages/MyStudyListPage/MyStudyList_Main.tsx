@@ -6,23 +6,23 @@ import * as S from "./MyStudyList_Main_style";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 import RoutesEnum from "../../lib/RoutesEnum";
+import { StudyDto } from "../../utils/type";
 
 const StudyList_Main = () => {
-  const [mangerStudies, setManagerStudies] = useState([]);
-  const [memberStudies, setMemberStudies] = useState([]);
+  const [mangerStudies, setManagerStudies] = useState<StudyDto[]>([]);
+  const [memberStudies, setMemberStudies] = useState<StudyDto[]>([]);
   const navigate = useNavigate();
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleClick = (study, isManager) => {
+  const handleClick = (study: StudyDto, isManager: boolean) => {
     console.log("study => ", study);
     if (isManager) {
       navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
-    }
-    else {
+    } else {
       navigate(RoutesEnum.STUDY_MEMBER(study.path), { state: study });
     }
   };
-  const handleManagerStudies = (studies) => {
+  const handleManagerStudies = (studies: StudyDto[]) => {
     const sanitizedStudies = Array.isArray(studies)
       ? studies.map((study) => ({
           ...study,
@@ -34,7 +34,7 @@ const StudyList_Main = () => {
     setManagerStudies(sanitizedStudies);
   };
 
-  const handleMemberStudies = (studies) => {
+  const handleMemberStudies = (studies: StudyDto[]) => {
     const sanitizedStudies = Array.isArray(studies)
       ? studies.map((study) => ({
           ...study,

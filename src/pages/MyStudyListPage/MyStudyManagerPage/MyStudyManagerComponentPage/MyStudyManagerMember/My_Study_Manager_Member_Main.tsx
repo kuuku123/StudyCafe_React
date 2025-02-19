@@ -3,25 +3,28 @@ import * as S from "./My_Study_Manager_Member_Main_style";
 import HandleResponseApi from "../../../../../lib/HandleResponse";
 import StudyManagerApi from "../../../../../lib/apis/StudyManagerApi";
 import ChatPopup from "../../../../../components/Chat/ChatPopup";
+import { AccountDto, StudyDto } from "../../../../../utils/type";
 
-const My_Study_Mananger_Member_Main = ({ study }) => {
-  const [img, setImage] = useState();
-  const [studyMembers, setStudyMembers] = useState([]);
+const My_Study_Mananger_Member_Main: React.FC<{ study: StudyDto }> = ({
+  study,
+}) => {
+  const [img, setImage] = useState<string>();
+  const [studyMembers, setStudyMembers] = useState<AccountDto[]>([]);
 
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleStudyMembers = (studyMembers) => {
+  const handleStudyMembers = (studyMembers: AccountDto[]) => {
     console.log("StudyMembers => ", studyMembers);
     setStudyMembers(studyMembers);
   };
 
-  const handleImage = (profile_image_base64_encoded) => {
+  const handleImage = (profile_image_base64_encoded: string) => {
     const base64Image = "data:image/png;base64," + profile_image_base64_encoded;
     setImage(base64Image);
   };
 
   useEffect(() => {
-    const getStudyMembers = async (path) => {
+    const getStudyMembers = async (path: string) => {
       const response = await StudyManagerApi.fetchStudyMembers(path);
       handleResponse(response, handleStudyMembers, false);
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import * as S from "./ProfileSetting_Main_style";
 import RoutesEnum from "../../lib/RoutesEnum";
@@ -19,19 +19,15 @@ const ProfileSetting_Main = () => {
     sessionStorage.setItem("ProfileSetting_Main_category", category);
   }, [category]);
 
-  const pageComponet = {
+  const pageComponet: Record<string, JSX.Element> = {
     profileEdit: <ProfileEdit_Main></ProfileEdit_Main>,
     password: <ProfilePassword_Main></ProfilePassword_Main>,
     alarm: <ProfileAlarm_Main></ProfileAlarm_Main>,
-    tagsAndZones: (
-      <ProfileTagsAndZones_Main
-        setCategory={setCategory}
-      ></ProfileTagsAndZones_Main>
-    ),
+    tagsAndZones: <ProfileTagsAndZones_Main></ProfileTagsAndZones_Main>,
     account: <ProfileAccount_Main></ProfileAccount_Main>,
   };
 
-  const handleOnClick = (category) => {
+  const handleOnClick = (category: string) => {
     setCategory(category);
   };
 

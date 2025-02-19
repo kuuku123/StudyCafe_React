@@ -1,3 +1,4 @@
+import { Profile } from "../../utils/type";
 
 const fetchProfile = async () => {
   const raw_profile = await fetch(`${API_GATEWAY_URL}/app/profile`, {
@@ -8,7 +9,7 @@ const fetchProfile = async () => {
   return profile;
 };
 
-const updatePorfile = async (profileEditInfo) => {
+const updatePorfile = async (profileEditInfo: Profile) => {
   const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/profile`, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -20,7 +21,6 @@ const updatePorfile = async (profileEditInfo) => {
   const response = await raw_response.json();
   return response;
 };
-
 
 const ProfileApi = {
   fetchProfile,

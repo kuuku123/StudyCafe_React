@@ -5,16 +5,17 @@ import ChatMessage from "./ChatMessage";
 import { selectAuth } from "../../lib/features/redux/authSelector";
 import { StudyDto } from "../../utils/type";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
-import HandleResponseApi from "../../lib/HandleResponse";
+import DOMPurify from "dompurify";
+import StudyMemberApi from "../../lib/apis/StudyMemberApi";
 
 export type StudySummary = Pick<StudyDto, "title" | "path">;
 
 const ChatPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // Explicitly type selectedStudy as Study | null
+  const [mangerStudies, setManagerStudies] = useState<StudyDto[]>([]);
+  const [memberStudies, setMemberStudies] = useState<StudyDto[]>([]);
   const [selectedStudy, setSelectedStudy] = useState<StudySummary | null>(null);
-  const { user } = useSelector(selectAuth);
-  const handleResponse = HandleResponseApi.useHandleResponse();
+  const { user, isAuthenticated } = useSelector(selectAuth);
 
   // Type the studies array
   const studies: StudySummary[] = [{ path: "asdf", title: "Study 1" }];
@@ -63,19 +64,43 @@ const ChatPopup = () => {
     }
   }, [isOpen, savedScroll]);
 
+  const handleManagerStudies = (studies: StudyDto[]) => {
+    const sanitizedStudies = Array.isArray(studies)
+      ? studies.map((study) => ({
+          ...study,
+          fullDescription: DOMPurify.sanitize(study.fullDescription),
+          studyImage: "data:image/png;base64," + study.studyImage,
+        }))
+      : [];
+    console.log("sanitizedStudies => ", sanitizedStudies);
+    setManagerStudies(sanitizedStudies);
+  };
+
+  const handleMemberStudies = (studies: StudyDto[]) => {
+    const sanitizedStudies = Array.isArray(studies)
+      ? studies.map((study) => ({
+          ...study,
+          fullDescription: DOMPurify.sanitize(study.fullDescription),
+          studyImage: "data:image/png;base64," + study.studyImage,
+        }))
+      : [];
+    console.log("handleMemberStudies => ", sanitizedStudies);
+    setMemberStudies(sanitizedStudies);
+  };
+
   useEffect(() => {
-    const getManagerStudyList = async () => {
-      const response = await StudyManagerApi.fetchStudyList();
-
-      handleResponse(response, handleManagerStudies, false);
-    };
-    const getMemberStudyList = async () => {
-      const response = await StudyMemberApi.fetchStudyList();
-
-      handleResponse(response, handleMemberStudies, false);
-    };
-    getManagerStudyList();
-    getMemberStudyList();
+    if (isAuthenticated) {
+      const getManagerStudyList = async () => {
+        const response = await StudyManagerApi.fetchStudyList();
+        handleManagerStudies(response.data);
+      };
+      const getMemberStudyList = async () => {
+        const response = await StudyMemberApi.fetchStudyList();
+        handleMemberStudies(response.data);
+      };
+      getManagerStudyList();
+      getMemberStudyList();
+    }
   }, []);
 
   // Auto-scroll if user is near the bottom

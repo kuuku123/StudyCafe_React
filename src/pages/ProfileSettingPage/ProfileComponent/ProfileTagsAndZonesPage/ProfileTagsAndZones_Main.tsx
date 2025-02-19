@@ -7,9 +7,10 @@ import ZoneApi from "../../../../lib/apis/ZoneApi";
 import Button from "../../../../components/Button";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as MyLayout from "../../../../lib/MyLayout";
+import { TagDto, TagType, ZoneDto, ZoneType } from "../../../../utils/type";
 
-const ProfileTagsAndZones_Main = ({ setCategory }) => {
-  const [uniqueTags, setUniqueTags] = useState([
+const ProfileTagsAndZones_Main = () => {
+  const [uniqueTags, setUniqueTags] = useState<TagType[]>([
     { value: "health", label: "health" },
     { value: "computer-science", label: "computer-science" },
     { value: "mathematics", label: "mathematics" },
@@ -23,17 +24,27 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
     { value: "engineering", label: "engineering" },
     { value: "philosophy", label: "philosophy" },
   ]);
-  const [willSelectedTags, setWillSelectedTags] = useState(null);
-  const [willSelectedZones, setWillSelectedZones] = useState(null);
-  const [selectedTags, setSelectedTags] = useState(null);
-  const [selectedZones, setSelectedZones] = useState(null);
-  const [defaultTags, setDefaultTags] = useState([]);
-  const [defaultZones, setDefaultZones] = useState([]);
-  const [uniqueZones, setUniqueZones] = useState([]);
+  const [willSelectedTags, setWillSelectedTags] = useState<TagType[] | null>(
+    null
+  );
+  const [willSelectedZones, setWillSelectedZones] = useState<ZoneType[] | null>(
+    null
+  );
+  const [selectedTags, setSelectedTags] = useState<TagDto[]>([]);
+  const [selectedZones, setSelectedZones] = useState<ZoneDto[]>([]);
+  const [defaultTags, setDefaultTags] = useState<TagDto[]>([]);
+  const [defaultZones, setDefaultZones] = useState<ZoneDto[]>([]);
+  const [uniqueZones, setUniqueZones] = useState<ZoneType[]>([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
   const { startLoading, finishLoading } = MyLayout.useLoading();
 
-  const handleTagChange = (selectedOption) => {
+  const handleTagChange = (selectedOption: TagType[] | null) => {
+    if (!selectedOption) {
+      setWillSelectedTags(null);
+      setSelectedTags([]);
+      return;
+    }
+
     setWillSelectedTags(selectedOption);
     setSelectedTags((prevTags) => {
       console.log("prevTags => ", prevTags);
@@ -42,10 +53,10 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
       console.log("newTags => ", newTags);
       // Combine the previous tags and the new tags
       const updatedTags = [
-        ...(prevTags || []),
+        ...prevTags,
         ...newTags.filter(
-          (newTag) =>
-            !(prevTags || []).some((prevTag) => prevTag.title === newTag.title)
+          (newTag: TagDto) =>
+            !prevTags.some((prevTag) => prevTag.title === newTag.title)
         ),
       ];
       console.log("updatedTags => ", updatedTags);
@@ -68,7 +79,7 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
       return finalTags;
     });
   };
-  const handleZoneChange = (selectedOption) => {
+  const handleZoneChange = (selectedOption: ZoneType[]) => {
     setWillSelectedZones(selectedOption);
     setSelectedZones((prevZones) => {
       const newZones = ZoneApi.changeZoneLabelToCity(selectedOption);
@@ -77,7 +88,7 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
       const updatedZones = [
         ...(prevZones || []), // Use an empty array if prevZones is null or undefined
         ...newZones.filter(
-          (newZone) =>
+          (newZone: ZoneDto) =>
             !(prevZones || []).some(
               (prevZone) => prevZone.city === newZone.city
             )
@@ -141,12 +152,12 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
     handleWillSelectedTagAndZones();
   };
 
-  const handleDeleteTag = async (tag) => {
+  const handleDeleteTag = async (tag: string) => {
     await TagApi.removeAccountTag({ title: tag });
     reset();
   };
 
-  const handleDeleteZone = async (city, province) => {
+  const handleDeleteZone = async (city: string, province: string) => {
     await ZoneApi.removeAccountZone({
       city: city,
       province: province,
@@ -154,7 +165,7 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
     reset();
   };
 
-  const parseZones = (zones) => {
+  const parseZones = (zones: ZoneDto[]) => {
     const mappedCities = zones.map((cityObj) => ({
       value: { city: cityObj.city, province: cityObj.province },
       label: cityObj.city,
@@ -162,11 +173,11 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
     setUniqueZones(mappedCities);
   };
 
-  const handleInitTags = (tags) => {
+  const handleInitTags = (tags: TagDto[]) => {
     setSelectedTags(tags);
     setDefaultTags(tags);
   };
-  const handleInitZones = (zones) => {
+  const handleInitZones = (zones: ZoneDto[]) => {
     setSelectedZones(zones);
     setDefaultZones(zones);
   };
@@ -251,7 +262,7 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
                   </S.Tag_Pill_style>
                   <ReactTooltip
                     id="customTooltipTag"
-                    effect="solid"
+                    variant="info"
                     place="top"
                   >
                     click to delete tag
@@ -277,7 +288,7 @@ const ProfileTagsAndZones_Main = ({ setCategory }) => {
                   </S.Zone_Pill_style>
                   <ReactTooltip
                     id="customTooltipZone"
-                    effect="solid"
+                    variant="info"
                     place="top"
                   >
                     click to delete zone

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DropDownContainer from "./Dropdown/DropDownContainer";
 import * as S from "./Component_style";
@@ -20,23 +20,21 @@ import {
   addStudyUpdated,
 } from "../lib/features/redux/notificationSlice";
 import { checkFirstLoggedIn } from "../lib/features/redux/authSlice";
+import { selectAuth } from "../lib/features/redux/authSelector";
+import {
+  selectStudyCreated,
+  selectStudyUpdated,
+} from "../lib/features/redux/notificationSelector";
+import { Notification, NotificationDto } from "../utils/type";
 
-const Title = ({ children }) => {
-  const [notifications, setNotifications] = useState([]);
+const Title = ({ children }: { children: ReactNode }) => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { user, isAuthenticated, firstLoggedIn } = useSelector(
-    (state) => state.auth
-  );
-  const { studyCreated, studyUpdated } = useSelector((state) => {
-    console.log("state ", state);
-    return {
-      studyCreated: state.notifications.messages.studyCreated.events,
-      studyUpdated: state.notifications.messages.studyUpdated.events,
-    };
-  });
+  const { user, isAuthenticated, firstLoggedIn } = useSelector(selectAuth);
+  const studyCreated = useSelector(selectStudyCreated);
+  const studyUpdated = useSelector(selectStudyUpdated);
 
-
-  const addUnReadNotification = (dataList) => {
+  const addUnReadNotification = (dataList: NotificationDto[]) => {
     dataList.forEach((data) => {
       if (data.message === "study updated") {
         const exists = studyUpdated.some((item) => item.id === data.id);
@@ -68,7 +66,11 @@ const Title = ({ children }) => {
 
   if (isAuthenticated) {
     console.log("user => ", user);
-    sseService.connect(user);
+    if (user) {
+      sseService.connect(user);
+    } else {
+      console.error("User is null, cannot connect to SSE service.");
+    }
     return (
       <S.Title_style>
         <S.Children_style>
@@ -131,25 +133,25 @@ const Title = ({ children }) => {
       </S.Title_style>
     );
   } else {
-    console.log("auAuthenticated Title ")
-  return (
-    <S.Title_style>
-      <S.Children_style>
-        <Link to="/">
-          <S.Header_Image_style src="/images/image.png"></S.Header_Image_style>
-        </Link>
-        {children}
-      </S.Children_style>
-      <S.Login_Signup_style>
-        <Link style={S.link_style} to="/login">
-          Login
-        </Link>
-        <Link style={S.link_style} to="/sign-up">
-          Sign-Up
-        </Link>
-      </S.Login_Signup_style>
-    </S.Title_style>
-  );
+    console.log("auAuthenticated Title ");
+    return (
+      <S.Title_style>
+        <S.Children_style>
+          <Link to="/">
+            <S.Header_Image_style src="/images/image.png"></S.Header_Image_style>
+          </Link>
+          {children}
+        </S.Children_style>
+        <S.Login_Signup_style>
+          <Link style={S.link_style} to="/login">
+            Login
+          </Link>
+          <Link style={S.link_style} to="/sign-up">
+            Sign-Up
+          </Link>
+        </S.Login_Signup_style>
+      </S.Title_style>
+    );
   }
 };
 

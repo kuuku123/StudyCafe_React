@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
-export const Profile_Edit_style = {
+export const Profile_Edit_style: CSSProperties = {
   gridRowStart: "2",
   gridRowEnd: "7",
   gridColumnStart: "6",

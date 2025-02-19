@@ -15,8 +15,12 @@ export const Input_style = styled.input`
   display: none;
 `;
 
+interface SliderProps {
+  isOn: boolean;
+}
+
 // The slider background
-export const Slider_style = styled.span`
+export const Slider_style = styled.span<SliderProps>`
   position: relative;
   width: 40%;
   height: 100%;

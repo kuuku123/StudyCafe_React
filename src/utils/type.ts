@@ -12,6 +12,38 @@ export interface User {
   zones: string[];
 }
 
+export interface LoginFormType {
+  nicknameOrEmail: string;
+  password: string;
+}
+
+export interface SignUpForm {
+  nickname: string;
+  email: string;
+  password: string;
+}
+
+export interface AccountDto {
+  nickname: string;
+  bio: string;
+  url: string;
+  occupation: string;
+  location: string;
+  email: string;
+  emailVerified: boolean;
+  profileImage: string;
+  tags: TagDto[];
+  zones: ZoneDto[];
+}
+
+export interface Profile {
+  bio: string;
+  url: string;
+  occupation: string;
+  location: string;
+  profileImage: string;
+}
+
 // Define the auth slice state
 export interface AuthState {
   user: User | null;
@@ -19,11 +51,9 @@ export interface AuthState {
   firstLoggedIn: boolean;
 }
 
-// Define an event type for notifications.
-// Adjust the properties based on your actual event structure.
-export interface Event {
-  id: string; // or number, depending on your design
-  // ... add other event properties if needed
+export interface PasswordForm {
+  newPassword: string;
+  newPasswordConfirm: string;
 }
 
 // Define the notification slice state
@@ -31,12 +61,45 @@ export interface NotificationState {
   messages: {
     count: number;
     studyCreated: {
-      events: Event[];
+      events: NotificationDto[];
     };
     studyUpdated: {
-      events: Event[];
+      events: NotificationDto[];
     };
   };
+}
+
+export enum NotificationType {
+  STUDY_CREATED = "STUDY_CREATED",
+  STUDY_UPDATED = "STUDY_UPDATED",
+  EVENT_ENROLLMENT = "EVENT_ENROLLMENT",
+}
+
+export interface NotificationDto {
+  id: number;
+  title: string;
+  link: string;
+  message: string;
+  checked: boolean;
+  accountEmail: string;
+  studyPath: string;
+  createdDateTime: string;
+  notificationType: NotificationType;
+}
+
+export interface Notification {
+  id: number;
+  studyPath: string;
+  type: string;
+}
+
+export interface StudyForm {
+  path: string;
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  fullDescriptionText: string;
+  studyImage?: string;
 }
 
 export interface StudyDto {
@@ -48,11 +111,51 @@ export interface StudyDto {
   published: boolean;
 }
 
+export interface StudyJoinDto {
+  id: number;
+  title: string;
+  path: string;
+  shortDescription: string;
+  tagDtoList: TagDto[];
+  zoneDtoList: ZoneDto[];
+}
+
+export interface TagDto {
+  id?: number;
+  title: string;
+}
+export interface TagForm {
+  title: string;
+}
+export interface TagType {
+  value: string;
+  label: string;
+}
+
+export interface ZoneDto {
+  id?: number;
+  city: string;
+  localNameOfCity?: string;
+  province: string;
+}
+export interface ZoneValue {
+  city: string;
+  province: string;
+}
+export interface ZoneType {
+  value: ZoneValue;
+  label: string;
+}
+
+export interface ZoneForm {
+  city: string;
+  province: string;
+}
+
 export interface ApiResponse<T = any> {
   status: string;
   data: T;
   message?: string;
 }
-
 
 export type PersistedAuthState = AuthState & PersistPartial;

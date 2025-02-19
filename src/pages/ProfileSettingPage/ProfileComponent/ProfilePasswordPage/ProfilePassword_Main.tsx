@@ -2,28 +2,29 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import * as MyForm from "../../../../lib/MyForm";
-import FormControl from "../../../../components/FomrControl";
+import FormControl from "../../../../components/FormControl";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 import { loginSuccess } from "../../../../lib/features/redux/authSlice";
 import * as S from "./ProfilePassword_Main_style";
+import AuthApi from "../../../../lib/apis/AuthApi";
+import { PasswordForm } from "../../../../utils/type";
 
 const ProfilePassword_Main = () => {
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const onSubmit = async (passwordInfo) => {
-    const response = await ProfileApi.updatePassword(passwordInfo);
+  const onSubmit = async (passwordInfo: PasswordForm) => {
+    const response = await AuthApi.updatePassword(passwordInfo);
     handleResponse(response, (data) => dispatch(loginSuccess(data)), {
       useNav: true,
       path: RoutesEnum.HOME,
-      dialog:
-        "password updated successfully",
+      dialog: "password updated successfully",
     });
   };
 
-  const validate = (values) => {
+  const validate = (values: PasswordForm) => {
     console.log("values ==> ", values);
-    const errors = {};
+    const errors: Record<string, any> = {};
     if (values.newPassword !== values.newPasswordConfirm) {
       console.log("not same!!");
       errors.newPasswordConfirm = "password is not same";

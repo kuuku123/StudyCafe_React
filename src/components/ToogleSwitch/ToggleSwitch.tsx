@@ -1,7 +1,17 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import * as S from "./ToggleSwitch_style";
 
-const ToggleSwitch = ({ isOn, handleToggle, children }) => {
+interface ToggleSwitchProps {
+  isOn: boolean;
+  handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  children: ReactNode;
+}
+
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  isOn,
+  handleToggle,
+  children,
+}) => {
   return (
     <S.ToggleSwitch_style>
       <S.Input_style type="checkbox" checked={isOn} onChange={handleToggle} />

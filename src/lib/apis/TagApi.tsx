@@ -1,4 +1,6 @@
-const getStudyTags = async (path) => {
+import { TagForm, TagType } from "../../utils/type";
+
+const getStudyTags = async (path: string) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/tags`,
     {
@@ -11,7 +13,7 @@ const getStudyTags = async (path) => {
   return get_tag_json;
 };
 
-const addStudyTag = async (path, tagData) => {
+const addStudyTag = async (path: string, tagData: TagForm[]) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/tags/add`,
     {
@@ -27,7 +29,7 @@ const addStudyTag = async (path, tagData) => {
   const response_json = raw_response.json();
   return response_json;
 };
-const removeStudyTag = async (path, tagData) => {
+const removeStudyTag = async (path: string, tagData: TagForm) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/app/study/${path}/settings/tags/remove`,
     {
@@ -54,7 +56,7 @@ const getAccountTags = async () => {
   return get_tag_json;
 };
 
-const addAccountTag = async (tagData) => {
+const addAccountTag = async (tagData: TagForm[]) => {
   const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/tags/add`, {
     credentials: "include",
     method: "POST",
@@ -68,27 +70,31 @@ const addAccountTag = async (tagData) => {
   return response_json;
 };
 
-const removeAccountTag = async (tagData) => {
-  const raw_response = await fetch(`${API_GATEWAY_URL}/app/settings/tags/remove`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(tagData),
-  });
+const removeAccountTag = async (tagData: TagForm) => {
+  const raw_response = await fetch(
+    `${API_GATEWAY_URL}/app/settings/tags/remove`,
+    {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tagData),
+    }
+  );
   console.log("raw_response => ", raw_response);
   const response_json = raw_response.json();
   return response_json;
 };
 
-const changeTagLabelToTitile = (tags) => {
+const changeTagLabelToTitile = (tags: TagType[] | null) => {
   if (tags != null) {
     const newTags = tags.map((tag) => ({
       title: tag.label,
     }));
     return newTags;
   }
+  return [];
 };
 
 const TagApi = {

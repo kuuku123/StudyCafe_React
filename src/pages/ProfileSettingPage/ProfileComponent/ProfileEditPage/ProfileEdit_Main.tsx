@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import * as MyForm from "../../../../lib/MyForm";
-import FormControl from "../../../../components/FomrControl";
+import FormControl from "../../../../components/FormControl";
 import * as S from "./ProfileEdit_Main_style";
 import HandleResponseApi from "../../../../lib/HandleResponse";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 import RoutesEnum from "../../../../lib/RoutesEnum";
+import { Profile } from "../../../../utils/type";
 
 const ProfileEdit_Main = () => {
-  const [img, setImage] = useState();
+  const [img, setImage] = useState<string>("");
   const handleResponse = HandleResponseApi.useHandleResponse();
 
-  const handleProfile =(profile) => {
+  const handleProfile = (profile: Profile) => {
     const base64Image = "data:image/png;base64," + profile.profileImage;
     setImage(base64Image);
-  }
+  };
 
   useEffect(() => {
     const getProfile = async () => {
@@ -24,22 +25,23 @@ const ProfileEdit_Main = () => {
     getProfile();
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
     const img = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onloadend = () => {
-      setImage(reader.result);
+      setImage(reader.result as string);
     };
   };
 
-  const handleSubmit = async (profileEditInfo) => {
+  const handleSubmit = async (profileEditInfo: Profile) => {
     profileEditInfo["profileImage"] = img;
     const response = await ProfileApi.updatePorfile(profileEditInfo);
     handleResponse(response, null, { useNav: true, path: RoutesEnum.PROFILE });
   };
 
-  const validate = (values) => {
+  const validate = () => {
     const errors = {};
     return errors;
   };
@@ -58,8 +60,8 @@ const ProfileEdit_Main = () => {
         id="profile-edit-form"
         initialValue={{
           bio: "",
-          link: "",
-          job: "",
+          url: "",
+          occupation: "",
           location: "",
           profileImage: img,
         }}
@@ -83,12 +85,12 @@ const ProfileEdit_Main = () => {
 
         <FormControl
           label="나의 링크"
-          htmlFor="link"
-          error={<MyForm.ErrorMessage name="link"></MyForm.ErrorMessage>}
+          htmlFor="url"
+          error={<MyForm.ErrorMessage name="url"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
-            id="profile-edit-link"
-            name="link"
+            id="profile-edit-url"
+            name="url"
             placeholder="http://studycafe.com"
             style={input_style}
           ></MyForm.Field>
@@ -99,12 +101,12 @@ const ProfileEdit_Main = () => {
         </FormControl>
         <FormControl
           label="직업"
-          htmlFor="job"
-          error={<MyForm.ErrorMessage name="job"></MyForm.ErrorMessage>}
+          htmlFor="occupation"
+          error={<MyForm.ErrorMessage name="occupation"></MyForm.ErrorMessage>}
         >
           <MyForm.Field
-            id="profile-edit-job"
-            name="job"
+            id="profile-edit-occupation"
+            name="occupation"
             placeholder="어떤 일을 하고 계신가요?"
             style={input_style}
           ></MyForm.Field>

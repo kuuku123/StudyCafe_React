@@ -8,7 +8,7 @@ const fetchStudyList = async () => {
   return studyList;
 };
 
-const fetchStudyMembers = async (path) => {
+const fetchStudyMembers = async (path: string) => {
   const raw_studyMemberList = await fetch(
     `${API_GATEWAY_URL}/app/manager/${path}/study-members`,
     {
@@ -21,7 +21,7 @@ const fetchStudyMembers = async (path) => {
   return studyMemberList;
 };
 
-const fetchStudyManagers = async (path) => {
+const fetchStudyManagers = async (path: string) => {
   const raw_studyManagerList = await fetch(
     `${API_GATEWAY_URL}/app/manager/${path}/study-managers`,
     {
@@ -34,7 +34,7 @@ const fetchStudyManagers = async (path) => {
   return studyManagerList;
 };
 
-const isManager = async (path) => {
+const isManager = async (path: string) => {
   const raw_isManager = await fetch(
     `${API_GATEWAY_URL}/app/manager/${path}/isManager`,
     {
