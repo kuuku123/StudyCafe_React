@@ -1,6 +1,6 @@
 import { User } from "../../utils/type";
 
-export interface ChatMessage {
+export interface ChatMessageType {
   id: number;
   sender: string;
   text: string;
@@ -9,7 +9,7 @@ export interface ChatMessage {
 class WSService {
   url: string;
   socket: WebSocket | null;
-  onMessageCallback?: (message: ChatMessage) => void;
+  onMessageCallback?: (message: ChatMessageType) => void;
   user?: User;
 
   constructor(url: string) {
@@ -19,7 +19,7 @@ class WSService {
 
   connect(
     studyPath: string,
-    onMessageCallback: (message: ChatMessage) => void,
+    onMessageCallback: (message: ChatMessageType) => void,
     user: User
   ) {
     this.onMessageCallback = onMessageCallback;
@@ -38,7 +38,7 @@ class WSService {
       this.socket.onmessage = (event: MessageEvent) => {
         try {
           console.log("event.data => ", event.data);
-          const message = JSON.parse(event.data) as ChatMessage;
+          const message = JSON.parse(event.data) as ChatMessageType;
           if (user.email !== message.sender) onMessageCallback(message);
           console.log("message => ", message);
         } catch (error) {
@@ -57,7 +57,7 @@ class WSService {
     }
   }
 
-  sendMessage(message: ChatMessage) {
+  sendMessage(message: ChatMessageType) {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       const serializedMessage = JSON.stringify(message);
       this.socket.send(serializedMessage);
