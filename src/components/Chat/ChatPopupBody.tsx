@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StudySummary } from "./ChatPopup";
 import { User } from "../../utils/type";
-import { ChatMessageType, wsService } from "../../lib/features/WSService";
+import { ChatMessageType, WSService } from "../../lib/features/WSService";
 import ChatMessage from "./ChatMessage";
 import * as S from "./ChatPopupBody_style";
 
@@ -11,6 +11,13 @@ interface ChatPopupBodyType {
 }
 
 const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
+  console.log("ChatPopupBody rerender => ", study)
+  // Only create the service ONCE per component instance:
+  const wsServiceRef = useRef<WSService | null>(null);
+  if (!wsServiceRef.current) {
+    wsServiceRef.current = new WSService();
+  }
+  const wsService = wsServiceRef.current;
   const [messages, setMessages] = useState<ChatMessageType[]>([
     { id: 1, sender: "tony", text: "Hi there! Welcome to the chat." },
     { id: 2, sender: "tony2", text: "Hello! Glad to be here." },
@@ -37,11 +44,10 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
   };
 
   useEffect(() => {
-    console.log("calling wsService ");
-    const studyPath = "asdf"; // Replace with your dynamic studyPath if needed
+    console.log("calling wsService ", study);
 
     wsService.connect(
-      studyPath,
+      study.path,
       (newMessage) =>
         setMessages((prevMessages) => [...prevMessages, newMessage]),
       user!
@@ -58,7 +64,9 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
 
   // Restore saved scroll when reopening
   useEffect(() => {
+    console.log("savedScroll!! out if")
     if (chatBodyRef.current) {
+      console.log("savedScroll!!")
       setTimeout(() => {
         chatBodyRef.current!.scrollTop = savedScroll;
       }, 0);
@@ -67,7 +75,9 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
 
   // Auto-scroll if user is near the bottom
   useEffect(() => {
+    console.log("Auto Scroll!! out if")
     if (chatBodyRef.current) {
+    console.log("Auto Scroll!! ")
       const { scrollTop, clientHeight, scrollHeight } = chatBodyRef.current;
       // Debug log to check scroll values
       console.log(
@@ -78,9 +88,9 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
         "scrollHeight:",
         scrollHeight
       );
-      if (scrollTop + clientHeight >= scrollHeight - 120) {
-        chatBodyRef.current.scrollTop = scrollHeight;
-      }
+      // if (scrollTop + clientHeight >= scrollHeight - 120) {
+      chatBodyRef.current.scrollTop = scrollHeight;
+      // }
     }
   }, [messages]);
 

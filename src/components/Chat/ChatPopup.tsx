@@ -7,7 +7,6 @@ import { StudyDto } from "../../utils/type";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
 import DOMPurify from "dompurify";
 import StudyMemberApi from "../../lib/apis/StudyMemberApi";
-import { wsService } from "../../lib/features/WSService";
 import ChatPopupBody from "./ChatPopupBody";
 
 export type StudySummary = Pick<StudyDto, "title" | "path">;
@@ -97,8 +96,12 @@ const ChatPopup = () => {
               <div
                 key={study.path}
                 style={{
-                  display:
-                    selectedStudy?.path === study.path ? "block" : "none",
+                  visibility:
+                    selectedStudy?.path === study.path ? "visible" : "hidden",
+                  position:
+                    selectedStudy?.path === study.path ? "static" : "absolute",
+                  pointerEvents:
+                    selectedStudy?.path === study.path ? "auto" : "none",
                 }}
               >
                 <ChatPopupBody study={study} user={user!} />

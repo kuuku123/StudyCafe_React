@@ -6,14 +6,14 @@ export interface ChatMessageType {
   text: string;
 }
 
-class WSService {
+ export class WSService {
   url: string;
   socket: WebSocket | null;
   onMessageCallback?: (message: ChatMessageType) => void;
   user?: User;
 
-  constructor(url: string) {
-    this.url = url;
+  constructor() {
+    this.url = `${API_GATEWAY_URL}/chat`;
     this.socket = null;
   }
 
@@ -75,4 +75,3 @@ class WSService {
   }
 }
 
-export const wsService = new WSService(`${API_GATEWAY_URL}/chat`);
