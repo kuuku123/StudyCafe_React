@@ -26,8 +26,8 @@ const CreateStudy_Main = () => {
     createStudyForm.studyImage = typeof img === "string" ? img : undefined;
     const response = await StudyApi.createStudy(createStudyForm);
     handleResponse(response, null, {
-      useNav: true,
       path: RoutesEnum.MY_STUDY_LIST,
+      dialog: "",
     });
   };
 

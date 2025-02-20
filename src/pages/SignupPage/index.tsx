@@ -27,15 +27,16 @@ const SignupPage = () => {
       return res.json();
     });
 
-    handleResponse(jwtResponse, null, false);
+    console.log("before jwt Response ======== ");
+    handleResponse(jwtResponse, null, { path: "", dialog: "" });
+    console.log("after jwt Response ======== ");
 
     if (jwtResponse.status == "OK") {
       const response = await ProfileApi.fetchProfile();
 
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-        useNav: true,
         path: RoutesEnum.HOME,
-        dialog: undefined,
+        dialog: "",
       });
     }
   };

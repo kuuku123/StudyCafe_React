@@ -25,7 +25,7 @@ const StudyManagerPage = () => {
     // Your logic here (e.g., re-fetch data, etc.)
     const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
-      handleResponse(response, setStudy, false);
+      handleResponse(response, setStudy, {path:"", dialog:""});
     };
     getStudy(path);
 

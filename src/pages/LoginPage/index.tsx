@@ -30,13 +30,14 @@ const LoginPage = () => {
     }).then((res) => {
       return res.json();
     });
-    console.log("jwtReposnse =>  ", jwtResponse);
+
+    handleResponse(jwtResponse, null, { path: "", dialog: "" });
 
     if (jwtResponse.status === "OK") {
       const response = await ProfileApi.fetchProfile();
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-        useNav: true,
         path: RoutesEnum.HOME,
+        dialog: "",
       });
     } else {
       openDialog(
@@ -48,7 +49,7 @@ const LoginPage = () => {
             </Button>
           }
         >
-          {jwtResponse.message}
+          {jwtResponse.data}
         </Dialog>
       );
     }

@@ -43,7 +43,7 @@ const Study_Description_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
       updateStudyForm,
       study.path
     );
-    handleResponse(response, submitSuccessCallback, false);
+    handleResponse(response, submitSuccessCallback, { path: "", dialog: "" });
   };
 
   const validate = () => {

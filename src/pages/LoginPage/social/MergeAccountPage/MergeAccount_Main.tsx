@@ -15,12 +15,12 @@ const MergeAccount_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleMerge = async () => {
     const mergeResponse = await SocialApi.mergeAccount();
-    handleResponse(mergeResponse, null, false);
+    handleResponse(mergeResponse, null, { path: "", dialog: "" });
     if (mergeResponse.status == "OK") {
       const response = await ProfileApi.fetchProfile();
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-        useNav: true,
         path: RoutesEnum.HOME,
+        dialog: "",
       });
     }
   };

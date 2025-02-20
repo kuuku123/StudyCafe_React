@@ -39,7 +39,7 @@ const StudyUpdatedEvent: React.FC<StudyUpdatedEventProps> = ({
   useEffect(() => {
     const isManager = async () => {
       const response = await StudyManagerApi.isManager(studyPath);
-      handleResponse(response, setIsManager, false);
+      handleResponse(response, setIsManager, { path: "", dialog: "" });
     };
     isManager();
   }, []);

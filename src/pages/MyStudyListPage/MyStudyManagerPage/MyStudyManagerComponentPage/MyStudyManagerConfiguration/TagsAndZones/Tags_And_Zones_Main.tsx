@@ -126,12 +126,12 @@ const Tags_And_Zones_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const getTags = async () => {
     const response = await TagApi.getStudyTags(study.path);
     console.log("getTags => ", response);
-    handleResponse(response, handleInitTags, false);
+    handleResponse(response, handleInitTags, { path: "", dialog: "" });
   };
   const getZones = async () => {
     const response = await ZoneApi.getStudyZones(study.path);
     console.log("getZones => ", response);
-    handleResponse(response, handleInitZones, false);
+    handleResponse(response, handleInitZones, { path: "", dialog: "" });
   };
 
   const reset = () => {
@@ -213,7 +213,7 @@ const Tags_And_Zones_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
     const getAllZones = async () => {
       const response = await ZoneApi.getAllZones();
       console.log("response => ", response);
-      handleResponse(response, parseZones, false);
+      handleResponse(response, parseZones, { path: "", dialog: "" });
     };
 
     getTags();

@@ -146,7 +146,7 @@ const JoinStudy_Main = () => {
         size
       );
       console.log("fetchStudyBytagsAndZones => ", response);
-      handleResponse(response, setStudies, false);
+      handleResponse(response, setStudies, { path: "", dialog: "" });
     };
     const newTags = selectedTags
       ? TagApi.changeTagLabelToTitile(selectedTags)
@@ -165,7 +165,7 @@ const JoinStudy_Main = () => {
   useEffect(() => {
     const getAllZones = async () => {
       const response = await ZoneApi.getAllZones();
-      handleResponse(response, parseZones, false);
+      handleResponse(response, parseZones, { path: "", dialog: "" });
     };
     getAllZones();
   }, []);

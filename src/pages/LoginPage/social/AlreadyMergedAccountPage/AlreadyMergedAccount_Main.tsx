@@ -13,8 +13,8 @@ const AlreadyMergedAccount = () => {
       const profile = await ProfileApi.fetchProfile();
       console.log("profile => ", profile);
       handleResponse(profile, (data) => dispatch(loginSuccess(data)), {
-        useNav: true,
         path: RoutesEnum.HOME,
+        dialog: "",
       });
     };
     getProfile();

@@ -55,7 +55,10 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
       response = await StudyApi.joinStudy(path);
     }
     console.log("handleJoinOnCLick => ", response);
-    handleResponse(response, () => setJoined(!joined), false);
+    handleResponse(response, () => setJoined(!joined), {
+      path: "",
+      dialog: "",
+    });
   };
 
   return (

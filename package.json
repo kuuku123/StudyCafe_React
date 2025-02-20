@@ -6,7 +6,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "css-loader": "^7.1.2",
-    "dompurify": "^3.1.6",
+    "dompurify": "^3.2.4",
     "dotenv": "^16.4.5",
     "event-source-polyfill": "^1.0.31",
     "js-cookie": "^3.0.5",

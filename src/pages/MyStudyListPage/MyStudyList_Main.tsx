@@ -50,12 +50,12 @@ const StudyList_Main = () => {
     const getManagerStudyList = async () => {
       const response = await StudyManagerApi.fetchStudyList();
 
-      handleResponse(response, handleManagerStudies, false);
+      handleResponse(response, handleManagerStudies, { path: "", dialog: "" });
     };
     const getMemberStudyList = async () => {
       const response = await StudyMemberApi.fetchStudyList();
 
-      handleResponse(response, handleMemberStudies, false);
+      handleResponse(response, handleMemberStudies, { path: "", dialog: "" });
     };
     getManagerStudyList();
     getMemberStudyList();

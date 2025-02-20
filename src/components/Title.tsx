@@ -58,7 +58,10 @@ const Title = ({ children }: { children: ReactNode }) => {
       const getNotificationsUnRead = async () => {
         const resposne = await NotificationApi.getNotificationUnRead();
         console.log("getNotficationsUnRead => ", resposne);
-        handleResponse(resposne, addUnReadNotification, false);
+        handleResponse(resposne, addUnReadNotification, {
+          path: "",
+          dialog: "",
+        });
       };
       getNotificationsUnRead();
     }

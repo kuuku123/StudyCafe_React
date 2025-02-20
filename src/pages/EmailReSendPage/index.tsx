@@ -18,7 +18,7 @@ const EmailReSendPage = () => {
     );
     const response = await raw_response.json();
     console.log(response.message);
-    handleResponse(response, null);
+    handleResponse(response, null, { path: "", dialog: "" });
   };
   return (
     <Page

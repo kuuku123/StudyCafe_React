@@ -26,7 +26,7 @@ const HomePage = () => {
     if (isAuthenticated) {
       const checkEmailVefieid = async () => {
         const response = await AuthApi.checkEmailVerified();
-        handleResponse(response, handleEmailVerfieid, false);
+        handleResponse(response, handleEmailVerfieid, { path: "", dialog: "" });
       };
       checkEmailVefieid();
       setLogin(true);

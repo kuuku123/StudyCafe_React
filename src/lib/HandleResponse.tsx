@@ -7,9 +7,8 @@ import RoutesEnum from "./RoutesEnum";
 import { ApiResponse } from "../utils/type";
 
 interface NavigateOptions {
-  useNav: boolean;
   path: string;
-  dialog?: string; // or undefined if you prefer
+  dialog: string;
 }
 const useHandleResponse = () => {
   const navigate = useNavigate();
@@ -18,41 +17,22 @@ const useHandleResponse = () => {
   const handleResponse = (
     response: ApiResponse,
     callback: ((data: any) => void) | null,
-    useNavigate: NavigateOptions | boolean = {
-      useNav: true,
-      path: RoutesEnum.HOME,
-      dialog: undefined,
-    }
+    useNavigate: NavigateOptions
   ) => {
     console.log("useNavigate => ", useNavigate);
 
-    // First, narrow the type if useNavigate is a boolean.
-    if (typeof useNavigate === "boolean") {
-      // In case useNavigate is a boolean, we might:
-      // - Simply call the callback if the response is OK.
-      // - Optionally, navigate if the boolean is true.
-      if (response.status === "OK" && callback) {
-        callback(response.data);
-      }
-      if (useNavigate) {
-        navigate(RoutesEnum.HOME);
-      }
-      return; // Exit early to avoid accessing properties on a boolean.
-    }
-
-    // Now, useNavigate is of type NavigateOptions.
     if (response.status === "OK") {
-      if (useNavigate.dialog == undefined && callback) {
+      if (useNavigate.dialog == "" && callback) {
         console.log("first callback ? ", useNavigate.dialog);
         callback(response.data);
-        if (useNavigate.path !== undefined) {
+        if (useNavigate.path !== "") {
           navigate(useNavigate.path);
         }
-      } else if (useNavigate.useNav && useNavigate.dialog !== undefined) {
+      } else if (useNavigate.path !== "" && useNavigate.dialog !== "") {
         console.log("dialog => ", useNavigate.dialog);
         openDialog(
           <Dialog
-            header={<>Login</>}
+            header={<></>}
             footer={
               <Button
                 onClick={() => {
@@ -67,8 +47,8 @@ const useHandleResponse = () => {
             }
           />
         );
-      } else if (useNavigate.useNav) {
-        console.log("hiihi - ", useNavigate.useNav, useNavigate.path);
+      } else if (useNavigate.path !== "") {
+        console.log("hiihi - ", useNavigate.path);
         navigate(useNavigate.path);
       }
     } else if (response.status === "403") {
@@ -84,11 +64,11 @@ const useHandleResponse = () => {
         />
       );
     } else {
-      console.log("response => ", response);
+      console.log("response else=> ", response);
       openDialog(
         <Dialog
-          header={<>오류</>}
-          footer={<Button onClick={() => closeDialog()}>네, 알겠습니다</Button>}
+          header={<>Error</>}
+          footer={<Button onClick={() => closeDialog()}>Close</Button>}
         >
           {response.data ? (
             <ul>

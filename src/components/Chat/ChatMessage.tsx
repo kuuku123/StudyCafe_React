@@ -10,9 +10,7 @@ interface ChatMessageProps {
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ sender, children }) => {
   const { user } = useSelector(selectAuth);
-
-  // Check if user exists to avoid potential null errors.
-  if (user && user.nickname === sender) {
+  if (user && user.email === sender) {
     return <S.ChatMessageMe>{children}</S.ChatMessageMe>;
   }
   return <S.ChatMessageOther>{children}</S.ChatMessageOther>;

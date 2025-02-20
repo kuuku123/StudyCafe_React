@@ -43,7 +43,7 @@ const My_Study_Manager_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const handleDraftOnClick = async (path: string) => {
     const response = await StudyApi.publishStudy(path);
     console.log("handleDraftOnCLick => ", response);
-    handleResponse(response, setPublished, false);
+    handleResponse(response, setPublished, { path: "", dialog: "" });
   };
 
   return (

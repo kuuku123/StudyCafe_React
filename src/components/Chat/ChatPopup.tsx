@@ -7,10 +7,12 @@ import { StudyDto } from "../../utils/type";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
 import DOMPurify from "dompurify";
 import StudyMemberApi from "../../lib/apis/StudyMemberApi";
+import { wsService } from "../../lib/features/WSService";
 
 export type StudySummary = Pick<StudyDto, "title" | "path">;
 
 const ChatPopup = () => {
+  console.log("ChatPOPUp get rereder? ===================?? ");
   const [isOpen, setIsOpen] = useState(false);
   const [mangerStudies, setManagerStudies] = useState<StudyDto[]>([]);
   const [memberStudies, setMemberStudies] = useState<StudyDto[]>([]);
@@ -48,9 +50,10 @@ const ChatPopup = () => {
     if (!inputText.trim() || !user) return;
     const newMessage = {
       id: messages.length + 1,
-      sender: user.nickname,
+      sender: user.email,
       text: inputText,
     };
+    wsService.sendMessage(newMessage);
     setMessages([...messages, newMessage]);
     setInputText("");
   };
@@ -116,70 +119,91 @@ const ChatPopup = () => {
         "scrollHeight:",
         scrollHeight
       );
-      if (scrollTop + clientHeight >= scrollHeight - 80) {
+      if (scrollTop + clientHeight >= scrollHeight - 120) {
         chatBodyRef.current.scrollTop = scrollHeight;
       }
     }
   }, [messages, isOpen]);
 
-  return (
-    <>
-      {isOpen ? (
-        <S.ChatContainer>
-          <S.ChatHeader>
-            <S.StudyList>
-              {studies.map((study) => (
-                <S.StudyItem
-                  key={study.path}
-                  onClick={() => handleStudyClick(study)}
-                  active={selectedStudy?.path === study.path}
-                >
-                  {study.title}
-                </S.StudyItem>
-              ))}
-            </S.StudyList>
-            <S.MinimizeButton onClick={toggleChat}>ㅡ</S.MinimizeButton>
-          </S.ChatHeader>
-          <S.ChatBody ref={chatBodyRef}>
-            {selectedStudy ? (
-              <>
-                <S.StudyTitle>
-                  Chat for <strong>{selectedStudy.title}</strong>
-                </S.StudyTitle>
-                {messages.map((msg) => (
-                  <ChatMessage key={msg.id} sender={msg.sender}>
-                    {msg.text}
-                  </ChatMessage>
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("calling wsService ");
+      const studyPath = "asdf"; // Replace with your dynamic studyPath if needed
+
+      wsService.connect(
+        studyPath,
+        (newMessage) =>
+          setMessages((prevMessages) => [...prevMessages, newMessage]),
+        user!
+      );
+
+      // Clean up connection on unmount.
+      return () => {
+        wsService.disconnect();
+      };
+    }
+  }, [isAuthenticated]);
+
+  if (isAuthenticated) {
+    return (
+      <>
+        {isOpen ? (
+          <S.ChatContainer>
+            <S.ChatHeader>
+              <S.StudyList>
+                {studies.map((study) => (
+                  <S.StudyItem
+                    key={study.path}
+                    onClick={() => handleStudyClick(study)}
+                    active={selectedStudy?.path === study.path}
+                  >
+                    {study.title}
+                  </S.StudyItem>
                 ))}
-              </>
-            ) : (
-              <S.NoStudySelected>
-                Please select a study to view chats.
-              </S.NoStudySelected>
+              </S.StudyList>
+              <S.MinimizeButton onClick={toggleChat}>ㅡ</S.MinimizeButton>
+            </S.ChatHeader>
+            <S.ChatBody ref={chatBodyRef}>
+              {selectedStudy ? (
+                <>
+                  <S.StudyTitle>
+                    Chat for <strong>{selectedStudy.title}</strong>
+                  </S.StudyTitle>
+                  {messages.map((msg) => (
+                    <ChatMessage key={msg.id} sender={msg.sender}>
+                      {msg.text}
+                    </ChatMessage>
+                  ))}
+                </>
+              ) : (
+                <S.NoStudySelected>
+                  Please select a study to view chats.
+                </S.NoStudySelected>
+              )}
+            </S.ChatBody>
+            {selectedStudy && (
+              <S.ChatInputContainer>
+                <S.ChatInput
+                  placeholder="Type your message..."
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                />
+                <S.SendButton onClick={handleSend}>Send</S.SendButton>
+              </S.ChatInputContainer>
             )}
-          </S.ChatBody>
-          {selectedStudy && (
-            <S.ChatInputContainer>
-              <S.ChatInput
-                placeholder="Type your message..."
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-              />
-              <S.SendButton onClick={handleSend}>Send</S.SendButton>
-            </S.ChatInputContainer>
-          )}
-        </S.ChatContainer>
-      ) : (
-        <S.ToggleButton onClick={toggleChat}>Study Chat</S.ToggleButton>
-      )}
-    </>
-  );
+          </S.ChatContainer>
+        ) : (
+          <S.ToggleButton onClick={toggleChat}>Study Chat</S.ToggleButton>
+        )}
+      </>
+    );
+  }
 };
 
 export default ChatPopup;

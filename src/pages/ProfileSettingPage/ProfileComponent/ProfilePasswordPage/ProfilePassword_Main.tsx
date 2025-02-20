@@ -16,7 +16,6 @@ const ProfilePassword_Main = () => {
   const onSubmit = async (passwordInfo: PasswordForm) => {
     const response = await AuthApi.updatePassword(passwordInfo);
     handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-      useNav: true,
       path: RoutesEnum.HOME,
       dialog: "password updated successfully",
     });

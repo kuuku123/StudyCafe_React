@@ -20,7 +20,7 @@ const ProfileEdit_Main = () => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
       console.log("profile=> ", response);
-      handleResponse(response, handleProfile, false);
+      handleResponse(response, handleProfile, { path: "", dialog: "" });
     };
     getProfile();
   }, []);
@@ -38,7 +38,7 @@ const ProfileEdit_Main = () => {
   const handleSubmit = async (profileEditInfo: Profile) => {
     profileEditInfo["profileImage"] = img;
     const response = await ProfileApi.updatePorfile(profileEditInfo);
-    handleResponse(response, null, { useNav: true, path: RoutesEnum.PROFILE });
+    handleResponse(response, null, { path: RoutesEnum.PROFILE, dialog: "" });
   };
 
   const validate = () => {

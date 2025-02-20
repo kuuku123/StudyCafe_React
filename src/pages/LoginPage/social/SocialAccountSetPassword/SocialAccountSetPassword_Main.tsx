@@ -15,13 +15,12 @@ const SocialAccountSetPassword_Main = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const onSubmit = async (passwordInfo: PasswordForm) => {
     const authResponse = await AuthApi.updatePassword(passwordInfo);
-    handleResponse(authResponse, null, false);
+    handleResponse(authResponse, null, { path: "", dialog: "" });
 
     if (authResponse.status == "OK") {
       const response = await ProfileApi.fetchProfile();
       console.log("SoicalAccountSetPassword => ", response);
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
-        useNav: true,
         path: RoutesEnum.HOME,
         dialog:
           "now you can login with your email as id and password you just sent",

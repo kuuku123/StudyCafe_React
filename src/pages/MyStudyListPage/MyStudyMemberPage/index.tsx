@@ -21,7 +21,7 @@ const StudyMemberPage = () => {
   useEffect(() => {
     const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
-      handleResponse(response, setStudy, false);
+      handleResponse(response, setStudy, { path: "", dialog: "" });
     };
     getStudy(path);
   }, [path]);

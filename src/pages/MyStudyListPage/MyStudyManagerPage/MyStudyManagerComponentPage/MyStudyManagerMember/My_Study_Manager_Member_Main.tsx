@@ -26,7 +26,7 @@ const My_Study_Mananger_Member_Main: React.FC<{ study: StudyDto }> = ({
   useEffect(() => {
     const getStudyMembers = async (path: string) => {
       const response = await StudyManagerApi.fetchStudyMembers(path);
-      handleResponse(response, handleStudyMembers, false);
+      handleResponse(response, handleStudyMembers, { path: "", dialog: "" });
     };
 
     const getStudyManager = async () => {
@@ -34,7 +34,7 @@ const My_Study_Mananger_Member_Main: React.FC<{ study: StudyDto }> = ({
         study.path
       );
       console.log("study_manager => ", study_manager.data[0]);
-      handleResponse(study_manager, handleImage, false);
+      handleResponse(study_manager, handleImage, { path: "", dialog: "" });
       handleImage(study_manager.data[0].profileImage);
     };
 

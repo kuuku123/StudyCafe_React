@@ -23,7 +23,7 @@ const Profile_Main = () => {
     const getProfile = async () => {
       const response = await ProfileApi.fetchProfile();
       console.log("profile=> ", response);
-      handleResponse(response, handleProfile, false);
+      handleResponse(response, handleProfile, { path: "", dialog: "" });
     };
     getProfile();
   }, []);
