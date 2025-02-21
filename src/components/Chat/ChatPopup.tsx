@@ -14,16 +14,11 @@ export type StudySummary = Pick<StudyDto, "title" | "path">;
 const ChatPopup = () => {
   console.log("ChatPOPUp get rereder? ===================?? ");
   const [isOpen, setIsOpen] = useState(false);
-  const [mangerStudies, setManagerStudies] = useState<StudyDto[]>([]);
-  const [memberStudies, setMemberStudies] = useState<StudyDto[]>([]);
+  const [studies, setStudies] = useState<StudySummary[]>([]);
   const [selectedStudy, setSelectedStudy] = useState<StudySummary | null>(null);
   const { user, isAuthenticated } = useSelector(selectAuth);
 
   // Type the studies array
-  const studies: StudySummary[] = [
-    { path: "asdf1", title: "Study 1" },
-    { path: "asdf2", title: "Study 2" },
-  ];
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -33,44 +28,27 @@ const ChatPopup = () => {
     setSelectedStudy(study);
   };
 
-  const handleManagerStudies = (studies: StudyDto[]) => {
+  const handleManagerMemberStudies = (studies: StudyDto[]) => {
     const sanitizedStudies = Array.isArray(studies)
-      ? studies.map((study) => ({
-          ...study,
-          fullDescription: DOMPurify.sanitize(study.fullDescription),
-          studyImage: "data:image/png;base64," + study.studyImage,
-        }))
+      ? studies.map(({ title, path }) => ({ title, path }))
       : [];
     console.log("sanitizedStudies => ", sanitizedStudies);
-    setManagerStudies(sanitizedStudies);
-  };
-
-  const handleMemberStudies = (studies: StudyDto[]) => {
-    const sanitizedStudies = Array.isArray(studies)
-      ? studies.map((study) => ({
-          ...study,
-          fullDescription: DOMPurify.sanitize(study.fullDescription),
-          studyImage: "data:image/png;base64," + study.studyImage,
-        }))
-      : [];
-    console.log("handleMemberStudies => ", sanitizedStudies);
-    setMemberStudies(sanitizedStudies);
+    setStudies(sanitizedStudies);
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      const getManagerStudyList = async () => {
-        const response = await StudyManagerApi.fetchStudyList();
-        handleManagerStudies(response.data);
+      console.log("ChatPopup getting study list called ===> ");
+      const getStudyLists = async () => {
+        const response1 = await StudyManagerApi.fetchStudyList();
+        const response2 = await StudyMemberApi.fetchStudyList();
+        const response = response1.data.concat(response2.data);
+        console.log("+ ===> ", response);
+        handleManagerMemberStudies(response);
       };
-      const getMemberStudyList = async () => {
-        const response = await StudyMemberApi.fetchStudyList();
-        handleMemberStudies(response.data);
-      };
-      getManagerStudyList();
-      getMemberStudyList();
+      getStudyLists();
     }
-  }, []);
+  }, [isOpen]);
 
   if (isAuthenticated) {
     return (
@@ -79,15 +57,19 @@ const ChatPopup = () => {
           <S.ChatContainer>
             <S.ChatHeader>
               <S.StudyList>
-                {studies.map((study) => (
-                  <S.StudyItem
-                    key={study.path}
-                    onClick={() => handleStudyClick(study)}
-                    active={selectedStudy?.path === study.path}
-                  >
-                    {study.title}
-                  </S.StudyItem>
-                ))}
+                {studies.length > 0 ? (
+                  studies.map((study) => (
+                    <S.StudyItem
+                      key={study.path}
+                      onClick={() => handleStudyClick(study)}
+                      active={selectedStudy?.path === study.path}
+                    >
+                      {study.title}
+                    </S.StudyItem>
+                  ))
+                ) : (
+                  <p>Join Study to Chat</p>
+                )}
               </S.StudyList>
               <S.MinimizeButton onClick={toggleChat}>ㅡ</S.MinimizeButton>
             </S.ChatHeader>
@@ -109,7 +91,14 @@ const ChatPopup = () => {
             ))}
           </S.ChatContainer>
         ) : (
-          <S.ToggleButton onClick={toggleChat}>Study Chat</S.ToggleButton>
+          <S.ChatBubbleContainer>
+            <S.SpeechImage
+              onClick={toggleChat}
+              src="/images/chat.webp"
+              width="200"
+            ></S.SpeechImage>
+            <S.ImageText>Study Chat</S.ImageText>
+          </S.ChatBubbleContainer>
         )}
       </>
     );

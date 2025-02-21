@@ -1,12 +1,14 @@
 import { User } from "../../utils/type";
 
 export interface ChatMessageType {
-  id: number;
-  sender: string;
+  id: string;
+  studyPath: string;
+  email: string;
   text: string;
+  createdAt: Date;
 }
 
- export class WSService {
+export class WSService {
   url: string;
   socket: WebSocket | null;
   onMessageCallback?: (message: ChatMessageType) => void;
@@ -39,7 +41,7 @@ export interface ChatMessageType {
         try {
           console.log("event.data => ", event.data);
           const message = JSON.parse(event.data) as ChatMessageType;
-          if (user.email !== message.sender) onMessageCallback(message);
+          if (user.email !== message.email) onMessageCallback(message);
           console.log("message => ", message);
         } catch (error) {
           console.error("Error parsing WebSocket message:", error);
@@ -74,4 +76,3 @@ export interface ChatMessageType {
     }
   }
 }
-

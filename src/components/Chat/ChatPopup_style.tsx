@@ -52,17 +52,31 @@ export const MinimizeButton = styled.button`
   right: 5px;
 `;
 
-
-export const ToggleButton = styled.button`
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
+export const ChatBubbleContainer = styled.div`
   position: fixed;
   bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+  right: 0px;
+  display: inline-block; /* Ensures container only takes the space of its content */
+  transition: transform 0.2s ease; /* Smooth animation */
+
+  &:hover {
+    transform: scale(1.25); /* Slightly larger on hover */
+    cursor: pointer; /* Change cursor to pointer */
+  }
 `;
 
+export const SpeechImage = styled.img`
+  display: block;
+`;
+
+export const ImageText = styled.div`
+  position: absolute;
+  top: 40%; /* Adjust this value to position the text vertically */
+  left: 50%; /* Adjust this value to position the text horizontally */
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  pointer-events: none; /* Ensures clicks pass through to underlying elements if needed */
+`;
