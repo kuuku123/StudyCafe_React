@@ -15,7 +15,7 @@ export class WSService {
   user?: User;
 
   constructor() {
-    this.url = `${API_GATEWAY_URL}/chat`;
+    this.url = `${API_GATEWAY_WS_URL}/ws`;
     this.socket = null;
   }
 
