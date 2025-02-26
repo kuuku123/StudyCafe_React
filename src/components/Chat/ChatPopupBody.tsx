@@ -96,6 +96,7 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
       );
       // if (scrollTop + clientHeight >= scrollHeight - 120) {
       chatBodyRef.current.scrollTop = scrollHeight;
+      console.log("scrollTop => ", chatBodyRef.current.scrollTop, scrollHeight);
       // }
     }
   }, [messages]);

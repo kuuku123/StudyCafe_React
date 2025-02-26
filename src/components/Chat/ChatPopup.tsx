@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./ChatPopup_style";
 import { useSelector } from "react-redux";
-import ChatMessage from "./ChatMessage";
 import { selectAuth } from "../../lib/features/redux/authSelector";
 import { StudyDto } from "../../utils/type";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
-import DOMPurify from "dompurify";
 import StudyMemberApi from "../../lib/apis/StudyMemberApi";
 import ChatPopupBody from "./ChatPopupBody";
+import { Resizable } from "re-resizable";
 
 export type StudySummary = Pick<StudyDto, "title" | "path">;
 
@@ -50,11 +49,33 @@ const ChatPopup = () => {
     }
   }, [isOpen]);
 
+  const ChatContainer_style = {
+    position: "fixed",
+    marginBottom: "30px",
+    bottom: "20px",
+    right: "20px",
+    width: "470px",
+    minWidth: "470px",
+    fontFamily: "Arial, sans-serif",
+    zIndex: 1000,
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+    display: "flex",
+    flexDirection: "column",
+  } as const;
+
   if (isAuthenticated) {
     return (
       <>
         {isOpen ? (
-          <S.ChatContainer>
+          <Resizable
+            defaultSize={{
+              width: 200,
+              height: 470,
+            }}
+            style={ChatContainer_style}
+            minWidth={300}
+            maxHeight={700}
+          >
             <S.ChatHeader>
               <S.StudyList>
                 {studies.length > 0 ? (
@@ -78,6 +99,9 @@ const ChatPopup = () => {
               <div
                 key={study.path}
                 style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
                   visibility:
                     selectedStudy?.path === study.path ? "visible" : "hidden",
                   position:
@@ -89,7 +113,7 @@ const ChatPopup = () => {
                 <ChatPopupBody study={study} user={user!} />
               </div>
             ))}
-          </S.ChatContainer>
+          </Resizable>
         ) : (
           <S.ChatBubbleContainer>
             <S.SpeechImage

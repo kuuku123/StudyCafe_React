@@ -4,11 +4,12 @@ export const ChatBody = styled.div`
   display: flex;
   flex-direction: column;
   background: #fff;
+  box-sizing: border-box;
   border: 1px solid #007bff;
   border-top: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  max-height: 300px;
+  max-height: 700px;
   overflow-y: auto;
   padding: 10px;
   flex: 1;
