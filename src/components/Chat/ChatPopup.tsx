@@ -51,11 +51,8 @@ const ChatPopup = () => {
 
   const ChatContainer_style = {
     position: "fixed",
-    marginBottom: "30px",
     bottom: "20px",
     right: "20px",
-    width: "470px",
-    minWidth: "470px",
     fontFamily: "Arial, sans-serif",
     zIndex: 1000,
     boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
@@ -70,7 +67,7 @@ const ChatPopup = () => {
           <Resizable
             defaultSize={{
               width: 200,
-              height: 470,
+              height: 530,
             }}
             style={ChatContainer_style}
             minWidth={300}

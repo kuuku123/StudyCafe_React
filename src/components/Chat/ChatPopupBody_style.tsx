@@ -13,6 +13,7 @@ export const ChatBody = styled.div`
   overflow-y: auto;
   padding: 10px;
   flex: 1;
+  flex-basis: 0px;
 `;
 
 export const StudyTitle = styled.div`
