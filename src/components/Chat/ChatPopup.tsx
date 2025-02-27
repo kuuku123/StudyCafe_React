@@ -17,8 +17,19 @@ const ChatPopup = () => {
   const [selectedStudy, setSelectedStudy] = useState<StudySummary | null>(null);
   const { user, isAuthenticated } = useSelector(selectAuth);
 
-  // Type the studies array
+  // Add state for storing dimensions
+  const [dimensions, setDimensions] = useState({
+    width: 300,
+    height: 530,
+  });
 
+  // Load saved dimensions from localStorage on initial render
+  useEffect(() => {
+    const savedDimensions = localStorage.getItem("chatPopupDimensions");
+    if (savedDimensions) {
+      setDimensions(JSON.parse(savedDimensions));
+    }
+  }, []);
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
@@ -33,6 +44,12 @@ const ChatPopup = () => {
       : [];
     console.log("sanitizedStudies => ", sanitizedStudies);
     setStudies(sanitizedStudies);
+  };
+
+  // Handler for resize events
+  const handleResize = (size: { width: number; height: number }) => {
+    setDimensions(size);
+    localStorage.setItem("chatPopupDimensions", JSON.stringify(size));
   };
 
   useEffect(() => {
@@ -65,13 +82,16 @@ const ChatPopup = () => {
       <>
         {isOpen ? (
           <Resizable
-            defaultSize={{
-              width: 200,
-              height: 530,
-            }}
+            defaultSize={dimensions}
             style={ChatContainer_style}
             minWidth={300}
             maxHeight={700}
+            onResizeStop={(e, direction, ref, d) => {
+              handleResize({
+                width: dimensions.width + d.width,
+                height: dimensions.height + d.height,
+              });
+            }}
           >
             <S.ChatHeader>
               <S.StudyList>

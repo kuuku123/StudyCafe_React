@@ -22,8 +22,7 @@ const SocialAccountSetPassword_Main = () => {
       console.log("SoicalAccountSetPassword => ", response);
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
         path: RoutesEnum.HOME,
-        dialog:
-          "now you can login with your email as id and password you just sent",
+        dialog: `Now you can log in using either your email (**${response.data.email}**) or your nickname (**${response.data.nickname}**) as your ID, with the password you just set.`,
       });
     }
   };

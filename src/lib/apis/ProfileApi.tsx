@@ -1,11 +1,11 @@
-import { Profile } from "../../utils/type";
+import { AccountDto, ApiResponse, Profile } from "../../utils/type";
 
 const fetchProfile = async () => {
   const raw_profile = await fetch(`${API_GATEWAY_URL}/app/profile`, {
     credentials: "include",
     method: "GET",
   });
-  const profile = await raw_profile.json();
+  const profile: ApiResponse<AccountDto> = await raw_profile.json();
   return profile;
 };
 

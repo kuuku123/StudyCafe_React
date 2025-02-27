@@ -6,6 +6,7 @@ import ChatMessage from "./ChatMessage";
 import * as S from "./ChatPopupBody_style";
 import ChatApi from "../../lib/apis/ChatApi";
 import { v4 as uuidv4 } from "uuid";
+import ChatProfile from "./ChatProfile";
 
 interface ChatPopupBodyType {
   study: StudySummary;
@@ -33,10 +34,13 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
     const newMessage = {
       id: uuidv4(),
       studyPath: study.path,
+      nickname: user.nickname,
       email: user.email,
       text: inputText,
       createdAt: new Date(),
     };
+
+    console.log("handleSend newMEssdage => ", newMessage)
     wsService.sendMessage(newMessage);
     setMessages([...messages, newMessage]);
     setInputText("");
@@ -110,9 +114,11 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
               Chat for <strong>{study.title}</strong>
             </S.StudyTitle>
             {messages.map((msg) => (
-              <ChatMessage key={msg.id} sender={msg.email}>
-                {msg.text}
-              </ChatMessage>
+              <ChatProfile msg={msg}>
+                <ChatMessage key={msg.id} sender={msg.email}>
+                  {msg.text}
+                </ChatMessage>
+              </ChatProfile>
             ))}
           </>
         ) : (

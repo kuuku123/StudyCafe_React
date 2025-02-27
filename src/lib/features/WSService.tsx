@@ -3,6 +3,7 @@ import { User } from "../../utils/type";
 export interface ChatMessageType {
   id: string;
   studyPath: string;
+  nickname: string;
   email: string;
   text: string;
   createdAt: Date;
