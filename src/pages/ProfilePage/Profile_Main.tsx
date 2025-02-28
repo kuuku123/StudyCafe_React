@@ -21,7 +21,7 @@ const Profile_Main = () => {
 
   useEffect(() => {
     const getProfile = async () => {
-      const response = await ProfileApi.fetchProfile();
+      const response = await ProfileApi.fetchMyProfile();
       console.log("profile=> ", response);
       handleResponse(response, handleProfile, { path: "", dialog: "" });
     };

@@ -17,7 +17,7 @@ const MergeAccount_Main = () => {
     const mergeResponse = await SocialApi.mergeAccount();
     handleResponse(mergeResponse, null, { path: "", dialog: "" });
     if (mergeResponse.status == "OK") {
-      const response = await ProfileApi.fetchProfile();
+      const response = await ProfileApi.fetchMyProfile();
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
         path: RoutesEnum.HOME,
         dialog: "",

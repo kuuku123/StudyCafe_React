@@ -1,8 +1,13 @@
+import { AccountDto, ApiResponse } from "../../utils/type";
+
 const fetchStudyList = async () => {
-  const raw_studyList = await fetch(`${API_GATEWAY_URL}/app/member/study-list`, {
-    credentials: "include",
-    method: "GET",
-  });
+  const raw_studyList = await fetch(
+    `${API_GATEWAY_URL}/app/member/study-list`,
+    {
+      credentials: "include",
+      method: "GET",
+    }
+  );
   const studyList = await raw_studyList.json();
   console.log(studyList);
   return studyList;
@@ -16,7 +21,8 @@ const fetchStudyMembers = async (path: string) => {
       method: "GET",
     }
   );
-  const studyMemberList = await raw_studyMemberList.json();
+  const studyMemberList: ApiResponse<AccountDto[]> =
+    await raw_studyMemberList.json();
   console.log(studyMemberList);
   return studyMemberList;
 };

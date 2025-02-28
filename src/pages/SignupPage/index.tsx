@@ -32,7 +32,7 @@ const SignupPage = () => {
     console.log("after jwt Response ======== ");
 
     if (jwtResponse.status == "OK") {
-      const response = await ProfileApi.fetchProfile();
+      const response = await ProfileApi.fetchMyProfile();
 
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
         path: RoutesEnum.HOME,

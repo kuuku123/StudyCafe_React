@@ -24,7 +24,7 @@ const StudyCreatedEvent: React.FC<StudyCreatedEventProps> = ({
 }) => {
   console.log("path", studyPath, id);
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const [isManager, setIsManager] = useState(false);
+  const [amiManager, setamiManager] = useState(false);
 
   const handleClick = () => {
     store.dispatch(minusStudyCreated(id));
@@ -33,14 +33,14 @@ const StudyCreatedEvent: React.FC<StudyCreatedEventProps> = ({
   };
 
   useEffect(() => {
-    const isManager = async () => {
-      const response = await StudyManagerApi.isManager(studyPath);
-      handleResponse(response, setIsManager, {path:"", dialog:""});
+    const amiManager = async () => {
+      const response = await StudyManagerApi.amiManager(studyPath);
+      handleResponse(response, setamiManager, {path:"", dialog:""});
     };
-    isManager();
+    amiManager();
   }, []);
 
-  if (isManager) {
+  if (amiManager) {
     return (
       <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(studyPath)}>
         <div onClick={handleClick}>[Study Created] {studyPath}</div>

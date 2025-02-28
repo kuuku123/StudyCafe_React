@@ -10,7 +10,7 @@ const AlreadyMergedAccount = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   useEffect(() => {
     const getProfile = async () => {
-      const profile = await ProfileApi.fetchProfile();
+      const profile = await ProfileApi.fetchMyProfile();
       console.log("profile => ", profile);
       handleResponse(profile, (data) => dispatch(loginSuccess(data)), {
         path: RoutesEnum.HOME,

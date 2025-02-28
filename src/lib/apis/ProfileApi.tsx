@@ -1,7 +1,16 @@
 import { AccountDto, ApiResponse, Profile } from "../../utils/type";
 
-const fetchProfile = async () => {
+const fetchMyProfile = async () => {
   const raw_profile = await fetch(`${API_GATEWAY_URL}/app/profile`, {
+    credentials: "include",
+    method: "GET",
+  });
+  const profile: ApiResponse<AccountDto> = await raw_profile.json();
+  return profile;
+};
+
+const fetchProfile = async (email: string) => {
+  const raw_profile = await fetch(`${API_GATEWAY_URL}/app/profile/${email}`, {
     credentials: "include",
     method: "GET",
   });
@@ -23,6 +32,7 @@ const updatePorfile = async (profileEditInfo: Profile) => {
 };
 
 const ProfileApi = {
+  fetchMyProfile,
   fetchProfile,
   updatePorfile,
 };

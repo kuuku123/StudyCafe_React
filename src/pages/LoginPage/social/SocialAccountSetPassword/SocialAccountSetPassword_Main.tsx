@@ -18,7 +18,7 @@ const SocialAccountSetPassword_Main = () => {
     handleResponse(authResponse, null, { path: "", dialog: "" });
 
     if (authResponse.status == "OK") {
-      const response = await ProfileApi.fetchProfile();
+      const response = await ProfileApi.fetchMyProfile();
       console.log("SoicalAccountSetPassword => ", response);
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
         path: RoutesEnum.HOME,

@@ -12,15 +12,24 @@ export const ChatMessageProfileWrapperOther = styled.div`
   margin: 5px 0;
 `;
 
-export const ChatProfile = styled.div`
+// export const ChatProfile = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px; /* Slight rounding, remove if you want a sharp rectangle */
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden; /* Hide any overflowing image content */
+//   flex-shrink: 0;
+// `;
+
+export const ChatProfile = styled.img`
   width: 40px;
   height: 40px;
   border: 1px solid #ccc;
-  border-radius: 4px; /* Slight rounding, remove if you want a sharp rectangle */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Hide any overflowing image content */
+  border-radius: 4px; /* Slight rounding */
+  object-fit: cover; /* Ensures the image covers the container */
   flex-shrink: 0;
 `;
 

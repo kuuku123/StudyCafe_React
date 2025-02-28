@@ -114,7 +114,7 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
               Chat for <strong>{study.title}</strong>
             </S.StudyTitle>
             {messages.map((msg) => (
-              <ChatProfile msg={msg}>
+              <ChatProfile user={user} msg={msg}>
                 <ChatMessage key={msg.id} sender={msg.email}>
                   {msg.text}
                 </ChatMessage>
