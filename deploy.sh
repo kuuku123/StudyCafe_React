@@ -16,7 +16,7 @@ npm run build
 
 # Step 2: Build the Docker image
 echo "Building Docker image..."
-docker buildx build --platform linux/amd64,linux/arm64 --load -t react-apache-app .
+docker buildx build --platform linux/arm64 --load -t react-apache-app .
 
 # Step 3: Tag the Docker image
 echo "Tagging Docker image..."
