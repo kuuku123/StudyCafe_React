@@ -4,6 +4,7 @@ export const ChatMessageProfileWrapperMe = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 5px 0;
+  position: relative;
 `;
 
 export const ChatMessageProfileWrapperOther = styled.div`

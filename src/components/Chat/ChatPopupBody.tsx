@@ -40,7 +40,7 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
       createdAt: new Date(),
     };
 
-    console.log("handleSend newMEssdage => ", newMessage)
+    console.log("handleSend newMEssdage => ", newMessage);
     wsService.sendMessage(newMessage);
     setMessages([...messages, newMessage]);
     setInputText("");

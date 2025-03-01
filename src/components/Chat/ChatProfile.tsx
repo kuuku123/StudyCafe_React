@@ -1,11 +1,10 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { ChatMessageType } from "../../lib/features/WSService";
 import * as S from "./ChatProfile_style";
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../lib/features/redux/authSelector";
 import { AccountDto, User } from "../../utils/type";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
+import ChatPopupProfile from "./ChatPopupProfile";
 
 interface ChatProfileProps {
   user: User;
@@ -16,6 +15,25 @@ interface ChatProfileProps {
 const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
   const [profile, setProfile] = useState<AccountDto>();
   const [isManager, setIsManager] = useState<Boolean>(false);
+  const [showChatPopupProfile, setShowChatPopupProfile] =
+    useState<Boolean>(false);
+  const [popupPosition, setPopupPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
+
+  const profileRef = useRef<HTMLImageElement>(null);
+  const calculateCurrentPosition = (open: boolean) => {
+    if (profileRef.current) {
+      const rect = profileRef.current.getBoundingClientRect();
+      // Adjust these values if you need an offset
+      setPopupPosition({ top: rect.bottom, left: rect.left });
+      setShowChatPopupProfile(open);
+    }
+  };
+  const handleClick = () => {
+    calculateCurrentPosition(true);
+  };
 
   useEffect(() => {
     if (user && user.email === msg.email) {
@@ -30,14 +48,29 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
     StudyManagerApi.isManager(msg.studyPath, msg.email).then((response) => {
       setIsManager(response.data);
     });
+    calculateCurrentPosition(false);
   }, []);
+
+  const profileImg = (
+    <S.ChatProfile
+      ref={profileRef}
+      src={profile ? "data:image/png;base64," + profile.profileImage : ""}
+      onClick={handleClick}
+    />
+  );
+
+  const popup = showChatPopupProfile && (
+    <ChatPopupProfile
+      setShowChatPopupProfile={setShowChatPopupProfile}
+      popupPosition={popupPosition}
+    />
+  );
 
   if (user && user.email === msg.email) {
     return (
       <S.ChatMessageProfileWrapperMe>
-        <S.ChatProfile
-          src={profile ? "data:image/png;base64," + profile.profileImage : ""}
-        ></S.ChatProfile>
+        {profileImg}
+        {popup}
         <S.ChatNicknameMessageWrapper>
           <S.ChatProfileNickname>
             {isManager ? `[M]${msg.nickname}` : msg.nickname}
@@ -49,9 +82,8 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
   }
   return (
     <S.ChatMessageProfileWrapperOther>
-      <S.ChatProfile
-        src={profile ? "data:image/png;base64," + profile.profileImage : ""}
-      ></S.ChatProfile>
+      {profileImg}
+      {popup}
       <S.ChatNicknameMessageWrapper>
         <S.ChatProfileNickname>
           {isManager ? `[M]${msg.nickname}` : msg.nickname}

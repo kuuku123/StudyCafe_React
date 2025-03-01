@@ -6,7 +6,7 @@ export const ChatContainer = styled.div`
   right: 20px;
   width: 300px;
   font-family: Arial, sans-serif;
-  z-index: 1000;
+  z-index: 2;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;

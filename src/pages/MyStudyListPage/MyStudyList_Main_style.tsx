@@ -21,7 +21,6 @@ export const List = styled.ul`
   gap: 20px;
 `;
 
-
 interface CardProps {
   index?: number; // or a required number if you always expect it
 }
@@ -42,7 +41,7 @@ export const Card = styled.li<CardProps>`
 
   &:hover {
     transform: scale(1.05);
-    z-index: 10;
+    z-index: 3;
   }
 
   ${({ index }) => `

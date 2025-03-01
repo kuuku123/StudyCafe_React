@@ -4,11 +4,16 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Optional: Adds a semi-transparent background */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Optional: Adds a semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1100;
+  z-index: 3;
 }
 
 .Dialog {
@@ -19,7 +24,7 @@
   padding: 16px;
   position: relative;
   width: 300px;
-  z-index: 1200;
+  z-index: 3;
 }
 .Dialog > header {
   font-size: 1.3rem;
