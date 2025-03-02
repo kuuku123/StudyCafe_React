@@ -46,6 +46,9 @@ const Profile_Main = () => {
       <S.Profile_Info_style>
         {profile?.bio || "default bio"}
       </S.Profile_Info_style>
+      <S.Profile_Link_style href={profile?.url}>
+        {profile?.url || "default url"}
+      </S.Profile_Link_style>
       <S.Profile_Email_style>
         <CgMail size={"55px"}></CgMail>
         {profile?.email}

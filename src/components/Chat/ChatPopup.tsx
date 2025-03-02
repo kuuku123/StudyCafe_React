@@ -71,10 +71,11 @@ const ChatPopup = () => {
     bottom: "20px",
     right: "20px",
     fontFamily: "Arial, sans-serif",
-    zIndex: 1000,
+    zIndex: 3,
     boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
     display: "flex",
     flexDirection: "column",
+    backgroundColor: "#fff",
   } as const;
 
   if (isAuthenticated) {

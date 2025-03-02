@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as S from "./ChatPopupProfile_style";
-import Button from "../Button";
+import { AccountDto } from "../../utils/type";
+import ProfileAccount_Main from "../../pages/ProfileSettingPage/ProfileComponent/ProfileAccountPage/ProfileAccount_Main";
 interface ChatPopupProfileType {
+  profile: AccountDto;
   setShowChatPopupProfile: React.Dispatch<React.SetStateAction<Boolean>>;
   popupPosition: { top: number; left: number };
 }
 const ChatPopupProfile: React.FC<ChatPopupProfileType> = ({
+  profile,
   setShowChatPopupProfile,
   popupPosition,
 }) => {
@@ -35,6 +38,10 @@ const ChatPopupProfile: React.FC<ChatPopupProfileType> = ({
       <S.CloseButton onClick={() => setShowChatPopupProfile((prev) => !prev)}>
         X
       </S.CloseButton>
+      <S.ChatPopupProfileImg
+        src={profile ? "data:image/png;base64," + profile.profileImage : ""}
+      ></S.ChatPopupProfileImg>
+      <S.ChatPopupProfileLink href={profile.url}>{profile.url || "default url"}</S.ChatPopupProfileLink>
     </S.ChatPopupProfileContainer>,
     document.body
   );

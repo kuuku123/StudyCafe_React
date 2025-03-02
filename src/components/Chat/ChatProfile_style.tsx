@@ -25,7 +25,7 @@ export const ChatMessageProfileWrapperOther = styled.div`
 //   flex-shrink: 0;
 // `;
 
-export const ChatProfile = styled.img`
+export const ChatProfileImg = styled.img`
   width: 40px;
   height: 40px;
   border: 1px solid #ccc;

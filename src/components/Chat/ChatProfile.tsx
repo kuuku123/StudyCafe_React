@@ -52,15 +52,16 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
   }, []);
 
   const profileImg = (
-    <S.ChatProfile
+    <S.ChatProfileImg
       ref={profileRef}
       src={profile ? "data:image/png;base64," + profile.profileImage : ""}
       onClick={handleClick}
     />
   );
 
-  const popup = showChatPopupProfile && (
+  const popup = showChatPopupProfile && profile && (
     <ChatPopupProfile
+      profile={profile}
       setShowChatPopupProfile={setShowChatPopupProfile}
       popupPosition={popupPosition}
     />

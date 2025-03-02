@@ -60,6 +60,14 @@ export const Profile_Name_style = styled.div`
   font-size: 30px;
 `;
 export const Profile_Info_style = styled.div`
+  grid-row-start: 3;
+  grid-row-end: 4;
+  grid-column-start: 8;
+  grid-column-end: 11;
+  font-size: 20px;
+`;
+
+export const Profile_Link_style = styled.a`
   grid-row-start: 4;
   grid-row-end: 5;
   grid-column-start: 8;
