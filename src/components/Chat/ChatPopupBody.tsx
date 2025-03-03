@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StudySummary } from "./ChatPopup";
-import { User } from "../../utils/type";
+import { AccountDto, User } from "../../utils/type";
 import { ChatMessageType, WSService } from "../../lib/features/WSService";
 import ChatMessage from "./ChatMessage";
 import * as S from "./ChatPopupBody_style";
 import ChatApi from "../../lib/apis/ChatApi";
 import { v4 as uuidv4 } from "uuid";
 import ChatProfile from "./ChatProfile";
+import ChatPopupProfile from "./ChatPopupProfile";
 
 interface ChatPopupBodyType {
   study: StudySummary;
@@ -25,6 +26,30 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
 
   const [inputText, setInputText] = useState("");
   const [savedScroll, setSavedScroll] = useState(0);
+
+  // "activePopupProfile" will hold the user/email/AccountDto that should have an open popup.
+  // Null means "no popup open right now."
+  const [activePopupProfile, setActivePopupProfile] =
+    useState<AccountDto | null>(null);
+
+  // Also track the popup position in ChatPopupBody, not in each ChatProfile
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+
+  // A function that children (ChatProfile) can call to request opening a popup
+  // for a given profile. This ensures we close any existing popup first, and open the new one.
+  const openPopupForProfile = (
+    profile: AccountDto,
+    position: { top: number; left: number }
+  ) => {
+    setPopupPosition(position);
+    setActivePopupProfile(profile);
+    console.log("profile => ", profile);
+  };
+
+  // If we want to close the popup from outside
+  const closePopupProfile = () => {
+    setActivePopupProfile(null);
+  };
 
   // Specify that chatBodyRef is a reference to an HTMLDivElement
   const chatBodyRef = useRef<HTMLDivElement>(null);
@@ -114,12 +139,28 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
               Chat for <strong>{study.title}</strong>
             </S.StudyTitle>
             {messages.map((msg) => (
-              <ChatProfile user={user} msg={msg}>
+              <ChatProfile
+                key={msg.id}
+                user={user}
+                msg={msg}
+                openPopupForProfile={openPopupForProfile}
+                activePopupProfile={activePopupProfile}
+                closePopupProfile={closePopupProfile}
+              >
                 <ChatMessage key={msg.id} sender={msg.email}>
                   {msg.text}
                 </ChatMessage>
               </ChatProfile>
             ))}
+            {/* Conditionally render a single ChatPopupProfile,
+                using the parent-level "activePopupProfile" state. */}
+            {activePopupProfile && (
+              <ChatPopupProfile
+                profile={activePopupProfile}
+                closePopupProfile={closePopupProfile}
+                popupPosition={popupPosition}
+              />
+            )}
           </>
         ) : (
           <S.NoStudySelected>

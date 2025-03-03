@@ -4,35 +4,47 @@ import * as S from "./ChatProfile_style";
 import { AccountDto, User } from "../../utils/type";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
-import ChatPopupProfile from "./ChatPopupProfile";
 
 interface ChatProfileProps {
   user: User;
   msg: ChatMessageType;
   children: ReactNode;
+  openPopupForProfile: (
+    profile: AccountDto,
+    position: { top: number; left: number }
+  ) => void;
+  activePopupProfile: AccountDto | null;
+  closePopupProfile: () => void;
 }
 
-const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
+const ChatProfile: React.FC<ChatProfileProps> = ({
+  user,
+  msg,
+  children,
+  openPopupForProfile,
+  activePopupProfile,
+  closePopupProfile,
+}) => {
   const [profile, setProfile] = useState<AccountDto>();
   const [isManager, setIsManager] = useState<Boolean>(false);
-  const [showChatPopupProfile, setShowChatPopupProfile] =
-    useState<Boolean>(false);
-  const [popupPosition, setPopupPosition] = useState<{
-    top: number;
-    left: number;
-  }>({ top: 0, left: 0 });
 
   const profileRef = useRef<HTMLImageElement>(null);
-  const calculateCurrentPosition = (open: boolean) => {
+  const calculateCurrentPosition = () => {
+    console.log("calculateCurerntPosition ");
     if (profileRef.current) {
       const rect = profileRef.current.getBoundingClientRect();
       // Adjust these values if you need an offset
-      setPopupPosition({ top: rect.bottom, left: rect.left });
-      setShowChatPopupProfile(open);
+      openPopupForProfile(profile!, {
+        top: rect.bottom,
+        left: rect.left,
+      });
+    }
+    if (activePopupProfile?.email === profile?.email) {
+      closePopupProfile();
     }
   };
   const handleClick = () => {
-    calculateCurrentPosition(true);
+    calculateCurrentPosition();
   };
 
   useEffect(() => {
@@ -48,7 +60,7 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
     StudyManagerApi.isManager(msg.studyPath, msg.email).then((response) => {
       setIsManager(response.data);
     });
-    calculateCurrentPosition(false);
+    calculateCurrentPosition();
   }, []);
 
   const profileImg = (
@@ -59,19 +71,10 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
     />
   );
 
-  const popup = showChatPopupProfile && profile && (
-    <ChatPopupProfile
-      profile={profile}
-      setShowChatPopupProfile={setShowChatPopupProfile}
-      popupPosition={popupPosition}
-    />
-  );
-
   if (user && user.email === msg.email) {
     return (
       <S.ChatMessageProfileWrapperMe>
         {profileImg}
-        {popup}
         <S.ChatNicknameMessageWrapper>
           <S.ChatProfileNickname>
             {isManager ? `[M]${msg.nickname}` : msg.nickname}
@@ -84,7 +87,6 @@ const ChatProfile: React.FC<ChatProfileProps> = ({ user, msg, children }) => {
   return (
     <S.ChatMessageProfileWrapperOther>
       {profileImg}
-      {popup}
       <S.ChatNicknameMessageWrapper>
         <S.ChatProfileNickname>
           {isManager ? `[M]${msg.nickname}` : msg.nickname}
