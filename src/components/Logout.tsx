@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../lib/features/redux/authSlice";
 import { CSSProperties } from "styled-components";
+import { clearStudyCreated, clearStudyUpdated } from "../lib/features/redux/notificationSlice";
 
 interface LogoutProps {
   style?: CSSProperties;
@@ -22,6 +23,8 @@ const Logout: React.FC<LogoutProps> = ({ style }) => {
     }).then((res) => {
       console.log(res);
       dispatch(logout());
+      dispatch(clearStudyCreated())
+      dispatch(clearStudyUpdated())
       navigate("/");
     });
   };
