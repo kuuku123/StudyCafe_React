@@ -23,6 +23,7 @@ const notificationSlice = createSlice({
     },
     clearStudyCreated(state) {
       state.messages.count = 0;
+      state.messages.studyCreated.events = [];
     },
     addStudyUpdated(state, action) {
       console.log("addStudyUpdated => ", action.payload);
@@ -31,6 +32,7 @@ const notificationSlice = createSlice({
     },
     clearStudyUpdated(state) {
       state.messages.count = 0;
+      state.messages.studyUpdated.events = [];
     },
     minusStudyCreated(state, action) {
       console.log("action.payload => ", action.payload);

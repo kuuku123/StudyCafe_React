@@ -27,6 +27,7 @@ const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.user = null;
+      state.firstLoggedIn = false;
     },
     checkFirstLoggedIn(state) {
       state.firstLoggedIn = true;

@@ -11,7 +11,6 @@ import { Resizable } from "re-resizable";
 export type StudySummary = Pick<StudyDto, "title" | "path">;
 
 const ChatPopup = () => {
-  console.log("ChatPOPUp get rereder? ===================?? ");
   const [isOpen, setIsOpen] = useState(false);
   const [studies, setStudies] = useState<StudySummary[]>([]);
   const [selectedStudy, setSelectedStudy] = useState<StudySummary | null>(null);

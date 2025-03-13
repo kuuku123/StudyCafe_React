@@ -13,7 +13,6 @@ class SSEService {
   }
 
   connect(user: User) {
-    console.log("EventSource => ", this.eventSource, user);
     if (!this.eventSource) {
       const EventSource = EventSourcePolyfill || NativeEventSource;
       this.eventSource = new EventSource(
@@ -28,12 +27,10 @@ class SSEService {
       };
 
       this.eventSource.addEventListener("StudyCreated", (event) => {
-        console.log("StudyCreated Notification => ", event);
         store.dispatch(addStudyCreated(event.data));
       });
 
       this.eventSource.addEventListener("StudyUpdated", (event) => {
-        console.log("StudyUpdated Notification => ", event);
         store.dispatch(addStudyUpdated(event.data));
       });
 

@@ -19,17 +19,14 @@ const useHandleResponse = () => {
     callback: ((data: any) => void) | null,
     useNavigate: NavigateOptions
   ) => {
-    console.log("useNavigate => ", useNavigate);
 
     if (response.status === "OK") {
       if (useNavigate.dialog == "" && callback) {
-        console.log("first callback ? ", useNavigate.dialog);
         callback(response.data);
         if (useNavigate.path !== "") {
           navigate(useNavigate.path);
         }
       } else if (useNavigate.path !== "" && useNavigate.dialog !== "") {
-        console.log("dialog => ", useNavigate.dialog);
         openDialog(
           <Dialog
             header={<></>}
@@ -48,11 +45,9 @@ const useHandleResponse = () => {
           />
         );
       } else if (useNavigate.path !== "") {
-        console.log("hiihi - ", useNavigate.path);
         navigate(useNavigate.path);
       }
     } else if (response.status === "403") {
-      console.log("unauthorized");
       openDialog(
         <Dialog
           header={<>Login</>}
@@ -64,7 +59,6 @@ const useHandleResponse = () => {
         />
       );
     } else {
-      console.log("response else=> ", response);
       openDialog(
         <Dialog
           header={<>Error</>}

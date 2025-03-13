@@ -53,6 +53,7 @@ const Title = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    console.log("firstLoggedIn => ", firstLoggedIn);
     if (isAuthenticated && !firstLoggedIn) {
       store.dispatch(checkFirstLoggedIn());
       const getNotificationsUnRead = async () => {
@@ -68,7 +69,6 @@ const Title = ({ children }: { children: ReactNode }) => {
   }, []);
 
   if (isAuthenticated) {
-    console.log("user => ", user);
     if (user) {
       sseService.connect(user);
     } else {
@@ -136,7 +136,6 @@ const Title = ({ children }: { children: ReactNode }) => {
       </S.Title_style>
     );
   } else {
-    console.log("auAuthenticated Title ");
     return (
       <S.Title_style>
         <S.Children_style>
