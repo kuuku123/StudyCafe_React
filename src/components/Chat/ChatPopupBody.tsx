@@ -99,9 +99,7 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
 
   // Restore saved scroll when reopening
   useEffect(() => {
-    console.log("savedScroll!! out if");
     if (chatBodyRef.current) {
-      console.log("savedScroll!!");
       setTimeout(() => {
         chatBodyRef.current!.scrollTop = savedScroll;
       }, 0);
@@ -110,9 +108,7 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
 
   // Auto-scroll if user is near the bottom
   useEffect(() => {
-    console.log("Auto Scroll!! out if");
     if (chatBodyRef.current) {
-      console.log("Auto Scroll!! ");
       const { scrollTop, clientHeight, scrollHeight } = chatBodyRef.current;
       // Debug log to check scroll values
       console.log(
@@ -125,7 +121,6 @@ const ChatPopupBody: React.FC<ChatPopupBodyType> = ({ study, user }) => {
       );
       // if (scrollTop + clientHeight >= scrollHeight - 120) {
       chatBodyRef.current.scrollTop = scrollHeight;
-      console.log("scrollTop => ", chatBodyRef.current.scrollTop, scrollHeight);
       // }
     }
   }, [messages]);

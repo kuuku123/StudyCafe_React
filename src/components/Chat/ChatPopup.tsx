@@ -51,7 +51,7 @@ const ChatPopup = () => {
     localStorage.setItem("chatPopupDimensions", JSON.stringify(size));
   };
 
-  useEffect(() => {
+    useEffect(() => {
     if (isAuthenticated) {
       console.log("ChatPopup getting study list called ===> ");
       const getStudyLists = async () => {
@@ -62,8 +62,10 @@ const ChatPopup = () => {
         handleManagerMemberStudies(response);
       };
       getStudyLists();
+    } else {
+      setIsOpen(false);
     }
-  }, [isOpen]);
+  }, [isOpen, isAuthenticated]);
 
   const ChatContainer_style = {
     position: "fixed",
