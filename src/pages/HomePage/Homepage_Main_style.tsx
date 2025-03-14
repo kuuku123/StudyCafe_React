@@ -18,6 +18,66 @@ export const Homeapge_Main_style = styled.div`
   min-height: 80vh;
 `;
 
+export const Tags_wrapper = styled.div`
+  position: relative;
+  overflow: hidden; /* Hide the overflow */
+`;
+
+export const Tags_style = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid;
+  overflow-x: auto; /* Enable horizontal scroll if needed */
+  scroll-behavior: smooth;
+  /* Optionally hide the scrollbar */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const Tag_style = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-bottom: 5px;
+  position: relative; /* Needed for absolute positioning of the pseudo-element */
+
+  /* Create the pseudo-element for the underline */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; /* position it at the bottom */
+    left: 0;
+    width: 0%;
+    height: 2px; /* desired underline thickness */
+    background-color: currentColor; /* matches the text color */
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ScrollButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 1;
+`;
 export const Email_Verification_style = styled.div`
   font-size: 20px;
 `;

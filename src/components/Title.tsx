@@ -75,13 +75,13 @@ const Title = ({ children }: { children: ReactNode }) => {
       console.error("User is null, cannot connect to SSE service.");
     }
     return (
-      <S.Title_style>
-        <S.Children_style>
+      <S.Home_Header_style>
+        <S.App_Image_style>
           <Link to="/">
             <S.Header_Image_style src="/images/image.png"></S.Header_Image_style>
           </Link>
           {children}
-        </S.Children_style>
+        </S.App_Image_style>
         <S.Login_Signup_style>
           <DropDownContainer
             profile={<Bell></Bell>}
@@ -133,17 +133,20 @@ const Title = ({ children }: { children: ReactNode }) => {
             <Logout style={S.link_style}></Logout>
           </DropDownContainer>
         </S.Login_Signup_style>
-      </S.Title_style>
+      </S.Home_Header_style>
     );
   } else {
     return (
-      <S.Title_style>
-        <S.Children_style>
+      <S.Home_Header_style>
+        <S.App_Image_style>
           <Link to="/">
             <S.Header_Image_style src="/images/image.png"></S.Header_Image_style>
           </Link>
           {children}
-        </S.Children_style>
+        </S.App_Image_style>
+        <div>ABC</div>
+        <div>ABC</div>
+        <div>ABC</div>
         <S.Login_Signup_style>
           <Link style={S.link_style} to="/login">
             Login
@@ -152,7 +155,7 @@ const Title = ({ children }: { children: ReactNode }) => {
             Sign-Up
           </Link>
         </S.Login_Signup_style>
-      </S.Title_style>
+      </S.Home_Header_style>
     );
   }
 };

@@ -47,17 +47,16 @@ export const FormControl_Container_style = styled.div`
   width: 100%;
 `;
 
-export const Title_style = styled.div`
+export const Home_Header_style = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   align-items: center;
-  background-color: #c2b4b4;
+  gap: 20px;
   width: 100%;
   min-width: 1400px;
+  padding-bottom: 10px;
 `;
 
-export const Children_style = styled.div`
+export const App_Image_style = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -70,7 +69,9 @@ export const Login_Signup_style = styled.div`
   color: gray;
   gap: 10px;
   margin-right: 10px;
+  margin-left: auto;
 `;
+
 
 export const Header_Image_style = styled.img`
   width: 70px; /* Set the width of the image */
