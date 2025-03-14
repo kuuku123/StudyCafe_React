@@ -41,11 +41,11 @@ const HomePage = () => {
             <Title>
               <S.Header_Input_style></S.Header_Input_style>
             </Title>
-            <div>
+            {/* <div>
               {login && !emailVerified && (
                 <EmailVerification></EmailVerification>
               )}
-            </div>
+            </div> */}
           </>
         }
         footer={<CopyRight></CopyRight>}

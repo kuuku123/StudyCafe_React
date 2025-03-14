@@ -14,11 +14,24 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import Tag from "./Tag";
+import JoinStudy_Main from "../JoinStudyPage/JoinStudy_Main";
+import PublishedStudyList from "./PublishedStudyList";
+import { TagForm, ZoneForm } from "../../utils/type";
+import StudyApi from "../../lib/apis/StudyApi";
+import HandleResponseApi from "../../lib/HandleResponse";
 
 const Hompage_Main = () => {
   const tagsRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [totalStudies, setTotalStudies] = useState<number>(0);
+  const [currentTag, setCurrentTag] = useState<TagForm>({ title: "All" });
+  const [currentZone, setCurrentZone] = useState<ZoneForm>({
+    city: "Andong",
+    province: "Andong",
+  });
+  const handleResponse = HandleResponseApi.useHandleResponse();
+
   // Check scrollability on mount and when window resizes
   const checkForOverflow = () => {
     const el = tagsRef.current;
@@ -31,6 +44,14 @@ const Hompage_Main = () => {
     checkForOverflow();
     window.addEventListener("resize", checkForOverflow);
     return () => window.removeEventListener("resize", checkForOverflow);
+  }, []);
+
+  useEffect(() => {
+    const totalStudyCount = async () => {
+      const response = await StudyApi.fetchTotalStudiesCount();
+      handleResponse(response, setTotalStudies, { path: "", dialog: "" });
+    };
+    totalStudyCount();
   }, []);
 
   const scroll = (direction: "left" | "right") => {
@@ -82,6 +103,12 @@ const Hompage_Main = () => {
         <S.Home_Intro_style>
           Provides study meeting management.
         </S.Home_Intro_style>
+        <PublishedStudyList
+          tag={currentTag}
+          zone={currentZone}
+          totalStudies={totalStudies}
+          pageSize={3}
+        ></PublishedStudyList>
       </S.Homeapge_Main_style>
     </>
   );

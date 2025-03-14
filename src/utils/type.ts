@@ -116,6 +116,9 @@ export interface StudyJoinDto {
   title: string;
   path: string;
   shortDescription: string;
+  fullDescription: string;
+  studyImage: string;
+  published: boolean;
   tagDtoList: TagDto[];
   zoneDtoList: ZoneDto[];
 }

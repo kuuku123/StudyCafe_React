@@ -109,6 +109,18 @@ EOF
   echo "------------------------------------------"
 done
 
+# Now, loop over each study and publish it.
+for (( i=0; i<NUM_STUDIES; i++ )); do
+  study_path="${STUDY_PATHS[$i]}"
+  echo "Publishing study: $study_path"
+  publish_response=$(curl -s -X POST "$API_GATEWAY_URL/app/study/$study_path/settings/publish" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    -b "$COOKIE_JAR")
+
+  echo "Publish response: $publish_response"
+  echo "------------------------------------------"
+done
+
 # Optionally, clean up by removing the cookie jar file
 rm -f "$COOKIE_JAR"
 

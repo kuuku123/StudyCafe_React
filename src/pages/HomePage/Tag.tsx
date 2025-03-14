@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./Homepage_Main_style";
+import * as S from "./Tag_style";
 interface TagProps {
   Icon: React.ComponentType<{ size?: number }>;
   label: string;
