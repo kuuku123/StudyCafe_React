@@ -10,7 +10,7 @@ export const ChatPopupProfileContainer = styled.div`
   height: 300px;
   background-color: #fff;
   border: 1px solid #000; /* This adds a 4px thick black border */
-  z-index: 3;
+  z-index: 5;
 `;
 
 export const CloseButton = styled.button`

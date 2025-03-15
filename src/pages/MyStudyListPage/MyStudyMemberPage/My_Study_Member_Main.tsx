@@ -8,6 +8,8 @@ import My_Study_Member_Member from "./MyStudyMemberComponentPage/MyStudyMemberMe
 import StudyApi from "../../../lib/apis/StudyApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
 import { StudyDto } from "../../../utils/type";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../../lib/features/redux/authSelector";
 
 const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const [category, setCategory] = useState(() => {
@@ -17,22 +19,25 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const handleResponse = HandleResponseApi.useHandleResponse();
+  const { user, isAuthenticated } = useSelector(selectAuth);
 
   useEffect(() => {
     sessionStorage.setItem("My_Study_Member_Main_category", category);
   }, [category]);
 
   useEffect(() => {
-    async function checkStudyJoined() {
-      try {
-        const response = await StudyApi.checkStudyJoined(path);
-        console.log("checkStudyJoined => ", response);
-        setJoined(response.data);
-      } catch (error) {
-        console.log(error);
+    if (isAuthenticated) {
+      async function checkStudyJoined() {
+        try {
+          const response = await StudyApi.checkStudyJoined(path);
+          console.log("checkStudyJoined => ", response);
+          setJoined(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
+      checkStudyJoined();
     }
-    checkStudyJoined();
   });
 
   const pageComponent: Record<string, JSX.Element> = {
@@ -44,21 +49,25 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   };
 
   const handleOnClick = (category: string) => {
-    setCategory(category);
+    if (isAuthenticated) {
+      setCategory(category);
+    }
   };
 
   const handleJoinOnClick = async (path: string) => {
-    let response = null;
-    if (joined) {
-      response = await StudyApi.leaveStudy(path);
-    } else {
-      response = await StudyApi.joinStudy(path);
+    if (isAuthenticated) {
+      let response = null;
+      if (joined) {
+        response = await StudyApi.leaveStudy(path);
+      } else {
+        response = await StudyApi.joinStudy(path);
+      }
+      console.log("handleJoinOnCLick => ", response);
+      handleResponse(response, () => setJoined(!joined), {
+        path: "",
+        dialog: "",
+      });
     }
-    console.log("handleJoinOnCLick => ", response);
-    handleResponse(response, () => setJoined(!joined), {
-      path: "",
-      dialog: "",
-    });
   };
 
   return (
@@ -75,30 +84,46 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
           {!joined ? "Join" : "Leave"}
         </S.Study_Component_Click_style>
         <ReactTooltip id="draftTooltip" variant="info" place="top">
-          {!joined ? "Click to join current Study" : "Click to Leave Study"}
+          {!isAuthenticated
+            ? "Login to join"
+            : !joined
+            ? "Click to join current Study"
+            : "Click to Leave Study"}
         </ReactTooltip>
       </S.Study_Draft_style>
       <S.Study_Link_style>
         <S.Study_Component_Click_style
           clicked={"info" === category}
           onClick={() => handleOnClick("info")}
+          data-tooltip-id="infoTooltip"
         >
           Info
         </S.Study_Component_Click_style>
+        <ReactTooltip id="infoTooltip" variant="info" place="top">
+          {!isAuthenticated && "Login to navigate"}
+        </ReactTooltip>
 
         <S.Study_Component_Click_style
           clicked={"member" === category}
           onClick={() => handleOnClick("member")}
+          data-tooltip-id="memberTooltip"
         >
           Member
         </S.Study_Component_Click_style>
+        <ReactTooltip id="memberTooltip" variant="info" place="top">
+          {!isAuthenticated && "Login to navigate"}
+        </ReactTooltip>
 
         <S.Study_Component_Click_style
           clicked={"schedule" === category}
           onClick={() => handleOnClick("schedule")}
+          data-tooltip-id="scheduleTooltip"
         >
           Schedule
         </S.Study_Component_Click_style>
+        <ReactTooltip id="scheduleTooltip" variant="info" place="top">
+          {!isAuthenticated && "Login to navigate"}
+        </ReactTooltip>
       </S.Study_Link_style>
 
       <S.Study_Link_Horizontal_Line_style></S.Study_Link_Horizontal_Line_style>

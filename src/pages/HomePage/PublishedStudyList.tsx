@@ -6,10 +6,9 @@ import * as S from "./PublishedStudyList_style";
 import { useNavigate } from "react-router-dom";
 import RoutesEnum from "../../lib/RoutesEnum";
 import DOMPurify from "dompurify";
-// Assume these are imported from your API and types
-// import StudyApi from 'path/to/StudyApi';
-// import HandleResponseApi from 'path/to/HandleResponseApi';
-// import { TagForm, ZoneForm, StudyJoinDto } from 'path/to/types';
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../lib/features/redux/authSelector";
+import StudyManagerApi from "../../lib/apis/StudyManagerApi";
 
 interface PublishedStudyListProps {
   tag: TagForm;
@@ -29,12 +28,21 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
   const totalPages = Math.ceil(totalStudies / pageSize);
   const handleResponse = HandleResponseApi.useHandleResponse();
   const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(selectAuth);
 
-  const handleClick = (study: StudyDto, isManager: boolean) => {
-    console.log("study => ", study);
-    if (isManager) {
-      navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
-    } else {
+  const handleClick = async (study: StudyDto) => {
+    try {
+      console.log("isAuthenticated => ", isAuthenticated);
+      if (isAuthenticated) {
+        const response = await StudyManagerApi.amiManager(study.path);
+        console.log("amiManager response:", response);
+        if (response.data === true) {
+          navigate(RoutesEnum.STUDY_MANAGER(study.path), { state: study });
+        }
+      }
+      navigate(RoutesEnum.STUDY_MEMBER(study.path), { state: study });
+    } catch (error) {
+      console.error("Error checking manager status", error);
       navigate(RoutesEnum.STUDY_MEMBER(study.path), { state: study });
     }
   };
@@ -81,7 +89,7 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
       }
     } else {
       // For more than 5 pages, we use a condensed pagination
-      if (currentPage <= 3) {
+      if (currentPage <= 4) {
         pages = [1, 2, 3, "...", totalPages];
       } else if (currentPage >= totalPages - 2) {
         pages = [1, "...", totalPages - 2, totalPages - 1, totalPages];
@@ -110,16 +118,13 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
           page === "..." ? (
             <span key={index}> ... </span>
           ) : (
-            <button
+            <S.PageButton
               key={index}
+              active={page === currentPage}
               onClick={() => goToPage(page as number)}
-              style={{
-                fontWeight: page === currentPage ? "bold" : "normal",
-                background: page === currentPage ? "#e0e0e0" : "transparent",
-              }}
             >
               {page}
-            </button>
+            </S.PageButton>
           )
         )}
         <button
@@ -144,13 +149,12 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
                 key={index}
                 index={index}
                 className={`card-${index}`}
-                onClick={() => handleClick(study, true)}
+                onClick={() => handleClick(study)}
               >
                 <S.CardImage>
                   <img src={study.studyImage} alt={study.title} />
                 </S.CardImage>
                 <S.CardBody>
-                  <h3>MANAGER</h3>
                   <h3>{study.title}</h3>
                   <p>Path: {study.path}</p>
                   <p>Short Description: {study.shortDescription}</p>

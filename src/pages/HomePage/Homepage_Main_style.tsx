@@ -19,8 +19,11 @@ export const Homeapge_Main_style = styled.div`
 `;
 
 export const Tags_wrapper = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   overflow: hidden; /* Hide the overflow */
+  background: white; /* Ensure a background so content below doesn't show through */
+  z-index: 3; /* Increase z-index if needed to overlay other content */
 `;
 
 export const Tags_style = styled.div`

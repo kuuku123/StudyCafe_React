@@ -40,7 +40,7 @@ export const Card = styled.li<CardProps>`
 
   &:hover {
     transform: scale(1.05);
-    z-index: 3;
+    z-index: 2;
   }
 
   ${({ index }) => `
@@ -107,4 +107,25 @@ export const FullDescription = styled.div`
       transform: scale(1); /* Text returns to original size */
     }
   }
+`;
+
+interface PageButtonProps {
+  active?: boolean;
+}
+
+export const PageButton = styled.button<PageButtonProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  background: ${(props) => (props.active ? "#e0e0e0" : "transparent")};
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin: 0 4px;
+  gap: 8px;
+  border: 1px solid;
+  width: 40px;
+  height: 40px;
+  font-size: 19px;
 `;

@@ -6,7 +6,7 @@ export const ChatContainer = styled.div`
   right: 20px;
   width: 300px;
   font-family: Arial, sans-serif;
-  z-index: 2;
+  z-index: 4;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
@@ -58,6 +58,7 @@ export const ChatBubbleContainer = styled.div`
   right: 0px;
   display: inline-block; /* Ensures container only takes the space of its content */
   transition: transform 0.2s ease; /* Smooth animation */
+  z-index: 4;
 
   &:hover {
     transform: scale(1.25); /* Slightly larger on hover */

@@ -18,7 +18,7 @@ const StudyMemberPage = () => {
   const handleResponse = HandleResponseApi.useHandleResponse();
   const location = useLocation();
   const path = location.pathname.split("/")[3];
-  const { user } = useSelector(selectAuth);
+  const { user, isAuthenticated } = useSelector(selectAuth);
 
   const navigate = useNavigate();
 
@@ -27,12 +27,13 @@ const StudyMemberPage = () => {
       const response = await StudyApi.fetchStudy(path);
       handleResponse(response, setStudy, { path: "", dialog: "" });
     };
-
-    StudyManagerApi.isManager(path, user!.email).then((response) => {
-      if (response.data == true) {
-        navigate(RoutesEnum.STUDY_MANAGER(path));
-      }
-    });
+    if (isAuthenticated) {
+      StudyManagerApi.isManager(path, user!.email).then((response) => {
+        if (response.data == true) {
+          navigate(RoutesEnum.STUDY_MANAGER(path));
+        }
+      });
+    }
     getStudy(path);
   }, [path]);
 
