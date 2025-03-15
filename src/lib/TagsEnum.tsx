@@ -1,6 +1,6 @@
 const TagsEnum = {
   Health: "health",
-  ComputerScience: "computer_science",
+  ComputerScience: "computer-science",
   Mathematics: "mathematics",
   Physics: "physics",
   Biology: "biology",

@@ -171,7 +171,7 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
               </S.Card>
             ))
           ) : (
-            <S.Card>No manager studies available</S.Card> // Fallback message when studies is empty or not yet filled
+            <S.Card>No more published studies available</S.Card> // Fallback message when studies is empty or not yet filled
           )}
         </S.List>
       </S.Container>
