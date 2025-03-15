@@ -19,6 +19,7 @@ class SSEService {
         `${this.url}/notifications?email=${user.email}`,
         {
           withCredentials: true,
+          heartbeatTimeout: 600000, // Extend idle timeout to 5 minutes
         }
       );
 

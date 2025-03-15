@@ -10,7 +10,7 @@ export const DropDown_Header_style = styled.div`
 
 export const DropDown_style = styled.ul`
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   right: 1rem;
   list-style: none;
   padding: 16px;

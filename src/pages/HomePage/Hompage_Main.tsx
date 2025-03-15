@@ -19,6 +19,7 @@ import PublishedStudyList from "./PublishedStudyList";
 import { TagForm, ZoneForm } from "../../utils/type";
 import StudyApi from "../../lib/apis/StudyApi";
 import HandleResponseApi from "../../lib/HandleResponse";
+import TagsEnum from "../../lib/TagsEnum";
 
 const Hompage_Main = () => {
   const tagsRef = useRef<HTMLDivElement | null>(null);
@@ -40,6 +41,13 @@ const Hompage_Main = () => {
       setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth);
     }
   };
+
+  // A dedicated handler for tag clicks
+  const handleTagClick = (tagLabel: string) => {
+    console.log("taglabel => ", tagLabel);
+    setCurrentTag({ title: tagLabel });
+  };
+
   useEffect(() => {
     checkForOverflow();
     window.addEventListener("resize", checkForOverflow);
@@ -80,18 +88,63 @@ const Hompage_Main = () => {
             &#8594;
           </S.ScrollButton>
         )}
+
         <S.Tags_style ref={tagsRef}>
-          <Tag Icon={FaHeartbeat} label="Health" />
-          <Tag Icon={FaLaptopCode} label="Computer Science" />
-          <Tag Icon={FaCalculator} label="Mathematics" />
-          <Tag Icon={FaAtom} label="Physics" />
-          <Tag Icon={FaFlask} label="Biology" />
-          <Tag Icon={FaBook} label="Chemistry" />
-          <Tag Icon={FaHistory} label="Literature" />
-          <Tag Icon={FaChartLine} label="History" />
-          <Tag Icon={FaBrain} label="Economics" />
-          <Tag Icon={FaCogs} label="Psychology" />
-          <Tag Icon={FaLightbulb} label="Engineering" />
+          <Tag
+            Icon={FaHeartbeat}
+            label="Health"
+            onClick={() => handleTagClick(TagsEnum.Health)}
+          />
+          <Tag
+            Icon={FaLaptopCode}
+            label="Computer Science"
+            onClick={() => handleTagClick(TagsEnum.ComputerScience)}
+          />
+          <Tag
+            Icon={FaCalculator}
+            label="Mathematics"
+            onClick={() => handleTagClick(TagsEnum.Mathematics)}
+          />
+          <Tag
+            Icon={FaAtom}
+            label="Physics"
+            onClick={() => handleTagClick(TagsEnum.Physics)}
+          />
+          <Tag
+            Icon={FaFlask}
+            label="Biology"
+            onClick={() => handleTagClick(TagsEnum.Biology)}
+          />
+          <Tag
+            Icon={FaBook}
+            label="Chemistry"
+            onClick={() => handleTagClick(TagsEnum.Chemistry)}
+          />
+          <Tag
+            Icon={FaHistory}
+            label="Literature"
+            onClick={() => handleTagClick(TagsEnum.Literature)}
+          />
+          <Tag
+            Icon={FaChartLine}
+            label="History"
+            onClick={() => handleTagClick(TagsEnum.History)}
+          />
+          <Tag
+            Icon={FaBrain}
+            label="Economics"
+            onClick={() => handleTagClick(TagsEnum.Economics)}
+          />
+          <Tag
+            Icon={FaCogs}
+            label="Psychology"
+            onClick={() => handleTagClick(TagsEnum.Psychology)}
+          />
+          <Tag
+            Icon={FaLightbulb}
+            label="Engineering"
+            onClick={() => handleTagClick(TagsEnum.Engineering)}
+          />
         </S.Tags_style>
       </S.Tags_wrapper>
 

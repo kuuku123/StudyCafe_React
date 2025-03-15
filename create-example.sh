@@ -121,6 +121,28 @@ for (( i=0; i<NUM_STUDIES; i++ )); do
   echo "------------------------------------------"
 done
 
+# Loop over each study and add a tag (using the study path as the tag).
+for (( i=0; i<NUM_STUDIES; i++ )); do
+  study_path="${STUDY_PATHS[$i]}"
+  echo "Adding tag '$study_path' to study: $study_path"
+  
+  # Construct the JSON payload for the tag. Adjust the key name if your TagForm expects a different field.
+  TAG_PAYLOAD=$(cat <<EOF
+[
+  {"title": "$study_path"}
+]
+EOF
+)
+  
+  tag_response=$(curl -s -X POST "$API_GATEWAY_URL/app/study/$study_path/settings/tags/add" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    -b "$COOKIE_JAR" \
+    -d "$TAG_PAYLOAD")
+  
+  echo "Tag response: $tag_response"
+  echo "------------------------------------------"
+done
+
 # Optionally, clean up by removing the cookie jar file
 rm -f "$COOKIE_JAR"
 
