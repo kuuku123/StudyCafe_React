@@ -164,6 +164,7 @@ const Hompage_Main = () => {
           tag={currentTag}
           zone={currentZone}
           totalStudies={totalStudies}
+          currentTag={currentTag}
           pageSize={5}
         ></PublishedStudyList>
       </S.Homeapge_Main_style>

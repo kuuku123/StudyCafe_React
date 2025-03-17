@@ -15,6 +15,7 @@ interface PublishedStudyListProps {
   zone: ZoneForm;
   totalStudies: number;
   pageSize: number;
+  currentTag: TagForm;
 }
 
 const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
@@ -22,6 +23,7 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
   zone,
   totalStudies,
   pageSize,
+  currentTag,
 }) => {
   const [studies, setStudies] = useState<StudyJoinDto[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +74,10 @@ const PublishedStudyList: React.FC<PublishedStudyListProps> = ({
     };
     fetchStudies();
   }, [currentPage, tag, zone, pageSize]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentTag]);
 
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return;
