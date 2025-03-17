@@ -1,35 +1,32 @@
 import styled from "styled-components";
 
-export const ChatContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  font-family: Arial, sans-serif;
-  z-index: 4;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+export const ChatHeaderAndBodyContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
-
-export const ChatHeader = styled.div`
-  background: #007bff;
-  color: #fff;
+export const StudyListSidebar = styled.div`
+  width: 100px; /* Adjust as needed */
+  background: #f1f1f1;
+  overflow-y: auto;
   padding: 10px;
-  position: relative; /* Needed for absolute positioning of MinimizeButton */
-  display: flex;
-  flex-direction: column;
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StudyList = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 10px;
   flex-wrap: wrap;
 `;
-
-interface StudyItemProps {
-  active?: boolean;
-}
 
 export const StudyItem = styled.div<StudyItemProps>`
   cursor: pointer;
@@ -40,6 +37,18 @@ export const StudyItem = styled.div<StudyItemProps>`
     background: #0056b3;
   }
 `;
+
+export const ChatHeader = styled.div`
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  position: relative; /* Needed for absolute positioning of MinimizeButton */
+  display: flex;
+`;
+
+interface StudyItemProps {
+  active?: boolean;
+}
 
 export const MinimizeButton = styled.button`
   background: transparent;

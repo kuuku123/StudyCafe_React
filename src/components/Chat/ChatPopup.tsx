@@ -76,7 +76,6 @@ const ChatPopup = () => {
     zIndex: 4,
     boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
     display: "flex",
-    flexDirection: "column",
     backgroundColor: "#fff",
   } as const;
 
@@ -96,7 +95,7 @@ const ChatPopup = () => {
               });
             }}
           >
-            <S.ChatHeader>
+            <S.StudyListSidebar>
               <S.StudyList>
                 {studies.length > 0 ? (
                   studies.map((study) => (
@@ -112,27 +111,34 @@ const ChatPopup = () => {
                   <p>Join Study to Chat</p>
                 )}
               </S.StudyList>
-              <S.MinimizeButton onClick={toggleChat}>ㅡ</S.MinimizeButton>
-            </S.ChatHeader>
+            </S.StudyListSidebar>
+            <S.ChatHeaderAndBodyContainer>
+              <S.ChatHeader>
+                <p>Study Chat {selectedStudy?.path}</p>
+                <S.MinimizeButton onClick={toggleChat}>ㅡ</S.MinimizeButton>
+              </S.ChatHeader>
 
-            {studies.map((study) => (
-              <div
-                key={study.path}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                  visibility:
-                    selectedStudy?.path === study.path ? "visible" : "hidden",
-                  position:
-                    selectedStudy?.path === study.path ? "static" : "absolute",
-                  pointerEvents:
-                    selectedStudy?.path === study.path ? "auto" : "none",
-                }}
-              >
-                <ChatPopupBody study={study} user={user!} />
-              </div>
-            ))}
+              {studies.map((study) => (
+                <div
+                  key={study.path}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    visibility:
+                      selectedStudy?.path === study.path ? "visible" : "hidden",
+                    position:
+                      selectedStudy?.path === study.path
+                        ? "static"
+                        : "absolute",
+                    pointerEvents:
+                      selectedStudy?.path === study.path ? "auto" : "none",
+                  }}
+                >
+                  <ChatPopupBody study={study} user={user!} />
+                </div>
+              ))}
+            </S.ChatHeaderAndBodyContainer>
           </Resizable>
         ) : (
           <S.ChatBubbleContainer>
