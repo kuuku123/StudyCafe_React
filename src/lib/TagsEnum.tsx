@@ -1,4 +1,5 @@
 const TagsEnum = {
+  All: "all",
   Health: "health",
   ComputerScience: "computer-science",
   Mathematics: "mathematics",

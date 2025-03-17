@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as S from "./ChatPopup_style";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../lib/features/redux/authSelector";
@@ -51,7 +52,7 @@ const ChatPopup = () => {
     localStorage.setItem("chatPopupDimensions", JSON.stringify(size));
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       console.log("ChatPopup getting study list called ===> ");
       const getStudyLists = async () => {
@@ -143,6 +144,18 @@ const ChatPopup = () => {
             <S.ImageText>Study Chat</S.ImageText>
           </S.ChatBubbleContainer>
         )}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <S.ChatBubbleContainer data-tooltip-id="anonymous">
+          <S.SpeechImage src="/images/chat.webp" width="200"></S.SpeechImage>
+          <S.ImageText>Study Chat</S.ImageText>
+        </S.ChatBubbleContainer>
+        <ReactTooltip id="anonymous" variant="info" place="top-start">
+          {"Login to Chat with study member"}
+        </ReactTooltip>
       </>
     );
   }

@@ -14,7 +14,6 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import Tag from "./Tag";
-import JoinStudy_Main from "../JoinStudyPage/JoinStudy_Main";
 import PublishedStudyList from "./PublishedStudyList";
 import { TagForm, ZoneForm } from "../../utils/type";
 import StudyApi from "../../lib/apis/StudyApi";
@@ -90,6 +89,11 @@ const Hompage_Main = () => {
         )}
 
         <S.Tags_style ref={tagsRef}>
+          <Tag
+            Icon={FaAtom}
+            label="All"
+            onClick={() => handleTagClick(TagsEnum.All)}
+          />
           <Tag
             Icon={FaHeartbeat}
             label="Health"
