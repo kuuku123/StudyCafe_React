@@ -146,9 +146,6 @@ const Title = ({ children }: { children: ReactNode }) => {
           </Link>
           {children}
         </S.App_Image_style>
-        <div>ABC</div>
-        <div>ABC</div>
-        <div>ABC</div>
         <S.Login_Signup_style>
           <Link style={S.link_style} to="/login">
             Login

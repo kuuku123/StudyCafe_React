@@ -35,7 +35,7 @@ export const StudyItem = styled.div<StudyItemProps>`
   border-radius: 3px;
   background: ${({ active }) => (active ? "#0056b3" : "transparent")};
   &:hover {
-    background: #0056b3;
+    background: lightblue;
   }
 `;
 
