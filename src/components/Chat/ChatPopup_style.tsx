@@ -10,6 +10,7 @@ export const StudyListSidebar = styled.div`
   background: #f1f1f1;
   overflow-y: auto;
   padding: 10px;
+  min-width: 100px;
 
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */

@@ -4,6 +4,9 @@ import * as S from "./ChatProfile_style";
 import { AccountDto, User } from "../../utils/type";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import StudyManagerApi from "../../lib/apis/StudyManagerApi";
+import { useDispatch, useSelector } from "react-redux";
+import { selectChatProfileByEmail } from "../../lib/features/redux/chatProfileCacheSelector";
+import { setCacheProfile } from "../../lib/features/redux/chatProfileCacheSlice";
 
 interface ChatProfileProps {
   user: User;
@@ -28,9 +31,11 @@ const ChatProfile: React.FC<ChatProfileProps> = ({
   const [profile, setProfile] = useState<AccountDto>();
   const [isManager, setIsManager] = useState<Boolean>(false);
 
+  const dispatch = useDispatch();
+  const chatProfileCache = useSelector(selectChatProfileByEmail(msg.email));
+
   const profileRef = useRef<HTMLImageElement>(null);
   const calculateCurrentPosition = () => {
-    console.log("calculateCurerntPosition ");
     if (profileRef.current) {
       const rect = profileRef.current.getBoundingClientRect();
       // Adjust these values if you need an offset
@@ -48,18 +53,39 @@ const ChatProfile: React.FC<ChatProfileProps> = ({
   };
 
   useEffect(() => {
-    if (user && user.email === msg.email) {
-      ProfileApi.fetchMyProfile().then((response) => {
-        setProfile(response.data);
-      });
+    const fetchProfileData = async () => {
+      try {
+        const chatResponse = await ProfileApi.fetchProfile(msg.email);
+        const managerResponse = await StudyManagerApi.isManager(
+          msg.studyPath,
+          msg.email
+        );
+
+        // Update local state
+        setProfile(chatResponse.data);
+        setIsManager(managerResponse.data);
+
+        // Dispatch combined data to update the Redux cache
+        dispatch(
+          setCacheProfile({
+            email: msg.email,
+            profile: {
+              accountDto: chatResponse.data,
+              isManager: managerResponse.data,
+            },
+          })
+        );
+      } catch (error) {
+        console.error("Error fetching chat profile data", error);
+      }
+    };
+    if (chatProfileCache) {
+      console.log("cached =>");
+      setProfile(chatProfileCache.accountDto);
+      setIsManager(chatProfileCache.isManager);
     } else {
-      ProfileApi.fetchProfile(msg.email).then((response) => {
-        setProfile(response.data);
-      });
+      fetchProfileData();
     }
-    StudyManagerApi.isManager(msg.studyPath, msg.email).then((response) => {
-      setIsManager(response.data);
-    });
     calculateCurrentPosition();
   }, []);
 

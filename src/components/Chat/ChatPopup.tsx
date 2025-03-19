@@ -65,6 +65,7 @@ const ChatPopup = () => {
       getStudyLists();
     } else {
       setIsOpen(false);
+      setSelectedStudy(null);
     }
   }, [isOpen, isAuthenticated]);
 
@@ -86,7 +87,7 @@ const ChatPopup = () => {
           <Resizable
             defaultSize={dimensions}
             style={ChatContainer_style}
-            minWidth={300}
+            minWidth={500}
             maxHeight={700}
             onResizeStop={(e, direction, ref, d) => {
               handleResize({

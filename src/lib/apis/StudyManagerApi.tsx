@@ -9,7 +9,6 @@ const fetchStudyList = async () => {
     }
   );
   const studyList = await raw_studyList.json();
-  console.log(studyList);
   return studyList;
 };
 
@@ -22,7 +21,6 @@ const fetchStudyMembers = async (path: string) => {
     }
   );
   const studyMemberList = await raw_studyMemberList.json();
-  console.log(studyMemberList);
   return studyMemberList;
 };
 
@@ -36,7 +34,6 @@ const fetchStudyManagers = async (path: string) => {
   );
   const studyManagerList: ApiResponse<AccountDto[]> =
     await raw_studyManagerList.json();
-  console.log(studyManagerList);
   return studyManagerList;
 };
 
@@ -49,7 +46,6 @@ const amiManager = async (path: string) => {
     }
   );
   const amiManager = await raw_amiManager.json();
-  console.log(amiManager);
   return amiManager;
 };
 
@@ -62,7 +58,6 @@ const isManager = async (path: string, email: string) => {
     }
   );
   const isManager = await raw_isManager.json();
-  console.log(isManager);
   return isManager;
 };
 

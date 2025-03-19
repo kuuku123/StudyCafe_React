@@ -1,4 +1,4 @@
-import { ApiResponse } from "../../utils/type";
+import { AccountDto, ApiResponse } from "../../utils/type";
 import { ChatMessageType } from "../features/WSService";
 
 const getAllChats = async (path: string) => {

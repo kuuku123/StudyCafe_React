@@ -23,6 +23,11 @@ export interface SignUpForm {
   password: string;
 }
 
+export interface ChatProfileCache {
+  accountDto: AccountDto;
+  isManager: boolean;
+}
+
 export interface AccountDto {
   nickname: string;
   bio: string;

@@ -6,10 +6,13 @@ import HandleResponseApi from "../../../../lib/HandleResponse";
 import ProfileApi from "../../../../lib/apis/ProfileApi";
 import RoutesEnum from "../../../../lib/RoutesEnum";
 import { Profile } from "../../../../utils/type";
+import { useDispatch } from "react-redux";
+import { clearCache } from "../../../../lib/features/redux/chatProfileCacheSlice";
 
 const ProfileEdit_Main = () => {
   const [img, setImage] = useState<string>("");
   const handleResponse = HandleResponseApi.useHandleResponse();
+  const dispatch = useDispatch();
 
   const handleProfile = (profile: Profile) => {
     const base64Image = "data:image/png;base64," + profile.profileImage;
@@ -38,7 +41,7 @@ const ProfileEdit_Main = () => {
   const handleSubmit = async (profileEditInfo: Profile) => {
     profileEditInfo["profileImage"] = img;
     const response = await ProfileApi.updatePorfile(profileEditInfo);
-    handleResponse(response, null, { path: RoutesEnum.PROFILE, dialog: "" });
+    handleResponse(response, (data) => dispatch(clearCache(data)) , { path: RoutesEnum.PROFILE, dialog: "" });
   };
 
   const validate = () => {

@@ -10,6 +10,7 @@ export const ChatBody = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   max-height: 700px;
+  min-width: 300px;
   overflow-y: auto;
   padding: 10px;
   flex: 1;
