@@ -25,7 +25,7 @@ import {
   selectStudyCreated,
   selectStudyUpdated,
 } from "../lib/features/redux/notificationSelector";
-import { Notification, NotificationDto } from "../utils/type";
+import { Notification, NotificationDto, NotificationType } from "../utils/type";
 
 const Title = ({ children }: { children: ReactNode }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -35,14 +35,16 @@ const Title = ({ children }: { children: ReactNode }) => {
   const studyUpdated = useSelector(selectStudyUpdated);
 
   const addUnReadNotification = (dataList: NotificationDto[]) => {
+    console.log("addUnreadNotification", dataList, studyUpdated, studyCreated);
     dataList.forEach((data) => {
-      if (data.message === "study updated") {
+      if (data.notificationType === NotificationType.STUDY_UPDATED) {
         const exists = studyUpdated.some((item) => item.id === data.id);
+        console.log("exists => ", exists);
         if (!exists) {
           console.log("Adding new study updated notification => ", data);
           store.dispatch(addStudyUpdated(JSON.stringify(data))); // No need for JSON.stringify
         }
-      } else if (data.message === "study created") {
+      } else if (data.notificationType === NotificationType.STUDY_CREATED) {
         const exists = studyCreated.some((item) => item.id === data.id);
         if (!exists) {
           console.log("Adding new study created notification => ", data);
