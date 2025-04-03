@@ -59,3 +59,27 @@ export const SignUp_Button_style = styled.button`
     cursor: not-allowed;
   }
 `;
+
+interface EmailVerifyButtonProps {
+  clickable: boolean;
+}
+
+export const Email_Verfiy_Button = styled.button<EmailVerifyButtonProps>`
+  padding: 8px 16px;
+  margin: 8px 0;
+  border: 2px solid ${({ clickable }) => (clickable ? "#007BFF" : "#cccccc")};
+  background-color: ${({ clickable }) => (clickable ? "#007BFF" : "#f0f0f0")};
+  color: ${({ clickable }) => (clickable ? "#fff" : "#999")};
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
+  opacity: ${({ clickable }) => (clickable ? 1 : 0.6)};
+  pointer-events: ${({ clickable }) => (clickable ? "auto" : "none")};
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background-color: ${({ clickable }) =>
+      clickable ? "#0056b3" : "#f0f0f0"};
+    border-color: ${({ clickable }) => (clickable ? "#0056b3" : "#cccccc")};
+  }
+`;
