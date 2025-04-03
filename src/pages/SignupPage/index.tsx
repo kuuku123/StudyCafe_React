@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import CopyRight from "../../components/CopyRight";
@@ -12,6 +12,7 @@ import ProfileApi from "../../lib/apis/ProfileApi";
 import { SignUpForm } from "../../utils/type";
 
 const SignupPage = () => {
+  const [emailVerified, setEmailVerified] = useState<Boolean>(false);
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (signupInfo: SignUpForm) => {
@@ -55,11 +56,19 @@ const SignupPage = () => {
           <S.Signup_Container_style>
             <h1>Create Account</h1>
           </S.Signup_Container_style>
-          <SignupForm onSubmit={handleSubmit}></SignupForm>
+          <SignupForm
+            onSubmit={handleSubmit}
+            emailVerified={emailVerified}
+            setEmailVerified={setEmailVerified}
+          ></SignupForm>
           <S.Signup_Container_style>
-            <S.SignUp_Button_style type="submit" form="signup-form">
-              Enroll
-            </S.SignUp_Button_style>
+            {emailVerified && (
+              <>
+                <S.SignUp_Button_style type="submit" form="signup-form">
+                  Enroll
+                </S.SignUp_Button_style>
+              </>
+            )}
           </S.Signup_Container_style>
         </S.Signup_Main_style>
       </Page>

@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FormControl";
 import * as S from "./SignupForm_style";
 import { SignUpForm } from "../../utils/type";
+import SignupEmailVerfification from "./SignupEmailVerfification";
 
 interface SignupFormProps {
   onSubmit: (data: SignUpForm) => void;
+  emailVerified: Boolean;
+  setEmailVerified: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
-const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
+const SignupForm: React.FC<SignupFormProps> = ({
+  onSubmit,
+  emailVerified,
+  setEmailVerified,
+}) => {
   const validate = (values: SignUpForm) => {
     const errors: Record<string, any> = {};
     if (!values.nickname) {
@@ -60,21 +67,26 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
           type="input"
           placeholder="write your email"
         ></MyForm.Field>
+        <SignupEmailVerfification setEmailVerified={setEmailVerified}></SignupEmailVerfification>
       </FormControl>
 
-      <FormControl
-        label="Password"
-        htmlFor="password"
-        error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
-      >
-        <MyForm.Field
-          id="password"
-          style={S.signup_input_style}
-          name="password"
-          type="password"
-          placeholder="write your password"
-        ></MyForm.Field>
-      </FormControl>
+      {emailVerified && (
+        <>
+          <FormControl
+            label="Password"
+            htmlFor="password"
+            error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
+          >
+            <MyForm.Field
+              id="password"
+              style={S.signup_input_style}
+              name="password"
+              type="password"
+              placeholder="write your password"
+            ></MyForm.Field>
+          </FormControl>
+        </>
+      )}
     </MyForm.Form>
   );
 };

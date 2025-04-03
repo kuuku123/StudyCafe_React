@@ -142,7 +142,7 @@ interface FormContextType {
   };
 }
 
-const formContext = React.createContext<FormContextType | null>(null);
+export const formContext = React.createContext<FormContextType | null>(null);
 formContext.displayName = "FormContext";
 
 // Now the Form component is generic and receives both the useForm options and the standard form props.
