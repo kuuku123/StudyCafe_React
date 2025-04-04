@@ -61,6 +61,11 @@ export interface PasswordForm {
   newPasswordConfirm: string;
 }
 
+export interface EmailVerificationDto {
+  email: string;
+  code: string;
+}
+
 // Define the notification slice state
 export interface NotificationState {
   messages: {

@@ -46,6 +46,21 @@ const useHandleResponse = () => {
         );
       } else if (useNavigate.path !== "") {
         navigate(useNavigate.path);
+      } else if (useNavigate.path == "" && useNavigate.dialog !== "") {
+        openDialog(
+          <Dialog
+            header={<></>}
+            footer={
+              <Button
+                onClick={() => {
+                  closeDialog();
+                }}
+              >
+                {useNavigate.dialog}
+              </Button>
+            }
+          />
+        );
       }
     } else if (response.status === "403") {
       openDialog(

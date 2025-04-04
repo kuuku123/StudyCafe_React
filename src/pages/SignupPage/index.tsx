@@ -12,7 +12,7 @@ import ProfileApi from "../../lib/apis/ProfileApi";
 import { SignUpForm } from "../../utils/type";
 
 const SignupPage = () => {
-  const [emailVerified, setEmailVerified] = useState<Boolean>(false);
+  const [emailVerified, setEmailVerified] = useState<boolean>(false);
   const dispatch = useDispatch();
   const handleResponse = HandleResponseApi.useHandleResponse();
   const handleSubmit = async (signupInfo: SignUpForm) => {

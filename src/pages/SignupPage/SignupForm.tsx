@@ -3,12 +3,12 @@ import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FormControl";
 import * as S from "./SignupForm_style";
 import { SignUpForm } from "../../utils/type";
-import SignupEmailVerfification from "./SignupEmailVerfification";
+import SignupEmailVerfication from "./EmailVerify/SignupEmailVerification";
 
 interface SignupFormProps {
   onSubmit: (data: SignUpForm) => void;
-  emailVerified: Boolean;
-  setEmailVerified: React.Dispatch<React.SetStateAction<Boolean>>;
+  emailVerified: boolean;
+  setEmailVerified: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({
@@ -40,6 +40,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
       }}
       validate={validate}
       onSubmit={onSubmit}
+      style={{ width: "600px" }}
     >
       <FormControl
         label="NickName"
@@ -67,7 +68,10 @@ const SignupForm: React.FC<SignupFormProps> = ({
           type="input"
           placeholder="write your email"
         ></MyForm.Field>
-        <SignupEmailVerfification setEmailVerified={setEmailVerified}></SignupEmailVerfification>
+        <SignupEmailVerfication
+          emailVerified={emailVerified}
+          setEmailVerified={setEmailVerified}
+        ></SignupEmailVerfication>
       </FormControl>
 
       {emailVerified && (
