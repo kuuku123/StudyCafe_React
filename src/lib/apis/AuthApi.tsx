@@ -13,21 +13,6 @@ const updatePassword = async (passwordInfo: PasswordForm) => {
   return response;
 };
 
-const checkEmailVerified = async () => {
-  const raw_response = await fetch(
-    `${API_GATEWAY_URL}/auth/check-email-verified`,
-    {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const response = await raw_response.json();
-  return response;
-};
-
 const checkAndMakeEmailVerificationCode = async (email: string) => {
   const raw_response = await fetch(
     `${API_GATEWAY_URL}/auth/check-and-make-email-verification-code`,
@@ -59,7 +44,6 @@ const verifyEmail = async (emailVerificationDto: EmailVerificationDto) => {
 
 const AuthApi = {
   updatePassword,
-  checkEmailVerified,
   checkAndMakeEmailVerificationCode,
   verifyEmail,
 };
