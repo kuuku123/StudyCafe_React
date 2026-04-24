@@ -8,6 +8,8 @@ import RoutesEnum from "../../lib/RoutesEnum";
 import StudyApi from "../../lib/apis/StudyApi";
 import Button from "../../components/Button";
 import { StudyForm } from "../../utils/type";
+import { Input_style } from "../../components/Component_style";
+
 const CreateStudy_Main = () => {
   const [img, setImage] = useState<string>("");
 
@@ -36,19 +38,6 @@ const CreateStudy_Main = () => {
     return errors;
   };
 
-  const input_style = {
-    width: "100%", // Takes full width of the parent container
-    maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
-    height: "40px",
-    minWidth: "200px", // Ensures it doesn't shrink too much
-  };
-
-  const full_description_style = {
-    width: "100%", // Takes full width of the parent container
-    maxWidth: "1200px", // Ensures it doesn't grow larger than 1200px
-    height: "200px",
-    minWidth: "200px", // Ensures it doesn't shrink too much
-  };
 
   return (
     <S.Grid_Container_style>
@@ -73,48 +62,48 @@ const CreateStudy_Main = () => {
           }}
         >
           <FormControl
-            label="write study path"
+            label="Write study path"
             htmlFor="path"
             error={<MyForm.ErrorMessage name="path"></MyForm.ErrorMessage>}
           >
             <MyForm.Field
               id="create-study-path"
               name="path"
-              placeholder="write path for your study group"
-              style={input_style}
+              placeholder="e.g. spring-boot-study"
+              as={Input_style}
             ></MyForm.Field>
           </FormControl>
 
           <FormControl
-            label="write study title (study name)"
+            label="Write study title"
             htmlFor="title"
             error={<MyForm.ErrorMessage name="title"></MyForm.ErrorMessage>}
           >
             <MyForm.Field
               id="create-study-title"
               name="title"
-              placeholder="write title for your study group"
-              style={input_style}
+              placeholder="e.g. Spring Boot Deep Dive"
+              as={Input_style}
             ></MyForm.Field>
           </FormControl>
 
           <FormControl
-            label="write study's short description"
-            htmlFor="shrot-description"
+            label="Write study's short description"
+            htmlFor="short-description"
             error={
               <MyForm.ErrorMessage name="short-description"></MyForm.ErrorMessage>
             }
           >
             <MyForm.Field
-              id="create-study-shrot-description"
+              id="create-study-short-description"
               name="shortDescription"
-              placeholder="write short-description for your study group"
-              style={input_style}
+              placeholder="A brief overview of your study group"
+              as={Input_style}
             ></MyForm.Field>
           </FormControl>
 
           <FormControl
-            label="wrtie study's full description"
+            label="Write study's full description"
             htmlFor="full-description"
             error={
               <MyForm.ErrorMessage name="full-description"></MyForm.ErrorMessage>
@@ -123,17 +112,22 @@ const CreateStudy_Main = () => {
             <MyForm.Field
               id="create-study-full-description"
               name="fullDescription"
-              placeholder="write full-description for your study group"
-              style={full_description_style}
+              placeholder="Detailed information about the study"
               as={MyEditor}
             ></MyForm.Field>
           </FormControl>
-          <Button type="submit">Save</Button>
+          <Button type="submit" size="large" width="100%">Create Study</Button>
         </MyForm.Form>
       </S.CreateStudy_Main_style>
       <S.Study_Image_style>
-        {img && <img src={img} width="240px" height="240px" />}
-        <figcaption style={{ textAlign: "center" }}>Study Image</figcaption>
+        {img ? (
+          <img src={img} alt="Study Preview" />
+        ) : (
+          <div style={{ width: "240px", height: "240px", background: "#f8fafc", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", color: "#cbd5e1" }}>
+            No Image Selected
+          </div>
+        )}
+        <figcaption>Study Banner</figcaption>
         <input
           type="file"
           accept="image/jpg,impge/png,image/jpeg,image/gif"

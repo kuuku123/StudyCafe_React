@@ -42,10 +42,52 @@ export const link_style: CSSProperties = {
 export const FormControl_Container_style = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
-  align-items: center;
+  margin-bottom: 24px;
+  align-items: flex-start;
   width: 100%;
+
+  .error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: 500;
+  }
 `;
+
+export const Label_style = styled.label`
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+  display: block;
+
+  .required {
+    color: #ef4444;
+    margin-left: 4px;
+  }
+`;
+
+export const Input_style = styled.input`
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  background: #f8fafc;
+
+  &:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+`;
+
 
 export const Home_Header_style = styled.div`
   display: flex;
