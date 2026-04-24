@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.config.js ",
-    "build": "webpack --config webpack.prod.config.js"
+    "build": "webpack --config webpack.prod.config.js",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
