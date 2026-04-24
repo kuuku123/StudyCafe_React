@@ -65,11 +65,11 @@ const StudyList_Main = () => {
     <S.Container>
       <h2>My Study List</h2>
       <S.List>
-        {/* Check if studies is an array and has items */}
+        {/* Manager Studies Section */}
         {Array.isArray(mangerStudies) && mangerStudies.length > 0 ? (
           mangerStudies.map((study, index) => (
             <S.Card
-              key={index}
+              key={`manager-${index}`}
               index={index}
               className={`card-${index}`}
               onClick={() => handleClick(study, true)}
@@ -78,10 +78,9 @@ const StudyList_Main = () => {
                 <img src={study.studyImage} alt={study.title} />
               </S.CardImage>
               <S.CardBody>
-                <h3>MANAGER</h3>
+                <S.RoleBadge roleType="manager">Manager</S.RoleBadge>
                 <h3>{study.title}</h3>
-                <p>Path: {study.path}</p>
-                <p>Short Description: {study.shortDescription}</p>
+                <p>{study.shortDescription}</p>
                 <S.FullDescription>
                   <summary>Full Description</summary>
                   <div
@@ -92,26 +91,24 @@ const StudyList_Main = () => {
               </S.CardBody>
             </S.Card>
           ))
-        ) : (
-          <S.Card>No manager studies available</S.Card> // Fallback message when studies is empty or not yet filled
-        )}
-        {/* Check if studies is an array and has items */}
+        ) : null}
+
+        {/* Member Studies Section */}
         {Array.isArray(memberStudies) && memberStudies.length > 0 ? (
           memberStudies.map((study, index) => (
             <S.Card
-              key={index}
-              index={index}
-              className={`card-${index}`}
+              key={`member-${index}`}
+              index={mangerStudies.length + index}
+              className={`card-${mangerStudies.length + index}`}
               onClick={() => handleClick(study, false)}
             >
               <S.CardImage>
                 <img src={study.studyImage} alt={study.title} />
               </S.CardImage>
               <S.CardBody>
-                <h3>MEMBER</h3>
+                <S.RoleBadge roleType="member">Member</S.RoleBadge>
                 <h3>{study.title}</h3>
-                <p>Path: {study.path}</p>
-                <p>Short Description: {study.shortDescription}</p>
+                <p>{study.shortDescription}</p>
                 <S.FullDescription>
                   <summary>Full Description</summary>
                   <div
@@ -122,8 +119,14 @@ const StudyList_Main = () => {
               </S.CardBody>
             </S.Card>
           ))
-        ) : (
-          <S.Card>No member studies available</S.Card> // Fallback message when studies is empty or not yet filled
+        ) : null}
+
+        {/* Empty State */}
+        {mangerStudies.length === 0 && memberStudies.length === 0 && (
+          <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "80px", background: "white", borderRadius: "20px", border: "1px solid #f1f5f9" }}>
+            <h3 style={{ color: "#1e293b", marginBottom: "10px" }}>No studies found</h3>
+            <p style={{ color: "#64748b" }}>You haven't joined or created any studies yet.</p>
+          </div>
         )}
       </S.List>
     </S.Container>
