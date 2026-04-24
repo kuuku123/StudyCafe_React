@@ -2,13 +2,19 @@ import styled from "styled-components";
 
 export const Header_Input_style = styled.input`
   margin-left: 10px;
-  font-size: 24px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none; /* Remove the default focus outline */
-  transition: border-color 0.3s ease; /* Smooth transition for border color */
-  height: auto;
+  padding: 8px 16px;
+  font-size: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
 `;
+
 
 export const Grid_Container_style = styled.div`
   display: flex;

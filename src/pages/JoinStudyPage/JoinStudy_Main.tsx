@@ -170,29 +170,70 @@ const JoinStudy_Main = () => {
     getAllZones();
   }, []);
 
+  // Custom styles for react-select
+  const customStyles = {
+    control: (provided: any, state: any) => ({
+      ...provided,
+      borderRadius: "10px",
+      borderColor: state.isFocused ? "#6366f1" : "#e2e8f0",
+      boxShadow: state.isFocused ? "0 0 0 3px rgba(99, 102, 241, 0.1)" : "none",
+      "&:hover": {
+        borderColor: "#6366f1",
+      },
+      padding: "2px",
+    }),
+    multiValue: (provided: any) => ({
+      ...provided,
+      backgroundColor: "rgba(99, 102, 241, 0.1)",
+      borderRadius: "6px",
+    }),
+    multiValueLabel: (provided: any) => ({
+      ...provided,
+      color: "#6366f1",
+      fontWeight: "600",
+    }),
+    multiValueRemove: (provided: any) => ({
+      ...provided,
+      color: "#6366f1",
+      "&:hover": {
+        backgroundColor: "rgba(99, 102, 241, 0.2)",
+        color: "#4f46e5",
+      },
+    }),
+  };
+
   return (
     <S.StudyListContainer>
       {/* Filters on the left */}
       <S.FiltersContainer>
+        <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#1e293b" }}>Filters</h3>
         {/* Searchable Tag Dropdown */}
-        <Select
-          value={selectedTags}
-          onChange={handleTagChange}
-          options={uniqueTags}
-          isClearable
-          isMulti
-          placeholder="Search and select tag..."
-        />
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#64748b" }}>Tags</label>
+          <Select
+            value={selectedTags}
+            onChange={handleTagChange}
+            options={uniqueTags}
+            isClearable
+            isMulti
+            placeholder="Select tags..."
+            styles={customStyles}
+          />
+        </div>
 
         {/* Searchable Zone Dropdown */}
-        <Select
-          value={selectedZones}
-          onChange={handleZoneChange}
-          options={uniqueZones}
-          isClearable
-          isMulti
-          placeholder="Search and select zone..."
-        />
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#64748b" }}>Zones</label>
+          <Select
+            value={selectedZones}
+            onChange={handleZoneChange}
+            options={uniqueZones}
+            isClearable
+            isMulti
+            placeholder="Select zones..."
+            styles={customStyles}
+          />
+        </div>
       </S.FiltersContainer>
 
       {/* Study list and pagination on the right */}
@@ -200,13 +241,13 @@ const JoinStudy_Main = () => {
         {/* Display Studies */}
         {paginatedStudies.length > 0 ? (
           paginatedStudies.map((study) => (
-            <Link to={RoutesEnum.STUDY_MEMBER(study.path)}>
-              <S.StudyCard key={study.id}>
+            <Link to={RoutesEnum.STUDY_MEMBER(study.path)} key={study.id} style={{ textDecoration: "none" }}>
+              <S.StudyCard>
                 <S.Title>{study.title}</S.Title>
-                {study.shortDescription}
+                <S.ShortDescription>{study.shortDescription}</S.ShortDescription>
                 <S.Zones>
                   {study.zoneDtoList.map((zone) => (
-                    <S.Zone>{zone.city}</S.Zone>
+                    <S.Zone key={zone.city}>{zone.city}</S.Zone>
                   ))}
                 </S.Zones>
                 <S.Tags>
@@ -218,7 +259,9 @@ const JoinStudy_Main = () => {
             </Link>
           ))
         ) : (
-          <p>No studies found for the selected filters.</p>
+          <div style={{ textAlign: "center", padding: "60px", background: "white", borderRadius: "16px", border: "1px solid #f1f5f9" }}>
+            <p style={{ color: "#64748b", fontSize: "1.1rem" }}>No studies found for the selected filters.</p>
+          </div>
         )}
         {/* Pagination */}
         <S.Pagination>
