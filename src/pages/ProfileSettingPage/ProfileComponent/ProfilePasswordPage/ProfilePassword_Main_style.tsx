@@ -3,55 +3,55 @@ import styled from "styled-components";
 export const Profile_Password_Container_style = styled.div`
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
-  margin: 0 auto;
-  padding: 20px;
-  gap: 20px;
-  grid-row-start: 2;
-  grid-row-end: 5;
-  grid-column-start: 6;
-  grid-column-end: 11;
+  gap: 1.5rem;
+  width: 100%;
+  maxWidth: 600px;
 `;
 
-export const Profile_Password_Title_style = styled.div`
-font-size: 30px;
-  align-self: center;
+export const Profile_Password_Title_style = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
 `;
 
 export const Set_Password_Input_style = {
   fontSize: "1rem",
-  border: "1px solid #ccc",
-  borderRadius: "5px",
+  border: "1px solid #cbd5e1",
+  borderRadius: "0.5rem",
   outline: "none",
-  transition: "border-color 0.3s ease",
+  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
   height: "auto",
-  marginTop: "10px",
-  padding: "0.375rem 0.75rem",
-  width: "600px",
+  marginTop: "0.5rem",
+  padding: "0.75rem 1rem",
+  width: "100%",
+  maxWidth: "500px",
 };
 
 export const Set_Password_Button_style = styled.button`
-  background-color: #007bff;
+  background-color: #6366f1;
   color: white;
-  padding: 0.375rem 0.75rem;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  /* Hover effect */
+  transition: all 0.2s ease;
+  width: fit-content;
+  margin-top: 1rem;
+
   &:hover {
-    background-color: #0056b3;
+    background-color: #4f46e5;
   }
 
-  /* Active effect */
   &:active {
-    background-color: #004080;
+    background-color: #4338ca;
   }
 
-  /* Disabled styles */
   &:disabled {
-    background-color: #b3b3b3;
-    color: #666666;
+    background-color: #cbd5e1;
+    color: #64748b;
     cursor: not-allowed;
   }
 `;

@@ -8,6 +8,8 @@ import ProfilePassword_Main from "./ProfileComponent/ProfilePasswordPage/Profile
 import ProfileAlarm_Main from "./ProfileComponent/ProfileAlarmPage/ProfileAlarm_Main";
 import ProfileAccount_Main from "./ProfileComponent/ProfileAccountPage/ProfileAccount_Main";
 
+import { HiUser, HiPencil, HiKey, HiBell, HiTag, HiCog } from "react-icons/hi";
+
 const ProfileSetting_Main = () => {
   const [category, setCategory] = useState(() => {
     return (
@@ -32,34 +34,55 @@ const ProfileSetting_Main = () => {
   };
 
   return (
-    <S.Grid_Container_style>
-      <S.Profile_List_style>
-        <Link to={RoutesEnum.PROFILE}>
-          <S.Profile_List_Element_style>Profile</S.Profile_List_Element_style>
+    <S.Container>
+      <S.Sidebar>
+        <Link to={RoutesEnum.PROFILE} style={{ textDecoration: 'none' }}>
+          <S.NavItem>
+            <HiUser size={24} />
+            Profile
+          </S.NavItem>
         </Link>
-        <S.Profile_List_Element_style
+        <S.NavItem
+          active={category === "profileEdit"}
           onClick={() => handleOnClick("profileEdit")}
         >
+          <HiPencil size={24} />
           Profile Edit
-        </S.Profile_List_Element_style>
-        <S.Profile_List_Element_style onClick={() => handleOnClick("password")}>
+        </S.NavItem>
+        <S.NavItem
+          active={category === "password"}
+          onClick={() => handleOnClick("password")}
+        >
+          <HiKey size={24} />
           Password
-        </S.Profile_List_Element_style>
-        <S.Profile_List_Element_style onClick={() => handleOnClick("alarm")}>
-          Alaram
-        </S.Profile_List_Element_style>
-        <S.Profile_List_Element_style
+        </S.NavItem>
+        <S.NavItem
+          active={category === "alarm"}
+          onClick={() => handleOnClick("alarm")}
+        >
+          <HiBell size={24} />
+          Alarm
+        </S.NavItem>
+        <S.NavItem
+          active={category === "tagsAndZones"}
           onClick={() => handleOnClick("tagsAndZones")}
         >
+          <HiTag size={24} />
           Tag and Zone
-        </S.Profile_List_Element_style>
-        <S.Profile_List_Element_style onClick={() => handleOnClick("account")}>
+        </S.NavItem>
+        <S.NavItem
+          active={category === "account"}
+          onClick={() => handleOnClick("account")}
+        >
+          <HiCog size={24} />
           Account
-        </S.Profile_List_Element_style>
-      </S.Profile_List_style>
+        </S.NavItem>
+      </S.Sidebar>
 
-      {pageComponet[category]}
-    </S.Grid_Container_style>
+      <S.ContentCard>
+        {pageComponet[category]}
+      </S.ContentCard>
+    </S.Container>
   );
 };
 

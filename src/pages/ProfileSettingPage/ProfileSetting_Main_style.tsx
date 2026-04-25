@@ -1,49 +1,49 @@
 import styled from "styled-components";
 
-export const Grid_Container_style = styled.div`
-  display: grid;
-  grid-template-columns: repeat(18, 100px);
-  grid-template-rows: repeat(8, 100px);
-  min-height: 80vh;
-  justify-items: center;
-  align-items: center;
-`;
-export const Profile_List_style = styled.div`
+export const Container = styled.div`
   display: flex;
-  grid-row-start: 2;
-  grid-row-end: 5;
-  grid-column-start: 3;
-  grid-column-end: 4;
-  flex-direction: column;
-  gap: 2px;
-  margin-right: 13px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
-export const Profile_List_Element_style = styled.button`
-  background-color: green;
-  color: white;
-  padding: 0.375rem 0.75rem;
-  width: 300px;
-  font-size: 30px;
-  border: none;
-  border-radius: 5px;
+
+export const Sidebar = styled.aside`
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+export const NavItem = styled.div<{ active?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background-color: ${props => props.active ? "#e0e7ff" : "transparent"};
+  color: ${props => props.active ? "#4338ca" : "#475569"};
+  font-weight: ${props => props.active ? "600" : "500"};
+  transition: all 0.2s ease;
   cursor: pointer;
 
-  /* Hover effect */
   &:hover {
-    background-color: #0056b3;
+    background-color: ${props => props.active ? "#e0e7ff" : "#f1f5f9"};
+    color: ${props => props.active ? "#4338ca" : "#1e293b"};
   }
+`;
 
-  /* Active effect */
-  &:active {
-    background-color: #004080;
-  }
-
-  /* Disabled styles */
-  &:disabled {
-    background-color: #b3b3b3;
-    color: #666666;
-    cursor: not-allowed;
-  }
+export const ContentCard = styled.div`
+  flex: 1;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 3rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 `;
 
 export const Header_Input_style = styled.input`
@@ -51,7 +51,7 @@ export const Header_Input_style = styled.input`
   font-size: 24px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  outline: none; /* Remove the default focus outline */
-  transition: border-color 0.3s ease; /* Smooth transition for border color */
+  outline: none;
+  transition: border-color 0.3s ease;
   height: auto;
 `;

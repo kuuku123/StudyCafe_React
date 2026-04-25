@@ -3,23 +3,22 @@ import styled from "styled-components";
 export const Profile_Alarm_Container_style = styled.div`
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
-  justify-self: flex-start;
-  margin: 0 auto;
-  padding: 20px;
-  gap: 20px;
-  grid-row-start: 2;
-  grid-row-end: 7;
-  grid-column-start: 6;
-  grid-column-end: 16;
-  height: 100%;
+  gap: 1.5rem;
   width: 100%;
 `;
 
 export const Profile_Alarm_Item_style = styled.div`
   display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
 `;
 
 export const Profile_Alarm_Description_style = styled.span`
-  font-size: 22px;
+  font-size: 1.125rem;
+  color: #1e293b;
+  font-weight: 500;
 `;
