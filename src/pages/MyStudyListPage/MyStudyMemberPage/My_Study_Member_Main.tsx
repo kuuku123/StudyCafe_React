@@ -10,6 +10,7 @@ import HandleResponseApi from "../../../lib/HandleResponse";
 import { StudyDto } from "../../../utils/type";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../lib/features/redux/authSelector";
+import { HiInformationCircle, HiUsers, HiCalendar, HiLogout, HiLogin } from "react-icons/hi";
 
 const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const [category, setCategory] = useState(() => {
@@ -19,7 +20,7 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const handleResponse = HandleResponseApi.useHandleResponse();
-  const { user, isAuthenticated } = useSelector(selectAuth);
+  const { isAuthenticated } = useSelector(selectAuth);
 
   useEffect(() => {
     sessionStorage.setItem("My_Study_Member_Main_category", category);
@@ -30,7 +31,6 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
       async function checkStudyJoined() {
         try {
           const response = await StudyApi.checkStudyJoined(path);
-          console.log("checkStudyJoined => ", response);
           setJoined(response.data);
         } catch (error) {
           console.log(error);
@@ -38,7 +38,7 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
       }
       checkStudyJoined();
     }
-  });
+  }, [isAuthenticated, path]);
 
   const pageComponent: Record<string, JSX.Element> = {
     info: <My_Study_Member_Info study={study}></My_Study_Member_Info>,
@@ -62,7 +62,6 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
       } else {
         response = await StudyApi.joinStudy(path);
       }
-      console.log("handleJoinOnCLick => ", response);
       handleResponse(response, () => setJoined(!joined), {
         path: "",
         dialog: "",
@@ -71,64 +70,71 @@ const My_Study_Member_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   };
 
   return (
-    <S.Grid_Container_style>
-      <S.Study_Title_style>
-        <h1>{study.title}</h1>
-      </S.Study_Title_style>
-      <S.Study_Draft_style>
-        <S.Study_Component_Click_style
-          data-tooltip-id="draftTooltip"
-          fontSize="22px"
+    <S.Container>
+      <S.Header>
+        <S.TitleSection>
+          <S.Title>{study.title}</S.Title>
+        </S.TitleSection>
+        
+        <S.JoinBadge
+          joined={joined}
           onClick={() => handleJoinOnClick(path)}
+          data-tooltip-id="joinTooltip"
         >
-          {!joined ? "Join" : "Leave"}
-        </S.Study_Component_Click_style>
-        <ReactTooltip id="draftTooltip" variant="info" place="top">
+          {joined ? <><HiLogout style={{marginRight: '8px'}}/> Leave</> : <><HiLogin style={{marginRight: '8px'}}/> Join</>}
+        </S.JoinBadge>
+        
+        <ReactTooltip id="joinTooltip" variant="info" place="top">
           {!isAuthenticated
             ? "Login to join"
             : !joined
             ? "Click to join current Study"
             : "Click to Leave Study"}
         </ReactTooltip>
-      </S.Study_Draft_style>
-      <S.Study_Link_style>
-        <S.Study_Component_Click_style
-          clicked={"info" === category}
+      </S.Header>
+
+      <S.TabList>
+        <S.Tab
+          active={"info" === category}
           onClick={() => handleOnClick("info")}
           data-tooltip-id="infoTooltip"
         >
+          <HiInformationCircle />
           Info
-        </S.Study_Component_Click_style>
+        </S.Tab>
         <ReactTooltip id="infoTooltip" variant="info" place="top">
           {!isAuthenticated && "Login to navigate"}
         </ReactTooltip>
 
-        <S.Study_Component_Click_style
-          clicked={"member" === category}
+        <S.Tab
+          active={"member" === category}
           onClick={() => handleOnClick("member")}
           data-tooltip-id="memberTooltip"
         >
-          Member
-        </S.Study_Component_Click_style>
+          <HiUsers />
+          Members
+        </S.Tab>
         <ReactTooltip id="memberTooltip" variant="info" place="top">
           {!isAuthenticated && "Login to navigate"}
         </ReactTooltip>
 
-        <S.Study_Component_Click_style
-          clicked={"schedule" === category}
+        <S.Tab
+          active={"schedule" === category}
           onClick={() => handleOnClick("schedule")}
           data-tooltip-id="scheduleTooltip"
         >
+          <HiCalendar />
           Schedule
-        </S.Study_Component_Click_style>
+        </S.Tab>
         <ReactTooltip id="scheduleTooltip" variant="info" place="top">
           {!isAuthenticated && "Login to navigate"}
         </ReactTooltip>
-      </S.Study_Link_style>
+      </S.TabList>
 
-      <S.Study_Link_Horizontal_Line_style></S.Study_Link_Horizontal_Line_style>
-      {pageComponent[category]}
-    </S.Grid_Container_style>
+      <S.ContentCard>
+        {pageComponent[category]}
+      </S.ContentCard>
+    </S.Container>
   );
 };
 

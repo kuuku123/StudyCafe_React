@@ -25,6 +25,13 @@ const StudyManagerPage = () => {
     
     const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
+      
+      // If the study doesn't exist or there's an error, redirect home or to an error page
+      if (response.status !== "OK") {
+        navigate(RoutesEnum.HOME, { replace: true });
+        return; // Don't call handleResponse so we avoid the weird popup
+      }
+
       handleResponse(response, setStudy, {path:"", dialog:""});
     };
     getStudy(path);

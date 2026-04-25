@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Page from "../../../components/Page";
 import Title from "../../../components/Title";
 import * as S from "./My_Study_Member_Main_style";
@@ -11,9 +11,10 @@ import HandleResponseApi from "../../../lib/HandleResponse";
 import StudyManagerApi from "../../../lib/apis/StudyManagerApi";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../lib/features/redux/authSelector";
+import { StudyDto } from "../../../utils/type";
 
 const StudyMemberPage = () => {
-  const [study, setStudy] = useState();
+  const [study, setStudy] = useState<StudyDto>();
 
   const handleResponse = HandleResponseApi.useHandleResponse();
   const location = useLocation();
@@ -23,35 +24,54 @@ const StudyMemberPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getStudy = async (path: string) => {
+    if (!path) return;
+
+    const getStudy = async () => {
       const response = await StudyApi.fetchStudy(path);
+      
+      // If the study doesn't exist or there's an error, redirect home or to an error page
+      if (response.status !== "OK") {
+        navigate(RoutesEnum.HOME, { replace: true });
+        return; // Don't call handleResponse so we avoid the weird popup
+      }
+
       handleResponse(response, setStudy, { path: "", dialog: "" });
     };
-    if (isAuthenticated) {
-      StudyManagerApi.isManager(path, user!.email).then((response) => {
-        if (response.data == true) {
-          navigate(RoutesEnum.STUDY_MANAGER(path));
+
+    getStudy();
+  }, [path]);
+
+  useEffect(() => {
+    if (isAuthenticated && user && path) {
+      StudyManagerApi.isManager(path, user.email).then((response) => {
+        if (response.data === true) {
+          navigate(RoutesEnum.STUDY_MANAGER(path), { replace: true });
         }
       });
     }
-    getStudy(path);
-  }, [path]);
+  }, [path, isAuthenticated, user?.email, navigate]);
 
-  if (!study) navigate(RoutesEnum.ERROR);
+  if (!study && path) {
+    // Loading state handled in return
+  }
 
   return (
-    <div>
-      <Page
-        header={
-          <Title>
-            <S.Header_Input_style></S.Header_Input_style>
-          </Title>
-        }
-        footer={<CopyRight></CopyRight>}
-      >
-        {study && <My_Study_Member_Main study={study}></My_Study_Member_Main>}
-      </Page>
-    </div>
+    <Page
+      header={
+        <Title>
+          <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1e293b' }}>Study Details</span>
+        </Title>
+      }
+      footer={<CopyRight />}
+    >
+      {study ? (
+        <My_Study_Member_Main study={study} />
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          Loading study details...
+        </div>
+      )}
+    </Page>
   );
 };
 
