@@ -22,7 +22,7 @@ const StudyManagerPage = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const refresh = queryParams.get("refresh");
-    // Your logic here (e.g., re-fetch data, etc.)
+    
     const getStudy = async (path: string) => {
       const response = await StudyApi.fetchStudy(path);
       handleResponse(response, setStudy, {path:"", dialog:""});
@@ -30,34 +30,34 @@ const StudyManagerPage = () => {
     getStudy(path);
 
     if (refresh) {
-      console.log("Refresh triggered:", refresh);
-
-      // Remove the query parameter from the URL
       queryParams.delete("refresh");
       const newSearch = queryParams.toString();
       const newUrl = location.pathname + (newSearch ? `?${newSearch}` : "");
-
-      // Use navigate to replace the URL without reloading
-      console.log("newUrl => ", newUrl);
-      navigate(newUrl);
+      navigate(newUrl, { replace: true });
     }
   }, [location.search]);
 
-  if (!study) navigate(RoutesEnum.ERROR);
+  if (!study && path) {
+     // Wait for study to load or handle error
+  }
 
   return (
-    <div>
-      <Page
-        header={
-          <Title>
-            <S.Header_Input_style></S.Header_Input_style>
-          </Title>
-        }
-        footer={<CopyRight></CopyRight>}
-      >
-        {study && <My_Study_Manager_Main study={study}></My_Study_Manager_Main>}
-      </Page>
-    </div>
+    <Page
+      header={
+        <Title>
+          <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1e293b' }}>Study Management</span>
+        </Title>
+      }
+      footer={<CopyRight />}
+    >
+      {study ? (
+        <My_Study_Manager_Main study={study} />
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          Loading study details...
+        </div>
+      )}
+    </Page>
   );
 };
 

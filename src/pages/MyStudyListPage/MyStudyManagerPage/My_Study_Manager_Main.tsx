@@ -9,6 +9,7 @@ import HandleResponseApi from "../../../lib/HandleResponse";
 import { useLocation } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { StudyDto } from "../../../utils/type";
+import { HiInformationCircle, HiUsers, HiCalendar, HiCog } from "react-icons/hi";
 
 const My_Study_Manager_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
   const [category, setCategory] = useState(() => {
@@ -42,63 +43,65 @@ const My_Study_Manager_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
 
   const handleDraftOnClick = async (path: string) => {
     const response = await StudyApi.publishStudy(path);
-    console.log("handleDraftOnCLick => ", response);
     handleResponse(response, setPublished, { path: "", dialog: "" });
   };
 
   return (
-    <S.Grid_Container_style>
-      <S.Study_Title_style>
-        <h1>{study.title}</h1>
-      </S.Study_Title_style>
-      <S.Study_Draft_style>
-        <S.Study_Component_Click_style
-          data-tooltip-id="draftTooltip"
-          fontSize="22px"
+    <S.Container>
+      <S.Header>
+        <S.TitleSection>
+          <S.Title>{study.title}</S.Title>
+        </S.TitleSection>
+        <S.StatusBadge
+          published={published}
           onClick={() => handleDraftOnClick(path)}
+          data-tooltip-id="draftTooltip"
         >
           {published ? "Published" : "Draft"}
-        </S.Study_Component_Click_style>
+        </S.StatusBadge>
         <ReactTooltip id="draftTooltip" variant="info" place="top">
-          Click to Pubslih Study to Others
+          Click to {published ? "unpublish" : "publish"} study to others
         </ReactTooltip>
-        <S.Study_Component_Click_style fontSize="22px">
-          off
-        </S.Study_Component_Click_style>
-      </S.Study_Draft_style>
-      <S.Study_Link_style>
-        <S.Study_Component_Click_style
-          clicked={"info" === category}
+      </S.Header>
+
+      <S.TabList>
+        <S.Tab
+          active={"info" === category}
           onClick={() => handleOnClick("info")}
         >
+          <HiInformationCircle />
           Info
-        </S.Study_Component_Click_style>
+        </S.Tab>
 
-        <S.Study_Component_Click_style
-          clicked={"member" === category}
+        <S.Tab
+          active={"member" === category}
           onClick={() => handleOnClick("member")}
         >
-          Member
-        </S.Study_Component_Click_style>
+          <HiUsers />
+          Members
+        </S.Tab>
 
-        <S.Study_Component_Click_style
-          clicked={"schedule" === category}
+        <S.Tab
+          active={"schedule" === category}
           onClick={() => handleOnClick("schedule")}
         >
+          <HiCalendar />
           Schedule
-        </S.Study_Component_Click_style>
+        </S.Tab>
 
-        <S.Study_Component_Click_style
-          clicked={"configuration" === category}
+        <S.Tab
+          active={"configuration" === category}
           onClick={() => handleOnClick("configuration")}
         >
-          Configuration
-        </S.Study_Component_Click_style>
-      </S.Study_Link_style>
+          <HiCog />
+          Settings
+        </S.Tab>
+      </S.TabList>
 
-      <S.Study_Link_Horizontal_Line_style></S.Study_Link_Horizontal_Line_style>
-      {pageComponent[category]}
-    </S.Grid_Container_style>
+      <S.ContentCard>
+        {pageComponent[category]}
+      </S.ContentCard>
+    </S.Container>
   );
 };
 
