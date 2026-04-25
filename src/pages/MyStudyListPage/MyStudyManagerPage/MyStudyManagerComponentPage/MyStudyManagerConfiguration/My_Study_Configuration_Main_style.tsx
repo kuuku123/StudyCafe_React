@@ -1,88 +1,79 @@
 import styled from "styled-components";
 
-export const Study_Select_Container_style = styled.div`
+export const ConfigContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  justify-self: flex-start;
-  margin: 0 auto;
-  padding: 20px;
-  gap: 20px;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 6;
-  grid-column-end: 11;
-  height: 100%;
+  gap: 2rem;
   width: 100%;
+  min-height: 500px;
+
+  @media (max-width: 968px) {
+    flex-direction: column;
+  }
 `;
 
-export const Study_List_style = styled.div`
+export const Sidebar = styled.div`
+  width: 280px;
+  flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 2;
-  grid-column-end: 5;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: 2px;
-  margin-right: 13px;
+  gap: 0.5rem;
+  background: rgba(248, 250, 252, 0.5);
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+
+  @media (max-width: 968px) {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
 `;
-export const Study_List_Element_style = styled.button`
-  background-color: green;
-  color: white;
-  padding: 0.375rem 0.75rem;
-  font-size: 30px;
-  border: none;
-  border-radius: 5px;
+
+export const NavItem = styled.button<{ active: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid ${props => props.active ? '#6366f1' : 'transparent'};
+  background: ${props => props.active ? 'white' : 'transparent'};
+  color: ${props => props.active ? '#6366f1' : '#64748b'};
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
 
-  /* Hover effect */
   &:hover {
-    background-color: #0056b3;
+    background: white;
+    color: #6366f1;
+    transform: translateX(4px);
   }
 
-  /* Active effect */
-  &:active {
-    background-color: #004080;
+  @media (max-width: 968px) {
+    white-space: nowrap;
+    &:hover { transform: translateY(-2px); }
   }
 
-  /* Disabled styles */
-  &:disabled {
-    background-color: #b3b3b3;
-    color: #666666;
-    cursor: not-allowed;
+  svg {
+    font-size: 1.25rem;
   }
 `;
 
-export const Study_Select_style = styled.div`
-  width: 80%;
+export const MainContent = styled.div`
+  flex-grow: 1;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
-export const Study_Configuration_Description_style = styled.div`
-  width: 100%;
-  height: 100%;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 11;
-  grid-column-end: 16;
-`;
-export const Selected_Items_Container_style = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
-
-export const Selected_Tags_Container_style = styled.div`
-  flex: 1;
-  margin-right: 20px;
-`;
-
-export const Selected_Zones_Container_style = styled.div`
-  flex: 1;
-`;
-
+// Legacy support if needed
+export const Study_List_style = Sidebar;
+export const Study_List_Element_style = NavItem;
+export const Study_Select_Container_style = MainContent;
+export const Study_Configuration_Description_style = MainContent;
 export const Tag_Pill_style = styled.div`
   display: inline-block;
   background-color: #e0f7fa;
@@ -93,7 +84,6 @@ export const Tag_Pill_style = styled.div`
   margin-bottom: 5px;
   font-size: 14px;
 `;
-
 export const Zone_Pill_style = styled.div`
   display: inline-block;
   background-color: #e1bee7;

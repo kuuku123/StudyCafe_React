@@ -1,76 +1,86 @@
 import styled from "styled-components";
 
-export const Study_Select_Container_style = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
-  justify-self: flex-start;
-  margin: 0 auto;
-  padding: 20px;
-  gap: 20px;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 6;
-  grid-column-end: 11;
-  height: 100%;
+  gap: 2rem;
   width: 100%;
 `;
 
-export const Study_Select_style = styled.div`
-  width: 80%;
-`;
-
-export const Study_Configuration_Description_style = styled.div`
-  width: 100%;
-  height: 100%;
-  grid-row-start: 3;
-  grid-row-end: 8;
-  grid-column-start: 11; 
-  grid-column-end: 15;
-`;
-export const Selected_Items_Container_style = styled.div`
+export const Section = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 1rem;
+  
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
 `;
 
-export const Selected_Tags_Container_style = styled.div`
-  flex: 1;
-  margin-right: 20px;
+export const SelectionArea = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-export const Selected_Zones_Container_style = styled.div`
-  flex: 1;
+export const PillsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  min-height: 100px;
 `;
 
 export const Tag_Pill_style = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background-color: #e0f7fa;
   color: #00796b;
-  border-radius: 12px;
-  padding: 5px 10px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  transition: transform 0.2s ease-in-out;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 121, 107, 0.1);
 
   &:hover {
-    transform: scale(1.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   }
 `;
 
 export const Zone_Pill_style = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background-color: #e1bee7;
   color: #6a1b9a;
-  border-radius: 12px;
-  padding: 5px 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  transition: transform 0.2s ease-in-out;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(106, 27, 154, 0.1);
 
   &:hover {
-    transform: scale(1.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   }
 `;
+
+// Legacy support
+export const Study_Select_Container_style = Container;
+export const Study_Select_style = styled.div`width: 100%;`;
+export const Study_Configuration_Description_style = Section;
+export const Selected_Items_Container_style = SelectionArea;
+export const Selected_Tags_Container_style = Section;
+export const Selected_Zones_Container_style = Section;

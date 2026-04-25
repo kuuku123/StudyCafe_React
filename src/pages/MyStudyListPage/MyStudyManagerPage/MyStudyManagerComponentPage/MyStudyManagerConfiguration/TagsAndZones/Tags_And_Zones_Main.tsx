@@ -221,92 +221,110 @@ const Tags_And_Zones_Main: React.FC<{ study: StudyDto }> = ({ study }) => {
     getAllZones();
   }, []);
   return (
-    <>
-      <S.Study_Select_Container_style>
-        <S.Study_Select_style>
-          {/* Searchable Tag Dropdown */}
-          <Select
-            value={willSelectedTags}
-            onChange={handleTagChange}
-            options={uniqueTags}
-            isClearable
-            isMulti
-            placeholder="Search and select tag..."
-          />
-        </S.Study_Select_style>
-        <S.Study_Select_style>
-          {/* Searchable Zone Dropdown */}
-          <Select
-            value={willSelectedZones}
-            onChange={handleZoneChange}
-            options={uniqueZones}
-            isClearable
-            isMulti
-            placeholder="Search and select zone..."
-          />
-        </S.Study_Select_style>
-        <Button size="medium" width="50%" type="submit" onClick={handleClick}>
-          save
+    <S.Container>
+      <S.Section>
+        <h3>Configure Discovery</h3>
+        <p style={{ color: '#64748b', marginBottom: '1rem' }}>Select tags and zones to help people find your study.</p>
+        
+        <S.SelectionArea>
+          <S.Section>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Tags</h4>
+            <Select
+              value={willSelectedTags}
+              onChange={handleTagChange}
+              options={uniqueTags}
+              isClearable
+              isMulti
+              placeholder="Search tags..."
+              styles={{
+                control: (base: any) => ({
+                  ...base,
+                  borderRadius: '0.5rem',
+                  borderColor: '#e2e8f0',
+                })
+              }}
+            />
+          </S.Section>
+          
+          <S.Section>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Zones</h4>
+            <Select
+              value={willSelectedZones}
+              onChange={handleZoneChange}
+              options={uniqueZones}
+              isClearable
+              isMulti
+              placeholder="Search zones..."
+              styles={{
+                control: (base: any) => ({
+                  ...base,
+                  borderRadius: '0.5rem',
+                  borderColor: '#e2e8f0',
+                })
+              }}
+            />
+          </S.Section>
+        </S.SelectionArea>
+        
+        <Button size="medium" width="200px" type="submit" onClick={handleClick} style={{ marginTop: '1rem' }}>
+          Save Configuration
         </Button>
-      </S.Study_Select_Container_style>
-      <S.Study_Configuration_Description_style>
-        <h2>Choose tags and Zone and save</h2>
-        <h3>this study will have Tags and Zone you have chosen</h3>
-        <S.Selected_Items_Container_style>
-          <S.Selected_Tags_Container_style>
-            <h4>Selected Tags:</h4>
+      </S.Section>
+
+      <S.SelectionArea>
+        <S.Section>
+          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>Active Tags</h4>
+          <S.PillsContainer>
             {selectedTags && selectedTags.length > 0 ? (
               selectedTags.map((tag) => (
-                <>
+                <React.Fragment key={tag.id}>
                   <S.Tag_Pill_style
-                    data-tooltip-id="customTooltipTag"
-                    key={tag.id}
+                    data-tooltip-id={`tooltip-tag-${tag.id}`}
                     onClick={() => handleDeleteTag(tag.title)}
                   >
                     {tag.title}
                   </S.Tag_Pill_style>
                   <ReactTooltip
-                    id="customTooltipTag"
+                    id={`tooltip-tag-${tag.id}`}
                     variant="info"
                     place="top"
-                  >
-                    click to delete tag
-                  </ReactTooltip>
-                </>
+                    content="Click to remove"
+                  />
+                </React.Fragment>
               ))
             ) : (
-              <p>No tags selected</p>
+              <p style={{ color: '#94a3b8', fontSize: '0.875rem' }}>No tags selected</p>
             )}
-          </S.Selected_Tags_Container_style>
+          </S.PillsContainer>
+        </S.Section>
 
-          <S.Selected_Zones_Container_style>
-            <h4>Selected Zones:</h4>
+        <S.Section>
+          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>Active Zones</h4>
+          <S.PillsContainer>
             {selectedZones && selectedZones.length > 0 ? (
               selectedZones.map((zone) => (
-                <>
+                <React.Fragment key={zone.id}>
                   <S.Zone_Pill_style
-                    key={zone.id}
-                    data-tooltip-id="customTooltipZone"
+                    data-tooltip-id={`tooltip-zone-${zone.id}`}
                     onClick={() => handleDeleteZone(zone.city, zone.province)}
                   >
-                    `{zone.city} [{zone.province}]`
+                    {zone.city} ({zone.province})
                   </S.Zone_Pill_style>
                   <ReactTooltip
-                    id="customTooltipZone"
+                    id={`tooltip-zone-${zone.id}`}
                     variant="info"
                     place="top"
-                  >
-                    click to delete zone
-                  </ReactTooltip>
-                </>
+                    content="Click to remove"
+                  />
+                </React.Fragment>
               ))
             ) : (
-              <p>No zones selected</p>
+              <p style={{ color: '#94a3b8', fontSize: '0.875rem' }}>No zones selected</p>
             )}
-          </S.Selected_Zones_Container_style>
-        </S.Selected_Items_Container_style>
-      </S.Study_Configuration_Description_style>
-    </>
+          </S.PillsContainer>
+        </S.Section>
+      </S.SelectionArea>
+    </S.Container>
   );
 };
 
