@@ -11,7 +11,7 @@ const ProfilePage = () => {
       <Page
         header={
           <Title>
-            <S.Header_Input_style></S.Header_Input_style>
+            <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1e293b' }}>My Profile</span>
           </Title>
         }
         footer={<CopyRight></CopyRight>}
