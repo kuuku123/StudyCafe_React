@@ -115,24 +115,26 @@ const Title = ({ children }: { children: ReactNode }) => {
             profile={<FaBookOpen size={"22px"}></FaBookOpen>}
             header={"Study"}
           >
-            <Link style={S.link_style} to={RoutesEnum.CREATE_STUDY}>
-              <li>create study</li>
-            </Link>
-            <Link style={S.link_style} to={RoutesEnum.JOIN_STUDY}>
-              <li>join study</li>
-            </Link>
+            <li>
+              <Link to={RoutesEnum.CREATE_STUDY}>Create Study</Link>
+            </li>
+            <li>
+              <Link to={RoutesEnum.JOIN_STUDY}>Join Study</Link>
+            </li>
           </DropDownContainer>
           <DropDownContainer
             profile={<CgProfile size={"22px"}></CgProfile>}
             header={"Profile"}
           >
-            <Link style={S.link_style} to={RoutesEnum.PROFILE}>
-              <li>Profile</li>
-            </Link>
-            <Link style={S.link_style} to={RoutesEnum.MY_STUDY_LIST}>
-              <li>Study</li>
-            </Link>
-            <Logout style={S.link_style}></Logout>
+            <li>
+              <Link to={RoutesEnum.PROFILE}>Profile</Link>
+            </li>
+            <li>
+              <Link to={RoutesEnum.MY_STUDY_LIST}>My Study List</Link>
+            </li>
+            <li>
+              <Logout />
+            </li>
           </DropDownContainer>
         </S.Login_Signup_style>
       </S.Home_Header_style>

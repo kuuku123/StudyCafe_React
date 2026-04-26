@@ -46,19 +46,15 @@ const StudyUpdatedEvent: React.FC<StudyUpdatedEventProps> = ({
 
   if (amiManager) {
     return (
-      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(studyPath)}>
-        <div onClick={handleClick}>
-          [(M) Study Updated {id}] {studyPath}
-        </div>
+      <Link to={RoutesEnum.STUDY_MANAGER(studyPath)} onClick={handleClick}>
+        [(M) Study Updated {id}] {studyPath}
       </Link>
     );
   }
 
   return (
-    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(studyPath)}>
-      <div onClick={handleClick}>
-        [Study Updated {id}] {studyPath}
-      </div>
+    <Link to={RoutesEnum.STUDY_MEMBER(studyPath)} onClick={handleClick}>
+      [Study Updated {id}] {studyPath}
     </Link>
   );
 };

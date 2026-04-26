@@ -42,15 +42,15 @@ const StudyCreatedEvent: React.FC<StudyCreatedEventProps> = ({
 
   if (amiManager) {
     return (
-      <Link style={S.link_style} to={RoutesEnum.STUDY_MANAGER(studyPath)}>
-        <div onClick={handleClick}>[Study Created] {studyPath}</div>
+      <Link to={RoutesEnum.STUDY_MANAGER(studyPath)} onClick={handleClick}>
+        [Study Created] {studyPath}
       </Link>
     );
   }
 
   return (
-    <Link style={S.link_style} to={RoutesEnum.STUDY_MEMBER(studyPath)}>
-      <div onClick={handleClick}>[Study Created] {studyPath}</div>
+    <Link to={RoutesEnum.STUDY_MEMBER(studyPath)} onClick={handleClick}>
+      [Study Created] {studyPath}
     </Link>
   );
 };
