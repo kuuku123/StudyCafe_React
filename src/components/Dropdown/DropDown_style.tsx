@@ -1,47 +1,88 @@
 import styled from "styled-components";
 
 export const DropDown_Header_style = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid black;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 export const DropDown_style = styled.ul`
   position: absolute;
-  z-index: 4;
-  right: 1rem;
+  z-index: 50;
+  right: 0;
+  top: calc(100% + 0.5rem);
   list-style: none;
-  padding: 16px;
+  padding: 0.75rem;
   margin: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 260px;
+  transform-origin: top right;
+  animation: dropdownFadeIn 0.2s ease-out;
 
-  li {
-    padding: 8px 16px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #f5f5f5;
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
     }
   }
-  /* Target only the first li element within DropDownContainer */
 
-  button {
-    display: block; /* Treat button as a block-level element */
-    width: 100%; /* Make the button full width */
-    padding: 8px 16px; /* Add padding to align with list items */
-    text-align: left; /* Align text to the left */
-    background-color: transparent; /* Remove default button background */
-    border: none; /* Remove default button border */
-    cursor: pointer; /* Change cursor to pointer on hover */
+  li {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 2px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &:hover {
-      background-color: #f5f5f5; /* Change background color on hover */
+      background-color: #f1f5f9;
     }
+  }
+
+  button, a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #6366f1;
+      background-color: #f1f5f9;
+    }
+  }
+
+  /* Icons inside dropdown items */
+  svg {
+    color: #94a3b8;
+    transition: color 0.2s ease;
+  }
+
+  li:hover svg {
+    color: #6366f1;
   }
 `;
