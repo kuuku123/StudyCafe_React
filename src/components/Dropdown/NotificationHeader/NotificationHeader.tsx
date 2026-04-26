@@ -11,19 +11,16 @@ interface NotificationHeaderProps {
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
 }
 
-
 const NotificationHeader: React.FC<NotificationHeaderProps> = ({
   setNotifications,
 }) => {
-  const [firstHovered, setFirstHovered] = useState(true);
+  const [activeTab, setActiveTab] = useState<string>("All");
 
   const studyCreatedPath = useSelector(selectStudyCreated);
   const studyUpdatedPath = useSelector(selectStudyUpdated);
 
   const handleClick = (tab: string) => {
-    console.log("studyCreatedPath => ", studyCreatedPath);
     const createNotifications = (events: NotificationDto[], type: string) => {
-      console.log("events => ", events);
       return events.map(({ id, studyPath }) => ({ id, studyPath, type }));
     };
 
@@ -51,35 +48,33 @@ const NotificationHeader: React.FC<NotificationHeaderProps> = ({
       default:
         break;
     }
-    console.log("currentNotifications => ", currentNotifications);
     setNotifications(currentNotifications);
-    setFirstHovered(false);
+    setActiveTab(tab);
   };
 
   useEffect(() => {
     handleClick("All");
-    setFirstHovered(true);
   }, []);
 
   return (
     <S.Notification_Header_style>
       <S.Notification_HeaderItem_style
         onClick={() => handleClick("All")}
-        isFirstHovered={firstHovered}
+        isActive={activeTab === "All"}
       >
         All
       </S.Notification_HeaderItem_style>
       <S.Notification_HeaderItem_style
-        isFirstHovered={false}
+        isActive={activeTab === "StudyCreated"}
         onClick={() => handleClick("StudyCreated")}
       >
-        Study Created
+        Created
       </S.Notification_HeaderItem_style>
       <S.Notification_HeaderItem_style
-        isFirstHovered={false}
+        isActive={activeTab === "StudyUpdated"}
         onClick={() => handleClick("StudyUpdated")}
       >
-        Study Updated
+        Updated
       </S.Notification_HeaderItem_style>
     </S.Notification_Header_style>
   );
