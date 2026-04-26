@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FormControl";
-import * as S from "./SignupForm_style";
+import * as CS from "../../components/Component_style";
 import { SignUpForm } from "../../utils/type";
 import SignupEmailVerfication from "./EmailVerify/SignupEmailVerification";
 
@@ -19,17 +19,22 @@ const SignupForm: React.FC<SignupFormProps> = ({
   const validate = (values: SignUpForm) => {
     const errors: Record<string, any> = {};
     if (!values.nickname) {
-      errors.nickname = "write nickname for your account";
+      errors.nickname = "Please enter your nickname";
     }
     if (!values.email) {
-      errors.email = "write email for your account";
+      errors.email = "Please enter your email";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(values.email)) {
+        errors.email = "Please enter a valid email address";
+      }
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(values.email)) {
-      errors.email = "write valid email address";
+    if (emailVerified && !values.password) {
+      errors.password = "Please enter a password";
     }
     return errors;
   };
+
   return (
     <MyForm.Form
       id="signup-form"
@@ -40,56 +45,57 @@ const SignupForm: React.FC<SignupFormProps> = ({
       }}
       validate={validate}
       onSubmit={onSubmit}
-      style={{ width: "600px" }}
     >
       <FormControl
-        label="NickName"
+        label="Nickname"
         htmlFor="nickname"
-        error={<MyForm.ErrorMessage name="nickname"></MyForm.ErrorMessage>}
+        error={<MyForm.ErrorMessage name="nickname" />}
       >
         <MyForm.Field
+          as={CS.Input_style}
           id="signup-nickname"
-          style={S.signup_input_style}
           name="nickname"
-          type="input"
-          placeholder="write your nickname"
-        ></MyForm.Field>
+          placeholder="Choose a nickname"
+          autoComplete="nickname"
+        />
       </FormControl>
 
       <FormControl
-        label="Email"
+        label="Email Address"
         htmlFor="email"
-        error={<MyForm.ErrorMessage name="email"></MyForm.ErrorMessage>}
+        error={<MyForm.ErrorMessage name="email" />}
       >
-        <MyForm.Field
-          id="email"
-          style={S.signup_input_style}
-          name="email"
-          type="input"
-          placeholder="write your email"
-        ></MyForm.Field>
-        <SignupEmailVerfication
-          emailVerified={emailVerified}
-          setEmailVerified={setEmailVerified}
-        ></SignupEmailVerfication>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%' }}>
+          <MyForm.Field
+            as={CS.Input_style}
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            autoComplete="email"
+            disabled={emailVerified}
+          />
+          <SignupEmailVerfication
+            emailVerified={emailVerified}
+            setEmailVerified={setEmailVerified}
+          />
+        </div>
       </FormControl>
 
       {emailVerified && (
-        <>
-          <FormControl
-            label="Password"
-            htmlFor="password"
-            error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
-          >
-            <MyForm.Field
-              id="password"
-              style={S.signup_input_style}
-              name="password"
-              type="password"
-              placeholder="write your password"
-            ></MyForm.Field>
-          </FormControl>
-        </>
+        <FormControl
+          label="Password"
+          htmlFor="password"
+          error={<MyForm.ErrorMessage name="password" />}
+        >
+          <MyForm.Field
+            as={CS.Input_style}
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Create a password"
+            autoComplete="new-password"
+          />
+        </FormControl>
       )}
     </MyForm.Form>
   );

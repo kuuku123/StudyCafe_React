@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../lib/features/redux/authSlice";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import { SignUpForm } from "../../utils/type";
+import { Link } from "react-router-dom";
 
 const SignupPage = () => {
   const [emailVerified, setEmailVerified] = useState<boolean>(false);
@@ -24,15 +25,12 @@ const SignupPage = () => {
       },
       body: JSON.stringify(signupInfo),
     }).then((res) => {
-      console.log("signup => ", res);
       return res.json();
     });
 
-    console.log("before jwt Response ======== ");
     handleResponse(jwtResponse, null, { path: "", dialog: "" });
-    console.log("after jwt Response ======== ");
 
-    if (jwtResponse.status == "OK") {
+    if (jwtResponse.status === "OK") {
       const response = await ProfileApi.fetchMyProfile();
 
       handleResponse(response, (data) => dispatch(loginSuccess(data)), {
@@ -43,36 +41,39 @@ const SignupPage = () => {
   };
 
   return (
-    <div>
-      <Page
-        header={
-          <Title>
-            <S.Header_Input_style></S.Header_Input_style>
-          </Title>
-        }
-        footer={<CopyRight></CopyRight>}
-      >
-        <S.Signup_Main_style>
-          <S.Signup_Container_style>
-            <h1>Create Account</h1>
-          </S.Signup_Container_style>
+    <Page
+      header={
+        <Title>
+          <S.Header_Input_style />
+        </Title>
+      }
+      footer={<CopyRight />}
+    >
+      <S.Signup_Main_style>
+        <S.SignupCard>
+          <S.TitleContainer>
+            <S.SignupTitle>Create Account</S.SignupTitle>
+            <S.Subtitle>Join our community and start studying together</S.Subtitle>
+          </S.TitleContainer>
+
           <SignupForm
             onSubmit={handleSubmit}
             emailVerified={emailVerified}
             setEmailVerified={setEmailVerified}
-          ></SignupForm>
-          <S.Signup_Container_style>
-            {emailVerified && (
-              <>
-                <S.SignUp_Button_style type="submit" form="signup-form">
-                  Enroll
-                </S.SignUp_Button_style>
-              </>
-            )}
+          />
+
+          {emailVerified && (
+            <S.SignUp_Button_style type="submit" form="signup-form">
+              Complete Enrollment
+            </S.SignUp_Button_style>
+          )}
+
+          <S.Signup_Container_style style={{ marginTop: '2rem', textAlign: 'center', fontSize: '0.875rem', color: '#64748b' }}>
+            Already have an account? <Link to={RoutesEnum.LOGIN} style={{ color: '#6366f1', fontWeight: 600, textDecoration: 'none' }}>Sign in</Link>
           </S.Signup_Container_style>
-        </S.Signup_Main_style>
-      </Page>
-    </div>
+        </S.SignupCard>
+      </S.Signup_Main_style>
+    </Page>
   );
 };
 

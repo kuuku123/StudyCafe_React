@@ -4,13 +4,14 @@ import * as S from "./SignupEmailVerification_style";
 import SignupEmailVerificationHidden from "./SignupEmailVerificationHidden";
 import AuthApi from "../../../lib/apis/AuthApi";
 import HandleResponseApi from "../../../lib/HandleResponse";
+import { HiCheckCircle } from "react-icons/hi";
 
-interface SingupEmailVerificationProps {
+interface SignupEmailVerificationProps {
   emailVerified: boolean;
   setEmailVerified: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SignupEmailVerfication: React.FC<SingupEmailVerificationProps> = ({
+const SignupEmailVerfication: React.FC<SignupEmailVerificationProps> = ({
   emailVerified,
   setEmailVerified,
 }) => {
@@ -20,40 +21,50 @@ const SignupEmailVerfication: React.FC<SingupEmailVerificationProps> = ({
   const { values, errors } = useContext(formContext)!;
 
   const handleEmailVerified = async () => {
-    console.log("handleEmailVerified => ", values.email)
     const response = await AuthApi.checkAndMakeEmailVerificationCode(
       values.email
     );
-    handleResponse(response, (prev) => setVerifyHidden(!prev), {
+    handleResponse(response, () => setVerifyHidden(true), {
       path: "",
       dialog: "",
     });
   };
-  useEffect(() => {
-    setClickable(Object.keys(errors).length === 0);
-  }, [errors]);
 
   useEffect(() => {
-    setEmailVerified(false);
-  }, [values.email]);
+    // Check if there are errors specifically for the email field
+    setClickable(!!values.email && !errors.email);
+  }, [values.email, errors.email]);
+
+  useEffect(() => {
+    if (emailVerified) {
+      setVerifyHidden(false);
+    }
+  }, [emailVerified]);
 
   return (
     <>
-      {!emailVerified && (
-        <S.Email_Verfiy_Button
-          clickable={clickable}
-          type="button"
-          onClick={handleEmailVerified}
-        >
-          Verifiy Email
-        </S.Email_Verfiy_Button>
-      )}
+      {!emailVerified ? (
+        <>
+          <S.Email_Verfiy_Button
+            clickable={clickable}
+            type="button"
+            onClick={handleEmailVerified}
+          >
+            Verify Email Address
+          </S.Email_Verfiy_Button>
 
-      {verifiyHidden && (
-        <SignupEmailVerificationHidden
-          emailVerified={emailVerified}
-          setEmailVerified={setEmailVerified}
-        ></SignupEmailVerificationHidden>
+          {verifiyHidden && (
+            <SignupEmailVerificationHidden
+              emailVerified={emailVerified}
+              setEmailVerified={setEmailVerified}
+            />
+          )}
+        </>
+      ) : (
+        <S.Verified_Success>
+          <HiCheckCircle size={20} />
+          Email Verified Successfully
+        </S.Verified_Success>
       )}
     </>
   );
