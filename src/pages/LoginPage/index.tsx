@@ -13,6 +13,7 @@ import { loginSuccess } from "../../lib/features/redux/authSlice";
 import ProfileApi from "../../lib/apis/ProfileApi";
 import HandleResponseApi from "../../lib/HandleResponse";
 import { LoginFormType } from "../../utils/type";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { openDialog, closeDialog } = MyLayout.useDialog();
@@ -56,41 +57,51 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <Page
-        header={
-          <Title>
-            <S.Header_Input_style></S.Header_Input_style>
-          </Title>
-        }
-        footer={<CopyRight></CopyRight>}
-      >
-        <S.Login_Main_style>
-          <S.Login_Container_style>
-            <h1>Login</h1>
-          </S.Login_Container_style>
-          <LoginForm onSubmit={handleSubmit}></LoginForm>
-          <S.Login_Container_style>
-            <S.Login_Button_style type="submit" form="login-form">
-              Login
-            </S.Login_Button_style>
-          </S.Login_Container_style>
-          <S.Social_Login_Button_Container_style>
+    <Page
+      header={
+        <Title>
+          <S.Header_Input_style />
+        </Title>
+      }
+      footer={<CopyRight />}
+    >
+      <S.Login_Main_style>
+        <S.LoginCard>
+          <S.TitleContainer>
+            <S.LoginTitle>Welcome Back</S.LoginTitle>
+            <S.Subtitle>Please enter your details to sign in</S.Subtitle>
+          </S.TitleContainer>
+
+          <LoginForm onSubmit={handleSubmit} />
+
+          <S.Login_Button_style type="submit" form="login-form">
+            Sign In
+          </S.Login_Button_style>
+
+          <S.Divider>
+            <span>or continue with</span>
+          </S.Divider>
+
+          <S.Social_Login_Container>
             <a href={`${API_GATEWAY_URL}/auth/oauth2/authorization/google`}>
-              <S.Social_Login_Button_style
-                src={"images/social/google.png"}
-              ></S.Social_Login_Button_style>
+              <S.Social_Icon_Wrapper title="Google">
+                <img src={"images/social/google.png"} alt="Google" />
+              </S.Social_Icon_Wrapper>
             </a>
-            <S.Social_Login_Button_style
-              src={"images/social/kakao.png"}
-            ></S.Social_Login_Button_style>
-            <S.Social_Login_Button_style
-              src={"images/social/naver.png"}
-            ></S.Social_Login_Button_style>
-          </S.Social_Login_Button_Container_style>
-        </S.Login_Main_style>
-      </Page>
-    </div>
+            <S.Social_Icon_Wrapper title="Kakao">
+              <img src={"images/social/kakao.png"} alt="Kakao" />
+            </S.Social_Icon_Wrapper>
+            <S.Social_Icon_Wrapper title="Naver">
+              <img src={"images/social/naver.png"} alt="Naver" />
+            </S.Social_Icon_Wrapper>
+          </S.Social_Login_Container>
+
+          <S.FooterLink>
+            Don't have an account? <Link to={RoutesEnum.SIGN_UP}>Sign up for free</Link>
+          </S.FooterLink>
+        </S.LoginCard>
+      </S.Login_Main_style>
+    </Page>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import * as MyForm from "../../lib/MyForm";
 import FormControl from "../../components/FormControl";
-import * as S from "./LoginForm_style";
+import * as CS from "../../components/Component_style";
 import { LoginFormType } from "../../utils/type";
 
 interface LoginFormProps {
@@ -12,7 +12,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const validate = (values: LoginFormType) => {
     const errors: Record<string, any> = {};
     if (!values.nicknameOrEmail) {
-      errors.nicknameOrEmail = "write nickname or email for login";
+      errors.nicknameOrEmail = "Please enter your nickname or email";
+    }
+    if (!values.password) {
+      errors.password = "Please enter your password";
     }
     return errors;
   };
@@ -28,17 +31,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       onSubmit={onSubmit}
     >
       <FormControl
-        label="NickName"
+        label="Nickname or Email"
         htmlFor="nicknameOrEmail"
         error={
           <MyForm.ErrorMessage name="nicknameOrEmail"></MyForm.ErrorMessage>
         }
       >
         <MyForm.Field
+          as={CS.Input_style}
           id="login-nicknameOrEmail"
-          style={S.login_input_style}
           name="nicknameOrEmail"
-          placeholder="write your nickname or email"
+          placeholder="Enter your nickname or email"
+          autoComplete="username"
         ></MyForm.Field>
       </FormControl>
       <FormControl
@@ -47,11 +51,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         error={<MyForm.ErrorMessage name="password"></MyForm.ErrorMessage>}
       >
         <MyForm.Field
+          as={CS.Input_style}
           id="password"
-          style={S.login_input_style}
           name="password"
           type="password"
-          placeholder="write your password"
+          placeholder="Enter your password"
+          autoComplete="current-password"
         ></MyForm.Field>
       </FormControl>
     </MyForm.Form>
