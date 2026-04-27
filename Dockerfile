@@ -9,14 +9,14 @@ RUN apt-get update && \
 # Enable mod_rewrite and configure .htaccess overrides
 RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
 RUN sed -i '/<Directory "\/usr\/local\/apache2\/htdocs">/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /usr/local/apache2/conf/httpd.conf
-RUN sed -i '/LoadModule ssl_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
+#RUN sed -i '/LoadModule ssl_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
 
 # Copy your application build files into Apache's web root
 COPY ./dist/ /usr/local/apache2/htdocs/
 
 # Copy your custom SSL configuration
-COPY ./httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
-RUN echo "Include conf/extra/httpd-ssl.conf" >> /usr/local/apache2/conf/httpd.conf
+#COPY ./httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+#RUN echo "Include conf/extra/httpd-ssl.conf" >> /usr/local/apache2/conf/httpd.conf
 
 # Copy the mod_evasive configuration file into Apache's configuration directory
 COPY ./mod_evasive.conf /usr/local/apache2/conf/extra/mod_evasive.conf
