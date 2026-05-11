@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Base URL for your API
-API_GATEWAY_URL="http://localhost:8083"
+API_GATEWAY_URL="http://localhost:8080/api"
 #API_GATEWAY_URL="https://tonylimtest123.duckdns.org:8083"
 
 # File to store cookies

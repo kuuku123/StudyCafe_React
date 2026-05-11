@@ -3,7 +3,9 @@ const common = require("./webpack.config");
 const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-require("dotenv").config({ path: ".env.prod" });
+const envFiles = { dev: '.env.dev', kube: '.env.kube', prod: '.env.prod' };
+const envFile = envFiles[process.env.BUILD_ENV] || '.env.prod';
+require("dotenv").config({ path: envFile });
 
 module.exports = merge(common(), {
   mode: "production",
